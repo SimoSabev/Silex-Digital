@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python \"C:\\\\Users\\\\User\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\frontend-design\\\\52e95f6756e5\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"digital agency automation SaaS landing page dark modern\" --design-system -p \"Silex Digital\")",
+      "Bash(python3 \"C:\\\\Users\\\\User\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\frontend-design\\\\52e95f6756e5\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"digital agency automation SaaS landing page dark modern\" --design-system -p \"Silex Digital\")",
+      "Bash(npx tsc:*)"
+    ]
+  }
+}

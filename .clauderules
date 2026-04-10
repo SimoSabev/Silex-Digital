@@ -1,0 +1,23 @@
+Skill: Elegant & Trustworthy UI/UX (Bizzupp Refinement)
+
+Visual Identity:
+
+Color Palette: Swap the saturated electric blue (#3b82f6) for Deep Navy (#0f172a) or Charcoal (#1e293b) with Champagne Gold (#d4af37) or Soft Silver (#f1f5f9) accents.
+
+Typography: Use a high-contrast serif for headings (e.g., Playfair Display or Instrument Serif) paired with a clean, wide-tracked sans-serif for body text (e.g., Inter or Geist).
+
+Spacing: Increase whitespace (padding) by 20%. Use "breathable" layouts where elements aren't crowded.
+
+Trust Indicators:
+
+Bento Grids: Instead of floating cards, use structured Bento Grids with subtle 1px borders (#e2e8f0).
+
+Micro-interactions: Use framer-motion for subtle "fade-in-up" effects (duration: 0.6s, ease: "easeOut"). No bouncy or aggressive animations.
+
+Glassmorphism: Use very low opacity (0.05) for glass backgrounds with a high backdrop-blur (20px) to simulate frosted glass.
+
+Next.js Implementation:
+
+Use shadcn/ui components but customize the radius to 0.3rem (sharper, more professional corners).
+
+Implement a "Sticky Header" that shrinks and gains a glass effect on scroll.

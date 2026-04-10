@@ -1,0 +1,64 @@
+[  421114ms] [ERROR] ./src/components/layout/Footer.tsx:177:9
+Parsing ecmascript source code failed
+  175 |           </motion.div>
+  176 |         </div>
+> 177 |       </div>
+      |         ^^^
+  178 |
+  179 |       {/* Bottom Bar */}
+  180 |       <div className="border-t border-white/[0.04]">
+
+Expected corresponding JSX closing tag for <footer>
+
+Import trace:
+  Server Component:
+    ./src/components/layout/Footer.tsx
+    ./src/app/layout.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_b0daae9a._.js:2359
+[  422477ms] [ERROR] ./src/components/layout/Footer.tsx:177:9
+Parsing ecmascript source code failed
+  175 |           </motion.div>
+  176 |         </div>
+> 177 |       </div>
+      |         ^^^
+  178 |
+  179 |       {/* Bottom Bar */}
+  180 |       <div className="border-t border-white/[0.04]">
+
+Expected corresponding JSX closing tag for <footer>
+
+Import trace:
+  Server Component:
+    ./src/components/layout/Footer.tsx
+    ./src/app/layout.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_b0daae9a._.js:2359
+[  423939ms] [ERROR] ./src/components/layout/Footer.tsx:49:20
+Parsing ecmascript source code failed
+  47 |
+  48 |       <div className="relative z-10 flex justify-center items-center border-2 py-20 lg:py-24">
+> 49 |         < className="mx-auto grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-16">
+     |                    ^
+  50 |   
+  51 |           {/* Brand */}
+  52 |           <motion.div
+
+Expected '</', got '='
+
+Import trace:
+  Server Component:
+    ./src/components/layout/Footer.tsx
+    ./src/app/layout.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_b0daae9a._.js:2359
+[  427083ms] [ERROR] ./src/components/layout/Footer.tsx:177:9
+Parsing ecmascript source code failed
+  175 |           </motion.div>
+  176 |         </div>
+> 177 |       </div>
+      |         ^^^
+  178 |
+  179 |       {/* Bottom Bar */}
+  180 |       <div className="border-t border-white/[0.04]">
+
+Expected corresponding JSX closing tag for <footer>
+
+Import trace:
+  Server Component:
+    ./src/components/layout/Footer.tsx
+    ./src/app/layout.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_b0daae9a._.js:2359
