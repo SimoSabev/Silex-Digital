@@ -25,6 +25,24 @@ import AnimatedSection, {
 } from "@/components/ui/AnimatedSection";
 import EmailAutomationDemo from "@/components/demos/EmailAutomationDemo";
 import { useI18n } from "@/lib/i18n";
+import TextReveal from "@/components/ui/TextReveal";
+import Magnetic from "@/components/ui/Magnetic";
+import dynamic from "next/dynamic";
+
+const HeroVisualization = dynamic(
+  () => import("@/components/animations/HeroVisualization"),
+  { ssr: false, loading: () => <div className="w-full h-full rounded-2xl bg-[var(--bg-section)] animate-pulse" /> },
+);
+
+const ProblemVisualization = dynamic(
+  () => import("@/components/animations/ProblemVisualization"),
+  { ssr: false },
+);
+
+const HowItWorksVisualization = dynamic(
+  () => import("@/components/animations/HowItWorksVisualization"),
+  { ssr: false },
+);
 
 const stats = [
   {
@@ -162,83 +180,95 @@ export default function HomeContent() {
     <div className="min-h-dvh bg-[var(--bg-page)] font-body text-[var(--text-main)]">
       {/* Hero */}
       <section className="relative overflow-hidden pt-20 pb-32 lg:pt-32 lg:pb-40">
-        {/* Ambient Aurora Gradient Mesh */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120vw] h-[80vh] opacity-40 pointer-events-none">
-          <div className="absolute top-[-10%] left-[20%] w-[50%] h-[60%] rounded-[100%] bg-[var(--violet)]/20 blur-[120px] mix-blend-multiply animate-float-slow" style={{ animationDuration: '20s' }} />
-          <div className="absolute top-[10%] right-[20%] w-[45%] h-[55%] rounded-[100%] bg-[var(--coral)]/20 blur-[120px] mix-blend-multiply animate-float-slow" style={{ animationDuration: '25s', animationDelay: '2s' }} />
-          <div className="absolute top-[30%] left-[40%] w-[40%] h-[40%] rounded-[100%] bg-[var(--lime)]/15 blur-[120px] mix-blend-multiply animate-float-fast" style={{ animationDuration: '18s' }} />
-        </div>
+        {/* Ambient Aurora Gradient Mesh removed - Now handled by PremiumHybridBackground in layout */}
         <Container>
-          <div className="relative z-10 mx-auto max-w-5xl text-center">
-            <AnimatedSection delay={0}>
-              <div className="badge-violet mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2 font-medium">
-                <span className="animate-pulse-dot h-2 w-2 rounded-full bg-[var(--violet)]" />
-                {locale === "bg"
-                  ? "Автоматизация за български бизнес"
-                  : "Automation for Bulgarian businesses"}
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.1}>
-              <h1 className="mb-6 font-display text-[48px] leading-[1.1] font-[800] tracking-tight lg:text-[72px]">
-                <span className="text-gradient-hero">
-                  {locale === "bg"
-                    ? "РАБОТИ КАТО ИМАШ 10 ЕКСТРИ СЛУЖИТЕЛИ"
-                    : "WORK LIKE YOU HAVE 10 EXTRA EMPLOYEES"}
-                </span>
-              </h1>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.2}>
-              <p className="mx-auto mb-12 max-w-[640px] text-[20px] leading-relaxed text-[var(--text-sub)]">
-                {locale === "bg"
-                  ? "Спести над 15 часа работа месечно с модерни автоматизации в сайта ти, така че бизнесът да работи за теб, дори когато си зает."
-                  : "Save over 15 hours of work per month with modern website automations, so your business keeps moving when you are busy."}
-              </p>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.3}>
-              <div className="mb-20 flex flex-wrap justify-center gap-4">
-                <Link href="/contact">
-                  <Button
-                    variant="primary"
-                    size="lg"
-                    className="h-auto rounded-xl border-none bg-[var(--coral)] px-8 py-4 text-lg font-bold text-white shadow-[var(--coral)]/20 shadow-xl transition-transform hover:-translate-y-1 hover:bg-[var(--coral-hover)]"
-                  >
-                    <Zap className="h-5 w-5" />
-                    {locale === "bg" ? "Започни безплатно" : "Start for free"}
-                  </Button>
-                </Link>
-                <Link href="/demos">
-                  <Button
-                    variant="secondary"
-                    size="lg"
-                    className="h-auto rounded-xl border-2 border-[var(--violet)] px-8 py-4 text-lg font-bold text-[var(--violet)] transition-colors hover:bg-[var(--violet)]/10"
-                  >
-                    <Play className="h-5 w-5" />
-                    {locale === "bg" ? "Виж демо" : "View demo"}
-                  </Button>
-                </Link>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.4}>
-              <div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-3">
-                {stats.map((stat) => (
-                  <div
-                    key={stat.value}
-                    className="card flex flex-col items-center rounded-[24px] border border-[var(--border)] bg-[var(--bg-card)] p-6 text-center shadow-sm transition-shadow hover:shadow-md"
-                  >
-                    <div className="mb-4 font-['JetBrains_Mono',monospace] text-[48px] leading-none font-bold text-[var(--violet)]">
-                      {stat.value}
-                    </div>
-                    <div className="font-display text-[16px] font-bold tracking-wide text-[var(--text-sub)] uppercase">
-                      {stat.label[locale]}
-                    </div>
+          <div className="relative z-10 mx-auto max-w-6xl">
+            <div className="grid items-center gap-12 lg:grid-cols-2">
+              {/* Left: text */}
+              <div className="text-center lg:text-left">
+                <AnimatedSection delay={0}>
+                  <div className="badge-violet mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2 font-medium">
+                    <span className="animate-pulse-dot h-2 w-2 rounded-full bg-[var(--violet)]" />
+                    {locale === "bg"
+                      ? "Автоматизация за български бизнес"
+                      : "Automation for Bulgarian businesses"}
                   </div>
-                ))}
+                </AnimatedSection>
+
+                <AnimatedSection delay={0.1}>
+                  <h1 className="mb-6 font-display text-[48px] leading-[1.1] font-[800] tracking-tight lg:text-[72px]">
+                    <span className="text-gradient-hero">
+                      <TextReveal
+                        text={locale === "bg" ? "РАБОТИ КАТО ИМАШ 10 ЕКСТРИ СЛУЖИТЕЛИ" : "WORK LIKE YOU HAVE 10 EXTRA EMPLOYEES"}
+                        delay={0.1}
+                      />
+                    </span>
+                  </h1>
+                </AnimatedSection>
+
+                <AnimatedSection delay={0.2}>
+                  <p className="mx-auto mb-12 max-w-[640px] text-[20px] leading-relaxed text-[var(--text-sub)] lg:mx-0">
+                    {locale === "bg"
+                      ? "Спести над 15 часа работа месечно с модерни автоматизации в сайта ти, така че бизнесът да работи за теб, дори когато си зает."
+                      : "Save over 15 hours of work per month with modern website automations, so your business keeps moving when you are busy."}
+                  </p>
+                </AnimatedSection>
+
+                <AnimatedSection delay={0.3}>
+                  <div className="mb-20 flex flex-wrap justify-center gap-4 lg:justify-start">
+                    <Link href="/contact">
+                      <Magnetic>
+                        <Button
+                          variant="primary"
+                          size="lg"
+                          className="h-auto rounded-xl border-none bg-[var(--coral)] px-8 py-4 text-lg font-bold text-white shadow-[var(--coral)]/20 shadow-xl transition-transform hover:-translate-y-1 hover:bg-[var(--coral-hover)]"
+                        >
+                          <Zap className="h-5 w-5" />
+                          {locale === "bg" ? "Започни безплатно" : "Start for free"}
+                        </Button>
+                      </Magnetic>
+                    </Link>
+                    <Link href="/demos">
+                      <Magnetic>
+                        <Button
+                          variant="secondary"
+                          size="lg"
+                          className="h-auto rounded-xl border-2 border-[var(--violet)] px-8 py-4 text-lg font-bold text-[var(--violet)] transition-colors hover:bg-[var(--violet)]/10"
+                        >
+                          <Play className="h-5 w-5" />
+                          {locale === "bg" ? "Виж демо" : "View demo"}
+                        </Button>
+                      </Magnetic>
+                    </Link>
+                  </div>
+                </AnimatedSection>
+
+                <AnimatedSection delay={0.4}>
+                  <div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-3">
+                    {stats.map((stat) => (
+                      <div
+                        key={stat.value}
+                        className="card flex flex-col items-center rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-6 text-center shadow-apple transition-all duration-400 hover:shadow-apple-hover"
+                      >
+                        <div className="mb-4 font-['JetBrains_Mono',monospace] text-[48px] leading-none font-bold text-[var(--violet)]">
+                          {stat.value}
+                        </div>
+                        <div className="font-display text-[16px] font-bold tracking-wide text-[var(--text-sub)] uppercase">
+                          {stat.label[locale]}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </AnimatedSection>
               </div>
-            </AnimatedSection>
+
+              {/* Right: Three.js visualization */}
+              <AnimatedSection delay={0.2} direction="right" className="hidden lg:block">
+                <div className="h-[480px] rounded-2xl overflow-hidden bg-[var(--bg-card)] border border-[var(--border)] shadow-apple-hover">
+                  <HeroVisualization />
+                </div>
+              </AnimatedSection>
+            </div>
           </div>
         </Container>
       </section>
@@ -292,7 +322,7 @@ export default function HomeContent() {
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-[1fr_auto_1fr]">
             {/* Before */}
             <AnimatedSection direction="left">
-              <div className="h-full rounded-[24px] border border-[var(--coral)]/20 bg-[var(--coral)]/5 p-8 shadow-sm lg:p-10">
+              <div className="h-full rounded-2xl border border-[var(--coral)]/20 bg-[var(--coral)]/5 p-8 shadow-apple lg:p-10">
                 {/* Header */}
                 <div className="mb-8 flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-[24px] bg-[var(--coral)]/10">
@@ -319,6 +349,9 @@ export default function HomeContent() {
                     </li>
                   ))}
                 </ul>
+                <div className="mt-6">
+                  <ProblemVisualization />
+                </div>
               </div>
             </AnimatedSection>
 
@@ -335,7 +368,7 @@ export default function HomeContent() {
 
             {/* After */}
             <AnimatedSection direction="right">
-              <div className="h-full rounded-[24px] border-2 border-[var(--lime)]/20 bg-[var(--lime)]/5 p-8 shadow-lg lg:p-10">
+              <div className="h-full rounded-2xl border-2 border-[var(--lime)]/20 bg-[var(--lime)]/5 p-8 shadow-apple lg:p-10">
                 {/* Header */}
                 <div className="mb-8 flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-[24px] bg-[var(--lime)]/10">
@@ -363,6 +396,34 @@ export default function HomeContent() {
                   ))}
                 </ul>
               </div>
+            </AnimatedSection>
+          </div>
+        </Container>
+      </section>
+
+      {/* How It Works */}
+      <section className="bg-transparent py-[80px] lg:py-[100px]">
+        <Container>
+          <div className="mx-auto max-w-5xl grid items-start gap-16 lg:grid-cols-2">
+            <AnimatedSection direction="left">
+              <div className="badge-lime mb-6 inline-flex rounded-full border border-[var(--lime)]/20 bg-[var(--lime)]/10 px-3 py-1 text-sm font-bold tracking-wider text-[var(--lime)] uppercase">
+                {locale === "bg" ? "Как работи" : "How it works"}
+              </div>
+              <h2 className="mb-6 font-display text-4xl font-[800] text-[var(--text-main)] leading-tight lg:text-5xl">
+                {locale === "bg" ? "От съобщение до клиент" : "From message to client"}
+                <br />
+                <span className="text-gradient-hero">
+                  {locale === "bg" ? "за 47 секунди" : "in 47 seconds"}
+                </span>
+              </h2>
+              <p className="text-[18px] leading-relaxed text-[var(--text-sub)]">
+                {locale === "bg"
+                  ? "Платформата улавя всяко взаимодействие, отговаря мигновено и ти праща нотификация — ти трябва само да потвърдиш резервацията."
+                  : "The platform captures every interaction, replies instantly and sends you a notification — you just confirm the booking."}
+              </p>
+            </AnimatedSection>
+            <AnimatedSection direction="right">
+              <HowItWorksVisualization />
             </AnimatedSection>
           </div>
         </Container>
@@ -396,7 +457,7 @@ export default function HomeContent() {
                     href="/services"
                     className="group block h-full outline-none"
                   >
-                    <div className="card relative h-full overflow-hidden rounded-[24px] border-2 border-[var(--border)] bg-[var(--bg-card)] p-8 transition-all duration-300 hover:-translate-y-2 hover:border-[var(--border-hover)] hover:shadow-xl">
+                    <div className="card relative h-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-8 shadow-apple transition-all duration-400 hover:-translate-y-2 hover:border-[var(--border-hover)] hover:shadow-apple-hover">
                       <div
                         className={`mb-8 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--${accentKey})]/10 origin-center transition-transform duration-300 group-hover:scale-110`}
                       >
@@ -502,8 +563,8 @@ export default function HomeContent() {
 
             <AnimatedSection direction="right" className="relative">
               <div className="absolute inset-0 -z-10 rounded-full bg-gradient-to-tr from-[var(--violet)]/20 to-[var(--coral)]/20 blur-3xl" />
-              <div className="card rounded-[24px] border-2 border-[var(--border)] bg-[var(--bg-card)] p-2 shadow-2xl">
-                <div className="overflow-hidden rounded-[24px] border border-[var(--border)] bg-transparent">
+              <div className="card rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-2 shadow-apple-hover">
+                <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-transparent">
                   <EmailAutomationDemo />
                 </div>
               </div>
@@ -516,7 +577,7 @@ export default function HomeContent() {
       <section className="bg-transparent py-[120px] lg:py-[160px]">
         <Container>
           <AnimatedSection className="mx-auto max-w-5xl">
-            <div className="card rounded-[24px] border-4 border-[var(--text-main)] bg-[var(--bg-card)] p-8 shadow-[8px_8px_0px_var(--text-main)] md:p-12">
+            <div className="card rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-8 shadow-apple-hover md:p-12">
               <div className="badge-coral mb-6 inline-flex rounded-full border border-[var(--coral)] bg-[var(--coral)]/10 px-4 py-2 text-sm font-bold tracking-wider text-[var(--coral)] uppercase">
                 {locale === "bg"
                   ? "Бърз ROI калкулатор"
@@ -578,7 +639,7 @@ export default function HomeContent() {
                 </label>
               </div>
 
-              <div className="grid gap-6 rounded-[24px] border-2 border-[var(--border)] bg-[var(--bg-section)] p-8 md:grid-cols-3">
+              <div className="grid gap-6 rounded-2xl border border-[var(--border)] bg-[var(--bg-section)] p-8 md:grid-cols-3">
                 <div>
                   <p className="mb-2 text-sm font-bold tracking-wider text-[var(--text-muted)] uppercase">
                     {locale === "bg"
@@ -646,7 +707,7 @@ export default function HomeContent() {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="card relative w-[85vw] shrink-0 snap-center rounded-[24px] border border-[var(--border)] bg-[var(--bg-card)] p-10 shadow-xl md:w-[400px]"
+                className="card relative w-[85vw] shrink-0 snap-center rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-10 shadow-apple md:w-[400px]"
               >
                 <Quote className="absolute top-8 right-8 h-20 w-20 text-[var(--violet)]/10" />
                 <div className="relative z-10 mb-6 flex gap-1">
@@ -701,7 +762,7 @@ export default function HomeContent() {
           <StaggerContainer className="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-3">
             {/* Starter */}
             <StaggerItem>
-              <div className="card rounded-[24px] border-2 border-[var(--border)] bg-[var(--bg-card)] p-8 text-center">
+              <div className="card rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-8 text-center shadow-apple">
                 <h3 className="mb-2 font-display text-2xl font-[800] text-[var(--text-main)]">
                   Starter
                 </h3>
@@ -748,7 +809,7 @@ export default function HomeContent() {
 
             {/* Pro (Popular) */}
             <StaggerItem>
-              <div className="card relative z-10 scale-100 transform rounded-[24px] border-4 border-[var(--violet)] bg-[var(--bg-card)] p-10 text-center shadow-[var(--violet)]/20 shadow-2xl md:scale-105">
+              <div className="card relative z-10 scale-100 transform rounded-2xl border border-[var(--violet)] bg-[var(--bg-card)] p-10 text-center shadow-apple-hover md:scale-105">
                 <div className="absolute -top-5 left-1/2 -translate-x-1/2">
                   <span className="rounded-full bg-[var(--coral)] px-6 py-2 text-sm font-bold tracking-wider text-white uppercase shadow-lg">
                     Popular
@@ -801,7 +862,7 @@ export default function HomeContent() {
 
             {/* Enterprise */}
             <StaggerItem>
-              <div className="card rounded-[24px] border-2 border-[var(--border)] bg-[var(--bg-card)] p-8 text-center">
+              <div className="card rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-8 text-center shadow-apple">
                 <h3 className="mb-2 font-display text-2xl font-[800] text-[var(--text-main)]">
                   Enterprise
                 </h3>
@@ -858,9 +919,9 @@ export default function HomeContent() {
           <Container>
             <div className="mx-auto max-w-4xl text-center">
               <h2 className="mb-8 font-display text-5xl leading-tight font-[800] text-white lg:text-7xl">
-                {locale === "bg"
-                  ? "ГОТОВ ЛИ СИ ДА АВТОМАТИЗИРАШ?"
-                  : "READY TO AUTOMATE YOUR BUSINESS?"}
+                <TextReveal 
+                  text={locale === "bg" ? "ГОТОВ ЛИ СИ ДА АВТОМАТИЗИРАШ?" : "READY TO AUTOMATE YOUR BUSINESS?"}
+                />
               </h2>
               <p className="mx-auto mb-12 max-w-2xl text-2xl leading-relaxed font-medium text-white/90">
                 {locale === "bg"
@@ -869,27 +930,31 @@ export default function HomeContent() {
               </p>
               <div className="flex flex-wrap justify-center gap-6">
                 <Link href="/contact?source=final-cta-home&offer=first-order-bonus&intent=consultation&pack=grow">
-                  <Button
-                    variant="primary"
-                    size="lg"
-                    className="h-auto rounded-xl border-none bg-white px-10 py-5 text-xl font-[800] text-[var(--text-main)] shadow-2xl transition-transform hover:-translate-y-1 hover:bg-white/90"
-                  >
-                    {locale === "bg"
-                      ? "Заяви безплатна консултация"
-                      : "Request a free consultation"}
-                    <ArrowRight className="ml-2 h-6 w-6" />
-                  </Button>
+                  <Magnetic>
+                    <Button
+                      variant="primary"
+                      size="lg"
+                      className="h-auto rounded-xl border-none bg-white px-10 py-5 text-xl font-[800] text-[var(--text-main)] shadow-apple transition-transform hover:-translate-y-1 hover:bg-white/90"
+                    >
+                      {locale === "bg"
+                        ? "Заяви безплатна консултация"
+                        : "Request a free consultation"}
+                      <ArrowRight className="ml-2 h-6 w-6" />
+                    </Button>
+                  </Magnetic>
                 </Link>
                 <Link href="/demos">
-                  <Button
-                    variant="secondary"
-                    size="lg"
-                    className="h-auto rounded-xl border-2 border-white px-10 py-5 text-xl font-[800] text-white transition-colors hover:bg-white/10"
-                  >
-                    {locale === "bg"
-                      ? "Виж интерактивни демота"
-                      : "View interactive demos"}
-                  </Button>
+                  <Magnetic>
+                    <Button
+                      variant="secondary"
+                      size="lg"
+                      className="h-auto rounded-xl border-2 border-white px-10 py-5 text-xl font-[800] text-white transition-colors hover:bg-white/10"
+                    >
+                      {locale === "bg"
+                        ? "Виж интерактивни демота"
+                        : "View interactive demos"}
+                    </Button>
+                  </Magnetic>
                 </Link>
               </div>
             </div>
