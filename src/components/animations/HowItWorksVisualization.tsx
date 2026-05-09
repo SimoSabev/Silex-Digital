@@ -3,7 +3,14 @@
 import { useState, useEffect } from "react";
 import { useI18n, type Locale } from "@/lib/i18n";
 
-const STEPS = [
+type StepDef = {
+  icon: string;
+  color: string;
+  title: Record<Locale, string>;
+  detail: Record<Locale, string>;
+};
+
+const STEPS: readonly StepDef[] = [
   { icon: "💬", color: "blue",   title: { bg: "Клиентът пише",           en: "Client reaches out"       }, detail: { bg: "Съобщение, обаждане, форма или WhatsApp", en: "Message, call, form or WhatsApp"              } },
   { icon: "⚡", color: "blue",   title: { bg: "Системата улавя",          en: "System captures it"       }, detail: { bg: "Автоматично разпознаване на намерение",  en: "Automatic intent recognition"                 } },
   { icon: "🤖", color: "green",  title: { bg: "Мигновен отговор",         en: "Instant reply"            }, detail: { bg: "Персонализиран AI отговор за секунди",   en: "Personalised AI reply in seconds"             } },
@@ -21,18 +28,23 @@ const ringColor: Record<string, string> = {
 export default function HowItWorksVisualization() {
   const { locale } = useI18n();
   const [active, setActive] = useState(0);
+  const [resetKey, setResetKey] = useState(0);
 
   useEffect(() => {
     const t = setInterval(() => setActive((p) => (p + 1) % STEPS.length), 2000);
     return () => clearInterval(t);
-  }, []);
+  }, [resetKey]);
 
   return (
     <div className="space-y-2">
       {STEPS.map((step, i) => (
         <button
           key={i}
-          onClick={() => setActive(i)}
+          onClick={() => {
+            setActive(i);
+            setResetKey((k) => k + 1);
+          }}
+          aria-pressed={i === active}
           className={`w-full flex items-start gap-4 p-3 rounded-xl border text-left transition-all duration-400 ${
             i === active
               ? (ringColor[step.color] ?? ringColor.blue)
@@ -41,12 +53,12 @@ export default function HowItWorksVisualization() {
         >
           <span className="text-xl leading-none mt-0.5">{step.icon}</span>
           <div className="min-w-0">
-            <p className="font-semibold text-sm leading-snug">{step.title[locale as Locale]}</p>
+            <p className="font-semibold text-sm leading-snug">{step.title[locale]}</p>
             {i === active && (
-              <p className="text-xs mt-0.5 opacity-80 leading-snug">{step.detail[locale as Locale]}</p>
+              <p className="text-xs mt-0.5 opacity-80 leading-snug">{step.detail[locale]}</p>
             )}
           </div>
-          <span className="ml-auto text-xs font-bold opacity-50 shrink-0 mt-0.5">{i + 1}/6</span>
+          <span className="ml-auto text-xs font-bold opacity-50 shrink-0 mt-0.5">{i + 1}/{STEPS.length}</span>
         </button>
       ))}
       <p className="text-center text-xs text-[var(--text-muted)] pt-2 font-medium">
