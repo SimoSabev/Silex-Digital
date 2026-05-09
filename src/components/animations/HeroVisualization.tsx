@@ -200,6 +200,21 @@ export default function HeroVisualization() {
       cancelAnimationFrame(animId);
       observer.disconnect();
       window.removeEventListener("resize", onResize);
+
+      // Dispose geometries and materials to free GPU memory
+      geo.dispose();
+      (points.material as THREE.PointsMaterial).dispose();
+      centerMesh.geometry.dispose();
+      (centerMesh.material as THREE.MeshPhongMaterial).dispose();
+      inputMeshes.forEach((mesh) => {
+        mesh.geometry.dispose();
+        (mesh.material as THREE.MeshPhongMaterial).dispose();
+      });
+      outputMeshes.forEach((mesh) => {
+        mesh.geometry.dispose();
+        (mesh.material as THREE.MeshPhongMaterial).dispose();
+      });
+
       renderer.dispose();
       if (mount.contains(renderer.domElement)) mount.removeChild(renderer.domElement);
     };
