@@ -67,9 +67,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         type={type}
         className={`${base} ${variants[variant]} ${sizes[size]} ${fullWidth ? "w-full" : ""} ${className}`}
         disabled={isDisabled}
-        whileHover={undefined}
-        whileTap={!isDisabled ? { scale: 0.98 } : undefined}
-        transition={{ type: "spring", stiffness: 320, damping: 24 }}
+        whileHover={!isDisabled ? { scale: 1.03 } : undefined}
+        whileTap={!isDisabled ? { scale: 0.97 } : undefined}
+        transition={{ type: "spring", stiffness: 400, damping: 25 }}
         {...props}
       >
         {/* Shimmer overlay */}

@@ -74,7 +74,7 @@ export default function Navbar() {
       >
         <div className={`w-full max-w-7xl transition-all duration-500 flex h-[72px] items-center justify-between gap-6 ${
           isScrolled 
-            ? "px-6 bg-[var(--bg-card)]/80 backdrop-blur-xl border border-[var(--border)] rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.08)]" 
+            ? "px-6 bg-[var(--bg-card)]/80 backdrop-blur-xl border border-[var(--border)] rounded-full shadow-apple" 
             : "px-6 sm:px-8 border-b border-transparent"
         }`}>
 

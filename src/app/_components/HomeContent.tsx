@@ -197,7 +197,7 @@ export default function HomeContent() {
 
                 <AnimatedSection delay={0.1}>
                   <h1 className="mb-6 font-display text-[48px] leading-[1.1] font-[800] tracking-tight lg:text-[72px]">
-                    <span className="text-gradient-hero">
+                    <span className="text-gradient-hero block">
                       <TextReveal
                         text={locale === "bg" ? "РАБОТИ КАТО ИМАШ 10 ЕКСТРИ СЛУЖИТЕЛИ" : "WORK LIKE YOU HAVE 10 EXTRA EMPLOYEES"}
                         delay={0.1}

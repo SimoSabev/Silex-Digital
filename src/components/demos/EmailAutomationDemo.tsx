@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type ReactElement } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, MessageCircle, Smartphone, AtSign, Bot, Database, Server, RefreshCw, CheckCircle2, Mail, Send, Check } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
@@ -16,7 +16,7 @@ type Message = {
   status: "falling" | "processing" | "done";
 };
 
-const CHANNELS: Record<Source, { icon: JSX.Element; bgName: string; enName: string; borderColor: string; bgColor: string; activeColor: string }> = {
+const CHANNELS: Record<Source, { icon: ReactElement; bgName: string; enName: string; borderColor: string; bgColor: string; activeColor: string }> = {
   viber: { icon: <Smartphone size={20} />, bgName: "Viber", enName: "Viber", borderColor: "border-purple-500/30", bgColor: "bg-purple-500/10", activeColor: "bg-purple-500" },
   messenger: { icon: <MessageCircle size={20} />, bgName: "Messenger", enName: "Messenger", borderColor: "border-blue-500/30", bgColor: "bg-blue-500/10", activeColor: "bg-blue-500" },
   whatsapp: { icon: <MessageCircle size={20} />, bgName: "WhatsApp", enName: "WhatsApp", borderColor: "border-green-500/30", bgColor: "bg-green-500/10", activeColor: "bg-green-500" },
@@ -75,7 +75,7 @@ export default function EmailAutomationDemo() {
     setMessages([]);
     setOrders([]);
     setProcessingMsg(null);
-    void trackEvent("simulation_started", { sources: activeSources });
+    void trackEvent("simulation_started", { sources: activeSources.join(",") });
 
     let msgCount = 0;
     const totalMessagesToSimulate = activeSources.length * 2; // e.g. 6 messages if 3 sources
@@ -100,8 +100,9 @@ export default function EmailAutomationDemo() {
 
       // Pick a random message from the pool
       const randomMsgTemp = messagePool[Math.floor(Math.random() * messagePool.length)];
+      if (!randomMsgTemp) return;
       const newId = `msg-${Date.now()}-${msgCount}`;
-      
+
       const newMsg: Message = {
         id: newId,
         source: randomMsgTemp.source,
@@ -120,7 +121,7 @@ export default function EmailAutomationDemo() {
         // Move from processing to done
         setTimeout(() => {
           setProcessingMsg(null);
-          setOrders(prev => [{ ...newMsg, status: "done" }, ...prev].slice(0, 5)); // Keep only latest 5 visually
+          setOrders(prev => [{ ...newMsg, status: "done" as const }, ...prev].slice(0, 5)); // Keep only latest 5 visually
         }, 1200);
 
       }, 1500); // Time it takes to fall into AI node

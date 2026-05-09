@@ -31,7 +31,7 @@ export default function AnimatedSection({
       opacity: 1,
       x: 0,
       y: 0,
-      transition: { duration: 0.6, ease: [0.25, 0.4, 0.25, 1], delay },
+      transition: { type: "spring", stiffness: 300, damping: 25, mass: 1, bounce: 0, delay },
     },
   };
 
@@ -92,7 +92,7 @@ export function StaggerItem({
           opacity: 1,
           x: 0,
           y: 0,
-          transition: { duration: 0.6, ease: [0.25, 0.4, 0.25, 1] },
+          transition: { type: "spring", stiffness: 300, damping: 25, mass: 1, bounce: 0 },
         },
       }}
       className={className}

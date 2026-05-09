@@ -1,20 +1,24 @@
 import "@/styles/globals.css";
-import "@fontsource/space-grotesk/400.css";
-import "@fontsource/space-grotesk/500.css";
-import "@fontsource/space-grotesk/600.css";
-import "@fontsource/space-grotesk/700.css";
 
 import { type Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, Lora, JetBrains_Mono } from "next/font/google";
 
 import { I18nProvider } from "@/lib/i18n";
 import { ThemeProvider } from "@/lib/theme";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import SmoothScroll from "@/components/layout/SmoothScroll";
+import PremiumHybridBackground from "@/components/ui/PremiumHybridBackground";
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
   variable: "--font-body",
+  display: "swap",
+});
+
+const lora = Lora({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -91,16 +95,18 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="bg" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="bg" className={`${inter.variable} ${lora.variable} ${jetbrainsMono.variable}`}>
       <body className="font-body flex min-h-dvh flex-col antialiased bg-[var(--bg-page)] text-[var(--text-main)]">
-        <div className="bg-noise" aria-hidden="true" />
-        <ThemeProvider>
-          <I18nProvider>
-            <Navbar />
-            <main className="w-full grow">{children}</main>
-            <Footer />
-          </I18nProvider>
-        </ThemeProvider>
+        <SmoothScroll>
+          <PremiumHybridBackground />
+          <ThemeProvider>
+            <I18nProvider>
+              <Navbar />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </I18nProvider>
+          </ThemeProvider>
+        </SmoothScroll>
       </body>
     </html>
   );
