@@ -1,9 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useI18n } from "@/lib/i18n";
-
-type Locale = "bg" | "en";
+import { useI18n, type Locale } from "@/lib/i18n";
 
 const SCENARIOS = [
   {
@@ -47,6 +45,7 @@ const stepColor: Record<string, string> = {
 export default function ProblemVisualization() {
   const { locale } = useI18n();
   const [activeIdx, setActiveIdx]       = useState(0);
+  const [cycleKey, setCycleKey]         = useState(0);
   const [visibleSteps, setVisibleSteps] = useState<number[]>([]);
 
   useEffect(() => {
@@ -56,11 +55,11 @@ export default function ProblemVisualization() {
       setTimeout(() => setVisibleSteps((prev) => [...prev, i]), step.delay),
     );
     const cycleTimer = setTimeout(
-      () => setActiveIdx((prev) => (prev + 1) % SCENARIOS.length),
+      () => { setActiveIdx((prev) => (prev + 1) % SCENARIOS.length); setCycleKey((k) => k + 1); },
       4600,
     );
     return () => { timers.forEach(clearTimeout); clearTimeout(cycleTimer); };
-  }, [activeIdx]);
+  }, [activeIdx, cycleKey]);
 
   const scenario = SCENARIOS[activeIdx]!;
 
@@ -71,7 +70,7 @@ export default function ProblemVisualization() {
         {SCENARIOS.map((s, i) => (
           <button
             key={s.id}
-            onClick={() => setActiveIdx(i)}
+            onClick={() => { setActiveIdx(i); setCycleKey((k) => k + 1); }}
             className={`text-xs px-3 py-1 rounded-full font-semibold transition-all ${
               i === activeIdx
                 ? "bg-red-500 text-white shadow-sm"
@@ -87,7 +86,7 @@ export default function ProblemVisualization() {
       <div className="space-y-3">
         {scenario.steps.map((step, i) => (
           <div
-            key={i}
+            key={`${activeIdx}-${i}`}
             className={`flex items-center gap-3 transition-all duration-500 ${
               visibleSteps.includes(i) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
             }`}
