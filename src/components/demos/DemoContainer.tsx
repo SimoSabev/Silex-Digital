@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { X, Maximize2, ArrowRight } from "lucide-react";
+import { X, Maximize2, ArrowRight, Share2, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "@/components/ui/Button";
 import { useI18n } from "@/lib/i18n";
@@ -33,6 +33,7 @@ export default function DemoContainer({
   const { locale } = useI18n();
   const [isExpanded, setIsExpanded] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => setMounted(true), []);
   
@@ -54,6 +55,13 @@ export default function DemoContainer({
       document.body.style.overflow = "";
     };
   }, [isExpanded]);
+
+  const handleShare = async () => {
+    const shareUrl = `${window.location.origin}/demos/${demoId ?? title.toLowerCase().replace(/\s+/g, "-")}`;
+    await navigator.clipboard.writeText(shareUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <>
@@ -169,6 +177,17 @@ export default function DemoContainer({
                    {locale === "bg" ? "Хареса ли ви резултатът?" : "Like what you see?"}
                 </p>
                 <div className="flex gap-4 w-full md:w-auto">
+                  <Button
+                    variant="ghost"
+                    onClick={handleShare}
+                    className="flex-1 md:flex-none flex items-center gap-2"
+                    title={locale === "bg" ? "Копирай линк за споделяне" : "Copy share link"}
+                  >
+                    {copied ? <Check className="h-4 w-4 text-green-500" /> : <Share2 className="h-4 w-4" />}
+                    {copied
+                      ? (locale === "bg" ? "Копирано!" : "Copied!")
+                      : (locale === "bg" ? "Сподели" : "Share")}
+                  </Button>
                   <Button
                     variant="ghost"
                     onClick={() => setIsExpanded(false)}
