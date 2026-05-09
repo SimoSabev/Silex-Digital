@@ -5,29 +5,29 @@ import DemoContainer from "@/components/demos/DemoContainer";
 import EmailAutomationDemo from "@/components/demos/EmailAutomationDemo";
 import LeadQualificationDemo from "@/components/demos/LeadQualificationDemo";
 import ChatbotDemo from "@/components/demos/ChatbotDemo";
-import { MessageSquare, Zap } from "lucide-react";
+import { MessageSquare, Zap, Bot } from "lucide-react";
 
 const DEMOS = {
   "email-automation": {
     title:       "Omnichannel automation demo — Silex Digital",
     description: "See how Silex Digital automates omnichannel workflows: Viber, Messenger and WhatsApp orders flow directly into your ERP.",
     heading:     "Omnichannel automation",
-    icon:        <MessageSquare className="h-6 w-6" />,
-    component:   <EmailAutomationDemo />,
+    Icon:        MessageSquare,
+    Component:   EmailAutomationDemo,
   },
   "lead-qualification": {
     title:       "AI lead qualification demo — Silex Digital",
     description: "Watch the AI score and prioritise your leads automatically, so your team focuses on the best opportunities.",
     heading:     "AI lead qualification",
-    icon:        <Zap className="h-6 w-6" />,
-    component:   <LeadQualificationDemo />,
+    Icon:        Zap,
+    Component:   LeadQualificationDemo,
   },
   chatbot: {
     title:       "AI chatbot demo — Silex Digital",
     description: "Try the virtual assistant that handles client inquiries 24/7 with instant, intelligent replies.",
     heading:     "AI chatbot",
-    icon:        <MessageSquare className="h-6 w-6" />,
-    component:   <ChatbotDemo />,
+    Icon:        Bot,
+    Component:   ChatbotDemo,
   },
 } as const;
 
@@ -55,7 +55,9 @@ export default async function DemoPage({
 }) {
   const { id } = await params;
   const demo = DEMOS[id as DemoId];
-  if (!demo) notFound();
+  if (!demo) return notFound();
+
+  const { Icon, Component, heading, description } = demo;
 
   return (
     <main className="min-h-screen bg-[var(--bg-page)] pt-24 pb-20">
@@ -66,20 +68,20 @@ export default async function DemoPage({
               Interactive Demo · Silex Digital
             </p>
             <h1 className="text-3xl font-bold text-[var(--text-main)] font-[family-name:var(--font-display)]">
-              {demo.heading}
+              {heading}
             </h1>
-            <p className="text-[var(--text-sub)] mt-2">{demo.description}</p>
+            <p className="text-[var(--text-sub)] mt-2">{description}</p>
           </div>
 
           <DemoContainer
             demoId={id}
-            title={demo.heading}
-            description={demo.description}
-            icon={demo.icon}
+            title={heading}
+            description={description}
+            icon={<Icon className="h-6 w-6" />}
             ctaText="Book this exact setup"
             ctaLink={`/contact?source=demo-share&demo=${id}`}
           >
-            {demo.component}
+            <Component />
           </DemoContainer>
 
           <div className="mt-10 text-center">
