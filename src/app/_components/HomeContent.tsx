@@ -245,7 +245,7 @@ export default function HomeContent() {
 
             {/* ── Full-width visualization ── */}
             <AnimatedSection delay={0.35}>
-              <div className="h-[480px] w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] shadow-apple-hover lg:h-[540px]">
+              <div className="h-[360px] w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] shadow-apple-hover sm:h-[420px] md:h-[480px] lg:h-[540px]">
                 <HeroVisualization />
               </div>
             </AnimatedSection>
@@ -310,10 +310,10 @@ export default function HomeContent() {
       </section>
 
       {/* Problem -> Solution */}
-      <section className="relative bg-[var(--bg-section)] py-[120px] lg:py-[160px]">
+      <section className="relative bg-[var(--bg-section)] py-16 md:py-[120px] lg:py-[160px]">
         <Container>
           {/* Section label */}
-          <AnimatedSection className="mb-16 text-center">
+          <AnimatedSection className="mb-10 text-center md:mb-16">
             <p className="font-display text-sm font-[700] tracking-[0.15em] text-[var(--text-muted)] uppercase">
               {locale === "bg" ? "Без автоматизация vs. С автоматизация" : "Without vs. With automation"}
             </p>
@@ -322,7 +322,7 @@ export default function HomeContent() {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_auto_1fr]">
             {/* Before */}
             <AnimatedSection direction="left">
-              <div className="h-full rounded-2xl border border-[var(--coral)]/20 bg-[var(--coral)]/5 p-8 shadow-apple lg:p-10">
+              <div className="h-full rounded-2xl border border-[var(--coral)]/20 bg-[var(--coral)]/5 p-5 shadow-apple sm:p-8 lg:p-10">
                 {/* Header */}
                 <div className="mb-8 flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-[24px] bg-[var(--coral)]/10">
@@ -368,7 +368,7 @@ export default function HomeContent() {
 
             {/* After */}
             <AnimatedSection direction="right">
-              <div className="h-full rounded-2xl border-2 border-[var(--lime)]/20 bg-[var(--lime)]/5 p-8 shadow-apple lg:p-10">
+              <div className="h-full rounded-2xl border-2 border-[var(--lime)]/20 bg-[var(--lime)]/5 p-5 shadow-apple sm:p-8 lg:p-10">
                 {/* Header */}
                 <div className="mb-8 flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-[24px] bg-[var(--lime)]/10">
@@ -430,7 +430,7 @@ export default function HomeContent() {
       </section>
 
       {/* Services */}
-      <section className="bg-transparent py-[120px] lg:py-[160px]">
+      <section className="bg-transparent py-16 md:py-[120px] lg:py-[160px]">
         <Container>
           <AnimatedSection className="mb-20 text-center">
             <div className="badge-neutral mb-6 inline-flex rounded-full border border-[var(--border)] px-3 py-1 text-sm font-bold tracking-wider uppercase">
@@ -501,9 +501,9 @@ export default function HomeContent() {
       </section>
 
       {/* Interactive Demo Preview */}
-      <section className="overflow-hidden border-y border-[var(--border)] bg-[var(--bg-section)] py-[120px] lg:py-[160px]">
+      <section className="overflow-hidden border-y border-[var(--border)] bg-[var(--bg-section)] py-16 md:py-[120px] lg:py-[160px]">
         <Container>
-          <div className="grid items-center gap-16 lg:grid-cols-2">
+          <div className="grid items-center gap-10 md:gap-16 lg:grid-cols-2">
             <AnimatedSection direction="left">
               <div className="badge-violet mb-6 inline-flex rounded-full border border-[var(--violet)]/20 bg-[var(--violet)]/10 px-3 py-1 text-sm font-bold tracking-wider text-[var(--violet)] uppercase">
                 {locale === "bg"

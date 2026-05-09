@@ -30,15 +30,16 @@ export default function Navbar() {
 
   useEffect(() => {
     if (isMobileMenuOpen) {
-       document.documentElement.style.overflow = "hidden";
-       document.body.style.overflow = "hidden";
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
+      document.documentElement.style.overflow = "hidden";
     } else {
-       document.documentElement.style.overflow = "";
-       document.body.style.overflow = "";
+      document.documentElement.style.paddingRight = "";
+      document.documentElement.style.overflow = "";
     }
-    return () => { 
-       document.documentElement.style.overflow = "";
-       document.body.style.overflow = ""; 
+    return () => {
+      document.documentElement.style.paddingRight = "";
+      document.documentElement.style.overflow = "";
     };
   }, [isMobileMenuOpen]);
 
@@ -222,10 +223,6 @@ export default function Navbar() {
                   <Sparkles size={18} />
                   {t("nav.getStarted") || t("common.contactUs")}
                 </Link>
-              </motion.div>
-
-              <motion.div variants={mobileLinkVariants} className="pt-8 flex items-center justify-center">
-                 <LanguageToggle />
               </motion.div>
 
             </div>

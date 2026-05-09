@@ -25,7 +25,9 @@
       "Bash(Get-ChildItem src/app -Recurse -Name -Filter \"page.tsx\")",
       "Bash(Select-Object -First 30)",
       "Bash(npm run *)",
-      "PowerShell(cmdkey *)"
+      "PowerShell(cmdkey *)",
+      "Bash(taskkill /F /IM node.exe)",
+      "PowerShell(Stop-Process *)"
     ]
   },
   "enableAllProjectMcpServers": true,

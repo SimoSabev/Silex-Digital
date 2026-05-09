@@ -172,7 +172,7 @@ export default function ServicesPage() {
       <section className="section bg-gradient-to-b from-[var(--violet)]/10 to-transparent pt-24 pb-20">
         <Container>
           <div className="mx-auto max-w-4xl text-center">
-            <h1 className="text-gradient-hero mb-6 font-display text-[48px] leading-tight font-bold md:text-[56px]">
+            <h1 className="text-gradient-hero mb-6 font-display text-3xl leading-tight font-bold sm:text-4xl md:text-[48px] lg:text-[56px]">
               {locale === "bg"
                 ? "Какво можем да автоматизираме"
                 : "What we can automate"}
@@ -189,59 +189,53 @@ export default function ServicesPage() {
       {/* Services Deep-Dives */}
       <section className="section">
         <Container>
-          <div className="space-y-32">
+          <div className="space-y-16 md:space-y-24 lg:space-y-32">
             {services.map((service, idx) => {
               const isEven = idx % 2 === 0;
               return (
                 <div
                   key={service.title.bg}
-                  className={`flex flex-col items-center gap-16 md:flex-row ${isEven ? "" : "md:flex-row-reverse"}`}
+                  className={`flex flex-col items-center gap-10 md:gap-16 md:flex-row ${isEven ? "" : "md:flex-row-reverse"}`}
                 >
-                  <div className="flex-1">
+                  <div className="flex-1 w-full">
                     <div
-                      className={`mb-8 flex h-32 w-32 items-center justify-center rounded-full ${service.iconBg}`}
+                      className={`mb-6 flex h-20 w-20 items-center justify-center rounded-full md:h-28 md:w-28 ${service.iconBg}`}
                     >
                       {service.icon}
                     </div>
-                    <h2 className="mb-4 font-display text-[40px] font-bold text-[var(--text-main)]">
+                    <h2 className="mb-4 font-display text-3xl font-bold text-[var(--text-main)] md:text-[40px]">
                       {service.title[locale]}
                     </h2>
-                    <p className="mb-8 font-body text-[18px] text-[var(--text-sub)]">
+                    <p className="mb-6 font-body text-base text-[var(--text-sub)] md:text-[18px]">
                       {service.description[locale]}
                     </p>
-                    <ul className="mb-8 space-y-4">
+                    <ul className="mb-8 space-y-3">
                       {service.features[locale].map((feature) => (
                         <li
                           key={feature}
-                          className="flex items-center gap-3 text-[18px] text-[var(--text-main)]"
+                          className="flex items-center gap-3 text-base text-[var(--text-main)] md:text-[18px]"
                         >
-                          <Check
-                            className="flex-shrink-0 text-[var(--lime)]"
-                            size={24}
-                          />
+                          <Check className="flex-shrink-0 text-[var(--lime)]" size={20} />
                           <span>{feature}</span>
                         </li>
                       ))}
                     </ul>
-                    <div className="flex items-center gap-6">
-                      <span
-                        className={`rounded-full px-4 py-2 text-sm font-bold ${service.badge}`}
-                      >
+                    <div className="flex flex-wrap items-center gap-4">
+                      <span className={`rounded-full px-4 py-2 text-sm font-bold ${service.badge}`}>
                         {service.price[locale]}
                       </span>
                       <Link
                         href={service.demo}
-                        className="flex items-center text-lg font-bold text-[var(--violet)] transition-opacity hover:opacity-80"
+                        className="flex items-center text-base font-bold text-[var(--violet)] transition-opacity hover:opacity-80 md:text-lg"
                       >
-                        {locale === "bg" ? "Научи повече" : "Learn more"}{" "}
-                        <ArrowRight className="ml-2 h-5 w-5" />
+                        {locale === "bg" ? "Научи повече" : "Learn more"}
+                        <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
                       </Link>
                     </div>
                   </div>
-                  <div className="w-full flex-1">
-                    {/* Visual Placeholder for the service */}
+                  <div className="w-full flex-1 md:max-w-[45%]">
                     <div
-                      className={`aspect-square w-full rounded-[24px] border-4 ${service.color} relative flex items-center justify-center overflow-hidden bg-[var(--bg-card)] p-12 shadow-xl`}
+                      className={`aspect-square w-full rounded-2xl border-4 ${service.color} relative flex items-center justify-center overflow-hidden bg-[var(--bg-card)] p-8 shadow-xl md:p-12`}
                     >
                       <div className="absolute inset-0 bg-gradient-to-tr from-transparent to-current opacity-5" />
                       {service.icon}
@@ -255,17 +249,17 @@ export default function ServicesPage() {
       </section>
 
       {/* Process Timeline */}
-      <section className="section relative overflow-hidden bg-[var(--bg-section)] py-32">
+      <section className="section relative overflow-hidden bg-[var(--bg-section)] py-16 md:py-24 lg:py-32">
         <Container>
-          <div className="mb-24 text-center">
-            <h2 className="mb-6 font-display text-4xl font-bold md:text-5xl">
+          <div className="mb-12 text-center md:mb-20">
+            <h2 className="mb-6 font-display text-3xl font-bold md:text-4xl lg:text-5xl">
               {locale === "bg" ? "Как работим" : "How we work"}
             </h2>
           </div>
 
-          <div className="relative flex flex-col items-start justify-between gap-12 md:flex-row md:gap-4">
+          <div className="relative flex flex-col items-start justify-between gap-10 md:flex-row md:gap-4">
             {/* Animated Line */}
-            <div className="absolute top-12 right-[10%] left-[10%] hidden h-2 md:block">
+            <div className="absolute top-10 right-[10%] left-[10%] hidden h-1.5 md:block">
               <div className="h-full w-full overflow-hidden rounded-full bg-[var(--border)]">
                 <motion.div
                   className="h-full bg-gradient-to-r from-[var(--violet)] to-[var(--coral)]"
@@ -280,15 +274,15 @@ export default function ServicesPage() {
             {processSteps.map((step, idx) => (
               <div
                 key={idx}
-                className="relative z-10 mx-auto flex max-w-xs flex-col items-center text-center"
+                className="relative z-10 mx-auto flex max-w-[200px] flex-col items-center text-center md:max-w-xs"
               >
-                <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full border-4 border-[var(--violet)] bg-transparent shadow-xl">
+                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full border-2 border-[var(--violet)] bg-transparent shadow-xl md:h-20 md:w-20 md:border-4">
                   {step.icon}
                 </div>
-                <h3 className="mb-4 font-display text-2xl font-bold">
+                <h3 className="mb-3 font-display text-lg font-bold md:text-2xl">
                   {step.title[locale]}
                 </h3>
-                <p className="text-lg text-[var(--text-sub)]">
+                <p className="text-sm text-[var(--text-sub)] md:text-base lg:text-lg">
                   {step.description[locale]}
                 </p>
               </div>
@@ -300,7 +294,7 @@ export default function ServicesPage() {
       {/* CTA Banner */}
       <section className="section py-24">
         <Container>
-          <div className="card-featured relative overflow-hidden rounded-[24px] bg-[var(--violet)] p-12 text-center text-white md:p-16">
+          <div className="card-featured relative overflow-hidden rounded-2xl bg-[var(--violet)] p-8 text-center text-white md:rounded-[24px] md:p-12 lg:p-16">
             <div className="absolute top-0 right-0 h-64 w-64 translate-x-1/2 -translate-y-1/2 rounded-full bg-white opacity-10 blur-3xl" />
             <h2 className="relative z-10 mb-6 font-display text-4xl font-bold md:text-5xl">
               {locale === "bg"

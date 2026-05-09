@@ -190,7 +190,7 @@ export default function CaseStudiesPage() {
                   </div>
                 </div>
 
-                <div className="flex w-full flex-col justify-between p-8 md:w-3/5 md:p-12">
+                <div className="flex w-full flex-col justify-between p-6 md:w-3/5 md:p-10 lg:p-12">
                   <div>
                     <div className="mb-6 flex items-center justify-between">
                       <h3 className="font-[family-name:var(--font-display)] text-3xl font-[700] text-[var(--text-main)]">
