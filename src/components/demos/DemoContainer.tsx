@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { X, Maximize2, ArrowRight, Share2, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -34,6 +34,7 @@ export default function DemoContainer({
   const [isExpanded, setIsExpanded] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [copied, setCopied] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => setMounted(true), []);
   
@@ -56,11 +57,18 @@ export default function DemoContainer({
     };
   }, [isExpanded]);
 
+  useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);
+
   const handleShare = async () => {
     const shareUrl = `${window.location.origin}/demos/${demoId ?? title.toLowerCase().replace(/\s+/g, "-")}`;
-    await navigator.clipboard.writeText(shareUrl);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // clipboard write failed silently (permission denied, non-HTTPS, iframe)
+    }
   };
 
   return (
@@ -154,9 +162,10 @@ export default function DemoContainer({
                 </div>
                 <button
                   onClick={() => setIsExpanded(false)}
+                  aria-label={locale === "bg" ? "Затвори" : "Close"}
                   className="rounded-full bg-[var(--bg-section)] p-3 text-[var(--text-sub)] transition-all hover:bg-[var(--violet)] hover:text-white"
                 >
-                  <X className="h-6 w-6" />
+                  <X className="h-5 w-5" />
                 </button>
               </div>
 
