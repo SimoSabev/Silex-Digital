@@ -37,7 +37,7 @@ export default function TextReveal({ text, className = "", delay = 0 }: TextReve
 
   return (
     <motion.span
-      className={`inline-flex flex-wrap ${className}`}
+      className={`flex flex-wrap justify-center ${className}`}
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"

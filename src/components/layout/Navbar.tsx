@@ -29,17 +29,13 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-      document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
-      document.documentElement.style.overflow = "hidden";
-    } else {
-      document.documentElement.style.paddingRight = "";
-      document.documentElement.style.overflow = "";
-    }
+    window.dispatchEvent(
+      new CustomEvent("silex-menu-toggle", { detail: { open: isMobileMenuOpen } })
+    );
     return () => {
-      document.documentElement.style.paddingRight = "";
-      document.documentElement.style.overflow = "";
+      window.dispatchEvent(
+        new CustomEvent("silex-menu-toggle", { detail: { open: false } })
+      );
     };
   }, [isMobileMenuOpen]);
 
@@ -150,26 +146,15 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile Toggle Button */}
-          <div className="flex shrink-0 items-center gap-3 lg:hidden z-60">
-            {!isMobileMenuOpen && (
-              <div className="bg-[var(--bg-section)]/50 rounded-full p-1 border border-[var(--border)]">
-                 <LanguageToggle />
-              </div>
-            )}
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              className={`relative flex h-10 w-10 items-center justify-center rounded-full border transition-colors z-[60] ${
-                isMobileMenuOpen 
-                  ? "bg-[var(--bg-section)] border-transparent text-[var(--text-main)]" 
-                  : "bg-gradient-to-r from-[var(--violet)] to-[var(--coral)] border-transparent text-white shadow-md"
-              }`}
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-            </motion.button>
-          </div>
+          {/* Mobile hamburger — only button, no language toggle here */}
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            className="relative z-[60] flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-transparent bg-gradient-to-r from-[var(--violet)] to-[var(--coral)] text-white shadow-md transition-colors lg:hidden"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </motion.button>
 
         </div>
       </motion.nav>
@@ -182,7 +167,7 @@ export default function Navbar() {
             initial="closed"
             animate="open"
             exit="closed"
-            className="fixed inset-0 z-[55] flex flex-col items-center justify-center bg-transparent/95 backdrop-blur-2xl lg:hidden"
+            className="fixed inset-0 z-[55] flex flex-col items-center justify-center overflow-hidden bg-[var(--bg-page)]/95 backdrop-blur-2xl lg:hidden"
           >
             {/* Ambient Background Glow in Mobile Menu */}
             <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-[var(--violet)]/10 rounded-full blur-[100px] pointer-events-none" />
@@ -223,6 +208,9 @@ export default function Navbar() {
                   <Sparkles size={18} />
                   {t("nav.getStarted") || t("common.contactUs")}
                 </Link>
+                <div className="flex justify-center pt-2">
+                  <LanguageToggle />
+                </div>
               </motion.div>
 
             </div>
