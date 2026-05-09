@@ -36,12 +36,12 @@ const HeroVisualization = dynamic(
 
 const ProblemVisualization = dynamic(
   () => import("@/components/animations/ProblemVisualization"),
-  { ssr: false },
+  { ssr: false, loading: () => <div className="min-h-[200px] rounded-2xl bg-red-50/60 dark:bg-red-950/20 animate-pulse" /> },
 );
 
 const HowItWorksVisualization = dynamic(
   () => import("@/components/animations/HowItWorksVisualization"),
-  { ssr: false },
+  { ssr: false, loading: () => <div className="min-h-[320px] rounded-xl animate-pulse bg-[var(--bg-card)]" /> },
 );
 
 const stats = [
