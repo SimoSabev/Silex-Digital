@@ -6,33 +6,36 @@ import { useI18n, type Locale } from "@/lib/i18n";
 const SCENARIOS = [
   {
     id: "message",
-    tab:   { bg: "Изпуснато съобщение", en: "Missed message" },
+    tab:   { bg: "Съобщение", en: "Message" },
     steps: [
-      { icon: "💬", delay: 0,    color: "slate",  label: { bg: 'Клиент: "Имате ли свободна дата?"', en: 'Client: "Do you have availability?"' } },
-      { icon: "⏳", delay: 900,  color: "yellow", label: { bg: "1 час... 3 часа... 5 часа без отговор", en: "1 hour… 3 hours… 5 hours with no reply" } },
-      { icon: "😤", delay: 1900, color: "red",    label: { bg: "Клиентът се обажда на конкурента", en: "Client calls your competitor" } },
-      { icon: "🏆", delay: 2900, color: "red",    label: { bg: "Конкурентът спечелва клиента", en: "Competitor wins the client" } },
+      { icon: "💬", color: "slate",  label: { bg: 'Клиент: "Имате ли свободна дата?"', en: 'Client: "Do you have availability?"' } },
+      { icon: "⏳", color: "yellow", label: { bg: "1 ч… 3 ч… 5 ч без отговор",         en: "1 hr… 3 hrs… 5 hrs with no reply"   } },
+      { icon: "😤", color: "red",    label: { bg: "Клиентът се обажда на конкурента",   en: "Client calls your competitor"       } },
+      { icon: "🏆", color: "red",    label: { bg: "Конкурентът спечелва клиента",       en: "Competitor wins the client"         } },
     ],
+    delay: 4600,
   },
   {
     id: "call",
-    tab:   { bg: "Пропуснато обаждане", en: "Missed call" },
+    tab:   { bg: "Обаждане", en: "Call" },
     steps: [
-      { icon: "📞", delay: 0,    color: "slate",  label: { bg: "Телефонът звъни...", en: "Phone is ringing…" } },
-      { icon: "🔕", delay: 900,  color: "yellow", label: { bg: "Пропуснато обаждане — пак и пак", en: "Missed call — again and again" } },
-      { icon: "📱", delay: 1900, color: "red",    label: { bg: "Клиентът пише на конкурента", en: "Client messages a competitor" } },
-      { icon: "💸", delay: 2900, color: "red",    label: { bg: "-1 клиент | -150 лв приход", en: "-1 client | -150 BGN revenue lost" } },
+      { icon: "📞", color: "slate",  label: { bg: "Телефонът звъни…",              en: "Phone is ringing…"             } },
+      { icon: "🔕", color: "yellow", label: { bg: "Пропуснато обаждане — отново",  en: "Missed call — again and again" } },
+      { icon: "📱", color: "red",    label: { bg: "Клиентът пише на конкурента",   en: "Client messages a competitor"  } },
+      { icon: "💸", color: "red",    label: { bg: "-1 клиент | -150 лв приход",    en: "-1 client | -150 BGN revenue"  } },
     ],
+    delay: 4600,
   },
   {
     id: "visitor",
-    tab:   { bg: "Изгубени посетители", en: "Lost visitors" },
+    tab:   { bg: "Посетители", en: "Visitors" },
     steps: [
-      { icon: "👥", delay: 0,    color: "slate",  label: { bg: "50 посетители идват на сайта", en: "50 visitors land on your site" } },
-      { icon: "🚶", delay: 900,  color: "yellow", label: { bg: "46 напускат без никакво действие", en: "46 leave without taking action" } },
-      { icon: "😔", delay: 1900, color: "red",    label: { bg: "92 % изчезват без лийд", en: "92 % vanish with no lead captured" } },
-      { icon: "💰", delay: 2900, color: "red",    label: { bg: "Пропуснат приход: ~690 лв / ден", en: "Missed revenue: ~690 BGN / day" } },
+      { icon: "👥", color: "slate",  label: { bg: "50 посетители на сайта",       en: "50 visitors land on site"       } },
+      { icon: "🚶", color: "yellow", label: { bg: "46 напускат без действие",      en: "46 leave without taking action" } },
+      { icon: "😔", color: "red",    label: { bg: "92 % без лийд",                en: "92 % vanish, no lead captured"  } },
+      { icon: "💰", color: "red",    label: { bg: "~690 лв / ден изгубен приход", en: "~690 BGN / day missed revenue"  } },
     ],
+    delay: 4600,
   },
 ] as const;
 
@@ -40,6 +43,12 @@ const stepColor: Record<string, string> = {
   slate:  "text-[var(--text-main)]",
   yellow: "text-yellow-600 dark:text-yellow-400",
   red:    "text-red-600 dark:text-red-400",
+};
+
+const stepBg: Record<string, string> = {
+  slate:  "bg-[var(--bg-card)]",
+  yellow: "bg-yellow-50 dark:bg-yellow-900/20",
+  red:    "bg-red-100/60 dark:bg-red-900/30",
 };
 
 export default function ProblemVisualization() {
@@ -51,12 +60,12 @@ export default function ProblemVisualization() {
   useEffect(() => {
     setVisibleSteps([]);
     const scenario = SCENARIOS[activeIdx]!;
-    const timers = scenario.steps.map((step, i) =>
-      setTimeout(() => setVisibleSteps((prev) => [...prev, i]), step.delay),
+    const timers = scenario.steps.map((_, i) =>
+      setTimeout(() => setVisibleSteps((prev) => [...prev, i]), i * 900),
     );
     const cycleTimer = setTimeout(
       () => { setActiveIdx((prev) => (prev + 1) % SCENARIOS.length); setCycleKey((k) => k + 1); },
-      4600,
+      scenario.delay,
     );
     return () => { timers.forEach(clearTimeout); clearTimeout(cycleTimer); };
   }, [activeIdx, cycleKey]);
@@ -64,17 +73,17 @@ export default function ProblemVisualization() {
   const scenario = SCENARIOS[activeIdx]!;
 
   return (
-    <div className="rounded-2xl border border-red-200 bg-red-50/60 dark:bg-red-950/20 dark:border-red-800/50 p-6 min-h-[200px]">
+    <div className="w-full rounded-xl border border-red-200 bg-red-50/50 dark:border-red-800/40 dark:bg-red-950/15 p-4">
       {/* Tab row */}
-      <div className="flex flex-wrap gap-2 mb-5">
+      <div className="mb-4 flex gap-1.5">
         {SCENARIOS.map((s, i) => (
           <button
             key={s.id}
             onClick={() => { setActiveIdx(i); setCycleKey((k) => k + 1); }}
-            className={`text-xs px-3 py-1 rounded-full font-semibold transition-all ${
+            className={`flex-1 rounded-lg px-2 py-1.5 text-xs font-semibold transition-all ${
               i === activeIdx
                 ? "bg-red-500 text-white shadow-sm"
-                : "bg-red-100 text-red-600 dark:bg-red-900/40 dark:text-red-300 hover:bg-red-200"
+                : "bg-red-100/80 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-300 dark:hover:bg-red-900/50"
             }`}
           >
             {s.tab[locale as Locale]}
@@ -83,16 +92,16 @@ export default function ProblemVisualization() {
       </div>
 
       {/* Steps */}
-      <div className="space-y-3">
+      <div className="space-y-2">
         {scenario.steps.map((step, i) => (
           <div
             key={`${activeIdx}-${i}`}
-            className={`flex items-center gap-3 transition-all duration-500 ${
+            className={`flex items-center gap-3 rounded-lg border border-transparent p-2.5 transition-all duration-500 ${stepBg[step.color]} ${
               visibleSteps.includes(i) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
             }`}
           >
-            <span className="text-xl leading-none">{step.icon}</span>
-            <span className={`text-sm font-medium ${stepColor[step.color] ?? stepColor.slate}`}>
+            <span className="flex-none text-lg leading-none">{step.icon}</span>
+            <span className={`text-xs font-medium leading-snug ${stepColor[step.color] ?? stepColor.slate}`}>
               {step.label[locale as Locale]}
             </span>
           </div>

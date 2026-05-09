@@ -264,7 +264,7 @@ export default function HomeContent() {
 
               {/* Right: Three.js visualization */}
               <AnimatedSection delay={0.2} direction="right" className="hidden lg:block">
-                <div className="h-[480px] rounded-2xl overflow-hidden bg-[var(--bg-card)] border border-[var(--border)] shadow-apple-hover">
+                <div className="h-[520px] w-full rounded-2xl overflow-hidden bg-[var(--bg-card)] border border-[var(--border)] shadow-apple-hover">
                   <HeroVisualization />
                 </div>
               </AnimatedSection>
@@ -319,7 +319,7 @@ export default function HomeContent() {
             </p>
           </AnimatedSection>
 
-          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-[1fr_auto_1fr]">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_auto_1fr]">
             {/* Before */}
             <AnimatedSection direction="left">
               <div className="h-full rounded-2xl border border-[var(--coral)]/20 bg-[var(--coral)]/5 p-8 shadow-apple lg:p-10">
@@ -402,9 +402,9 @@ export default function HomeContent() {
       </section>
 
       {/* How It Works */}
-      <section className="bg-transparent py-[80px] lg:py-[100px]">
+      <section className="bg-transparent py-[80px] lg:py-[120px]">
         <Container>
-          <div className="mx-auto max-w-5xl grid items-start gap-16 lg:grid-cols-2">
+          <div className="grid items-start gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
             <AnimatedSection direction="left">
               <div className="badge-lime mb-6 inline-flex rounded-full border border-[var(--lime)]/20 bg-[var(--lime)]/10 px-3 py-1 text-sm font-bold tracking-wider text-[var(--lime)] uppercase">
                 {locale === "bg" ? "Как работи" : "How it works"}
@@ -422,7 +422,7 @@ export default function HomeContent() {
                   : "The platform captures every interaction, replies instantly and sends you a notification — you just confirm the booking."}
               </p>
             </AnimatedSection>
-            <AnimatedSection direction="right">
+            <AnimatedSection direction="right" className="lg:pt-2">
               <HowItWorksVisualization />
             </AnimatedSection>
           </div>

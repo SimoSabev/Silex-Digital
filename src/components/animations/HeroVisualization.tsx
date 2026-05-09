@@ -1,224 +1,284 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import * as THREE from "three";
+import { useEffect, useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const INPUT_NODES = [
-  { label: "Chat",      color: 0x4A90E2 },
-  { label: "Email",     color: 0xF5A623 },
-  { label: "SMS",       color: 0x50E3C2 },
-  { label: "WhatsApp",  color: 0x7ED321 },
-  { label: "Form",      color: 0xB8E986 },
+type Message = {
+  id: number;
+  name: string;
+  channel: string;
+  channelColor: string;
+  text: string;
+  replyTime: string;
+  reply: string;
+};
+
+const MESSAGES: Message[] = [
+  {
+    id: 1,
+    name: "Maria K.",
+    channel: "WhatsApp",
+    channelColor: "#25D366",
+    text: "Имате ли свободна дата за утре?",
+    replyTime: "0.8s",
+    reply: "Здравейте, Maria! Да, имаме свободни часове от 10:00 до 15:00. Кое ви е най-удобно?",
+  },
+  {
+    id: 2,
+    name: "Stefan P.",
+    channel: "Email",
+    channelColor: "#4A90E2",
+    text: "Колко струва стандартният пакет?",
+    replyTime: "1.1s",
+    reply: "Здравейте, Stefan! Стандартният Grow пакет е 599 лв/мес и включва AI агент + автоматизации.",
+  },
+  {
+    id: 3,
+    name: "Elena T.",
+    channel: "Form",
+    channelColor: "#B8E986",
+    text: "Искам демо на вашата платформа.",
+    replyTime: "0.6s",
+    reply: "Страхотно, Elena! Резервирах ви 30-минутна демонстрация за утре в 11:00. Очаквайте потвърждение!",
+  },
 ];
 
-const PARTICLE_COUNT = 280;
+const NOTIFICATIONS = [
+  { icon: "💰", text: "Нова резервация потвърдена", color: "#4ADE80" },
+  { icon: "📊", text: "+3 нови лийда днес",          color: "#818CF8" },
+  { icon: "⚡", text: "Workflow изпълнен за 0.6s",   color: "#CCFF00" },
+  { icon: "🔔", text: "Report изпратен на клиента",  color: "#FB923C" },
+];
+
+const STATS = [
+  { label: "Avg reply", value: "0.8s" },
+  { label: "Today leads", value: "24" },
+  { label: "Conversion", value: "94%" },
+];
+
+type Phase = "incoming" | "typing" | "replied" | "done";
 
 export default function HeroVisualization() {
-  const mountRef = useRef<HTMLDivElement>(null);
+  const [msgIndex, setMsgIndex] = useState(0);
+  const [phase, setPhase] = useState<Phase>("incoming");
+  const [notifIndex, setNotifIndex] = useState<number | null>(null);
+  const [statVisible, setStatVisible] = useState(false);
+  const cycleRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const notifRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const msg = MESSAGES[msgIndex]!;
 
   useEffect(() => {
-    const mount = mountRef.current;
-    if (!mount) return;
-
-    const w = mount.clientWidth;
-    const h = mount.clientHeight;
-
-    // ── Renderer ──────────────────────────────────────────────────────────
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(w, h);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    mount.appendChild(renderer.domElement);
-
-    // ── Scene / Camera ────────────────────────────────────────────────────
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, w / h, 0.1, 100);
-    camera.position.set(0, 0, 25);
-
-    // ── Lights ────────────────────────────────────────────────────────────
-    scene.add(new THREE.AmbientLight(0x888888));
-    const pl1 = new THREE.PointLight(0x4A90E2, 1.5);
-    pl1.position.set(0, 0, 15);
-    scene.add(pl1);
-    const pl2 = new THREE.PointLight(0xF5A623, 1);
-    pl2.position.set(15, 15, 5);
-    scene.add(pl2);
-
-    // ── Central node ──────────────────────────────────────────────────────
-    const centerMesh = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(2.8, 1),
-      new THREE.MeshPhongMaterial({
-        color: 0x1a1a2e,
-        emissive: 0x4A90E2,
-        emissiveIntensity: 0.6,
-        transparent: true,
-        opacity: 0.92,
-      }),
-    );
-    scene.add(centerMesh);
-
-    // ── Input nodes ───────────────────────────────────────────────────────
-    const INPUT_RADIUS = 13;
-    const inputMeshes = INPUT_NODES.map((node, i) => {
-      const angle = (i / INPUT_NODES.length) * Math.PI * 2 - Math.PI / 2;
-      const mesh = new THREE.Mesh(
-        new THREE.SphereGeometry(1.1, 16, 16),
-        new THREE.MeshPhongMaterial({
-          color: node.color,
-          emissive: node.color,
-          emissiveIntensity: 0.4,
-        }),
-      );
-      mesh.position.set(
-        Math.cos(angle) * INPUT_RADIUS,
-        Math.sin(angle) * INPUT_RADIUS,
-        0,
-      );
-      scene.add(mesh);
-      return mesh;
-    });
-
-    // ── Output nodes ──────────────────────────────────────────────────────
-    const OUTPUT_COLOR = 0x2BAB66;
-    const OUTPUT_RADIUS = 11;
-    const outputMeshes = [0, 1, 2].map((i) => {
-      const angle = (i / 3) * Math.PI * 2 + Math.PI / 6;
-      const mesh = new THREE.Mesh(
-        new THREE.SphereGeometry(0.9, 16, 16),
-        new THREE.MeshPhongMaterial({
-          color: OUTPUT_COLOR,
-          emissive: OUTPUT_COLOR,
-          emissiveIntensity: 0.5,
-        }),
-      );
-      mesh.position.set(
-        Math.cos(angle) * OUTPUT_RADIUS,
-        Math.sin(angle) * OUTPUT_RADIUS,
-        1,
-      );
-      scene.add(mesh);
-      return mesh;
-    });
-
-    // ── Particles ─────────────────────────────────────────────────────────
-    const positions = new Float32Array(PARTICLE_COUNT * 3);
-    const colors   = new Float32Array(PARTICLE_COUNT * 3);
-
-    type PData = { t: number; speed: number; srcIdx: number; dstIdx: number };
-    const pdata: PData[] = Array.from({ length: PARTICLE_COUNT }, () => ({
-      t:      Math.random(),
-      speed:  0.003 + Math.random() * 0.002,
-      srcIdx: Math.floor(Math.random() * INPUT_NODES.length),
-      dstIdx: Math.floor(Math.random() * 3),
-    }));
-
-    pdata.forEach((pd, i) => {
-      const c = new THREE.Color(INPUT_NODES[pd.srcIdx]!.color);
-      colors[i * 3]     = c.r;
-      colors[i * 3 + 1] = c.g;
-      colors[i * 3 + 2] = c.b;
-    });
-
-    const geo = new THREE.BufferGeometry();
-    const posAttr   = new THREE.BufferAttribute(positions, 3);
-    const colorAttr = new THREE.BufferAttribute(colors, 3);
-    geo.setAttribute("position", posAttr);
-    geo.setAttribute("color", colorAttr);
-
-    const points = new THREE.Points(
-      geo,
-      new THREE.PointsMaterial({ size: 0.22, vertexColors: true, transparent: true, opacity: 0.85 }),
-    );
-    scene.add(points);
-
-    // ── Animation ─────────────────────────────────────────────────────────
-    let animId: number;
-    let paused = false;
-
-    const tick = () => {
-      animId = requestAnimationFrame(tick);
-      if (paused) return;
-
-      centerMesh.rotation.y += 0.004;
-      centerMesh.rotation.x += 0.002;
-
-      pdata.forEach((pd, i) => {
-        pd.t += pd.speed;
-        if (pd.t >= 1) {
-          pd.t      = 0;
-          pd.srcIdx = Math.floor(Math.random() * INPUT_NODES.length);
-          pd.dstIdx = Math.floor(Math.random() * 3);
-          const c = new THREE.Color(INPUT_NODES[pd.srcIdx]!.color);
-          colorAttr.setXYZ(i, c.r, c.g, c.b);
-        }
-
-        const src = inputMeshes[pd.srcIdx]!.position;
-        const dst = outputMeshes[pd.dstIdx]!.position;
-        let x: number, y: number, z: number;
-
-        if (pd.t < 0.5) {
-          const lt = pd.t / 0.5;
-          x = src.x * (1 - lt);
-          y = src.y * (1 - lt);
-          z = src.z * (1 - lt);
-        } else {
-          const lt = (pd.t - 0.5) / 0.5;
-          x = dst.x * lt;
-          y = dst.y * lt;
-          z = dst.z * lt;
-        }
-        posAttr.setXYZ(i, x, y, z);
-      });
-
-      posAttr.needsUpdate   = true;
-      colorAttr.needsUpdate = true;
-
-      const pulse = 1 + Math.sin(Date.now() * 0.0025) * 0.04;
-      centerMesh.scale.setScalar(pulse);
-
-      renderer.render(scene, camera);
+    setStatVisible(true);
+    const runCycle = () => {
+      setPhase("incoming");
+      cycleRef.current = setTimeout(() => {
+        setPhase("typing");
+        cycleRef.current = setTimeout(() => {
+          setPhase("replied");
+          // Show a random notification
+          const ni = Math.floor(Math.random() * NOTIFICATIONS.length);
+          notifRef.current = setTimeout(() => {
+            setNotifIndex(ni);
+            notifRef.current = setTimeout(() => {
+              setNotifIndex(null);
+              cycleRef.current = setTimeout(() => {
+                setPhase("done");
+                cycleRef.current = setTimeout(() => {
+                  setMsgIndex((i) => (i + 1) % MESSAGES.length);
+                  runCycle();
+                }, 600);
+              }, 1200);
+            }, 2200);
+          }, 400);
+        }, 1800);
+      }, 1200);
     };
-    tick();
-
-    // ── Pause when off-screen ─────────────────────────────────────────────
-    const observer = new IntersectionObserver(
-      ([entry]) => { paused = !entry?.isIntersecting; },
-      { threshold: 0.1 },
-    );
-    observer.observe(mount);
-
-    // ── Resize ────────────────────────────────────────────────────────────
-    const onResize = () => {
-      const nw = mount.clientWidth;
-      const nh = mount.clientHeight;
-      camera.aspect = nw / nh;
-      camera.updateProjectionMatrix();
-      renderer.setSize(nw, nh);
-    };
-    window.addEventListener("resize", onResize);
-
+    runCycle();
     return () => {
-      cancelAnimationFrame(animId);
-      observer.disconnect();
-      window.removeEventListener("resize", onResize);
-
-      // Dispose geometries and materials to free GPU memory
-      geo.dispose();
-      (points.material as THREE.PointsMaterial).dispose();
-      centerMesh.geometry.dispose();
-      (centerMesh.material as THREE.MeshPhongMaterial).dispose();
-      inputMeshes.forEach((mesh) => {
-        mesh.geometry.dispose();
-        (mesh.material as THREE.MeshPhongMaterial).dispose();
-      });
-      outputMeshes.forEach((mesh) => {
-        mesh.geometry.dispose();
-        (mesh.material as THREE.MeshPhongMaterial).dispose();
-      });
-
-      renderer.dispose();
-      if (mount.contains(renderer.domElement)) mount.removeChild(renderer.domElement);
+      if (cycleRef.current) clearTimeout(cycleRef.current);
+      if (notifRef.current) clearTimeout(notifRef.current);
     };
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [msgIndex]);
 
-  return <div ref={mountRef} className="w-full h-full" aria-hidden="true" />;
+  const notif = notifIndex !== null ? NOTIFICATIONS[notifIndex] : null;
+
+  return (
+    <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-[#0A0A0F] p-4 md:p-6">
+      {/* Ambient glow blobs */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[#4A90E2]/10 blur-3xl" />
+        <div className="absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-[#CCFF00]/8 blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#818CF8]/8 blur-3xl" />
+      </div>
+
+      {/* Main card */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="relative z-10 w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/10 bg-[#111118]/90 shadow-2xl backdrop-blur-md"
+      >
+        {/* Header bar */}
+        <div className="flex items-center gap-3 border-b border-white/8 px-4 py-3">
+          <div className="flex gap-1.5">
+            <div className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
+            <div className="h-2.5 w-2.5 rounded-full bg-[#FFBD2E]" />
+            <div className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
+          </div>
+          <div className="flex flex-1 items-center justify-center gap-2">
+            <div className="flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-white/60">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#4ADE80] opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#4ADE80]" />
+              </span>
+              Silex AI · Live
+            </div>
+          </div>
+          <div className="text-xs text-white/20">v2.4</div>
+        </div>
+
+        {/* Message feed */}
+        <div className="px-4 py-4">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={msg.id}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.35 }}
+            >
+              {/* Incoming message */}
+              <div className="mb-3 flex items-start gap-3">
+                {/* Avatar */}
+                <div className="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-gradient-to-br from-[#4A90E2] to-[#818CF8] text-xs font-bold text-white">
+                  {msg.name[0]}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="mb-1 flex items-center gap-2">
+                    <span className="text-sm font-semibold text-white">{msg.name}</span>
+                    <span
+                      className="rounded-full px-2 py-0.5 text-[10px] font-bold text-black"
+                      style={{ backgroundColor: msg.channelColor }}
+                    >
+                      {msg.channel}
+                    </span>
+                    <span className="text-[10px] text-white/30">just now</span>
+                  </div>
+                  <div className="rounded-xl rounded-tl-sm bg-white/8 px-3 py-2 text-sm text-white/80">
+                    {msg.text}
+                  </div>
+                </div>
+              </div>
+
+              {/* AI response */}
+              <AnimatePresence>
+                {(phase === "typing" || phase === "replied") && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="ml-11 flex items-start gap-2"
+                  >
+                    <div className="min-w-0 flex-1">
+                      {phase === "typing" ? (
+                        <div className="rounded-xl rounded-tl-sm bg-[#CCFF00]/15 px-3 py-2.5 border border-[#CCFF00]/20">
+                          <div className="mb-1 flex items-center gap-1.5">
+                            <span className="text-[10px] font-bold text-[#CCFF00]">🤖 AI генерира отговор</span>
+                          </div>
+                          <div className="flex gap-1">
+                            {[0, 1, 2].map((i) => (
+                              <motion.div
+                                key={i}
+                                className="h-1.5 w-1.5 rounded-full bg-[#CCFF00]/70"
+                                animate={{ y: [0, -4, 0] }}
+                                transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15 }}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          className="rounded-xl rounded-tl-sm bg-[#CCFF00]/10 px-3 py-2.5 border border-[#CCFF00]/25"
+                        >
+                          <p className="mb-1.5 text-xs leading-relaxed text-white/80">{msg.reply}</p>
+                          <div className="flex items-center gap-1.5">
+                            <svg viewBox="0 0 12 12" className="h-3 w-3 text-[#4ADE80]" fill="none">
+                              <path d="M2 6l2.5 2.5L10 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                            <span className="text-[10px] font-semibold text-[#4ADE80]">
+                              Изпратен за {msg.replyTime}
+                            </span>
+                          </div>
+                        </motion.div>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Stats footer */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: statVisible ? 1 : 0 }}
+          className="flex items-center justify-around border-t border-white/8 px-4 py-3"
+        >
+          {STATS.map((stat) => (
+            <div key={stat.label} className="text-center">
+              <div className="text-base font-bold text-[#CCFF00]">{stat.value}</div>
+              <div className="text-[10px] text-white/35">{stat.label}</div>
+            </div>
+          ))}
+        </motion.div>
+      </motion.div>
+
+      {/* Floating notification */}
+      <AnimatePresence>
+        {notif && (
+          <motion.div
+            key={notifIndex}
+            initial={{ opacity: 0, x: 40, y: 0 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            exit={{ opacity: 0, x: 40 }}
+            transition={{ type: "spring", stiffness: 300, damping: 26 }}
+            className="absolute right-4 top-8 z-20 flex items-center gap-2.5 rounded-xl border border-white/10 bg-[#18181f]/95 px-3.5 py-2.5 shadow-xl backdrop-blur-md"
+          >
+            <span className="text-lg leading-none">{notif.icon}</span>
+            <span className="text-xs font-semibold text-white/80">{notif.text}</span>
+            <div
+              className="ml-1 h-1.5 w-1.5 rounded-full"
+              style={{ backgroundColor: notif.color }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Channel source pills — floating left */}
+      <div className="absolute left-3 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-2" aria-hidden="true">
+        {[
+          { label: "WhatsApp", color: "#25D366" },
+          { label: "Email",    color: "#4A90E2" },
+          { label: "SMS",      color: "#FB923C" },
+          { label: "Form",     color: "#818CF8" },
+        ].map((src, i) => (
+          <motion.div
+            key={src.label}
+            initial={{ opacity: 0, x: -16 }}
+            animate={{ opacity: 0.7, x: 0 }}
+            transition={{ delay: 0.4 + i * 0.1, duration: 0.4 }}
+            className="flex items-center gap-1.5 rounded-full border border-white/10 bg-[#111118]/80 px-2.5 py-1 backdrop-blur-sm"
+          >
+            <div className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: src.color }} />
+            <span className="text-[10px] font-medium text-white/50">{src.label}</span>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
 }
