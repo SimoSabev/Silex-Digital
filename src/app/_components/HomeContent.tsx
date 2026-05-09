@@ -179,96 +179,96 @@ export default function HomeContent() {
   return (
     <div className="min-h-dvh bg-[var(--bg-page)] font-body text-[var(--text-main)]">
       {/* Hero */}
-      <section className="relative overflow-hidden pt-20 pb-32 lg:pt-32 lg:pb-40">
-        {/* Ambient Aurora Gradient Mesh removed - Now handled by PremiumHybridBackground in layout */}
+      <section className="relative overflow-hidden pt-20 pb-24 lg:pt-32 lg:pb-32">
         <Container>
-          <div className="relative z-10 mx-auto max-w-6xl">
-            <div className="grid items-center gap-12 lg:grid-cols-2">
-              {/* Left: text */}
-              <div className="text-center lg:text-left">
-                <AnimatedSection delay={0}>
-                  <div className="badge-violet mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2 font-medium">
-                    <span className="animate-pulse-dot h-2 w-2 rounded-full bg-[var(--violet)]" />
-                    {locale === "bg"
-                      ? "Автоматизация за български бизнес"
-                      : "Automation for Bulgarian businesses"}
-                  </div>
-                </AnimatedSection>
+          <div className="relative z-10 mx-auto max-w-7xl">
 
-                <AnimatedSection delay={0.1}>
-                  <h1 className="mb-6 font-display text-[48px] leading-[1.1] font-[800] tracking-tight lg:text-[72px]">
-                    <span className="text-gradient-hero block">
-                      <TextReveal
-                        text={locale === "bg" ? "РАБОТИ КАТО ИМАШ 10 ЕКСТРИ СЛУЖИТЕЛИ" : "WORK LIKE YOU HAVE 10 EXTRA EMPLOYEES"}
-                        delay={0.1}
-                      />
-                    </span>
-                  </h1>
-                </AnimatedSection>
+            {/* ── Centered text block ── */}
+            <div className="mx-auto mb-12 max-w-4xl text-center">
+              <AnimatedSection delay={0}>
+                <div className="badge-violet mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2 font-medium">
+                  <span className="animate-pulse-dot h-2 w-2 rounded-full bg-[var(--violet)]" />
+                  {locale === "bg"
+                    ? "Автоматизация за български бизнес"
+                    : "Automation for Bulgarian businesses"}
+                </div>
+              </AnimatedSection>
 
-                <AnimatedSection delay={0.2}>
-                  <p className="mx-auto mb-12 max-w-[640px] text-[20px] leading-relaxed text-[var(--text-sub)] lg:mx-0">
-                    {locale === "bg"
-                      ? "Спести над 15 часа работа месечно с модерни автоматизации в сайта ти, така че бизнесът да работи за теб, дори когато си зает."
-                      : "Save over 15 hours of work per month with modern website automations, so your business keeps moving when you are busy."}
-                  </p>
-                </AnimatedSection>
+              <AnimatedSection delay={0.1}>
+                <h1 className="mb-6 font-display text-[48px] leading-[1.1] font-[800] tracking-tight lg:text-[72px]">
+                  <span className="text-gradient-hero block">
+                    <TextReveal
+                      text={locale === "bg" ? "РАБОТИ КАТО ИМАШ 10 ЕКСТРИ СЛУЖИТЕЛИ" : "WORK LIKE YOU HAVE 10 EXTRA EMPLOYEES"}
+                      delay={0.1}
+                    />
+                  </span>
+                </h1>
+              </AnimatedSection>
 
-                <AnimatedSection delay={0.3}>
-                  <div className="mb-20 flex flex-wrap justify-center gap-4 lg:justify-start">
-                    <Link href="/contact">
-                      <Magnetic>
-                        <Button
-                          variant="primary"
-                          size="lg"
-                          className="h-auto rounded-xl border-none bg-[var(--coral)] px-8 py-4 text-lg font-bold text-white shadow-[var(--coral)]/20 shadow-xl transition-transform hover:-translate-y-1 hover:bg-[var(--coral-hover)]"
-                        >
-                          <Zap className="h-5 w-5" />
-                          {locale === "bg" ? "Започни безплатно" : "Start for free"}
-                        </Button>
-                      </Magnetic>
-                    </Link>
-                    <Link href="/demos">
-                      <Magnetic>
-                        <Button
-                          variant="secondary"
-                          size="lg"
-                          className="h-auto rounded-xl border-2 border-[var(--violet)] px-8 py-4 text-lg font-bold text-[var(--violet)] transition-colors hover:bg-[var(--violet)]/10"
-                        >
-                          <Play className="h-5 w-5" />
-                          {locale === "bg" ? "Виж демо" : "View demo"}
-                        </Button>
-                      </Magnetic>
-                    </Link>
-                  </div>
-                </AnimatedSection>
+              <AnimatedSection delay={0.2}>
+                <p className="mx-auto mb-10 max-w-[600px] text-[20px] leading-relaxed text-[var(--text-sub)]">
+                  {locale === "bg"
+                    ? "Спести над 15 часа работа месечно с модерни автоматизации — бизнесът работи за теб, дори когато си зает."
+                    : "Save over 15 hours of work per month with modern website automations, so your business keeps moving when you are busy."}
+                </p>
+              </AnimatedSection>
 
-                <AnimatedSection delay={0.4}>
-                  <div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-3">
-                    {stats.map((stat) => (
-                      <div
-                        key={stat.value}
-                        className="card flex flex-col items-center rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-6 text-center shadow-apple transition-all duration-400 hover:shadow-apple-hover"
+              <AnimatedSection delay={0.3}>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <Link href="/contact">
+                    <Magnetic>
+                      <Button
+                        variant="primary"
+                        size="lg"
+                        className="h-auto rounded-xl border-none bg-[var(--coral)] px-8 py-4 text-lg font-bold text-white shadow-[var(--coral)]/20 shadow-xl transition-transform hover:-translate-y-1 hover:bg-[var(--coral-hover)]"
                       >
-                        <div className="mb-4 font-['JetBrains_Mono',monospace] text-[48px] leading-none font-bold text-[var(--violet)]">
-                          {stat.value}
-                        </div>
-                        <div className="font-display text-[16px] font-bold tracking-wide text-[var(--text-sub)] uppercase">
-                          {stat.label[locale]}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </AnimatedSection>
-              </div>
-
-              {/* Right: Three.js visualization */}
-              <AnimatedSection delay={0.2} direction="right" className="hidden lg:block">
-                <div className="h-[520px] w-full rounded-2xl overflow-hidden bg-[var(--bg-card)] border border-[var(--border)] shadow-apple-hover">
-                  <HeroVisualization />
+                        <Zap className="h-5 w-5" />
+                        {locale === "bg" ? "Започни безплатно" : "Start for free"}
+                      </Button>
+                    </Magnetic>
+                  </Link>
+                  <Link href="/demos">
+                    <Magnetic>
+                      <Button
+                        variant="secondary"
+                        size="lg"
+                        className="h-auto rounded-xl border-2 border-[var(--violet)] px-8 py-4 text-lg font-bold text-[var(--violet)] transition-colors hover:bg-[var(--violet)]/10"
+                      >
+                        <Play className="h-5 w-5" />
+                        {locale === "bg" ? "Виж демо" : "View demo"}
+                      </Button>
+                    </Magnetic>
+                  </Link>
                 </div>
               </AnimatedSection>
             </div>
+
+            {/* ── Full-width visualization ── */}
+            <AnimatedSection delay={0.35}>
+              <div className="h-[480px] w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] shadow-apple-hover lg:h-[540px]">
+                <HeroVisualization />
+              </div>
+            </AnimatedSection>
+
+            {/* ── Stats row ── */}
+            <AnimatedSection delay={0.5}>
+              <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+                {stats.map((stat) => (
+                  <div
+                    key={stat.value}
+                    className="card flex flex-col items-center rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-6 text-center shadow-apple transition-all duration-400 hover:shadow-apple-hover"
+                  >
+                    <div className="mb-3 font-['JetBrains_Mono',monospace] text-[48px] leading-none font-bold text-[var(--violet)]">
+                      {stat.value}
+                    </div>
+                    <div className="font-display text-[16px] font-bold tracking-wide text-[var(--text-sub)] uppercase">
+                      {stat.label[locale]}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </AnimatedSection>
+
           </div>
         </Container>
       </section>
