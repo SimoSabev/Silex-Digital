@@ -98,29 +98,29 @@ export default function DemoContainer({
           <p className="text-sm text-[var(--text-sub)]">{description}</p>
         </div>
 
-        {/* Pristine Abstract Visual Cover */}
-        <div className="flex-1 relative overflow-hidden flex items-center justify-center p-8 bg-[var(--bg-section)]">
-           {/* Decorative Background Mesh */}
-           <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(var(--text-muted) 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
-           
-           {/* Center Glowing Icon Presentation */}
+        {/* Preview Visual */}
+        <div className="relative h-52 overflow-hidden flex items-center justify-center bg-[var(--bg-section)]">
+           {/* Dot mesh */}
+           <div className="absolute inset-0 opacity-[0.15] pointer-events-none" style={{ backgroundImage: 'radial-gradient(var(--text-muted) 1px, transparent 1px)', backgroundSize: '18px 18px' }} />
+
+           {/* Gradient glow behind icon */}
+           <div className="absolute w-40 h-40 rounded-full bg-gradient-to-br from-[var(--violet)]/25 to-[var(--coral)]/15 blur-2xl" />
+
+           {/* Center icon with rings */}
            <div className="relative flex items-center justify-center group-hover:scale-110 transition-transform duration-700 ease-[0.16,1,0.3,1]">
-             {/* Pulse rings */}
-             <div className="absolute w-24 h-24 rounded-full border border-[var(--violet)]/30 animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite]" />
-             <div className="absolute w-32 h-32 rounded-full border border-[var(--coral)]/20 animate-[ping_4s_cubic-bezier(0,0,0.2,1)_infinite] animation-delay-1000" />
-             
-             {/* Core Icon Box */}
-             <div className="relative w-16 h-16 rounded-[24px] bg-gradient-to-br from-[var(--violet)] to-[var(--coral)] flex items-center justify-center text-white shadow-[0_0_40px_rgba(124,58,237,0.4)]">
+             <div className="absolute w-20 h-20 rounded-full border border-[var(--violet)]/25 animate-[ping_3.5s_cubic-bezier(0,0,0.2,1)_infinite]" />
+             <div className="absolute w-28 h-28 rounded-full border border-[var(--coral)]/15 animate-[ping_5s_cubic-bezier(0,0,0.2,1)_infinite]" style={{ animationDelay: '1s' }} />
+             <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--violet)] to-[var(--coral)] flex items-center justify-center text-white shadow-[0_0_32px_rgba(124,58,237,0.45)]">
                {icon}
              </div>
            </div>
 
-           {/* Floating "Click to interact" Pill */}
-           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-0 y-4 group-hover:opacity-100 group-hover:y-0 transition-all duration-500 ease-[0.16,1,0.3,1]">
-              <div className="flex items-center gap-2 bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-main)] px-5 py-2.5 rounded-full font-bold shadow-xl backdrop-blur-md">
-                <Maximize2 size={16} className="text-[var(--violet)]" />
-                {locale === "bg" ? "Интерактивно демо" : "Launch Demo"}
-              </div>
+           {/* Launch pill — visible always, brighter on hover */}
+           <div className="absolute bottom-5 left-1/2 -translate-x-1/2 opacity-60 group-hover:opacity-100 transition-opacity duration-300">
+             <div className="flex items-center gap-2 bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-main)] px-4 py-2 rounded-full text-sm font-semibold shadow-lg backdrop-blur-md whitespace-nowrap">
+               <Maximize2 size={14} className="text-[var(--violet)] shrink-0" />
+               {locale === "bg" ? "Интерактивно демо" : "Launch Demo"}
+             </div>
            </div>
         </div>
       </motion.div>
