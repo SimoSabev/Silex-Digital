@@ -87,7 +87,7 @@ export default function Navbar() {
               Silex
             </span>
             <span className="font-display bg-gradient-to-r from-[var(--violet)] via-[var(--coral)] to-[var(--lime)] bg-clip-text text-2xl font-[800] tracking-tight text-transparent bg-[length:200%_auto] animate-gradient-shift">
-              Digital
+              Brand
             </span>
           </Link>
 

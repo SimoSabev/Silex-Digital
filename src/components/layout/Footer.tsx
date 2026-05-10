@@ -66,7 +66,7 @@ export default function Footer() {
               >
                 <span className="text-[var(--text-main)]">Silex</span>
                 <span className="bg-gradient-to-r from-[var(--violet)] to-[var(--coral)] bg-clip-text text-transparent">
-                  Digital
+                  Brand
                 </span>
               </Link>
               <p className="font-inter text-sm leading-relaxed text-[var(--text-sub)]">
@@ -171,10 +171,10 @@ export default function Footer() {
                     <Mail size={14} className="text-[var(--violet)]" />
                   </div>
                   <a
-                    href="mailto:info@silex-digital.com"
+                    href="mailto:info@silexbrand.com"
                     className="transition-colors duration-300 group-hover:text-[var(--text-main)]"
                   >
-                    info@silex-digital.com
+                    info@silexbrand.com
                   </a>
                 </li>
               </ul>
@@ -187,7 +187,7 @@ export default function Footer() {
       <div className="w-full border-t border-[var(--border)] bg-transparent">
         <div className="mx-auto flex w-full flex-col items-center justify-between gap-4 px-4 py-6 sm:flex-row sm:px-6 sm:py-7 md:px-8 lg:px-12">
           <p className="font-inter text-sm text-[var(--text-muted)]">
-            © {new Date().getFullYear()} Silex Digital. {t("footer.rights")}
+            © {new Date().getFullYear()} SilexBrand. {t("footer.rights")}
           </p>
           <div className="flex gap-6">
             <Link

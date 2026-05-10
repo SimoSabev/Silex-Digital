@@ -41,8 +41,8 @@ const caseStudies = [
     ],
     testimonial: {
       text: {
-        bg: "Silex Digital промени начина по който работим. Вече се фокусираме върху стратегия, не върху имейли.",
-        en: "Silex Digital changed the way we work. We now focus on strategy, not emails.",
+        bg: "SilexBrand промени начина по който работим. Вече се фокусираме върху стратегия, не върху имейли.",
+        en: "SilexBrand changed the way we work. We now focus on strategy, not emails.",
       },
       author: "Иван Петров",
       role: {
@@ -271,8 +271,8 @@ export default function CaseStudiesPage() {
             </h2>
             <p className="mb-8 text-lg text-[var(--text-sub)]">
               {locale === "bg"
-                ? "Свържи се с нас днес и открий как Silex Digital може да трансформира твоя бизнес."
-                : "Contact us today and discover how Silex Digital can transform your business."}
+                ? "Свържи се с нас днес и открий как SilexBrand може да трансформира твоя бизнес."
+                : "Contact us today and discover how SilexBrand can transform your business."}
             </p>
             <Link
               href="/contact"

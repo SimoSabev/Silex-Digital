@@ -29,22 +29,35 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Silex Digital | Business Automation in Bulgaria",
+  title: {
+    default: "SilexBrand | Автоматизация на бизнеса в България",
+    template: "%s | SilexBrand",
+  },
   description:
-    "A modern automation platform that generates clients for Bulgarian businesses. Respond instantly, capture every lead, and grow automatically.",
+    "Автоматизирай бизнеса си с SilexBrand — AI чатбот, CRM интеграция, омниканална автоматизация и уеб разработка за малкия бизнес в България. Безплатна консултация.",
   keywords: [
-    "business automation",
-    "client generation",
+    "автоматизация на бизнеса",
+    "бизнес автоматизация България",
+    "AI чатбот за бизнес",
+    "CRM система малък бизнес",
+    "уеб сайт за малкия бизнес",
+    "автоматизация на процеси",
+    "дигитализация на бизнес",
+    "омниканална автоматизация",
+    "автоматизация маркетинг",
+    "уеб разработка България",
+    "чатбот за бизнес",
+    "интеграция Viber Messenger WhatsApp",
+    "генериране на лийдове",
+    "бизнес автоматизация София",
+    "бизнес автоматизация Варна",
     "business automation Bulgaria",
-    "automated response",
-    "CRM Bulgaria",
-    "online booking",
-    "chatbot for business",
-    "small business website",
-    "modern website",
-    "business automation Bulgaria",
+    "AI chatbot Bulgaria",
+    "web development Bulgaria",
+    "CRM integration Bulgaria",
+    "automation agency Bulgaria",
   ],
-  metadataBase: new URL("https://silex-digital.com"),
+  metadataBase: new URL("https://silexbrand.com"),
   alternates: {
     canonical: "/",
     languages: {
@@ -53,29 +66,29 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Silex Digital | Business Automation",
+    title: "SilexBrand | Автоматизация на бизнеса в България",
     description:
-      "Automation platform that turns every contact into a client. Three layers: Automation, CMS, Code.",
+      "AI чатбот, CRM интеграция и омниканална автоматизация за малкия бизнес. Отговаряй моментално, улавяй всеки клиент — 24/7.",
     type: "website",
-    locale: "en_US",
+    locale: "bg_BG",
     alternateLocale: ["en_US"],
-    siteName: "Silex Digital",
+    siteName: "SilexBrand",
     images: [
       {
         url: "/images/og-default.jpg",
         width: 1200,
         height: 630,
-        alt: "Silex Digital - Business Automation",
+        alt: "SilexBrand — Автоматизация на бизнеса в България",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Silex Digital | Business Automation",
+    title: "SilexBrand | Автоматизация на бизнеса в България",
     description:
-      "Modern automation for Bulgarian businesses. Respond instantly and capture every client.",
-    creator: "@silexdigital",
-    site: "@silexdigital",
+      "AI чатбот, CRM и омниканална автоматизация за малкия бизнес в България. Безплатна консултация.",
+    creator: "@silexbrand",
+    site: "@silexbrand",
   },
   icons: [{ rel: "icon", url: "/favicon.ico" }],
   robots: {
@@ -88,6 +101,9 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  verification: {
+    google: "your-google-site-verification-token",
   },
 };
 

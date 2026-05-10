@@ -9,21 +9,21 @@ import { MessageSquare, Zap, Bot } from "lucide-react";
 
 const DEMOS = {
   "email-automation": {
-    title:       "Omnichannel automation demo — Silex Digital",
-    description: "See how Silex Digital automates omnichannel workflows: Viber, Messenger and WhatsApp orders flow directly into your ERP.",
+    title:       "Omnichannel automation demo — SilexBrand",
+    description: "See how SilexBrand automates omnichannel workflows: Viber, Messenger and WhatsApp orders flow directly into your ERP.",
     heading:     "Omnichannel automation",
     Icon:        MessageSquare,
     Component:   EmailAutomationDemo,
   },
   "lead-qualification": {
-    title:       "AI lead qualification demo — Silex Digital",
+    title:       "AI lead qualification demo — SilexBrand",
     description: "Watch the AI score and prioritise your leads automatically, so your team focuses on the best opportunities.",
     heading:     "AI lead qualification",
     Icon:        Zap,
     Component:   LeadQualificationDemo,
   },
   chatbot: {
-    title:       "AI chatbot demo — Silex Digital",
+    title:       "AI chatbot demo — SilexBrand",
     description: "Try the virtual assistant that handles client inquiries 24/7 with instant, intelligent replies.",
     heading:     "AI chatbot",
     Icon:        Bot,
@@ -65,7 +65,7 @@ export default async function DemoPage({
         <div className="mx-auto max-w-3xl">
           <div className="mb-8 text-center">
             <p className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-2">
-              Interactive Demo · Silex Digital
+              Interactive Demo · SilexBrand
             </p>
             <h1 className="text-3xl font-bold text-[var(--text-main)] font-[family-name:var(--font-display)]">
               {heading}

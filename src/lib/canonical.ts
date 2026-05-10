@@ -34,7 +34,7 @@ export function getAlternateUrls(path = ''): Record<string, string> {
   
   return {
     bg: canonical,
-    en: canonical.replace('silex-digital.com', 'silex-digital.com/en'),
+    en: canonical.replace('silexbrand.com', 'silexbrand.com/en'),
   };
 }
 

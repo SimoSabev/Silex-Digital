@@ -1,4 +1,4 @@
--- Demo Data Schema for Silex Digital Platform
+-- Demo Data Schema for SilexBrand Platform
 -- This schema provides real, realistic data for all demo scenarios
 
 -- Demo Data Table

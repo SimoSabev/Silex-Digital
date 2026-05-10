@@ -464,7 +464,7 @@ export default function ContactContent() {
                   </h3>
                   <div className="space-y-4">
                     <a
-                      href="mailto:info@silex-digital.com"
+                      href="mailto:info@silexbrand.com"
                       className="group card flex items-center gap-4 bg-[var(--bg-card)] p-4"
                     >
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--violet)]/10 text-[var(--violet)] transition-colors group-hover:bg-[var(--violet)] group-hover:text-white">
@@ -475,7 +475,7 @@ export default function ContactContent() {
                           Email
                         </p>
                         <p className="text-sm font-medium text-[var(--text-main)]">
-                          info@silex-digital.com
+                          info@silexbrand.com
                         </p>
                       </div>
                     </a>

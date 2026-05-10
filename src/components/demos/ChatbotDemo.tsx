@@ -53,7 +53,7 @@ export default function ChatbotDemo() {
       setMessages([{
         id: "welcome",
         role: "bot",
-        text: locale === "bg" ? "Здравейте! Аз съм AI асистентът на Silex Digital. Напишете ми какво искате да автоматизирате (напр. 'Цена за чатбот' или 'Интеграция с CRM')." : "Hello! I am Silex Digital's AI assistant. Let me know what you want to automate (e.g., 'Chatbot pricing' or 'CRM Integration')."
+        text: locale === "bg" ? "Здравейте! Аз съм AI асистентът на SilexBrand. Напишете ми какво искате да автоматизирате (напр. 'Цена за чатбот' или 'Интеграция с CRM')." : "Hello! I am SilexBrand's AI assistant. Let me know what you want to automate (e.g., 'Chatbot pricing' or 'CRM Integration')."
       }]);
     }, 600);
   }, [trackEvent, locale]);

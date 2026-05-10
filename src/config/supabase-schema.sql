@@ -1,5 +1,5 @@
 -- ============================================
--- Silex Digital Lead Capture System
+-- SilexBrand Lead Capture System
 -- Supabase Database Schema
 -- ============================================
 -- Run this SQL in your Supabase SQL Editor to create the leads table

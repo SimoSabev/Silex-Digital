@@ -80,7 +80,7 @@ export default function AdminLoginPage() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="admin@silex-digital.com"
+                  placeholder="admin@silexbrand.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -124,7 +124,7 @@ export default function AdminLoginPage() {
 
         {/* Footer */}
         <p className="text-center text-sm text-muted-foreground mt-6">
-          © {new Date().getFullYear()} Silex Digital. All rights reserved.
+          © {new Date().getFullYear()} SilexBrand. All rights reserved.
         </p>
       </div>
     </div>

@@ -2,9 +2,16 @@ import { type Metadata } from "next";
 import HomeContent from "./_components/HomeContent";
 
 export const metadata: Metadata = {
-  title: "Silex Digital | AI and Automation for Micro Businesses in Varna",
+  title: "SilexBrand | Автоматизация на бизнеса в България — AI чатбот и CRM",
   description:
-    "Affordable AI and automation packages for micro businesses in Varna and the region. Website, light SEO, and light automation with a fast launch.",
+    "Спести над 15 часа на месец с AI автоматизация. Чатбот за бизнес, CRM интеграция, омниканални съобщения (Viber, Messenger, WhatsApp). Безплатна консултация за малкия бизнес в България.",
+  alternates: {
+    canonical: "/",
+    languages: {
+      "bg-BG": "/",
+      "en-US": "/en",
+    },
+  },
 };
 
 export default function HomePage() {

@@ -41,7 +41,7 @@ export default function TextReveal({ text, className = "", delay = 0 }: TextReve
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-50px" }}
+      viewport={{ once: true, amount: 0.1 }}
     >
       {words.map((word, index) => (
         <span key={index} className="overflow-hidden inline-block mr-[0.25em]">

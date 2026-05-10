@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
       await resend?.emails.send({
         from: FROM_EMAIL,
         to: data.email,
-        subject: 'Благодарим ви за вашето запитване | Silex Digital',
+        subject: 'Благодарим ви за вашето запитване | SilexBrand',
         html: createConfirmationEmail(data.name, data.email, data.projectType),
         text: createConfirmationEmailText(data.name, data.email, data.projectType),
       });

@@ -130,14 +130,14 @@ export function createConfirmationEmail(
       <p>Нашият екип ще прегледа вашето запитване и ще се свърже с вас в рамките на 24 работни часа.</p>
       <p>Ако имате въпроси или искате да добавите допълнителна информация, не се колебайте да ни пишете.</p>
       
-      <a href="mailto:info@silexdigital.com" class="button">Свържете се с нас</a>
+      <a href="mailto:info@silexbrand.com" class="button">Свържете се с нас</a>
     </div>
     <div class="footer">
-      <p><strong>Silex Digital</strong></p>
+      <p><strong>SilexBrand</strong></p>
       <p>Вашят надежден партньор за дигитални решения</p>
       <p>
-        <a href="https://silexdigital.com">Уебсайт</a> | 
-        <a href="mailto:info@silexdigital.com">Имейл</a>
+        <a href="https://silexbrand.com">Уебсайт</a> | 
+        <a href="mailto:info@silexbrand.com">Имейл</a>
       </p>
     </div>
   </div>
@@ -364,7 +364,7 @@ export function createNotificationEmail(lead: Lead): string {
       </div>
     </div>
     <div class="footer">
-      <p><strong>Silex Digital Lead Capture System</strong></p>
+      <p><strong>SilexBrand Lead Capture System</strong></p>
       <p>This email was automatically generated. Do not reply to this email.</p>
       <p style="font-size: 12px; margin-top: 16px;">
         Generated at ${new Date().toISOString()}
@@ -399,10 +399,10 @@ export function createConfirmationEmailText(
 
 Нашият екип ще прегледа вашето запитване и ще се свърже с вас в рамките на 24 работни часа.
 
-Ако имате въпроси или искате да добавите допълнителна информация, не се колебайте да ни пишете на info@silexdigital.com
+Ако имате въпроси или искате да добавите допълнителна информация, не се колебайте да ни пишете на info@silexbrand.com
 
 С уважение,
-Екипът на Silex Digital
+Екипът на SilexBrand
   `.trim();
 }
 
@@ -440,7 +440,7 @@ Reply to Lead: mailto:${lead.email}
 View in Supabase: https://supabase.com/dashboard/project/_/editor
 
 ---
-Silex Digital Lead Capture System
+SilexBrand Lead Capture System
 This email was automatically generated. Do not reply to this email.
 Generated at ${new Date().toISOString()}
   `.trim();

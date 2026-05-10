@@ -20,7 +20,7 @@ export default function AdminSettingsPage() {
       icon: User,
       items: [
         { label: 'Name', value: 'Admin User', type: 'text' },
-        { label: 'Email', value: 'admin@silex-digital.com', type: 'email' },
+        { label: 'Email', value: 'admin@silexbrand.com', type: 'email' },
       ],
     },
     {

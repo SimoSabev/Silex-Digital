@@ -1,43 +1,55 @@
 /**
- * SEO Configuration for Silex Digital
+ * SEO Configuration for SilexBrand
  * Automation Platform — Bulgarian Market
  */
 
 export const siteConfig = {
-  name: "Silex Digital",
-  title: "Silex Digital | Автоматизация на бизнеса в България",
+  name: "SilexBrand",
+  title: "SilexBrand | Автоматизация на бизнеса в България",
   description:
-    "Модерна платформа за автоматизация, която генерира клиенти за българския бизнес. Три слоя: Автоматизация, CMS, Код. Отговаряйте моментално, улавяйте всеки лийд.",
-  url: "https://silex-digital.com",
-  domain: "silex-digital.com",
+    "Автоматизирай бизнеса си с SilexBrand — AI чатбот, CRM интеграция, омниканална автоматизация и уеб разработка за малкия бизнес в България. Безплатна консултация.",
+  url: "https://silexbrand.com",
+  domain: "silexbrand.com",
   locale: "bg_BG",
   defaultImage: "/images/og-default.jpg",
 
   keywords: [
+    // BG Primary
     "автоматизация на бизнеса",
-    "генериране на клиенти",
     "бизнес автоматизация България",
-    "автоматичен отговор",
-    "CRM система България",
-    "онлайн резервация",
-    "чат бот за бизнес",
+    "AI чатбот за бизнес",
+    "CRM система малък бизнес",
     "уеб сайт за малкия бизнес",
-    "модерен уеб сайт България",
-    "бизнес софтуер България",
-    "дигитален маркетинг",
-    "лийд генериране",
+    "автоматизация на процеси",
+    "дигитализация на бизнес",
+    "омниканална автоматизация",
+    "автоматизация маркетинг",
+    "уеб разработка България",
+    "чатбот за бизнес",
+    "интеграция Viber Messenger WhatsApp",
+    "генериране на лийдове",
+    "бизнес автоматизация София",
+    "бизнес автоматизация Варна",
+    "автоматизация поръчки",
+    "автоматизация клиентско обслужване",
+    // EN Secondary
     "business automation Bulgaria",
-    "automated client capture",
+    "AI chatbot Bulgaria",
+    "web development Bulgaria",
+    "CRM integration Bulgaria",
+    "automation agency Bulgaria",
+    "small business automation",
+    "lead generation Bulgaria",
   ],
 
   social: {
-    facebook: "https://facebook.com/silexdigital",
-    linkedin: "https://linkedin.com/company/silexdigital",
-    instagram: "https://instagram.com/silexdigital",
+    facebook: "https://facebook.com/silexbrand",
+    linkedin: "https://linkedin.com/company/silexbrand",
+    instagram: "https://instagram.com/silexbrand",
   },
 
   contact: {
-    email: "info@silex-digital.com",
+    email: "info@silexbrand.com",
     phone: "+359 888 123 456",
     address: {
       streetAddress: "ул. Витоша 100",
@@ -48,74 +60,151 @@ export const siteConfig = {
   },
 
   business: {
-    name: "Silex Digital",
-    legalName: "Silex Digital EOOD",
+    name: "SilexBrand",
+    legalName: "SilexBrand EOOD",
     foundingDate: "2024",
     priceRange: "$$",
   },
 
   openGraph: {
     type: "website",
-    siteName: "Silex Digital",
+    siteName: "SilexBrand",
     locale: "bg_BG",
     alternateLocale: ["en_US"],
   },
 
   twitter: {
     card: "summary_large_image",
-    creator: "@silexdigital",
-    site: "@silexdigital",
+    creator: "@silexbrand",
+    site: "@silexbrand",
   },
 };
 
 export const pageSeo = {
   home: {
-    title: "Автоматизация на бизнеса | Silex Digital",
+    title: "SilexBrand | Автоматизация на бизнеса в България — AI чатбот и CRM",
     description:
-      "Платформа за автоматизация, която превръща всеки контакт в клиент. Три слоя: Автоматизация, CMS, Код.",
+      "Спести над 15 часа на месец с AI автоматизация. Чатбот за бизнес, CRM интеграция, омниканални съобщения (Viber, Messenger, WhatsApp). Безплатна консултация за малкия бизнес в България.",
     keywords: [
       "автоматизация на бизнеса",
-      "генериране на клиенти",
+      "AI чатбот за бизнес",
+      "CRM система малък бизнес",
       "бизнес автоматизация България",
+      "омниканална автоматизация",
+      "автоматизация Viber Messenger",
+      "дигитализация малък бизнес",
+      "уеб сайт за малкия бизнес",
+      "спести работно време автоматизация",
+      "business automation Bulgaria",
+      "AI chatbot Bulgaria",
     ],
   },
   pricing: {
-    title: "Цени | Автоматизация за бизнеса | Silex Digital",
+    title: "Цени | Автоматизация и AI чатбот за малкия бизнес | SilexBrand",
     description:
-      "Прозрачни цени за автоматизация, CMS платформа и персонализирани решения. От 99 €/месец.",
-    keywords: ["цени автоматизация", "цена CRM система", "бизнес софтуер цена"],
+      "Прозрачни цени за AI автоматизация, чатбот и уеб сайт. Пакети от 99 €/месец за малкия бизнес в България. Без скрити такси, безплатна консултация.",
+    keywords: [
+      "цена автоматизация бизнес",
+      "цена AI чатбот",
+      "цена уеб сайт малък бизнес",
+      "евтина автоматизация България",
+      "пакети автоматизация цени",
+      "CRM система цена",
+      "automation pricing Bulgaria",
+    ],
   },
   blog: {
-    title: "Блог | Автоматизация и Растеж | Silex Digital",
+    title: "Блог | Автоматизация, AI и Растеж на бизнеса | SilexBrand",
     description:
-      "Статии за бизнес автоматизация, генериране на клиенти и дигитален маркетинг за българския бизнес.",
-    keywords: ["блог автоматизация", "бизнес растеж", "дигитален маркетинг"],
+      "Практични статии за бизнес автоматизация, AI инструменти и дигитализация за малкия бизнес в България. Как да спестиш време и да печелиш повече клиенти.",
+    keywords: [
+      "блог автоматизация бизнес",
+      "AI инструменти за бизнес",
+      "дигитализация малък бизнес",
+      "бизнес растеж България",
+      "как да автоматизирам бизнеса",
+      "business automation tips Bulgaria",
+    ],
   },
   contact: {
-    title: "Контакти | Свържете се | Silex Digital",
+    title: "Безплатна консултация | Автоматизация на бизнеса | SilexBrand",
     description:
-      "Свържете се с Silex Digital за автоматизация на бизнеса. Безплатна консултация и 14-дневен пробен период.",
-    keywords: ["контакти Silex Digital", "безплатна консултация", "автоматизация"],
+      "Свържи се с SilexBrand за безплатна консултация. Автоматизация, AI чатбот и уеб разработка за малкия бизнес в България. Отговаряме до 24 часа.",
+    keywords: [
+      "безплатна консултация автоматизация",
+      "контакти автоматизация бизнес",
+      "SilexBrand консултация",
+      "AI решения за бизнес България",
+      "free consultation business automation Bulgaria",
+    ],
   },
   services: {
-    title: "Услуги | Автоматизация и Уеб Разработка | Silex Digital",
-    description: "Комплексни решения за автоматизация, модерни уеб сайтове и персонализирани платформи за българския бизнес.",
-    keywords: ["услуги автоматизация", "уеб разработка България", "бизнес решения"],
+    title: "Услуги | AI Автоматизация, Чатбот и Уеб Разработка | SilexBrand",
+    description:
+      "Пълен набор от дигитални услуги за малкия бизнес: AI чатбот, омниканална автоматизация, CRM интеграция, модерни уеб сайтове и персонализирани платформи за България.",
+    keywords: [
+      "AI чатбот услуга",
+      "омниканална автоматизация услуга",
+      "CRM интеграция България",
+      "уеб разработка малък бизнес",
+      "автоматизация поръчки",
+      "Viber WhatsApp Messenger автоматизация",
+      "уеб сайт за ресторант",
+      "уеб сайт за магазин",
+      "web development small business Bulgaria",
+      "CRM integration Bulgaria",
+    ],
   },
   demos: {
-    title: "Демо | Вижте платформата в действие | Silex Digital",
-    description: "Интерактивни демонстрации на автоматизацията, CMS платформата и кодовата платформа.",
-    keywords: ["демо автоматизация", "демо CMS", "демо платформа"],
+    title: "Интерактивно Демо | AI Чатбот и Автоматизация в действие | SilexBrand",
+    description:
+      "Изпробвай AI чатбота, омниканалната автоматизация и квалификацията на лийдове директно в браузъра. Виж как SilexBrand работи за твоя бизнес.",
+    keywords: [
+      "демо AI чатбот",
+      "демо автоматизация бизнес",
+      "интерактивно демо автоматизация",
+      "как работи AI чатбот",
+      "омниканална автоматизация демо",
+      "AI chatbot demo Bulgaria",
+    ],
   },
   industries: {
-    title: "Индустрии | Решения по сектори | Silex Digital",
-    description: "Автоматизация за ресторанти, е-търговия, здравеопазване, недвижими имоти и други индустрии.",
-    keywords: ["индустрии автоматизация", "сектори бизнес решения"],
+    title: "Индустрии | Автоматизация за Ресторанти, Магазини и Услуги | SilexBrand",
+    description:
+      "Специализирана автоматизация по сектори: ресторанти, е-търговия, салони за красота, недвижими имоти, здравеопазване. Персонализирани решения за всяка индустрия в България.",
+    keywords: [
+      "автоматизация ресторант",
+      "автоматизация онлайн магазин",
+      "автоматизация салон красота",
+      "автоматизация недвижими имоти",
+      "чатбот за ресторант",
+      "автоматизация здравеопазване",
+      "restaurant automation Bulgaria",
+    ],
   },
   portfolio: {
-    title: "Портфолио | Наши проекти | Silex Digital",
-    description: "Разгледайте реализирани проекти за автоматизация, уеб сайтове и платформи за български бизнеси.",
-    keywords: ["портфолио проекти", "реализирани проекти", "примери автоматизация"],
+    title: "Портфолио | Реализирани проекти за автоматизация | SilexBrand",
+    description:
+      "Реални резултати: вижте проекти за автоматизация, уеб сайтове и AI решения, изградени от SilexBrand за български бизнеси. Измерими резултати и доволни клиенти.",
+    keywords: [
+      "портфолио автоматизация България",
+      "реализирани проекти уеб сайтове",
+      "примери AI чатбот бизнес",
+      "резултати автоматизация",
+      "automation portfolio Bulgaria",
+    ],
+  },
+  caseStudies: {
+    title: "Казуси | Как автоматизацията промени тези бизнеси | SilexBrand",
+    description:
+      "Реални казуси: как малкия бизнес в България спести часове работа и привлече повече клиенти с AI автоматизация от SilexBrand. Измерими резултати.",
+    keywords: [
+      "казуси автоматизация",
+      "резултати AI чатбот бизнес",
+      "успешни проекти автоматизация",
+      "бизнес трансформация автоматизация",
+      "case studies business automation Bulgaria",
+    ],
   },
 };
 
@@ -191,7 +280,7 @@ export const websiteSchema = {
 export const softwareApplicationSchema = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: "Silex Digital Automation Platform",
+  name: "SilexBrand Automation Platform",
   applicationCategory: "BusinessApplication",
   operatingSystem: "Web",
   offers: {
