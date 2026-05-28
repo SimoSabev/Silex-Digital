@@ -128,7 +128,7 @@ const translations = {
     "cta.secondary": "Говори с нас",
 
     // Footer
-    "footer.description": "Модерна автоматизация за българския бизнес. Превърнете всеки контакт в клиент.",
+    "footer.description": "Модерна автоматизация за вашия бизнес. Превърнете всеки контакт в клиент.",
     "footer.quickLinks": "Бързи връзки",
     "footer.solutions": "Решения",
     "footer.contact": "Контакти",
@@ -271,7 +271,7 @@ const translations = {
     "cta.secondary": "Talk to us",
 
     // Footer
-    "footer.description": "Modern automation for Bulgarian businesses. Turn every contact into a client.",
+    "footer.description": "Modern automation for your businesses. Turn every contact into a client.",
     "footer.quickLinks": "Quick Links",
     "footer.solutions": "Solutions",
     "footer.contact": "Contact",
