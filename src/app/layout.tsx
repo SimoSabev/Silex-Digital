@@ -1,6 +1,8 @@
 import "@/styles/globals.css";
 import { type Metadata } from "next";
 import { Inter, Lora, JetBrains_Mono } from "next/font/google";
+
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from "@vercel/analytics/next"
 import { I18nProvider } from "@/lib/i18n";
 import { ThemeProvider } from "@/lib/theme";
@@ -119,6 +121,7 @@ export default function RootLayout({
               <Navbar />
               <main className="flex-1">{children}</main>
               <Analytics />
+              <SpeedInsights />
               <Footer />
             </I18nProvider>
           </ThemeProvider>
