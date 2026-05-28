@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, ChevronRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
 const FacebookIcon = () => (
@@ -27,14 +27,6 @@ const InstagramIcon = () => (
 export default function Footer() {
   const { t, locale } = useI18n();
 
-  const quickLinks = [
-    { label: t("nav.home"), href: "/" },
-    { label: t("nav.features"), href: "#features" },
-    { label: t("nav.demos"), href: "#demos" },
-    { label: t("nav.pricing"), href: "#pricing" },
-    { label: t("nav.blog"), href: "/blog" },
-  ];
-
   const solutions = [
     { label: t("footer.automation"), href: "#demos" },
     { label: t("footer.cmsLayer"), href: "#demos" },
@@ -49,170 +41,189 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative w-full overflow-hidden border-t border-[var(--border)] bg-[var(--bg-section)]">
-      <div className="relative z-10 w-full py-16 sm:py-20 lg:py-24">
+    <footer className="relative w-full overflow-hidden bg-[var(--bg-section)]">
+      {/* Premium Glowing Top Border */}
+      <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[var(--violet)]/25 via-[var(--coral)]/35 via-[var(--lime)]/25 to-transparent" />
+
+      {/* Subtle Ambient Background Glows */}
+      <div className="absolute -top-40 -left-40 w-[450px] h-[450px] bg-[var(--violet)]/5 rounded-full blur-[120px] pointer-events-none animate-pulse duration-[8000ms]" />
+      <div className="absolute -bottom-40 -right-40 w-[450px] h-[450px] bg-[var(--coral)]/5 rounded-full blur-[120px] pointer-events-none animate-pulse duration-[8000ms]" />
+
+      <div className="relative z-10 w-full py-12 sm:py-16">
         <div className="mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12">
-          <div className="flex flex-col gap-16 lg:gap-20">
-            {/* Top Row: Brand & Socials */}
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16 items-start">
+            
+            {/* Left Column: Brand Dashboard Card */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 pb-12 border-b border-[var(--border)]"
+              className="lg:col-span-5 w-full"
             >
-              <Link
-                href="/"
-                className="inline-block relative -ml-2"
-              >
-                <Image 
-                  src="/long-logo.png" 
-                  alt="Silex Digital" 
-                  width={288} 
-                  height={72} 
-                  className="h-48 sm:h-60 md:h-72 w-auto object-contain"
-                  priority
-                />
-              </Link>
-              <div className="flex flex-col lg:items-end gap-6 max-w-sm lg:max-w-md">
-                <p className="font-inter text-sm leading-relaxed text-[var(--text-sub)] lg:text-right">
+              <div className="w-full flex flex-col gap-6 rounded-2xl border border-[var(--border)]/50 bg-[var(--bg-card)]/15 backdrop-blur-xs p-6 sm:p-8 shadow-xs">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <Link 
+                    href="/" 
+                    className="h-[44px] sm:h-[52px] w-[180px] sm:w-[220px] overflow-hidden flex items-center justify-start relative -ml-1.5"
+                  >
+                    <Image 
+                      src="/long-logo.png" 
+                      alt="Silex Digital" 
+                      width={220} 
+                      height={55} 
+                      className="h-[140px] sm:h-[180px] w-auto object-contain max-w-none"
+                      priority
+                    />
+                  </Link>
+                  
+                  {/* Premium System Operational Indicator */}
+                  <div className="flex items-center gap-2 self-start sm:self-auto rounded-full border border-[var(--lime)]/20 bg-[var(--lime)]/10 px-2.5 py-1 text-[9px] font-bold tracking-[0.1em] text-[var(--lime)] uppercase">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--lime)] opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--lime)]"></span>
+                    </span>
+                    {locale === "bg" ? "Всички системи активни" : "Systems Online"}
+                  </div>
+                </div>
+
+                <p className="font-inter text-sm leading-relaxed text-[var(--text-sub)]">
                   {t("footer.description")}
                 </p>
-                <div className="flex gap-3">
-                  {socials.map((social) => (
-                    <motion.a
-                      key={social.label}
-                      href={social.href}
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="rounded-xl border border-[var(--border)] bg-[var(--bg-card)] p-3 text-[var(--text-sub)] shadow-sm transition-all duration-300 hover:border-[var(--violet)] hover:text-[var(--violet)]"
-                      aria-label={social.label}
-                    >
-                      <social.icon />
-                    </motion.a>
-                  ))}
+
+                <div className="w-full h-[1px] bg-[var(--border)]/40 my-1" />
+
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <span className="text-[10px] font-bold tracking-[0.15em] text-[var(--text-muted)] uppercase">
+                    {locale === "bg" ? "Свържете се с нас" : "Follow us"}
+                  </span>
+                  <div className="flex gap-2.5">
+                    {socials.map((social) => (
+                      <motion.a
+                        key={social.label}
+                        href={social.href}
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="relative group flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--bg-card)]/40 text-[var(--text-sub)] shadow-xs transition-all duration-300 hover:border-[var(--violet)]/40 hover:text-[var(--violet)] hover:shadow-[var(--violet)]/10 hover:shadow-md"
+                        aria-label={social.label}
+                      >
+                        <social.icon />
+                      </motion.a>
+                    ))}
+                  </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* Bottom Row: Links Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-start gap-8 sm:gap-10 lg:gap-16">
-            {/* Quick Links */}
+            {/* Middle Column: Interactive Solutions Navigator */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1, duration: 0.6 }}
+              className="lg:col-span-3 flex flex-col items-start lg:pl-2"
             >
-              <h3 className="font-space mb-6 text-xs font-[800] tracking-[0.2em] text-[var(--text-main)] uppercase">
-                {t("footer.quickLinks")}
+              <h3 className="font-space mb-6 flex items-center gap-2 text-xs font-[800] tracking-[0.2em] text-[var(--text-main)] uppercase">
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--violet)] animate-pulse" />
+                {t("footer.solutions")}
               </h3>
-              <ul className="space-y-3.5">
-                {quickLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="font-inter inline-block text-sm text-[var(--text-sub)] transition-colors duration-300 hover:translate-x-1 hover:text-[var(--violet)]"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
+              <div className="flex flex-col gap-3 w-full">
+                {solutions.map((link) => (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className="group font-inter flex items-center justify-between gap-3 w-full rounded-xl border border-[var(--border)]/40 bg-[var(--bg-card)]/10 hover:bg-[var(--bg-card)]/30 hover:border-[var(--violet)]/25 px-4 py-3.5 shadow-xs transition-all duration-300"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span className="h-1 w-1 rounded-full bg-[var(--violet)] scale-50 group-hover:scale-100 transition-transform duration-300" />
+                      <span className="text-sm font-semibold text-[var(--text-sub)] transition-colors group-hover:text-[var(--text-main)]">
+                        {link.label}
+                      </span>
+                    </div>
+                    <ChevronRight size={14} className="text-[var(--text-muted)] transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[var(--violet)]" />
+                  </Link>
                 ))}
-              </ul>
+              </div>
             </motion.div>
 
-            {/* Solutions */}
+            {/* Right Column: Contact info Hub */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2, duration: 0.6 }}
+              className="lg:col-span-4 flex flex-col items-start lg:items-end w-full"
             >
-              <h3 className="font-space mb-6 text-xs font-[800] tracking-[0.2em] text-[var(--text-main)] uppercase">
-                {t("footer.solutions")}
-              </h3>
-              <ul className="space-y-3.5">
-                {solutions.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="font-inter inline-block text-sm text-[var(--text-sub)] transition-colors duration-300 hover:translate-x-1 hover:text-[var(--violet)]"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
+              <div className="w-full max-w-sm lg:text-right">
+                <h3 className="font-space mb-6 flex items-center gap-2 text-xs font-[800] tracking-[0.2em] text-[var(--text-main)] uppercase lg:justify-end">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--coral)] animate-pulse" />
+                  {t("footer.contact")}
+                </h3>
+                
+                <div className="flex flex-col gap-3 w-full max-w-sm lg:ml-auto">
+                  {/* Address Widget */}
+                  <div className="group flex items-center gap-3.5 rounded-xl border border-[var(--border)]/40 bg-[var(--bg-card)]/10 p-3.5 shadow-xs transition-all duration-300 hover:border-[var(--violet)]/25 hover:bg-[var(--bg-card)]/30">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--violet)]/10 text-[var(--violet)] shrink-0">
+                      <MapPin size={18} />
+                    </div>
+                    <div className="flex flex-col items-start text-left">
+                      <span className="text-[10px] font-[800] tracking-[0.1em] text-[var(--text-muted)] uppercase">
+                        {locale === "bg" ? "Офис" : "Office"}
+                      </span>
+                      <span className="text-sm font-semibold text-[var(--text-sub)]">
+                        {locale === "bg" ? "Варна, България" : "Varna, Bulgaria"}
+                      </span>
+                    </div>
+                  </div>
 
-            {/* Contact */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-            >
-              <h3 className="font-space mb-6 text-xs font-[800] tracking-[0.2em] text-[var(--text-main)] uppercase">
-                {t("footer.contact")}
-              </h3>
-              <ul className="space-y-4">
-                <li className="group font-inter flex items-center gap-3 text-sm text-[var(--text-sub)]">
-                  <div className="mt-0.5 rounded-lg bg-[var(--violet)]/10 p-1.5">
-                    <MapPin size={14} className="text-[var(--violet)]" />
-                  </div>
-                  <span className="transition-colors group-hover:text-[var(--text-main)]">
-                    {locale === "bg" ? "Варна, България" : "Varna, Bulgaria"}
-                  </span>
-                </li>
-                <li className="group font-inter flex items-center gap-3 text-sm text-[var(--text-sub)]">
-                  <div className="rounded-lg bg-[var(--violet)]/10 p-1.5">
-                    <Phone size={14} className="text-[var(--violet)]" />
-                  </div>
+                  {/* Phone Widget */}
                   <a
                     href="tel:+359885031865"
-                    className="transition-colors duration-300 group-hover:text-[var(--text-main)]"
+                    className="group flex items-center gap-3.5 rounded-xl border border-[var(--border)]/40 bg-[var(--bg-card)]/10 p-3.5 shadow-xs transition-all duration-300 hover:border-[var(--violet)]/25 hover:bg-[var(--bg-card)]/30 hover:shadow-[var(--violet)]/5"
                   >
-                    +359 88 503 1865
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--violet)]/10 text-[var(--violet)] transition-colors group-hover:bg-[var(--violet)] group-hover:text-white shrink-0">
+                      <Phone size={18} />
+                    </div>
+                    <div className="flex flex-col items-start text-left">
+                      <span className="text-[10px] font-[800] tracking-[0.1em] text-[var(--text-muted)] uppercase">
+                        {locale === "bg" ? "Телефон" : "Phone"}
+                      </span>
+                      <span className="text-sm font-semibold text-[var(--text-sub)] transition-colors group-hover:text-[var(--text-main)]">
+                        +359 88 503 1865
+                      </span>
+                    </div>
                   </a>
-                </li>
-                <li className="group font-inter flex items-center gap-3 text-sm text-[var(--text-sub)]">
-                  <div className="rounded-lg bg-[var(--violet)]/10 p-1.5">
-                    <Mail size={14} className="text-[var(--violet)]" />
-                  </div>
+
+                  {/* Email Widget */}
                   <a
                     href="mailto:info@silexbrand.com"
-                    className="transition-colors duration-300 group-hover:text-[var(--text-main)]"
+                    className="group flex items-center gap-3.5 rounded-xl border border-[var(--border)]/40 bg-[var(--bg-card)]/10 p-3.5 shadow-xs transition-all duration-300 hover:border-[var(--violet)]/25 hover:bg-[var(--bg-card)]/30 hover:shadow-[var(--violet)]/5"
                   >
-                    info@silexbrand.com
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--violet)]/10 text-[var(--violet)] transition-colors group-hover:bg-[var(--violet)] group-hover:text-white shrink-0">
+                      <Mail size={18} />
+                    </div>
+                    <div className="flex flex-col items-start text-left">
+                      <span className="text-[10px] font-[800] tracking-[0.1em] text-[var(--text-muted)] uppercase">
+                        {locale === "bg" ? "Имейл" : "Email"}
+                      </span>
+                      <span className="text-sm font-semibold text-[var(--text-sub)] transition-colors group-hover:text-[var(--text-main)]">
+                        info@silexbrand.com
+                      </span>
+                    </div>
                   </a>
-                </li>
-              </ul>
+                </div>
+              </div>
             </motion.div>
-            </div>
           </div>
         </div>
       </div>
 
       {/* Bottom Bar */}
-      <div className="w-full border-t border-[var(--border)] bg-transparent">
+      <div className="w-full border-t border-[var(--border)]/60 bg-transparent">
         <div className="mx-auto flex w-full flex-col items-center justify-center gap-4 px-4 py-6 sm:flex-row sm:px-6 sm:py-7 md:px-8 lg:px-12">
-          <p className="font-inter text-sm text-[var(--text-muted)]">
+          <p className="font-inter text-xs tracking-wider text-[var(--text-muted)] uppercase">
             © {new Date().getFullYear()} SilexBrand. {t("footer.rights")}
           </p>
-          <div className="flex gap-6">
-            {/* <Link
-              href="/privacy"
-              className="font-inter text-sm text-[var(--text-muted)] transition-colors duration-300 hover:text-[var(--violet)]"
-            >
-              {t("footer.privacy")}
-            </Link>
-            <Link
-              href="/terms"
-              className="font-inter text-sm text-[var(--text-muted)] transition-colors duration-300 hover:text-[var(--violet)]"
-            >
-              {t("footer.terms")}
-            </Link> */}
-          </div>
         </div>
       </div>
     </footer>
