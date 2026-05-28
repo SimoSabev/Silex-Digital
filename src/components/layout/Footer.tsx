@@ -152,7 +152,7 @@ export default function Footer() {
                     <MapPin size={14} className="text-[var(--violet)]" />
                   </div>
                   <span className="transition-colors group-hover:text-[var(--text-main)]">
-                    {locale === "bg" ? "София, България" : "Sofia, Bulgaria"}
+                    {locale === "bg" ? "Варна, България" : "Varna, Bulgaria"}
                   </span>
                 </li>
                 <li className="group font-inter flex items-center gap-3 text-sm text-[var(--text-sub)]">
@@ -160,10 +160,10 @@ export default function Footer() {
                     <Phone size={14} className="text-[var(--violet)]" />
                   </div>
                   <a
-                    href="tel:+359888123456"
+                    href="tel:+359885031865"
                     className="transition-colors duration-300 group-hover:text-[var(--text-main)]"
                   >
-                    +359 888 123 456
+                    +359 88 503 1865
                   </a>
                 </li>
                 <li className="group font-inter flex items-center gap-3 text-sm text-[var(--text-sub)]">
