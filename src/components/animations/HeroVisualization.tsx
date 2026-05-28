@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useI18n } from "@/lib/i18n";
 
 type Channel = { name: string; color: string; bg: string };
 const CHANNELS: Channel[] = [
@@ -35,10 +36,10 @@ const TOASTS = [
 ];
 
 const METRICS = [
-  { label: "Avg reply",   value: "0.8s", accent: "#CCFF00" },
-  { label: "Leads / day", value: "24",   accent: "#4ADE80" },
-  { label: "Conversion",  value: "94%",  accent: "#818CF8" },
-  { label: "Saved hrs",   value: "15h",  accent: "#FB923C" },
+  { label: { bg: "Ср. отговор",       en: "Avg reply"    }, value: "0.8s", accent: "#CCFF00" },
+  { label: { bg: "Запитвания / ден",  en: "Leads / day"  }, value: "24",   accent: "#4ADE80" },
+  { label: { bg: "Конверсия",         en: "Conversion"   }, value: "94%",  accent: "#818CF8" },
+  { label: { bg: "Спест. часа",       en: "Saved hrs"    }, value: "15h",  accent: "#FB923C" },
 ];
 
 const BAR_DATA = [14, 21, 18, 27, 24, 31, 24];
@@ -71,6 +72,7 @@ function TypingDots() {
 type Phase = "incoming" | "typing" | "replied";
 
 export default function HeroVisualization() {
+  const { locale } = useI18n();
   const [convIdx, setConvIdx]   = useState(0);
   const [phase, setPhase]       = useState<Phase>("incoming");
   const [toastIdx, setToastIdx] = useState<number | null>(null);
@@ -129,7 +131,7 @@ export default function HeroVisualization() {
         <div className="mb-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <LiveDot />
-            <span className="text-[10px] font-bold tracking-widest text-white/40 uppercase">Live inbox</span>
+            <span className="text-[10px] font-bold tracking-widest text-white/40 uppercase">{locale === "bg" ? "На живо" : "Live inbox"}</span>
           </div>
           {/* Channel pills — hidden on very small screens */}
           <div className="hidden gap-1 sm:flex">
@@ -194,7 +196,7 @@ export default function HeroVisualization() {
                     {conv.channel.name}
                   </span>
                 </div>
-                <span className="text-[10px] text-white/25">just now</span>
+                <span className="text-[10px] text-white/25">{locale === "bg" ? "току що" : "just now"}</span>
               </div>
             </div>
 
@@ -243,18 +245,18 @@ export default function HeroVisualization() {
 
         {/* Header */}
         <div className="mb-4 flex items-center justify-between">
-          <span className="text-[10px] font-bold tracking-widest text-white/40 uppercase">Performance</span>
+          <span className="text-[10px] font-bold tracking-widest text-white/40 uppercase">{locale === "bg" ? "Представяне" : "Performance"}</span>
           <div className="rounded-full bg-[#CCFF00]/15 px-2.5 py-1 text-[9px] font-bold text-[#CCFF00]">
-            ↑ 40% this week
+            {locale === "bg" ? "↑ 40% тази седмица" : "↑ 40% this week"}
           </div>
         </div>
 
         {/* Metrics 2×2 */}
         <div className="mb-4 grid grid-cols-2 gap-2">
           {METRICS.map((m) => (
-            <div key={m.label} className="rounded-xl border border-white/8 bg-white/[0.04] p-3">
+            <div key={m.label.en} className="rounded-xl border border-white/8 bg-white/[0.04] p-3">
               <div className="text-2xl font-black leading-none" style={{ color: m.accent }}>{m.value}</div>
-              <div className="mt-1 text-[10px] text-white/30">{m.label}</div>
+              <div className="mt-1 text-[10px] text-white/30">{m.label[locale]}</div>
             </div>
           ))}
         </div>
@@ -262,7 +264,7 @@ export default function HeroVisualization() {
         {/* Bar chart */}
         <div className="mb-4 rounded-xl border border-white/8 bg-white/[0.03] p-3">
           <div className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-white/30">
-            Leads this week
+            {locale === "bg" ? "Запитвания тази седмица" : "Leads this week"}
           </div>
           <div className="flex h-12 items-end gap-1">
             {BAR_DATA.map((v, i) => (
@@ -284,21 +286,21 @@ export default function HeroVisualization() {
         {/* Active automations */}
         <div className="flex-1 space-y-1.5">
           {[
-            { label: "Email follow-up",    status: "running", color: "#4ADE80" },
-            { label: "Lead qualification", status: "running", color: "#4ADE80" },
-            { label: "Booking reminder",   status: "queued",  color: "#FB923C" },
+            { label: { bg: "Имейл отговор",        en: "Email reply"         }, status: { bg: "активен",     en: "running" }, color: "#4ADE80", key: "email" },
+            { label: { bg: "Разпределение",         en: "Lead qualification"  }, status: { bg: "активен",     en: "running" }, color: "#4ADE80", key: "lead"  },
+            { label: { bg: "Напомняне за среща",    en: "Booking reminder"    }, status: { bg: "на опашка",   en: "queued"  }, color: "#FB923C", key: "book"  },
           ].map((item) => (
-            <div key={item.label} className="flex items-center gap-2.5 rounded-lg bg-white/[0.03] px-3 py-2">
+            <div key={item.key} className="flex items-center gap-2.5 rounded-lg bg-white/[0.03] px-3 py-2">
               <div className="relative h-2 w-2 flex-none">
-                {item.status === "running" && (
+                {item.status.en === "running" && (
                   <span className="absolute inset-0 animate-ping rounded-full opacity-60"
                     style={{ backgroundColor: item.color }} />
                 )}
                 <span className="relative block h-2 w-2 rounded-full" style={{ backgroundColor: item.color }} />
               </div>
-              <span className="flex-1 truncate text-[11px] text-white/50">{item.label}</span>
+              <span className="flex-1 truncate text-[11px] text-white/50">{item.label[locale]}</span>
               <span className="flex-none text-[9px] font-bold uppercase tracking-wider"
-                style={{ color: item.color }}>{item.status}</span>
+                style={{ color: item.color }}>{item.status[locale]}</span>
             </div>
           ))}
         </div>
@@ -307,9 +309,9 @@ export default function HeroVisualization() {
       {/* Mobile metrics strip — shown only on mobile ────────────── */}
       <div className="absolute bottom-0 left-0 right-0 z-20 flex border-t border-white/8 bg-[#08080E]/90 px-4 py-2.5 backdrop-blur-sm lg:hidden">
         {METRICS.map((m) => (
-          <div key={m.label} className="flex-1 text-center">
+          <div key={m.label.en} className="flex-1 text-center">
             <div className="text-sm font-black" style={{ color: m.accent }}>{m.value}</div>
-            <div className="text-[9px] text-white/30">{m.label}</div>
+            <div className="text-[9px] text-white/30">{m.label[locale]}</div>
           </div>
         ))}
       </div>

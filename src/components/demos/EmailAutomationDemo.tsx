@@ -288,7 +288,7 @@ export default function EmailAutomationDemo() {
                     <div className={`absolute inset-0 rounded-[24px] ${c.bgColor} opacity-40`} />
                     <div className="relative z-10 flex gap-2 items-center mb-1.5 border-b border-[var(--border)] pb-1.5">
                       <div className={`scale-75 p-1 rounded-md ${c.bgColor} ${c.activeColor.replace("bg-", "text-")}`}>{c.icon}</div>
-                      <span className="text-[10px] font-bold uppercase text-[var(--text-sub)] tracking-widest">New Order</span>
+                      <span className="text-[10px] font-bold uppercase text-[var(--text-sub)] tracking-widest">{locale === "bg" ? "Нова Поръчка" : "New Order"}</span>
                     </div>
                     <p className="relative z-10 text-xs text-[var(--text-main)] font-medium line-clamp-2 leading-relaxed">{msg.text}</p>
                   </motion.div>
@@ -321,7 +321,7 @@ export default function EmailAutomationDemo() {
             >
               <Bot size={processingMsg ? 32 : 28} className={processingMsg ? "drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]" : ""} />
               <span className={`text-[9px] md:text-[10px] font-black uppercase tracking-widest mt-2 ${processingMsg ? "opacity-90" : "opacity-60"}`}>
-                {processingMsg ? (locale === "bg" ? "Извличане..." : "Extracting") : "AI Core"}
+                {processingMsg ? (locale === "bg" ? "Извличане..." : "Extracting...") : (locale === "bg" ? "AI Ядро" : "AI Core")}
               </span>
               <AnimatePresence>
                 {processingMsg && (
@@ -357,8 +357,8 @@ export default function EmailAutomationDemo() {
                       <div className="text-[9px] text-[var(--violet)] font-mono uppercase tracking-[0.2em]">{"<Data_Map>"}</div>
                     </div>
                     <div className="text-[10px] sm:text-xs text-[var(--text-sub)] font-mono flex flex-col gap-1.5">
-                      <span className="flex justify-between">Source: <span className="text-[var(--text-main)] font-bold">{CHANNELS[processingMsg.source].enName}</span></span>
-                      <span className="flex justify-between items-center gap-2">Item: <span className="text-[var(--lime)] font-bold truncate">{processingMsg.product}</span></span>
+                      <span className="flex justify-between">{locale === "bg" ? "Канал:" : "Source:"} <span className="text-[var(--text-main)] font-bold">{CHANNELS[processingMsg.source][locale === "bg" ? "bgName" : "enName"]}</span></span>
+                      <span className="flex justify-between items-center gap-2">{locale === "bg" ? "Продукт:" : "Item:"} <span className="text-[var(--lime)] font-bold truncate">{processingMsg.product}</span></span>
                     </div>
                   </div>
                 </motion.div>
@@ -416,7 +416,7 @@ export default function EmailAutomationDemo() {
                     </div>
                     <div className="hidden sm:flex shrink-0 items-center gap-1.5 text-[9px] font-bold text-[var(--lime)] py-1 px-2.5 rounded border border-[var(--lime)]/20 uppercase tracking-widest bg-[var(--lime)]/10">
                       <span className="w-1.5 h-1.5 rounded-full bg-[var(--lime)] animate-pulse" />
-                      Stored
+                      {locale === "bg" ? "Записано" : "Stored"}
                     </div>
                   </motion.div>
                 ))}

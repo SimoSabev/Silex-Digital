@@ -135,7 +135,7 @@ export default function ContactContent() {
           details?: string[];
         };
         const details = errorBody.details?.join(", ");
-        throw new Error(details || errorBody.error || "Failed to submit lead");
+        throw new Error((details ?? errorBody.error) ?? "Failed to submit lead");
       }
 
       setSubmitSuccess(true);
@@ -165,12 +165,12 @@ export default function ContactContent() {
               {locale === "bg" ? "Свържи се с нас" : "Contact us"}
             </span>
             <h1 className="mb-6 font-[family-name:var(--font-display)] text-4xl leading-tight font-[700] tracking-tight md:text-5xl lg:text-[56px]">
-              {locale === "bg" ? "Нека поговорим" : "Let's talk"}
+              {locale === "bg" ? "Нека спрем да изпускаш клиенти" : "Let's stop you losing clients"}
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-[var(--text-sub)] md:text-xl">
               {locale === "bg"
-                ? "Имаш въпроси? Искаш консултация? Напиши ни."
-                : "Have questions? Need a consultation? Drop us a line."}
+                ? "30 минути разговор, без ангажимент. Ще видиш точно как изглежда решение за твоя бизнес."
+                : "30 minutes, no commitment. You'll see exactly what a solution for your business looks like."}
             </p>
           </div>
 
@@ -297,16 +297,16 @@ export default function ContactContent() {
                       className="input"
                     >
                       <option value="automation">
-                        {locale === "bg" ? "Автоматизация" : "Automation"}
+                        {locale === "bg" ? "Автоматизации" : "Automations"}
                       </option>
                       <option value="ai-agent">
-                        {locale === "bg" ? "AI агент" : "AI agent"}
+                        {locale === "bg" ? "AI интеграции" : "AI Integrations"}
                       </option>
                       <option value="web-development">
-                        {locale === "bg" ? "Уеб разработка" : "Web development"}
+                        {locale === "bg" ? "Уеб услуги" : "Web Services"}
                       </option>
                       <option value="custom-platform">
-                        {locale === "bg" ? "Custom решение" : "Custom solution"}
+                        {locale === "bg" ? "Оптимизация" : "Optimization"}
                       </option>
                     </select>
                   </div>
@@ -481,7 +481,7 @@ export default function ContactContent() {
                     </a>
 
                     <a
-                      href="tel:+359888123456"
+                      href="tel:+359885031865"
                       className="group card flex items-center gap-4 bg-[var(--bg-card)] p-4"
                     >
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--coral)]/10 text-[var(--coral)] transition-colors group-hover:bg-[var(--coral)] group-hover:text-white">
@@ -492,7 +492,7 @@ export default function ContactContent() {
                           {locale === "bg" ? "Телефон" : "Phone"}
                         </p>
                         <p className="text-sm font-medium text-[var(--text-main)]">
-                          +359 888 123 456
+                          +359 88 503 1865
                         </p>
                       </div>
                     </a>
@@ -507,8 +507,8 @@ export default function ContactContent() {
                         </p>
                         <p className="text-sm font-medium text-[var(--text-main)]">
                           {locale === "bg"
-                            ? "София, България"
-                            : "Sofia, Bulgaria"}
+                            ? "Варна, България"
+                            : "Varna, Bulgaria"}
                         </p>
                       </div>
                     </div>

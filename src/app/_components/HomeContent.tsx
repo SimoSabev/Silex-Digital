@@ -49,24 +49,24 @@ const stats = [
     icon: <Clock className="h-5 w-5" />,
     value: "15+",
     label: {
-      bg: "часа спестени месечно",
-      en: "hours saved monthly",
+      bg: "часа спестени всеки месец",
+      en: "hours saved every month",
     },
   },
   {
     icon: <Users className="h-5 w-5" />,
     value: "120+",
     label: {
-      bg: "микробизнеса с по-бърз отговор",
-      en: "micro-businesses with faster response",
+      bg: "бизнеса отговарят по-бързо",
+      en: "businesses respond faster",
     },
   },
   {
     icon: <TrendingUp className="h-5 w-5" />,
     value: "40%",
     label: {
-      bg: "по-малко изпуснати запитвания",
-      en: "fewer missed inquiries",
+      bg: "по-малко изпуснати клиенти",
+      en: "fewer missed clients",
     },
   },
 ];
@@ -74,40 +74,40 @@ const stats = [
 const services = [
   {
     icon: <Zap className="h-6 w-6" />,
-    title: { bg: "Workflow автоматизация", en: "Workflow automation" },
+    title: { bg: "Автоматизации", en: "Automations" },
     description: {
-      bg: "Автоматизирай повтарящи се задачи. Запитвания, нотификации и базов CRM поток - без сложен setup.",
-      en: "Automate repetitive work. Inquiries, notifications, and basic CRM flow without complex setup.",
+      bg: "Имейли, резервации, напомняния, потвърждения — всичко се случва само. Клиентът получава отговор веднага, ти не пипаш нищо.",
+      en: "Emails, bookings, reminders, confirmations — everything happens on its own. The client gets a reply instantly, you don't touch a thing.",
     },
     price: { bg: "от 149 €/месец", en: "from 149 EUR/month" },
     color: "blue" as const,
   },
   {
     icon: <Bot className="h-6 w-6" />,
-    title: { bg: "AI агенти", en: "AI agents" },
+    title: { bg: "AI интеграции", en: "AI Integrations" },
     description: {
-      bg: "Интелигентни ботове за първи отговор 24/7. Категоризират запитвания и подготвят следваща стъпка.",
-      en: "Intelligent bots for 24/7 first response. They classify inquiries and prepare the next step.",
+      bg: "Свързваме AI с твоя бизнес — отговаря на клиенти, разпознава запитвания и те уведомява само когато трябва да действаш лично.",
+      en: "We connect AI to your business — it replies to clients, reads inquiries and only pings you when your personal touch is needed.",
     },
     price: { bg: "от 299 €/месец", en: "from 299 EUR/month" },
     color: "green" as const,
   },
   {
     icon: <Code className="h-6 w-6" />,
-    title: { bg: "Уеб разработка", en: "Web development" },
+    title: { bg: "Уеб услуги", en: "Web Services" },
     description: {
-      bg: "Сайт, който изглежда професионално и генерира запитвания. Подходящ за микро бизнес във Варна.",
-      en: "A professional website that generates inquiries. Designed for micro businesses in Varna.",
+      bg: "Сайт, приложение или онлайн платформа — правим го бързо, красиво и така, че хората да се обадят, не само да разгледат.",
+      en: "Website, app or online platform — built fast, beautiful and designed so people call you, not just browse.",
     },
-    price: { bg: "от 990 € старт", en: "from 990 EUR setup" },
+    price: { bg: "от 990 € старт", en: "from 990 EUR" },
     color: "purple" as const,
   },
   {
-    icon: <Database className="h-6 w-6" />,
-    title: { bg: "CMS интеграции", en: "CMS integrations" },
+    icon: <TrendingUp className="h-6 w-6" />,
+    title: { bg: "Оптимизация", en: "Optimization" },
     description: {
-      bg: "Подреждаме съдържанието така, че да го управляваш лесно - без зависимост от разработчик за всяка дребна промяна.",
-      en: "We organize your content so you can manage it easily without relying on a developer for every small update.",
+      bg: "Подобряваме скоростта, SEO и видимостта на това, което вече имаш. Повече хора те намират в Google, повече влизат в сайта.",
+      en: "We improve speed, SEO and visibility of what you already have. More people find you on Google, more visit your site.",
     },
     price: { bg: "от 199 €/месец", en: "from 199 EUR/month" },
     color: "orange" as const,
@@ -117,8 +117,8 @@ const services = [
 const testimonials = [
   {
     quote: {
-      bg: "След като имплементирахме automation-а, спестихме 20 часа седмично. Екипът ни се фокусира върху важните задачи.",
-      en: "After implementing automation, we saved 20 hours every week. Our team now focuses on high-impact work.",
+      bg: "Откакто работим с SilexBrand, спестяваме по 20 часа седмично. Екипът ни вече се занимава с важното, не с имейли.",
+      en: "Since working with SilexBrand we save 20 hours every week. Our team handles what matters, not inbox management.",
     },
     author: "Maria Petrova",
     role: {
@@ -129,25 +129,25 @@ const testimonials = [
   },
   {
     quote: {
-      bg: "AI чатботът отговаря на клиенти ни 24/7. Конверсията ни се повиши с 35% само за един месец.",
-      en: "The AI chatbot responds to our customers 24/7. Conversion increased by 35% in just one month.",
+      bg: "Помощникът отговаря на клиентите ни денем и нощем. За един месец приехме с 35% повече поръчки.",
+      en: "The assistant replies to our customers day and night. In one month we took 35% more orders.",
     },
     author: "Ivan Kolev",
     role: {
-      bg: "CEO, EcoShop.bg",
-      en: "CEO, EcoShop.bg",
+      bg: "Собственик, EcoShop.bg",
+      en: "Owner, EcoShop.bg",
     },
     initials: "IK",
   },
   {
     quote: {
-      bg: "Професионални, бързи и винаги на линия. Препоръчвам ги на всеки бизнес който иска да расте.",
-      en: "Professional, fast, and always available. I recommend them to any business that wants to grow.",
+      bg: "Мислех, че е сложно. Оказа се, че за 3 дни всичко беше готово. Сега сайтът ми работи за мен, не аз за него.",
+      en: "I thought it would be complicated. In 3 days everything was live. Now my website works for me, not the other way around.",
     },
     author: "Elena Stoyanova",
     role: {
-      bg: "Маркетинг директор, FinancePro",
-      en: "Marketing Director, FinancePro",
+      bg: "Собственик, Beauty Studio Елена",
+      en: "Owner, Beauty Studio Elena",
     },
     initials: "ES",
   },
@@ -189,8 +189,8 @@ export default function HomeContent() {
                 <div className="badge-violet mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2 font-medium">
                   <span className="animate-pulse-dot h-2 w-2 rounded-full bg-[var(--violet)]" />
                   {locale === "bg"
-                    ? "Автоматизация за български бизнес"
-                    : "Automation for Bulgarian businesses"}
+                    ? "За малкия бизнес в България"
+                    : "Built for Bulgarian businesses"}
                 </div>
               </AnimatedSection>
 
@@ -199,7 +199,7 @@ export default function HomeContent() {
                   <span className="text-gradient-hero block">
                     <TextReveal
                       key={locale}
-                      text={locale === "bg" ? "РАБОТИ КАТО ИМАШ 10 ЕКСТРА АГЕНТА" : "WORK LIKE YOU HAVE 10 EXTRA AGENTS"}
+                      text={locale === "bg" ? "НИКОГА ПОВЕЧЕ ИЗПУСНАТ КЛИЕНТ" : "NEVER MISS ANOTHER CLIENT AGAIN"}
                       delay={0.1}
                     />
                   </span>
@@ -209,8 +209,8 @@ export default function HomeContent() {
               <AnimatedSection delay={0.2}>
                 <p className="mx-auto mb-10 max-w-[600px] text-[20px] leading-relaxed text-[var(--text-sub)]">
                   {locale === "bg"
-                    ? "Спести над 15 часа работа месечно с модерни автоматизации — бизнесът работи за теб, дори когато си зает."
-                    : "Save over 15 hours of work per month with modern website automations, so your business keeps moving when you are busy."}
+                    ? "Клиентите пишат в 23:00. Ние отговаряме за теб. Ти получаваш резервацията сутринта — без да си пипнал телефона."
+                    : "Clients message at 11pm. We reply for you. You wake up to a new booking — without touching your phone."}
                 </p>
               </AnimatedSection>
 
@@ -224,7 +224,7 @@ export default function HomeContent() {
                         className="h-auto rounded-xl border-none bg-[var(--coral)] px-8 py-4 text-lg font-bold text-white shadow-[var(--coral)]/20 shadow-xl transition-transform hover:-translate-y-1 hover:bg-[var(--coral-hover)]"
                       >
                         <Zap className="h-5 w-5" />
-                        {locale === "bg" ? "Започни безплатно" : "Start for free"}
+                        {locale === "bg" ? "Покажи ми как работи" : "Show me how it works"}
                       </Button>
                     </Magnetic>
                   </Link>
@@ -280,29 +280,29 @@ export default function HomeContent() {
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <span className="font-display text-sm font-bold tracking-wider text-[var(--text-sub)] uppercase">
               {locale === "bg"
-                ? "Доверен от 247+ български бизнеса"
-                : "Trusted by 247+ Bulgarian businesses"}
+                ? "247+ бизнеса вече не изпускат клиенти"
+                : "247+ businesses already stop missing clients"}
             </span>
             <div className="relative h-6 flex-1 overflow-hidden">
               {/* Duplicated content for seamless marquee loop */}
               <div className="absolute flex animate-[marquee_20s_linear_infinite] items-center gap-2 text-sm font-medium whitespace-nowrap text-[var(--text-main)]">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-[var(--lime)]" />
-                <span>{locale === "bg" ? "Ресторант в София се присъедини преди 2 часа" : "Restaurant in Sofia joined 2 hours ago"}</span>
+                <span>{locale === "bg" ? "Ресторант в София — получи 3 резервации тази нощ" : "Restaurant in Sofia — got 3 bookings overnight"}</span>
                 <span className="mx-8 text-[var(--text-muted)]">•</span>
                 <span className="h-2 w-2 animate-pulse rounded-full bg-[var(--violet)]" />
-                <span>{locale === "bg" ? "Клиника във Варна добави AI агент" : "Clinic in Varna added AI agent"}</span>
+                <span>{locale === "bg" ? "Зъболекар във Варна — нула пропуснати обаждания" : "Dentist in Varna — zero missed calls"}</span>
                 <span className="mx-8 text-[var(--text-muted)]">•</span>
                 <span className="h-2 w-2 animate-pulse rounded-full bg-[var(--coral)]" />
-                <span>{locale === "bg" ? "Beauty salon в Пловдив стартира автоматизация" : "Beauty salon in Plovdiv started automation"}</span>
+                <span>{locale === "bg" ? "Козметичен салон в Пловдив — записва клиенти докато спи" : "Beauty salon in Plovdiv — books clients while sleeping"}</span>
                 <span className="mx-8 text-[var(--text-muted)]">•</span>
                 <span className="h-2 w-2 animate-pulse rounded-full bg-[var(--lime)]" />
-                <span>{locale === "bg" ? "Ресторант в София се присъедини преди 2 часа" : "Restaurant in Sofia joined 2 hours ago"}</span>
+                <span>{locale === "bg" ? "Ресторант в София — получи 3 резервации тази нощ" : "Restaurant in Sofia — got 3 bookings overnight"}</span>
                 <span className="mx-8 text-[var(--text-muted)]">•</span>
                 <span className="h-2 w-2 animate-pulse rounded-full bg-[var(--violet)]" />
-                <span>{locale === "bg" ? "Клиника във Варна добави AI агент" : "Clinic in Varna added AI agent"}</span>
+                <span>{locale === "bg" ? "Зъболекар във Варна — нула пропуснати обаждания" : "Dentist in Varna — zero missed calls"}</span>
                 <span className="mx-8 text-[var(--text-muted)]">•</span>
                 <span className="h-2 w-2 animate-pulse rounded-full bg-[var(--coral)]" />
-                <span>{locale === "bg" ? "Beauty salon в Пловдив стартира автоматизация" : "Beauty salon in Plovdiv started automation"}</span>
+                <span>{locale === "bg" ? "Козметичен салон в Пловдив — записва клиенти докато спи" : "Beauty salon in Plovdiv — books clients while sleeping"}</span>
                 <span className="mx-8 text-[var(--text-muted)]">•</span>
               </div>
             </div>
@@ -316,7 +316,7 @@ export default function HomeContent() {
           {/* Section label */}
           <AnimatedSection className="mb-10 text-center md:mb-16">
             <p className="font-display text-sm font-[700] tracking-[0.15em] text-[var(--text-muted)] uppercase">
-              {locale === "bg" ? "Без автоматизация vs. С автоматизация" : "Without vs. With automation"}
+              {locale === "bg" ? "Преди SilexBrand vs. След SilexBrand" : "Before SilexBrand vs. After SilexBrand"}
             </p>
           </AnimatedSection>
 
@@ -335,10 +335,10 @@ export default function HomeContent() {
                 </div>
                 <ul className="space-y-4">
                   {[
-                    locale === "bg" ? "Ръчно отговаряне на имейли — 3 часа дневно" : "Manual email replies — 3 hours daily",
-                    locale === "bg" ? "Изгубени лийдове заради бавни отговори" : "Lost leads due to slow responses",
-                    locale === "bg" ? "Повтарящи се задачи ядат времето на екипа" : "Repetitive tasks consume team time",
-                    locale === "bg" ? "Данни разпръснати в 5 различни системи" : "Data spread across 5 different systems",
+                    locale === "bg" ? "Ръчно отговаряш на едни и същи въпроси всеки ден" : "Manually answering the same questions every day",
+                    locale === "bg" ? "Клиент пише в 22:00 — ти го виждаш сутринта, той вече е при конкурента" : "Client messages at 10pm — you see it next morning, they've already gone to a competitor",
+                    locale === "bg" ? "Половин работен ден губиш за неща, които могат да стават сами" : "Half your workday lost to things that could run themselves",
+                    locale === "bg" ? "Не знаеш колко запитвания изпускаш всяка седмица" : "You don't know how many enquiries you're losing each week",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3 text-[15px] font-[500] text-[var(--coral-hover)]">
                       <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--coral)]/20">
@@ -376,15 +376,15 @@ export default function HomeContent() {
                     <Sparkles className="h-6 w-6 text-[var(--lime)]" />
                   </div>
                   <h2 className="font-display text-2xl font-[800] text-[var(--lime-hover)]">
-                    {locale === "bg" ? "След автоматизация" : "After automation"}
+                    {locale === "bg" ? "С SilexBrand" : "With SilexBrand"}
                   </h2>
                 </div>
                 <ul className="space-y-4">
                   {[
-                    locale === "bg" ? "AI отговаря на имейли за секунди" : "AI replies to emails in seconds",
-                    locale === "bg" ? "Незабавни отговори = повече клиенти" : "Instant responses = more customers",
-                    locale === "bg" ? "Екипът се фокусира върху важното" : "Team focuses on what matters",
-                    locale === "bg" ? "Всичко свързано на едно място" : "Everything connected in one place",
+                    locale === "bg" ? "Клиентът получава отговор за секунди — дори в 23:00" : "Client gets a reply in seconds — even at 11pm",
+                    locale === "bg" ? "Записваш клиенти докато спиш, без да вдигаш телефона" : "You book clients while sleeping, without answering calls",
+                    locale === "bg" ? "Знаеш точно колко запитвания идват и колко се превръщат в поръчки" : "You know exactly how many inquiries come in and how many convert",
+                    locale === "bg" ? "Работиш по-малко часа, вземаш повече" : "Work fewer hours, earn more",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3 text-[15px] font-[700] text-[var(--lime)]">
                       <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--lime)]/20">
@@ -439,13 +439,13 @@ export default function HomeContent() {
             </div>
             <h2 className="mb-6 font-display text-4xl font-[800] text-[var(--text-main)] lg:text-5xl">
               {locale === "bg"
-                ? "Какво можем да автоматизираме"
-                : "What we can automate"}
+                ? "Как помагаме на твоя бизнес"
+                : "How we help your business"}
             </h2>
             <p className="mx-auto max-w-2xl text-[20px] text-[var(--text-sub)]">
               {locale === "bg"
-                ? "От прости имейл автоматизации до комплексни AI агенти. Избираш нивото на автоматизация според нуждите си."
-                : "From simple email automations to complex AI agents. Choose the level of automation based on your needs."}
+                ? "От автоматичен отговор на имейли до AI помощник, който говори с клиентите вместо теб. Избираш с какво да започнеш."
+                : "From automatic email replies to an AI assistant that talks to clients for you. You choose where to start."}
             </p>
           </AnimatedSection>
 
@@ -522,8 +522,8 @@ export default function HomeContent() {
               </h2>
               <p className="mb-8 text-[20px] leading-relaxed text-[var(--text-sub)]">
                 {locale === "bg"
-                  ? 'Избери тригър и действия. Натисни "Тествай" и виж как твоят workflow би протекъл автоматично. Няма нужда от код.'
-                  : 'Choose a trigger and actions. Press "Test" and see how your workflow runs automatically. No code required.'}
+                  ? 'Натисни "Тествай" и виж как изглежда, когато клиент пише и получава отговор автоматично — без ти да правиш нищо.'
+                  : 'Press "Test" and see what it looks like when a client messages and gets an automatic reply — without you doing anything.'}
               </p>
               <ul className="mb-10 space-y-4">
                 <li className="flex items-center gap-4 text-lg font-bold text-[var(--text-main)]">
@@ -591,8 +591,8 @@ export default function HomeContent() {
               </h2>
               <p className="mb-12 text-[20px] text-[var(--text-sub)]">
                 {locale === "bg"
-                  ? "Въведи приблизителни стойности и виж потенциала при по-бърз отговор и автоматичен follow-up."
-                  : "Enter rough values and estimate upside from faster response and automated follow-up."}
+                  ? "Въведи приблизителни стойности и виж колко допълнителни клиенти можеш да спечелиш само с по-бърз отговор."
+                  : "Enter rough values and see how many extra clients you could win simply by responding faster."}
               </p>
 
               <div className="mb-12 grid gap-10 md:grid-cols-2">
@@ -778,10 +778,9 @@ export default function HomeContent() {
                 <ul className="mb-10 space-y-4 text-left">
                   <li className="flex items-center gap-3 text-[16px] font-medium text-[var(--text-main)]">
                     <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
-                    1{" "}
                     {locale === "bg"
-                      ? "light автоматизация"
-                      : "light automation"}
+                      ? "1 автоматичен отговор"
+                      : "1 automatic reply flow"}
                   </li>
                   <li className="flex items-center gap-3 text-[16px] font-medium text-[var(--text-main)]">
                     <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
@@ -838,7 +837,7 @@ export default function HomeContent() {
                   </li>
                   <li className="flex items-center gap-3 text-[16px] font-bold text-[var(--text-main)]">
                     <Check className="h-6 w-6 flex-shrink-0 text-[var(--violet)]" />{" "}
-                    CRM {locale === "bg" ? "настройка" : "setup"}
+                    {locale === "bg" ? "Следене на клиентите" : "Client tracking"}
                   </li>
                   <li className="flex items-center gap-3 text-[16px] font-bold text-[var(--text-main)]">
                     <Check className="h-6 w-6 flex-shrink-0 text-[var(--violet)]" />{" "}
@@ -920,14 +919,15 @@ export default function HomeContent() {
           <Container>
             <div className="mx-auto max-w-4xl text-center">
               <h2 className="mb-8 font-display text-5xl leading-tight font-[800] text-white lg:text-7xl">
-                <TextReveal 
-                  text={locale === "bg" ? "ГОТОВ ЛИ СИ ДА АВТОМАТИЗИРАШ?" : "READY TO AUTOMATE YOUR BUSINESS?"}
+                <TextReveal
+                  key={locale}
+                  text={locale === "bg" ? "СПРИ ДА ИЗПУСКАШ КЛИЕНТИ ДНЕС" : "STOP LOSING CLIENTS TODAY"}
                 />
               </h2>
               <p className="mx-auto mb-12 max-w-2xl text-2xl leading-relaxed font-medium text-white/90">
                 {locale === "bg"
-                  ? "Започни с безплатна 30-минутна консултация. Ще ти покажем точно как автоматизацията може да помогне на твоя бизнес."
-                  : "Start with a free 30-minute consultation. We will show you exactly how automation can help your business."}
+                  ? "Разговор от 30 минути, без ангажимент. Ще ти покажем точно кои клиенти изпускаш сега и как да ги спреш."
+                  : "A 30-minute call, no commitment. We'll show you exactly which clients you're losing now and how to stop it."}
               </p>
               <div className="flex flex-wrap justify-center gap-6">
                 <Link href="/contact?source=final-cta-home&offer=first-order-bonus&intent=consultation&pack=grow">

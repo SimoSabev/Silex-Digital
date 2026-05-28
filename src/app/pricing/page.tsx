@@ -12,9 +12,9 @@ import { useI18n } from "@/lib/i18n";
 type Addon = { id: string; name: { bg: string; en: string }; price: number };
 
 const availableAddons: Addon[] = [
-  { id: "extra-automation", name: { bg: "+1 Автоматизация", en: "+1 Automation Flow" }, price: 50 },
-  { id: "seo-audit", name: { bg: "Месечен SEO Одит", en: "Monthly SEO Audit" }, price: 70 },
-  { id: "priority-support", name: { bg: "24/7 Приоритетна Поддръжка", en: "24/7 Priority Support" }, price: 90 },
+  { id: "extra-automation", name: { bg: "+1 Автоматичен отговор", en: "+1 Automation" }, price: 50 },
+  { id: "seo-audit", name: { bg: "Месечна SEO оптимизация", en: "Monthly SEO optimization" }, price: 70 },
+  { id: "priority-support", name: { bg: "24/7 Приоритетна поддръжка", en: "24/7 Priority support" }, price: 90 },
 ];
 
 const pricingPlans = [
@@ -31,17 +31,17 @@ const pricingPlans = [
     },
     features: {
       bg: [
-        "1 light автоматизация",
-        "Базов lead capture",
-        "Email нотификация",
-        "Месечен мини отчет",
+        "1 автоматичен отговор",
+        "Записване на запитвания",
+        "Известия по имейл",
+        "Месечен отчет за резултати",
         "Стандартна поддръжка",
       ],
       en: [
-        "1 light automation",
-        "Basic lead capture",
+        "1 automatic reply flow",
+        "Inquiry capture",
         "Email notifications",
-        "Monthly mini report",
+        "Monthly results report",
         "Standard support",
       ],
     },
@@ -67,18 +67,18 @@ const pricingPlans = [
     features: {
       bg: [
         "До 4 автоматизации",
-        "AI първи отговор",
-        "CRM базова връзка",
-        "Lead приоритизация",
-        "2 оптимизации месечно",
+        "AI помощник за клиенти",
+        "Следене на запитванията",
+        "Разпределение по важност",
+        "2 подобрения месечно",
         "Приоритетна поддръжка",
       ],
       en: [
         "Up to 4 automations",
-        "AI first response",
-        "Basic CRM connection",
-        "Lead prioritization",
-        "2 monthly optimizations",
+        "AI client assistant",
+        "Inquiry tracking",
+        "Priority-based routing",
+        "2 monthly improvements",
         "Priority support",
       ],
     },
@@ -103,19 +103,19 @@ const pricingPlans = [
     features: {
       bg: [
         "6+ автоматизации",
-        "AI + multi-channel потоци",
-        "Разширени интеграции",
-        "Месечна growth сесия",
+        "AI по всички канали",
+        "Свързване на всички системи",
+        "Месечна консултация за растеж",
         "Приоритетна поддръжка",
-        "Кратък SLA",
+        "Гарантирано бързо реагиране",
       ],
       en: [
         "6+ automations",
-        "AI + multi-channel flows",
-        "Advanced integrations",
-        "Monthly growth session",
+        "AI across all channels",
+        "Full system integration",
+        "Monthly growth consultation",
         "Priority support",
-        "Short SLA",
+        "Guaranteed fast response",
       ],
     },
     cta: { bg: "Започни с Pro", en: "Start Pro" },
@@ -143,12 +143,12 @@ const faqsEn = [
 ];
 
 const comparisonFeatures = [
-  { name: { bg: "Брой автоматизации", en: "Number of automations" }, start: "1 light", grow: "До 4", pro: "6+" },
-  { name: { bg: "AI Агенти", en: "AI Agents" }, start: false, grow: true, pro: true },
-  { name: { bg: "CRM Връзка", en: "CRM Connection" }, start: "Базова", grow: "Базова", pro: "Разширена" },
-  { name: { bg: "Multi-channel", en: "Multi-channel" }, start: false, grow: false, pro: true },
-  { name: { bg: "Месечни оптимизации", en: "Monthly optimizations" }, start: "Мини отчет", grow: "2 пъти", pro: "Growth сесия" },
-  { name: { bg: "Поддръжка", en: "Support" }, start: "Стандартна", grow: "Приоритетна", pro: "24/7 SLA" },
+  { name: { bg: "Брой автоматизации", en: "Number of automations" }, start: "1", grow: "До 4", pro: "6+" },
+  { name: { bg: "AI помощник", en: "AI assistant" }, start: false, grow: true, pro: true },
+  { name: { bg: "Следене на клиентите", en: "Client tracking" }, start: "Базово", grow: "Базово", pro: "Разширено" },
+  { name: { bg: "Всички канали", en: "All channels" }, start: false, grow: false, pro: true },
+  { name: { bg: "Месечни подобрения", en: "Monthly improvements" }, start: "Отчет", grow: "2 пъти", pro: "Консултация" },
+  { name: { bg: "Поддръжка", en: "Support" }, start: "Стандартна", grow: "Приоритетна", pro: "24/7" },
 ];
 
 export default function PricingPage() {
@@ -249,30 +249,19 @@ export default function PricingPage() {
                     : "Start completely free — 30 days"}
                 </h2>
                 <div className="mb-8 grid grid-cols-2 lg:grid-cols-4 gap-4 text-[17px] font-medium text-[var(--text-sub)]">
-                  <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-full bg-[var(--lime)]/20 flex items-center justify-center">
-                      <Check className="text-[var(--lime)]" size={18} /> 
+                  {[
+                    { bg: "5 снимки", en: "5 photos" },
+                    { bg: "1 видео", en: "1 video" },
+                    { bg: "Лек SEO старт", en: "Basic SEO setup" },
+                    { bg: "Брандинг", en: "Branding" },
+                  ].map((item) => (
+                    <div key={item.bg} className="flex items-center gap-3">
+                      <div className="h-8 w-8 rounded-full bg-[var(--lime)]/20 flex items-center justify-center">
+                        <Check className="text-[var(--lime)]" size={18} />
+                      </div>
+                      {item[locale]}
                     </div>
-                    5 снимки
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-full bg-[var(--lime)]/20 flex items-center justify-center">
-                      <Check className="text-[var(--lime)]" size={18} /> 
-                    </div>
-                    1 видео
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-full bg-[var(--lime)]/20 flex items-center justify-center">
-                      <Check className="text-[var(--lime)]" size={18} /> 
-                    </div>
-                    Лек SEO
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-full bg-[var(--lime)]/20 flex items-center justify-center">
-                      <Check className="text-[var(--lime)]" size={18} /> 
-                    </div>
-                    Брандинг
-                  </div>
+                  ))}
                 </div>
                 <Link href="/contact?source=pricing-page-trial">
                   <Button className="rounded-xl border-none bg-[var(--text-main)] px-8 py-4 text-lg font-bold text-[var(--bg-page)] shadow-[0_10px_30px_rgba(255,255,255,0.1)] transition-all hover:bg-[var(--lime)] hover:text-black hover:scale-105 group-hover:shadow-[0_10px_40px_rgba(182,255,66,0.3)]">
@@ -313,9 +302,9 @@ export default function PricingPage() {
                   )}
 
                   {isPopular && (
-                    <div className="absolute -top-4 right-8">
-                      <span className="rounded-full bg-gradient-to-r from-[var(--violet)] to-[#b185ff] px-4 py-1.5 text-xs font-bold tracking-wider text-white uppercase shadow-lg flex items-center gap-1">
-                        <Sparkles size={14} /> {locale === "bg" ? "Популярен" : "Popular"}
+                    <div className="absolute top-4 right-4 z-20">
+                      <span className="rounded-full bg-gradient-to-r from-[var(--violet)] to-[#b185ff] px-3 py-1.5 text-xs font-bold tracking-wider text-white uppercase shadow-lg flex items-center gap-1">
+                        <Sparkles size={12} /> {locale === "bg" ? "Популярен" : "Popular"}
                       </span>
                     </div>
                   )}

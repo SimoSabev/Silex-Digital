@@ -15,8 +15,8 @@ const caseStudies = [
       en: "50+ emails per day, manual request processing, and lost leads because of slow replies",
     },
     solution: {
-      bg: "AI агент за автоматичен отговор, workflow за класифициране на лийдове, CRM интеграция",
-      en: "AI response agent, lead qualification workflow, and CRM integration",
+      bg: "AI помощник за автоматичен отговор, автоматично разпределение на запитванията, свързване на системите",
+      en: "AI assistant for automatic replies, automated inquiry routing, and system integration",
     },
     results: {
       bg: [
@@ -60,8 +60,8 @@ const caseStudies = [
       en: "Manual bookings, duplicate requests, lost customer data, and disorganized operations",
     },
     solution: {
-      bg: "Автоматична онлайн резервация, SMS потвърждения, синхронизация на данни, CRM за клиенти",
-      en: "Automated online booking, SMS confirmations, data sync, and customer CRM",
+      bg: "Автоматична онлайн резервация, SMS потвърждения, синхронизация на данни, следене на клиентите",
+      en: "Automated online booking, SMS confirmations, data synchronization, and client tracking",
     },
     results: {
       bg: [
@@ -101,12 +101,12 @@ const caseStudies = [
     company: "ZenDesign Studio",
     industry: { bg: "Дизайн и маркетинг", en: "Design and marketing" },
     challenge: {
-      bg: "Сложни проектни workflow-и, пропуснати одобрения, забавяния в доставката",
-      en: "Complex project workflows, missed approvals, and delivery delays",
+      bg: "Сложни проектни процеси, пропуснати одобрения, закъснения в доставката",
+      en: "Complex project processes, missed approvals, and delivery delays",
     },
     solution: {
-      bg: "Custom workflow за одобрение, автоматични напомняния, статус трекинг, клиентски портал",
-      en: "Custom approval workflow, automated reminders, status tracking, and client portal",
+      bg: "Персонализиран процес на одобрение, автоматични напомняния, проследяване на статус, клиентски портал",
+      en: "Custom approval process, automated reminders, status tracking, and client portal",
     },
     results: {
       bg: [
@@ -165,8 +165,8 @@ export default function CaseStudiesPage() {
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-[var(--text-sub)] md:text-xl">
               {locale === "bg"
-                ? "Виж как автоматизацията променя български компании от различни индустрии към по-добро."
-                : "See how automation changes Bulgarian companies from different industries for the better."}
+                ? "Виж как реални бизнеси в България спряха да изпускат клиенти и започнаха да печелят повече — без да работят повече часа."
+                : "See how real Bulgarian businesses stopped losing clients and started earning more — without working more hours."}
             </p>
           </div>
 

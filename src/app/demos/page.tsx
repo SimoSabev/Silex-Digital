@@ -19,10 +19,10 @@ import { useI18n } from "@/lib/i18n";
 const demos = [
   {
     id: "email-automation",
-    title: { bg: "Омниканална автоматизация", en: "Omnichannel automation" },
+    title: { bg: "Автоматизация от всички канали", en: "All-channel automation" },
     description: {
-      bg: "Автоматизирай процесите от социалните мрежи. Приемай поръчки от Viber, Messenger и WhatsApp директно в ERP-то си.",
-      en: "Automate social network workflows. Accept orders from Viber, Messenger and WhatsApp directly into your ERP.",
+      bg: "Приемай поръчки от Viber, Messenger и WhatsApp директно в системата си — без ти да правиш нищо.",
+      en: "Accept orders from Viber, Messenger and WhatsApp directly into your system — without lifting a finger.",
     },
     icon: <MessageSquare className="h-6 w-6" />,
     component: <EmailAutomationDemo />,
@@ -30,10 +30,10 @@ const demos = [
   },
   {
     id: "lead-qualification",
-    title: { bg: "AI класификация на лийдове", en: "AI lead qualification" },
+    title: { bg: "AI разпознаване на запитвания", en: "AI inquiry recognition" },
     description: {
-      bg: "Автоматично оценявай качеството на лийдовете. AI анализира данните и определя приоритет за твоя екип.",
-      en: "Automatically score lead quality. AI analyzes the data and sets priority for your team.",
+      bg: "AI чете свободен текст — имейл или съобщение — и веднага извлича кой е клиентът, какво иска и какъв е бюджетът.",
+      en: "AI reads free-form text — email or message — and instantly extracts who the client is, what they want and their budget.",
     },
     icon: <Zap className="h-6 w-6" />,
     component: <LeadQualificationDemo />,
@@ -52,10 +52,10 @@ const demos = [
   },
   {
     id: "crm",
-    title: { bg: "CRM интеграция", en: "CRM integration" },
+    title: { bg: "Свързване на системи", en: "System integration" },
     description: {
-      bg: "Свържи всичките си системи на едно място. Автоматичен трансфер на данни между платформи.",
-      en: "Connect all systems in one place. Automatic data transfer between platforms.",
+      bg: "Свържи всичките си програми на едно място. Данните се прехвърлят автоматично — без ръчно копиране.",
+      en: "Connect all your tools in one place. Data transfers automatically — no manual copy-pasting.",
     },
     icon: <Database className="h-6 w-6" />,
     badge: { bg: "Скоро", en: "Soon" },
@@ -105,17 +105,17 @@ export default function DemosPage() {
                   : "Interactive demos"}
               </span>
               <h1 className="mb-6 font-[family-name:var(--font-display)] text-4xl leading-tight font-[700] tracking-tight text-[var(--text-main)] md:text-5xl lg:text-[56px]">
-                {locale === "bg" ? "Виж как работят " : "See how "}
+                {locale === "bg" ? "Виж как изглежда " : "See what it looks like "}
                 <span className="text-gradient-hero">
                   {locale === "bg"
-                    ? "нашите автоматизации"
-                    : "our automations work"}
+                    ? "когато всичко работи само"
+                    : "when everything runs itself"}
                 </span>
               </h1>
               <p className="text-lg text-[var(--text-sub)]">
                 {locale === "bg"
-                  ? "Изпробвай всяка услуга директно тук. Кликни върху всяка карта, за да отвориш интерактивната симулация."
-                  : "Try each service directly here. Click on any card to open the interactive simulation."}
+                  ? "Кликни върху всяка карта и виж как изглежда в твоя бизнес — интерактивна симулация, без регистрация."
+                  : "Click on any card and see how it looks in your business — interactive simulation, no sign-up needed."}
               </p>
             </div>
           </LazyReveal>

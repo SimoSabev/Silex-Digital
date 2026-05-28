@@ -21,10 +21,10 @@ import { useI18n } from "@/lib/i18n";
 const services = [
   {
     icon: <Zap size={64} className="text-[var(--violet)]" />,
-    title: { bg: "Workflow автоматизация", en: "Workflow automation" },
+    title: { bg: "Автоматизации", en: "Automations" },
     description: {
-      bg: "Леки автоматизации за ежедневни задачи и по-бърз отговор към клиенти. Спестете време и ресурси с интелигентни работни процеси.",
-      en: "Light automations for daily tasks and faster responses to customer inquiries. Save time and resources with intelligent workflows.",
+      bg: "Имейли, резервации, напомняния — автоматично. Клиентът получава отговор веднага, без ти да правиш нищо. Спестяваш часове всяка седмица и спираш да изпускаш хора.",
+      en: "Emails, bookings, reminders — automatic. The client gets a reply instantly without you doing a thing. Save hours every week and stop missing people.",
     },
     price: { bg: "от 149 €", en: "from 149 EUR" },
     color: "bg-[var(--violet)]/10 border-[var(--violet)]",
@@ -32,26 +32,26 @@ const services = [
     badge: "badge-violet",
     features: {
       bg: [
-        "Lead capture и сортиране",
-        "Автоматични известия",
-        "CRM синхронизация",
-        "Follow-up напомняния",
+        "Автоматични отговори на запитвания",
+        "Потвърждения и напомняния",
+        "Известия в реално време",
+        "Свързване с имейл и телефон",
       ],
       en: [
-        "Lead capture and routing",
-        "Automated alerts",
-        "CRM synchronization",
-        "Follow-up reminders",
+        "Automatic inquiry replies",
+        "Confirmations and reminders",
+        "Real-time notifications",
+        "Email and phone integration",
       ],
     },
     demo: "/demos",
   },
   {
     icon: <Bot size={64} className="text-[var(--coral)]" />,
-    title: { bg: "AI агенти", en: "AI agents" },
+    title: { bg: "AI интеграции", en: "AI Integrations" },
     description: {
-      bg: "Интелигентен първи контакт, който не изпуска запитвания извън работно време. Предложете денонощна поддръжка.",
-      en: "A smart first contact layer that captures inquiries outside business hours. Offer 24/7 support.",
+      bg: "Свързваме AI директно с твоя бизнес — говори с клиентите, разпознава въпроси и те уведомява само когато трябва да действаш лично. Денем и нощем.",
+      en: "We connect AI directly to your business — it talks to clients, reads questions and only alerts you when your personal touch is needed. Day and night.",
     },
     price: { bg: "от 299 €", en: "from 299 EUR" },
     color: "bg-[var(--coral)]/10 border-[var(--coral)]",
@@ -59,70 +59,70 @@ const services = [
     badge: "badge-coral",
     features: {
       bg: [
-        "BG/EN отговори",
-        "Базова квалификация",
-        "Записване на запитвания",
-        "Насочване към екип",
+        "AI помощник на сайта и в чата",
+        "Отговори на BG и EN",
+        "Разпознаване на запитвания",
+        "Уведомления само когато трябва",
       ],
       en: [
-        "BG/EN responses",
-        "Basic qualification",
-        "Inquiry capture",
-        "Team handoff",
+        "AI assistant on website and chat",
+        "BG and EN replies",
+        "Inquiry recognition",
+        "Alerts only when needed",
       ],
     },
     demo: "/demos",
   },
   {
     icon: <Code size={64} className="text-[var(--lime)]" />,
-    title: { bg: "Уеб разработка", en: "Web development" },
+    title: { bg: "Уеб услуги", en: "Web Services" },
     description: {
-      bg: "Професионален сайт и лендинг страници, направени да носят запитвания. Модерна визия и изключителна скорост.",
-      en: "Professional websites and landing pages built to generate inquiries. Modern look and exceptional speed.",
+      bg: "Сайт, мобилно приложение или онлайн платформа — правим го така, че хората да се обадят, не само да разгледат. Бързо, красиво, лесно за управление.",
+      en: "Website, mobile app or online platform — built so people call you, not just browse. Fast, beautiful and easy to manage.",
     },
-    price: { bg: "от 549 €", en: "from 549 EUR" },
+    price: { bg: "от 990 €", en: "from 990 EUR" },
     color: "bg-[var(--lime)]/10 border-[var(--lime)]",
     iconBg: "bg-[var(--lime)]/20 text-[var(--lime)]",
     badge: "badge-lime",
     features: {
       bg: [
-        "Landing страници",
-        "Фирмен сайт",
-        "Основно SEO",
-        "Свързване с форми",
+        "Фирмен сайт и лендинг страници",
+        "Мобилни приложения",
+        "Онлайн платформи и магазини",
+        "Промени сам от телефона",
       ],
       en: [
-        "Landing pages",
-        "Business websites",
-        "Basic SEO",
-        "Lead form integration",
+        "Business sites and landing pages",
+        "Mobile applications",
+        "Online platforms and shops",
+        "Self-manage from your phone",
       ],
     },
     demo: "/demos",
   },
   {
     icon: <Database size={64} className="text-[var(--violet)]" />,
-    title: { bg: "CMS интеграции", en: "CMS integrations" },
+    title: { bg: "Оптимизация", en: "Optimization" },
     description: {
-      bg: "Практични връзки между системи без тежки enterprise бюджети. Оптимизирайте управлението на съдържанието.",
-      en: "Practical system integrations without heavy enterprise budgets. Optimize your content management.",
+      bg: "Подобряваме скоростта, SEO и видимостта на това, което вече имаш. Повече хора те намират в Google — без да правиш нов сайт.",
+      en: "We improve speed, SEO and visibility of what you already have. More people find you on Google — without building a new site.",
     },
-    price: { bg: "от 249 €", en: "from 249 EUR" },
+    price: { bg: "от 199 €", en: "from 199 EUR" },
     color: "bg-[var(--violet)]/10 border-[var(--violet)]/40",
     iconBg: "bg-[var(--violet)]/20 text-[var(--violet)]",
     badge: "bg-[var(--violet)]/10 text-[var(--violet)]",
     features: {
       bg: [
-        "WordPress/CMS setup",
-        "Миграции",
-        "Синхронизация на съдържание",
-        "Кратко обучение",
+        "SEO оптимизация за Google",
+        "Подобрена скорост на зареждане",
+        "Мобилна оптимизация",
+        "Месечен отчет за резултати",
       ],
       en: [
-        "WordPress/CMS setup",
-        "Migrations",
-        "Content synchronization",
-        "Short training",
+        "SEO optimization for Google",
+        "Improved loading speed",
+        "Mobile optimization",
+        "Monthly results report",
       ],
     },
     demo: "/demos",
@@ -150,8 +150,8 @@ const processSteps = [
     icon: <Wrench className="h-8 w-8 text-[var(--violet)]" />,
     title: { bg: "Разработка", en: "Build" },
     description: {
-      bg: "Изграждаме автоматизацията стъпка по стъпка. Редовни update-и за напредъка.",
-      en: "We build your automation step by step with regular progress updates.",
+      bg: "Изграждаме решението стъпка по стъпка. Редовно те информираме за напредъка.",
+      en: "We build the solution step by step and keep you informed of progress.",
     },
   },
   {
@@ -174,13 +174,13 @@ export default function ServicesPage() {
           <div className="mx-auto max-w-4xl text-center">
             <h1 className="text-gradient-hero mb-6 font-display text-3xl leading-tight font-bold sm:text-4xl md:text-[48px] lg:text-[56px]">
               {locale === "bg"
-                ? "Какво можем да автоматизираме"
-                : "What we can automate"}
+                ? "Как помагаме на твоя бизнес"
+                : "How we help your business"}
             </h1>
             <p className="mx-auto mb-8 max-w-2xl font-body text-[18px] text-[var(--text-sub)]">
               {locale === "bg"
-                ? "Създаваме практични решения за бизнеси с ясен бюджет и бързо внедряване. По-малко ръчна работа, повече реални клиенти."
-                : "We build practical solutions for businesses with clear budgets and fast delivery. Less manual work, more real clients."}
+                ? "От автоматичен отговор на клиентски съобщения до пълен сайт или AI помощник. Ясен бюджет, бърза доставка, реални резултати."
+                : "From automatic client message replies to a full website or AI assistant. Clear budget, fast delivery, real results."}
             </p>
           </div>
         </Container>
@@ -276,7 +276,7 @@ export default function ServicesPage() {
                 key={idx}
                 className="relative z-10 mx-auto flex max-w-[200px] flex-col items-center text-center md:max-w-xs"
               >
-                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full border-2 border-[var(--violet)] bg-transparent shadow-xl md:h-20 md:w-20 md:border-4">
+                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full border-2 border-[var(--violet)] bg-[var(--bg-section)] shadow-xl md:h-20 md:w-20 md:border-4">
                   {step.icon}
                 </div>
                 <h3 className="mb-3 font-display text-lg font-bold md:text-2xl">
@@ -298,18 +298,18 @@ export default function ServicesPage() {
             <div className="absolute top-0 right-0 h-64 w-64 translate-x-1/2 -translate-y-1/2 rounded-full bg-white opacity-10 blur-3xl" />
             <h2 className="relative z-10 mb-6 font-display text-4xl font-bold md:text-5xl">
               {locale === "bg"
-                ? "Готови за по-умен старт?"
-                : "Ready for a smarter start?"}
+                ? "Не си сигурен откъде да започнеш?"
+                : "Not sure where to start?"}
             </h2>
             <p className="relative z-10 mx-auto mb-10 max-w-2xl text-xl opacity-90">
               {locale === "bg"
-                ? "Запазете час за безплатна консултация и ще изберем точния пакет според вашия бизнес."
-                : "Book a free consultation and we will choose the right package for your business."}
+                ? "30 минути разговор и ще ти кажем точно кое решение ще донесе най-бързи резултати за твоя бизнес."
+                : "30 minutes and we will tell you exactly which solution will bring the fastest results for your business."}
             </p>
             <div className="relative z-10">
               <Link href="/contact">
                 <Button className="rounded-xl border-none bg-[var(--coral)] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:bg-[#e63e3e] hover:shadow-xl">
-                  {locale === "bg" ? "Започни безплатно" : "Start for free"}
+                  {locale === "bg" ? "Заяви безплатна консултация" : "Request free consultation"}
                 </Button>
               </Link>
             </div>
