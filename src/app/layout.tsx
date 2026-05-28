@@ -1,5 +1,4 @@
-import "@/styles/globals.css" with { type: "css" };
-
+import "@/styles/globals.css";
 import { type Metadata } from "next";
 import { Inter, Lora, JetBrains_Mono } from "next/font/google";
 
@@ -112,7 +111,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="bg" className={`${inter.variable} ${lora.variable} ${jetbrainsMono.variable}`}>
-      <body className="font-body flex min-h-dvh flex-col antialiased bg-[var(--bg-page)] text-[var(--text-main)]">
+      <body className="font-body flex min-h-dvh flex-col antialiased bg-(--bg-page) text-(--text-main)">
         <SmoothScroll>
           <PremiumHybridBackground />
           <ThemeProvider>

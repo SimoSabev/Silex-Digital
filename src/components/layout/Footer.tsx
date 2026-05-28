@@ -147,7 +147,7 @@ export default function Footer() {
                 {t("footer.contact")}
               </h3>
               <ul className="space-y-4">
-                <li className="group font-inter flex items-start gap-3 text-sm text-[var(--text-sub)]">
+                <li className="group font-inter flex items-center gap-3 text-sm text-[var(--text-sub)]">
                   <div className="mt-0.5 rounded-lg bg-[var(--violet)]/10 p-1.5">
                     <MapPin size={14} className="text-[var(--violet)]" />
                   </div>
