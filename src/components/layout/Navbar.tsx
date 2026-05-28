@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -79,16 +80,16 @@ export default function Navbar() {
           <Link
             href="/"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="group flex shrink-0 items-center gap-1 relative overflow-hidden"
+            className="group flex flex-col shrink-0 justify-center relative overflow-hidden"
           >
-            <span
-              className="font-display text-2xl font-[800] tracking-tight text-[var(--violet)] transition-all duration-300 group-hover:tracking-widest"
-            >
-              Silex
-            </span>
-            <span className="font-display bg-gradient-to-r from-[var(--violet)] via-[var(--coral)] to-[var(--lime)] bg-clip-text text-2xl font-[800] tracking-tight text-transparent bg-[length:200%_auto] animate-gradient-shift">
-              Brand
-            </span>
+            <Image 
+              src="/long-logo.png" 
+              alt="Silex Digital" 
+              width={140} 
+              height={35} 
+              className="h-64w-auto object-contain"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}

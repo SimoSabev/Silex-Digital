@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
@@ -69,10 +70,15 @@ export function AdminSidebar({ onLogout }: AdminSidebarProps) {
     <div className="flex flex-col h-full">
       {/* Logo */}
       <div className="flex items-center gap-3 px-6 py-4 border-b border-border">
-        <div className="w-8 h-8 rounded-lg bg-linear-to-br from-primary to-accent flex items-center justify-center">
-          <span className="text-white font-bold text-lg">S</span>
-        </div>
-        <span className="text-xl font-bold text-foreground">Silex Admin</span>
+        <Link href="/admin" className="flex items-center relative">
+          <Image 
+            src="/long-logo.png" 
+            alt="Silex Admin" 
+            width={120} 
+            height={30} 
+            className="h-44 w-auto object-contain"
+          />
+        </Link>
       </div>
 
       {/* Navigation */}

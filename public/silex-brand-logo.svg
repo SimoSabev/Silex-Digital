@@ -1,0 +1,96 @@
+<svg
+  width="1024"
+  height="1024"
+  viewBox="0 0 1024 1024"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+
+    <linearGradient
+      id="silexGradient"
+      x1="280"
+      y1="180"
+      x2="760"
+      y2="860"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="40%" stop-color="#EC4899"/>
+      <stop offset="72%" stop-color="#FF9F1C"/>
+      <stop offset="100%" stop-color="#F5EA00"/>
+    </linearGradient>
+
+    <filter
+      id="glow"
+      x="-50%"
+      y="-50%"
+      width="200%"
+      height="200%"
+    >
+      <feGaussianBlur
+        stdDeviation="24"
+        result="blur"
+      />
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+  </defs>
+
+  <rect
+    width="1024"
+    height="1024"
+    fill="#04040F"
+  />
+
+  <g filter="url(#glow)">
+
+    <!-- Main S -->
+    <path
+      d="
+        M705 185
+        C630 140 525 150 430 225
+        C315 315 255 430 260 560
+        C265 680 345 790 470 885
+        C565 955 700 940 790 850
+        C875 765 900 630 845 515
+        C800 420 715 365 620 325
+        L545 295
+        C620 240 675 205 705 185
+        Z
+
+        M515 250
+        C590 250 655 285 705 350
+        C770 435 790 555 760 665
+        C730 770 655 840 555 860
+        C475 875 400 835 345 760
+        C285 680 275 580 305 485
+        C345 365 425 280 515 250
+        Z
+      "
+      fill="url(#silexGradient)"
+      fill-rule="evenodd"
+    />
+
+    <!-- Lightning Cut -->
+    <path
+      d="
+        M520 390
+        L430 480
+        L485 535
+        L425 595
+        L540 710
+        L640 610
+        L585 555
+        L645 495
+        Z
+      "
+      fill="#04040F"
+    />
+
+  </g>
+
+</svg>

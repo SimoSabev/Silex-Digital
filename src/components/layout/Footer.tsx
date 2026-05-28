@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
@@ -51,43 +52,51 @@ export default function Footer() {
     <footer className="relative w-full overflow-hidden border-t border-[var(--border)] bg-[var(--bg-section)]">
       <div className="relative z-10 w-full py-16 sm:py-20 lg:py-24">
         <div className="mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12">
-          <div className="grid grid-cols-1 items-start gap-8 sm:gap-10 md:grid-cols-2 md:gap-12 lg:grid-cols-4 lg:gap-16">
-            {/* Brand */}
+          <div className="flex flex-col gap-16 lg:gap-20">
+            {/* Top Row: Brand & Socials */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="space-y-6"
+              className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 pb-12 border-b border-[var(--border)]"
             >
               <Link
                 href="/"
-                className="font-space inline-block text-2xl font-[800] tracking-tight"
+                className="inline-block relative -ml-2"
               >
-                <span className="text-[var(--text-main)]">Silex</span>
-                <span className="bg-gradient-to-r from-[var(--violet)] to-[var(--coral)] bg-clip-text text-transparent">
-                  Brand
-                </span>
+                <Image 
+                  src="/long-logo.png" 
+                  alt="Silex Digital" 
+                  width={288} 
+                  height={72} 
+                  className="h-48 sm:h-60 md:h-72 w-auto object-contain"
+                  priority
+                />
               </Link>
-              <p className="font-inter text-sm leading-relaxed text-[var(--text-sub)]">
-                {t("footer.description")}
-              </p>
-              <div className="flex gap-3">
-                {socials.map((social) => (
-                  <motion.a
-                    key={social.label}
-                    href={social.href}
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="rounded-xl border border-[var(--border)] bg-[var(--bg-card)] p-3 text-[var(--text-sub)] shadow-sm transition-all duration-300 hover:border-[var(--violet)] hover:text-[var(--violet)]"
-                    aria-label={social.label}
-                  >
-                    <social.icon />
-                  </motion.a>
-                ))}
+              <div className="flex flex-col lg:items-end gap-6 max-w-sm lg:max-w-md">
+                <p className="font-inter text-sm leading-relaxed text-[var(--text-sub)] lg:text-right">
+                  {t("footer.description")}
+                </p>
+                <div className="flex gap-3">
+                  {socials.map((social) => (
+                    <motion.a
+                      key={social.label}
+                      href={social.href}
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="rounded-xl border border-[var(--border)] bg-[var(--bg-card)] p-3 text-[var(--text-sub)] shadow-sm transition-all duration-300 hover:border-[var(--violet)] hover:text-[var(--violet)]"
+                      aria-label={social.label}
+                    >
+                      <social.icon />
+                    </motion.a>
+                  ))}
+                </div>
               </div>
             </motion.div>
 
+            {/* Bottom Row: Links Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-start gap-8 sm:gap-10 lg:gap-16">
             {/* Quick Links */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -179,18 +188,19 @@ export default function Footer() {
                 </li>
               </ul>
             </motion.div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Bottom Bar */}
       <div className="w-full border-t border-[var(--border)] bg-transparent">
-        <div className="mx-auto flex w-full flex-col items-center justify-between gap-4 px-4 py-6 sm:flex-row sm:px-6 sm:py-7 md:px-8 lg:px-12">
+        <div className="mx-auto flex w-full flex-col items-center justify-center gap-4 px-4 py-6 sm:flex-row sm:px-6 sm:py-7 md:px-8 lg:px-12">
           <p className="font-inter text-sm text-[var(--text-muted)]">
             © {new Date().getFullYear()} SilexBrand. {t("footer.rights")}
           </p>
           <div className="flex gap-6">
-            <Link
+            {/* <Link
               href="/privacy"
               className="font-inter text-sm text-[var(--text-muted)] transition-colors duration-300 hover:text-[var(--violet)]"
             >
@@ -201,7 +211,7 @@ export default function Footer() {
               className="font-inter text-sm text-[var(--text-muted)] transition-colors duration-300 hover:text-[var(--violet)]"
             >
               {t("footer.terms")}
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>
