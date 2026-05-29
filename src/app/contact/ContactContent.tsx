@@ -165,12 +165,12 @@ export default function ContactContent() {
               {locale === "bg" ? "Свържи се с нас" : "Contact us"}
             </span>
             <h1 className="mb-6 font-[family-name:var(--font-display)] text-4xl leading-tight font-[700] tracking-tight md:text-5xl lg:text-[56px]">
-              {locale === "bg" ? "Нека спрем да изпускаш клиенти" : "Let's stop you losing clients"}
+              {locale === "bg" ? "Не изпускай повече клиенти - Свържи се с нас!" : "Don't miss any more clients - Contact Us"}
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-[var(--text-sub)] md:text-xl">
               {locale === "bg"
-                ? "30 минути разговор, без ангажимент. Ще видиш точно как изглежда решение за твоя бизнес."
-                : "30 minutes, no commitment. You'll see exactly what a solution for your business looks like."}
+                ? "30 минути разговор, без ангажимент. Ще предложим решение за твоя бизнес."
+                : "30 minutes, no commitment. We will reccomend solution for your business."}
             </p>
           </div>
 

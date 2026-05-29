@@ -55,10 +55,10 @@ const stats = [
   },
   {
     icon: <Users className="h-5 w-5" />,
-    value: "120+",
+    value: "2x",
     label: {
-      bg: "бизнеса отговарят по-бързо",
-      en: "businesses respond faster",
+      bg: "по-бърз отговор",
+      en: "faster response",
     },
   },
   {
@@ -189,8 +189,8 @@ export default function HomeContent() {
                 <div className="badge-violet mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2 font-medium">
                   <span className="animate-pulse-dot h-2 w-2 rounded-full bg-[var(--violet)]" />
                   {locale === "bg"
-                    ? "За малкия бизнес в България"
-                    : "Built for Bulgarian businesses"}
+                    ? "За малките исредни бизнеси"
+                    : "Built for small and medium businesses"}
                 </div>
               </AnimatedSection>
 
@@ -275,7 +275,7 @@ export default function HomeContent() {
       </section>
 
       {/* Social Proof Bar */}
-      <section className="flex w-full items-center overflow-hidden border-y border-[var(--border)] bg-[var(--bg-section)] py-4">
+      {/* <section className="flex w-full items-center overflow-hidden border-y border-[var(--border)] bg-[var(--bg-section)] py-4">
         <Container>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <span className="font-display text-sm font-bold tracking-wider text-[var(--text-sub)] uppercase">
@@ -283,9 +283,9 @@ export default function HomeContent() {
                 ? "247+ бизнеса вече не изпускат клиенти"
                 : "247+ businesses already stop missing clients"}
             </span>
-            <div className="relative h-6 flex-1 overflow-hidden">
+            <div className="relative h-6 flex-1 overflow-hidden"> */}
               {/* Duplicated content for seamless marquee loop */}
-              <div className="absolute flex animate-[marquee_20s_linear_infinite] items-center gap-2 text-sm font-medium whitespace-nowrap text-[var(--text-main)]">
+              {/* <div className="absolute flex animate-[marquee_20s_linear_infinite] items-center gap-2 text-sm font-medium whitespace-nowrap text-[var(--text-main)]">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-[var(--lime)]" />
                 <span>{locale === "bg" ? "Ресторант в София — получи 3 резервации тази нощ" : "Restaurant in Sofia — got 3 bookings overnight"}</span>
                 <span className="mx-8 text-[var(--text-muted)]">•</span>
@@ -308,7 +308,7 @@ export default function HomeContent() {
             </div>
           </div>
         </Container>
-      </section>
+      </section> */}
 
       {/* Problem -> Solution */}
       <section className="relative bg-[var(--bg-section)] py-16 md:py-[120px] lg:py-[160px]">
@@ -376,7 +376,7 @@ export default function HomeContent() {
                     <Sparkles className="h-6 w-6 text-[var(--lime)]" />
                   </div>
                   <h2 className="font-display text-2xl font-[800] text-[var(--lime-hover)]">
-                    {locale === "bg" ? "С SilexBrand" : "With SilexBrand"}
+                    {locale === "bg" ? "След SilexBrand" : "After SilexBrand"}
                   </h2>
                 </div>
                 <ul className="space-y-4">
