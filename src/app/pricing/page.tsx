@@ -20,29 +20,31 @@ const availableAddons: Addon[] = [
 const pricingPlans = [
   {
     name: "Start",
-    basePrice: 149,
-    nextTierTarget: 299,
+    basePrice: 49,
+    setupFee: 690,
+    aiCorePrice: 0,
+    nextTierTarget: 199,
     nextTierName: "Grow",
     period: { bg: "/месец", en: "/month" },
     currency: { bg: "€", en: "EUR" },
     description: {
-      bg: "За микробизнеси 1-3 човека",
-      en: "For micro businesses with 1-3 people",
+      bg: "Уеб Основа & Локално търсене за перфектно присъствие",
+      en: "Web Foundation & Local Search for perfect search visibility",
     },
     features: {
       bg: [
-        "1 автоматичен отговор",
-        "Записване на запитвания",
-        "Известия по имейл",
-        "Месечен отчет за резултати",
-        "Стандартна поддръжка",
+        "Професионален сайт (Код или CMS)",
+        "Ултра-бързо зареждане",
+        "Google Карти & Локално SEO",
+        "Edge хостинг & SSL защита",
+        "Включена 24/7 поддръжка по имейл",
       ],
       en: [
-        "1 automatic reply flow",
-        "Inquiry capture",
-        "Email notifications",
-        "Monthly results report",
-        "Standard support",
+        "Professional site (Code or CMS)",
+        "Ultra-fast loading speed",
+        "Google Maps & Local SEO",
+        "Edge hosting & SSL security",
+        "24/7 standard email support",
       ],
     },
     cta: { bg: "Избери Start", en: "Select Start" },
@@ -52,94 +54,196 @@ const pricingPlans = [
     popular: false,
     color: "var(--lime)",
     bgColor: "rgba(182, 255, 66, 0.1)",
+    audit: {
+      bg: {
+        setup: [
+          { label: "Професионална изработка (код/CMS)", value: "300 €" },
+          { label: "Бизнес текстове и копирайтинг", value: "150 €" },
+          { label: "Google Карти и GEO/SEO настройки", value: "140 €" },
+          { label: "Защита и сигурност (GDPR)", value: "100 €" },
+        ],
+        monthly: [
+          { label: "Хостинг и SSL сертификат", value: "15 €" },
+          { label: "Google Maps поддръжка", value: "20 €" },
+          { label: "Сигурност и резервни копия", value: "14 €" },
+        ],
+      },
+      en: {
+        setup: [
+          { label: "Design & web engineering (code/CMS)", value: "300 €" },
+          { label: "Business Copywriting & Content", value: "150 €" },
+          { label: "Google Maps & SEO Metadata Schema", value: "140 €" },
+          { label: "Security Hardening & GDPR Privacy", value: "100 €" },
+        ],
+        monthly: [
+          { label: "Secure Edge Hosting & SSL Certificate", value: "15 €" },
+          { label: "Local Google Maps SEO Maintenance", value: "20 €" },
+          { label: "Backups, Speed & Core security checks", value: "14 €" },
+        ],
+      },
+    },
   },
   {
     name: "Grow",
-    basePrice: 299,
-    nextTierTarget: 549,
+    basePrice: 199,
+    setupFee: 290,
+    aiCorePrice: 49,
+    nextTierTarget: 249,
     nextTierName: "Pro",
     period: { bg: "/месец", en: "/month" },
     currency: { bg: "€", en: "EUR" },
     description: {
-      bg: "За локални бизнеси с постоянни запитвания",
-      en: "For local businesses with steady inquiries",
+      bg: "AI Дигитален секретар във Viber & вашия сайт",
+      en: "AI Smart Autopilot in Viber & your website",
     },
     features: {
       bg: [
-        "До 4 автоматизации",
-        "AI помощник за клиенти",
-        "Следене на запитванията",
-        "Разпределение по важност",
-        "2 подобрения месечно",
-        "Приоритетна поддръжка",
+        "AI асистент денонощно (24/7)",
+        "Интеграция във Viber & Уебсайт",
+        "Памет на асистента (цени/каталог)",
+        "Автоматично записване на часове",
+        "Сейф за Клиенти (CRM база)",
+        "Включена поддръжка по имейл & чат",
       ],
       en: [
-        "Up to 4 automations",
-        "AI client assistant",
-        "Inquiry tracking",
-        "Priority-based routing",
-        "2 monthly improvements",
-        "Priority support",
+        "24/7 AI chat receptionist",
+        "Viber & Web Widget integration",
+        "Assistant memory (catalog/prices)",
+        "Automated calendar booking",
+        "Secure Client Vault CRM database",
+        "Priority email & chat support",
       ],
     },
-    cta: { bg: "Най-търсен - Grow", en: "Most popular - Grow" },
+    cta: { bg: "Най-желан - Grow", en: "Most popular - Grow" },
     ctaVariant: "primary" as const,
     popular: true,
     intent: "grow-pack",
     pack: "grow",
     color: "var(--violet)",
     bgColor: "rgba(107, 45, 219, 0.1)",
+    audit: {
+      bg: {
+        setup: [
+          { label: "Обучение и характер на асистента", value: "150 €" },
+          { label: "База от знания (каталози и цени)", value: "90 €" },
+          { label: "Интеграция с Viber и Уебсайт", value: "50 €" },
+        ],
+        monthly: [
+          { label: "Информационно табло и анализи", value: "50 €" },
+          { label: "Сейф за Клиенти (CRM база)", value: "49 €" },
+          { label: "Платформи и конектори лицензи", value: "50 €" },
+        ],
+        aiCore: [
+          { label: "API разход към OpenAI/Claude", value: "24 €" },
+          { label: "Седмични инженерни проверки за точност", value: "25 €" },
+        ],
+      },
+      en: {
+        setup: [
+          { label: "AI Persona & Character Training", value: "150 €" },
+          { label: "Knowledge Base Compiler (catalogs/rules)", value: "90 €" },
+          { label: "Viber & Web integration channels", value: "50 €" },
+        ],
+        monthly: [
+          { label: "Interactive Analytics Dashboard", value: "50 €" },
+          { label: "Secure Client Vault (CRM database)", value: "49 €" },
+          { label: "Connector licenses & APIs hosting", value: "50 €" },
+        ],
+        aiCore: [
+          { label: "LLM API usage budget", value: "24 €" },
+          { label: "Weekly human auditing & prompt tuning", value: "25 €" },
+        ],
+      },
+    },
   },
   {
     name: "Pro",
-    basePrice: 549,
+    basePrice: 249,
+    setupFee: 990,
+    aiCorePrice: 49,
     nextTierTarget: null,
     period: { bg: "/месец", en: "/month" },
     currency: { bg: "€", en: "EUR" },
     description: {
-      bg: "За активен ръст и по-висок обем",
-      en: "For active growth and higher volume",
+      bg: "Дигитален Автопилот: Премиум сайт + AI Асистент",
+      en: "Digital Autopilot: Premium Website & AI Assistant",
     },
     features: {
       bg: [
-        "6+ автоматизации",
-        "AI по всички канали",
-        "Свързване на всички системи",
+        "Цялостен нов премиум уебсайт",
+        "AI по всички чат канали (WhatsApp/Viber)",
+        "Синхронизация в реално време",
+        "Сейф за Клиенти (CRM база)",
+        "Лична техническа поддръжка",
         "Месечна консултация за растеж",
-        "Приоритетна поддръжка",
-        "Гарантирано бързо реагиране",
       ],
       en: [
-        "6+ automations",
-        "AI across all channels",
-        "Full system integration",
+        "Custom premium website build",
+        "Viber, WhatsApp & Messenger AI",
+        "Real-time catalog & stock sync",
+        "Full Secure Client Vault CRM",
+        "Dedicated developer support",
         "Monthly growth consultation",
-        "Priority support",
-        "Guaranteed fast response",
       ],
     },
-    cta: { bg: "Започни с Pro", en: "Start Pro" },
+    cta: { bg: "Избери Pro", en: "Select Pro" },
     ctaVariant: "secondary" as const,
     intent: "pro-pack",
     pack: "pro",
     popular: false,
     color: "var(--coral)",
     bgColor: "rgba(255, 99, 71, 0.1)",
+    audit: {
+      bg: {
+        setup: [
+          { label: "Сайт с резервации и е-търговия", value: "400 €" },
+          { label: "Обучение на AI и векторна памет", value: "250 €" },
+          { label: "Връзка Viber + Messenger + Web", value: "200 €" },
+          { label: "Премиум SEO и локално присъствие", value: "140 €" },
+        ],
+        monthly: [
+          { label: "Високоскоростен хостинг", value: "80 €" },
+          { label: "Панел за управление и CRM", value: "69 €" },
+          { label: "Месечна техническа поддръжка", value: "100 €" },
+        ],
+        aiCore: [
+          { label: "API разходи и лицензи за токени", value: "29 €" },
+          { label: "Синхронизиране на каталози в реално време", value: "20 €" },
+        ],
+      },
+      en: {
+        setup: [
+          { label: "Enterprise E-Commerce UI build", value: "400 €" },
+          { label: "AI Agent & High-speed Vector Memory", value: "250 €" },
+          { label: "Facebook, Viber & Web connection setup", value: "200 €" },
+          { label: "Premium SEO & local positioning", value: "140 €" },
+        ],
+        monthly: [
+          { label: "Premium Cluster Edge Hosting SLA", value: "80 €" },
+          { label: "Multi-User CRM dashboard database", value: "69 €" },
+          { label: "Continuous developer modifications & copy", value: "100 €" },
+        ],
+        aiCore: [
+          { label: "LLM token API allocation", value: "29 €" },
+          { label: "Real-time Vector Database sync engine", value: "20 €" },
+        ],
+      },
+    },
   },
 ];
 
 const faqsBg = [
-  { q: "Има ли договор?", a: "Не изискваме договор за първите 3 месеца. След това работим с месечни условия и 30 дни предизвестие." },
-  { q: "Включена ли е настройката?", a: "Да, включена е пълна настройка и интеграция. За Enterprise получаваш dedicated екип." },
-  { q: "Мога ли да променя плана?", a: "Да, можеш да ъпгрейднеш или да намалиш плана всеки месец без допълнителни такси." },
-  { q: "Какво включва поддръжката?", a: "Всички планове включват поддръжка. Professional е с приоритет, Enterprise е с разширена ежедневна поддръжка." },
+  { q: "Какво е Алокация на AI Ядрото?", a: "Тази такса покрива директните разходи към световните сървъри (API) за всяко съобщение на вашите клиенти, както и седмичните проверки от нашите инженери за 100% точност, за да гарантираме, че вашият асистент никога не бърка цените." },
+  { q: "Има ли скрити условия?", a: "Не, ценообразуването е брутално прозрачно. Всички разходи за дизайн, код, SEO поддръжка и AI лицензи са описани до стотинка." },
+  { q: "Мога ли да променя плана?", a: "Да, можете да преминете на по-висок или по-нисък месечен план по всяко време без никакви допълнителни такси или глоби." },
+  { q: "Има ли дългосрочен договор?", a: "Не изискваме дългосрочни обвързващи договори. Работим с месечни условия и 30-дневно предизвестие." },
 ];
 
 const faqsEn = [
-  { q: "Is there a contract?", a: "No contract is required for the first 3 months. After that we work with monthly terms and a 30-day notice period." },
-  { q: "Is setup included?", a: "Yes, full setup and integration are included. Enterprise includes a dedicated team." },
-  { q: "Can I change plans?", a: "Yes, you can upgrade or downgrade your plan monthly without extra fees." },
-  { q: "What support is included?", a: "All plans include support. Professional has priority support, Enterprise has extended daily support." },
+  { q: "What is AI Core Allocation?", a: "This fee directly covers raw token usage (APIs) on neural networks like Claude and GPT-4 on behalf of your customers, as well as weekly prompt tuning by our engineers to ensure 100% accurate responses." },
+  { q: "Are there any hidden terms?", a: "No, our pricing is brutally transparent. All costs for design, custom code, hosting, Local SEO, and AI licenses are detailed to the cent." },
+  { q: "Can I change plans?", a: "Yes, you can upgrade or downgrade your monthly plan at any time without extra fees or penalties." },
+  { q: "Is there a long-term contract?", a: "No binding contracts are required. We operate on simple monthly terms with a standard 30-day notice period." },
 ];
 
 const comparisonFeatures = [
@@ -161,6 +265,20 @@ export default function PricingPage() {
     Grow: [],
     Pro: [],
   });
+
+  // State to track expanded financial audits per plan
+  const [activeAudits, setActiveAudits] = useState<Record<string, boolean>>({
+    Start: false,
+    Grow: false,
+    Pro: false,
+  });
+
+  const toggleAudit = (planName: string) => {
+    setActiveAudits((prev) => ({
+      ...prev,
+      [planName]: !prev[planName],
+    }));
+  };
 
   const faqs = locale === "bg" ? faqsBg : faqsEn;
 
@@ -318,7 +436,7 @@ export default function PricingPage() {
                       {plan.description[locale]}
                     </p>
                     
-                    <div className="flex flex-col items-start justify-center gap-1 min-h-[90px]">
+                    <div className="flex flex-col items-start justify-center gap-2 min-h-[90px] w-full">
                       <div className="flex items-baseline gap-2">
                         <AnimatePresence mode="popLayout">
                           <motion.span
@@ -338,6 +456,93 @@ export default function PricingPage() {
                         </span>
                       </div>
                       
+                      {/* Setup and AI Core Fees */}
+                      <div className="flex flex-col gap-1 text-xs font-bold text-[var(--text-sub)] mt-1">
+                        <div>
+                          <span className="text-[var(--text-muted)]">{locale === "bg" ? "Такса изработка: " : "Setup fee: "}</span>
+                          <span style={{ color: plan.color }}>+{plan.setupFee} €</span>
+                          <span className="text-[var(--text-muted)] font-medium"> {locale === "bg" ? "(еднократно)" : "(one-time)"}</span>
+                        </div>
+                        {plan.aiCorePrice > 0 && (
+                          <div>
+                            <span className="text-[var(--text-muted)]">{locale === "bg" ? "Алокация на AI Ядрото: " : "AI Core Allocation: "}</span>
+                            <span className="text-[var(--lime)]">+{plan.aiCorePrice} €</span>
+                            <span className="text-[var(--text-muted)] font-medium"> {locale === "bg" ? "/месец" : "/month"}</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Financial Audit Trigger */}
+                      <button
+                        onClick={() => toggleAudit(plan.name)}
+                        className="mt-3 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors cursor-pointer"
+                      >
+                        <span>{activeAudits[plan.name] ? (locale === "bg" ? "🔽 Скрий одита" : "🔽 Hide audit") : (locale === "bg" ? "🔍 Виж финансов одит" : "🔍 View financial audit")}</span>
+                      </button>
+
+                      {/* Financial Audit Details Panel */}
+                      <AnimatePresence>
+                        {activeAudits[plan.name] && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                            animate={{ opacity: 1, height: "auto", marginTop: 12 }}
+                            exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                            className="w-full bg-[var(--bg-section)] border border-[var(--border)] rounded-xl p-4 text-xs font-medium relative z-10 shadow-inner overflow-hidden text-left"
+                          >
+                            <h4 className="text-[11px] font-extrabold uppercase tracking-wider text-[var(--text-muted)] mb-3 pb-1 border-b border-[var(--border)]">
+                              {locale === "bg" ? "Финансов одит (Къде отива всяко €)" : "Financial Audit (Where the money goes)"}
+                            </h4>
+                            
+                            {/* Setup Fee Audit */}
+                            <div className="mb-3">
+                              <h5 className="font-extrabold mb-1.5 uppercase tracking-wide text-[10px]" style={{ color: plan.color }}>
+                                {locale === "bg" ? `Еднократна такса (${plan.setupFee} €)` : `Setup Fee (${plan.setupFee} €)`}
+                              </h5>
+                              <div className="space-y-1">
+                                {plan.audit[locale].setup.map((item: any, i: number) => (
+                                  <div key={i} className="flex items-center justify-between text-[11px] text-[var(--text-sub)]">
+                                    <span>{item.label}</span>
+                                    <span className="font-bold text-[var(--text-main)]">{item.value}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+
+                            {/* Monthly Base Audit */}
+                            <div className="mb-3">
+                              <h5 className="font-extrabold mb-1.5 uppercase tracking-wide text-[10px]" style={{ color: plan.color }}>
+                                {locale === "bg" ? `Месечен абонамент (${plan.basePrice} €/мес)` : `Monthly Subscription (${plan.basePrice} €/mo)`}
+                              </h5>
+                              <div className="space-y-1">
+                                {plan.audit[locale].monthly.map((item: any, i: number) => (
+                                  <div key={i} className="flex items-center justify-between text-[11px] text-[var(--text-sub)]">
+                                    <span>{item.label}</span>
+                                    <span className="font-bold text-[var(--text-main)]">{item.value}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+
+                            {/* AI Core Audit if applicable */}
+                            {plan.aiCorePrice > 0 && plan.audit[locale].aiCore && (
+                              <div>
+                                <h5 className="font-extrabold mb-1.5 uppercase tracking-wide text-[10px] text-[var(--lime)]">
+                                  {locale === "bg" ? `Алокация на AI Ядрото (${plan.aiCorePrice} €/мес)` : `AI Core Allocation (${plan.aiCorePrice} €/mo)`}
+                                </h5>
+                                <div className="space-y-1">
+                                  {plan.audit[locale].aiCore.map((item: any, i: number) => (
+                                    <div key={i} className="flex items-center justify-between text-[11px] text-[var(--text-sub)]">
+                                      <span>{item.label}</span>
+                                      <span className="font-bold text-[var(--text-main)]">{item.value}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
                       {/* Price Ladder Upsell notification */}
                       <AnimatePresence>
                         {isCloseToNext && (

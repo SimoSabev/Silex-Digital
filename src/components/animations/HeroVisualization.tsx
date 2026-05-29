@@ -25,7 +25,7 @@ const CONVERSATIONS: Conversation[] = [
   { id: 1, initials: "MK", name: "Maria K.",  channel: CHANNELS[0]!, msg: "Имате ли свободна дата за утре?",   reply: "Здравей! Имаме от 10:00 до 15:00. Кое е удобно?",              time: "0.8s" },
   { id: 2, initials: "SP", name: "Stefan P.", channel: CHANNELS[1]!, msg: "Колко струва стандартният пакет?",  reply: "Grow пакетът е 599 лв/мес — AI агент + автоматизации.",       time: "1.1s" },
   { id: 3, initials: "ET", name: "Elena T.",  channel: CHANNELS[2]!, msg: "Искам демо на вашата платформа.",   reply: "Резервирах 30-мин. демо за утре в 11:00. Очаквайте!",          time: "0.6s" },
-  { id: 4, initials: "BV", name: "Boris V.",  channel: CHANNELS[3]!, msg: "Мога ли да интегрирам с моя CRM?", reply: "Да! Поддържаме HubSpot, Salesforce и Pipedrive от кутията.",   time: "0.9s" },
+  { id: 4, initials: "BV", name: "Boris V.",  channel: CHANNELS[3]!, msg: "Мога ли да интегрирам с моя CRM?", reply: "Да! Поддържаме всякакви интеграции.",   time: "0.9s" },
 ];
 
 const TOASTS = [

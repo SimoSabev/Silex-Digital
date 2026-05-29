@@ -21,7 +21,6 @@ export default function Navbar() {
     { label: t("nav.services"), href: "/services" },
     { label: t("nav.demos"), href: "/demos" },
     { label: t("nav.pricing"), href: "/pricing" },
-    { label: t("nav.caseStudies"), href: "/case-studies" },
   ];
 
   useEffect(() => {

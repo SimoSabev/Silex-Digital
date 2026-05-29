@@ -194,18 +194,6 @@ export const pageSeo = {
       "automation portfolio Bulgaria",
     ],
   },
-  caseStudies: {
-    title: "Казуси | Как автоматизацията промени тези бизнеси | SilexBrand",
-    description:
-      "Реални казуси: как малкия бизнес в България спести часове работа и привлече повече клиенти с AI автоматизация от SilexBrand. Измерими резултати.",
-    keywords: [
-      "казуси автоматизация",
-      "резултати AI чатбот бизнес",
-      "успешни проекти автоматизация",
-      "бизнес трансформация автоматизация",
-      "case studies business automation Bulgaria",
-    ],
-  },
 };
 
 export const organizationSchema = {

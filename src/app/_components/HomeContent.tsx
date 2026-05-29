@@ -49,73 +49,52 @@ const HowItWorksVisualization = dynamic(
   { ssr: false, loading: () => <div className="min-h-[320px] rounded-xl animate-pulse bg-[var(--bg-card)]" /> },
 );
 
-const stats = [
-  {
-    icon: <Clock className="h-5 w-5" />,
-    value: "15+",
-    label: {
-      bg: "часа спестени всеки месец",
-      en: "hours saved every month",
-    },
-  },
-  {
-    icon: <Users className="h-5 w-5" />,
-    value: "2x",
-    label: {
-      bg: "по-бърз отговор",
-      en: "faster response",
-    },
-  },
-  {
-    icon: <TrendingUp className="h-5 w-5" />,
-    value: "40%",
-    label: {
-      bg: "по-малко изпуснати клиенти",
-      en: "fewer missed clients",
-    },
-  },
-];
+const heroStats = [
+  { icon: <Clock className="h-5 w-5" />, valueKey: "hero.stat1Value", labelKey: "hero.stat1Label" },
+  { icon: <Users className="h-5 w-5" />, valueKey: "hero.stat2Value", labelKey: "hero.stat2Label" },
+  { icon: <TrendingUp className="h-5 w-5" />, valueKey: "hero.stat3Value", labelKey: "hero.stat3Label" },
+] as const;
 
 const services = [
   {
-    icon: <Zap className="h-6 w-6" />,
-    title: { bg: "Автоматизации", en: "Automations" },
+    icon: <Code className="h-6 w-6" />,
+    title: { bg: "Вашето лице онлайн", en: "Your face online" },
     description: {
-      bg: "Имейли, резервации, напомняния, потвърждения — всичко се случва само. Клиентът получава отговор веднага, ти не пипаш нищо.",
-      en: "Emails, bookings, reminders, confirmations — everything happens on its own. The client gets a reply instantly, you don't touch a thing.",
+      bg: "Сайт и Google, с които брандът ви изглежда сериозно и ви намират хората около вас — не шаблон, а решение за вашия бизнес.",
+      en: "A website and Google presence that make your brand look serious and get you found locally — not a template, a fit for your business.",
     },
-    price: { bg: "от 149 €/месец", en: "from 149 EUR/month" },
+    price: { bg: "от 690 € старт + 49 €/мес", en: "from 690 EUR setup + 49 EUR/mo" },
     color: "blue" as const,
   },
   {
-    icon: <Bot className="h-6 w-6" />,
-    title: { bg: "AI интеграции", en: "AI Integrations" },
+    icon: <Zap className="h-6 w-6" />,
+    title: { bg: "Да ви намират в града", en: "Found in your city" },
     description: {
-      bg: "Свързваме AI с твоя бизнес — отговаря на клиенти, разпознава запитвания и те уведомява само когато трябва да действаш лично.",
-      en: "We connect AI to your business — it replies to clients, reads inquiries and only pings you when your personal touch is needed.",
+      bg: "Когато някой търси услугата ви наблизо — излизате в Google. Подходящо за фирми, които живеят от местни клиенти.",
+      en: "When someone nearby searches for what you offer — you show up on Google. For businesses that depend on local clients.",
     },
-    price: { bg: "от 299 €/месец", en: "from 299 EUR/month" },
+    price: { bg: "включено в уеб услугите", en: "included with web services" },
+    color: "orange" as const,
+  },
+  {
+    icon: <Bot className="h-6 w-6" />,
+    title: { bg: "Отговори, които звучат като вас", en: "Replies that sound like you" },
+    description: {
+      bg: "Помощник във Viber и на сайта — знае цените ви, отговаря бързо и записва час. За бизнеси, където всеки разговор е пари.",
+      en: "A helper on Viber and your site — knows your prices, replies fast, books appointments. For businesses where every chat is money.",
+    },
+    price: { bg: "от 290 € старт + 199 €/мес", en: "from 290 EUR setup + 199 EUR/mo" },
     color: "green" as const,
   },
   {
-    icon: <Code className="h-6 w-6" />,
-    title: { bg: "Уеб услуги", en: "Web Services" },
+    icon: <Sparkles className="h-6 w-6" />,
+    title: { bg: "Пълен образ + продажби", en: "Full brand + sales" },
     description: {
-      bg: "Сайт, приложение или онлайн платформа — правим го бързо, красиво и така, че хората да се обадят, не само да разгледат.",
-      en: "Website, app or online platform — built fast, beautiful and designed so people call you, not just browse.",
+      bg: "Когато ви трябва и силен бранд онлайн, и отговори денонощно — съчетаваме сайт, Google и Viber в едно решение за вас.",
+      en: "When you need both a strong online brand and round-the-clock replies — we combine site, Google, and Viber in one solution built for you.",
     },
-    price: { bg: "от 990 € старт", en: "from 990 EUR" },
+    price: { bg: "от 990 € старт + 249 €/мес", en: "from 990 EUR setup + 249 EUR/mo" },
     color: "purple" as const,
-  },
-  {
-    icon: <TrendingUp className="h-6 w-6" />,
-    title: { bg: "Оптимизация", en: "Optimization" },
-    description: {
-      bg: "Подобряваме скоростта, SEO и видимостта на това, което вече имаш. Повече хора те намират в Google, повече влизат в сайта.",
-      en: "We improve speed, SEO and visibility of what you already have. More people find you on Google, more visit your site.",
-    },
-    price: { bg: "от 199 €/месец", en: "from 199 EUR/month" },
-    color: "orange" as const,
   },
 ];
 
@@ -166,7 +145,7 @@ const serviceColorMap = {
 };
 
 export default function HomeContent() {
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
   const [monthlyLeads, setMonthlyLeads] = useState(60);
   const [averageDeal, setAverageDeal] = useState(120);
 
@@ -184,64 +163,65 @@ export default function HomeContent() {
   return (
     <div className="min-h-dvh bg-[var(--bg-page)] font-body text-[var(--text-main)]">
       {/* Hero */}
-      <section className="relative overflow-hidden pt-20 pb-24 lg:pt-32 lg:pb-32">
+      <section className="hero-section relative overflow-hidden pt-16 pb-16 sm:pt-20 sm:pb-20 lg:pt-28 lg:pb-24">
+        <div
+          className="pointer-events-none absolute inset-0 -z-0"
+          aria-hidden
+        >
+          <div className="absolute left-1/2 top-0 h-[420px] w-[min(100%,720px)] -translate-x-1/2 rounded-full bg-[var(--violet)]/[0.07] blur-[100px]" />
+          <div className="absolute right-[10%] top-[28%] h-48 w-48 rounded-full bg-[var(--coral)]/[0.06] blur-[80px]" />
+        </div>
         <Container>
-          <div className="relative z-10 mx-auto max-w-7xl">
+          <div className="relative z-10 mx-auto max-w-6xl">
 
-            {/* ── Centered text block ── */}
-            <div className="mx-auto mb-12 max-w-4xl text-center">
+            <div className="mx-auto mb-10 max-w-3xl text-center sm:mb-12">
               <AnimatedSection delay={0}>
-                <div className="badge-violet mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2 font-medium">
-                  <span className="animate-pulse-dot h-2 w-2 rounded-full bg-[var(--violet)]" />
-                  {locale === "bg"
-                    ? "За малките исредни бизнеси"
-                    : "Built for small and medium businesses"}
-                </div>
+                <p className="mb-6 inline-flex max-w-[95%] items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--bg-card)]/80 px-4 py-2 text-[13px] font-medium leading-snug text-[var(--text-sub)] backdrop-blur-sm sm:max-w-none sm:text-sm">
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--violet)]" />
+                  {t("hero.badge")}
+                </p>
               </AnimatedSection>
 
-              <AnimatedSection delay={0.1}>
-                <h1 className="mb-6 font-display text-[48px] leading-[1.1] font-[800] tracking-tight lg:text-[72px]">
-                  <span className="text-gradient-hero block">
-                    <TextReveal
-                      key={locale}
-                      text={locale === "bg" ? "НИКОГА ПОВЕЧЕ ИЗПУСНАТ КЛИЕНТ" : "NEVER MISS ANOTHER CLIENT AGAIN"}
-                      delay={0.1}
-                    />
+              <AnimatedSection delay={0.08}>
+                <h1 className="text-balance font-display text-[1.75rem] font-extrabold leading-[1.12] tracking-tight sm:text-[2.5rem] sm:leading-[1.1] lg:text-[3.25rem]">
+                  <span className="block text-[var(--text-main)]">
+                    <TextReveal key={`${locale}-1`} text={t("hero.headlineLine1")} delay={0.05} />
+                  </span>
+                  <span className="text-gradient-hero mt-2 block sm:mt-3">
+                    <TextReveal key={`${locale}-2`} text={t("hero.headlineLine2")} delay={0.12} />
                   </span>
                 </h1>
               </AnimatedSection>
 
-              <AnimatedSection delay={0.2}>
-                <p className="mx-auto mb-10 max-w-[600px] text-[20px] leading-relaxed text-[var(--text-sub)]">
-                  {locale === "bg"
-                    ? "Клиентите пишат в 23:00. Ние отговаряме за теб. Ти получаваш резервацията сутринта — без да си пипнал телефона."
-                    : "Clients message at 11pm. We reply for you. You wake up to a new booking — without touching your phone."}
+              <AnimatedSection delay={0.16}>
+                <p className="mx-auto mt-6 max-w-[34rem] text-pretty text-[17px] leading-[1.65] text-[var(--text-sub)] sm:mt-7 sm:text-lg sm:leading-relaxed">
+                  {t("hero.sub")}
                 </p>
               </AnimatedSection>
 
-              <AnimatedSection delay={0.3}>
-                <div className="flex flex-wrap justify-center gap-4">
-                  <Link href="/contact">
-                    <Magnetic>
+              <AnimatedSection delay={0.22}>
+                <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:mt-9 sm:flex-row sm:items-center">
+                  <Link href="/contact" className="w-full sm:w-auto">
+                    <Magnetic className="block w-full sm:w-auto">
                       <Button
                         variant="primary"
                         size="lg"
-                        className="h-auto rounded-xl border-none bg-[var(--coral)] px-8 py-4 text-lg font-bold text-white shadow-[var(--coral)]/20 shadow-xl transition-transform hover:-translate-y-1 hover:bg-[var(--coral-hover)]"
+                        className="h-12 w-full rounded-full border-none bg-[var(--coral)] px-7 text-[15px] font-bold text-white shadow-lg shadow-[var(--coral)]/25 transition-transform hover:-translate-y-0.5 hover:bg-[var(--coral-hover)] sm:h-11 sm:w-auto"
                       >
-                        <Zap className="h-5 w-5" />
-                        {locale === "bg" ? "Покажи ми как работи" : "Show me how it works"}
+                        <Zap className="h-4 w-4" />
+                        {t("hero.cta")}
                       </Button>
                     </Magnetic>
                   </Link>
-                  <Link href="/demos">
-                    <Magnetic>
+                  <Link href="/demos" className="w-full sm:w-auto">
+                    <Magnetic className="block w-full sm:w-auto">
                       <Button
                         variant="secondary"
                         size="lg"
-                        className="h-auto rounded-xl border-2 border-[var(--violet)] px-8 py-4 text-lg font-bold text-[var(--violet)] transition-colors hover:bg-[var(--violet)]/10"
+                        className="h-12 w-full rounded-full border border-[var(--border)] bg-[var(--bg-card)]/60 px-7 text-[15px] font-semibold text-[var(--text-main)] backdrop-blur-sm transition-colors hover:border-[var(--violet)]/40 hover:bg-[var(--bg-card)] sm:h-11 sm:w-auto"
                       >
-                        <Play className="h-5 w-5" />
-                        {locale === "bg" ? "Виж демо" : "View demo"}
+                        <Play className="h-4 w-4 text-[var(--violet)]" />
+                        {t("hero.ctaSecondary")}
                       </Button>
                     </Magnetic>
                   </Link>
@@ -249,37 +229,120 @@ export default function HomeContent() {
               </AnimatedSection>
             </div>
 
-            {/* ── Full-width visualization ── */}
-            <AnimatedSection delay={0.35}>
-              <div className="h-[360px] w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] shadow-apple-hover sm:h-[420px] md:h-[480px] lg:h-[540px]">
+            <AnimatedSection delay={0.28}>
+              <div className="hero-visual mx-auto h-[280px] w-full max-w-5xl overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] shadow-apple sm:h-[340px] md:h-[400px] lg:h-[440px]">
                 <HeroVisualization />
               </div>
             </AnimatedSection>
 
-            {/* ── Stats row ── */}
-            <AnimatedSection delay={0.5}>
-              <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
-                {stats.map((stat) => (
-                  <div
-                    key={stat.value}
-                    className="card flex flex-col items-center rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-6 text-center shadow-apple transition-all duration-400 hover:shadow-apple-hover"
+            <AnimatedSection delay={0.38}>
+              <ul className="mx-auto mt-6 flex max-w-3xl flex-col divide-y divide-[var(--border)] rounded-2xl border border-[var(--border)] bg-[var(--bg-card)]/50 backdrop-blur-sm sm:mt-8 sm:flex-row sm:divide-x sm:divide-y-0">
+                {heroStats.map((stat) => (
+                  <li
+                    key={stat.labelKey}
+                    className="flex flex-1 flex-col items-center gap-0.5 px-4 py-4 text-center sm:py-5"
                   >
-                    <div className="mb-3 font-['JetBrains_Mono',monospace] text-[48px] leading-none font-bold text-[var(--violet)]">
-                      {stat.value}
-                    </div>
-                    <div className="font-display text-[16px] font-bold tracking-wide text-[var(--text-sub)] uppercase">
-                      {stat.label[locale]}
-                    </div>
-                  </div>
+                    <span className="font-['JetBrains_Mono',monospace] text-2xl font-bold tabular-nums text-[var(--violet)] sm:text-3xl">
+                      {t(stat.valueKey)}
+                    </span>
+                    <span className="max-w-[11rem] text-[13px] leading-snug text-[var(--text-sub)] sm:max-w-[10.5rem] sm:text-sm">
+                      {t(stat.labelKey)}
+                    </span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </AnimatedSection>
 
           </div>
         </Container>
       </section>
 
+      {/* The Silex Pact (Сделката с бизнеса) */}
+      <section className="relative py-12 border-y border-[var(--border)] bg-[var(--bg-section)]">
+        <Container>
+          <AnimatedSection delay={0.1}>
+            <div className="mx-auto max-w-4xl rounded-2xl border border-[var(--lime)]/30 bg-[var(--lime)]/5 p-8 md:p-12 text-center shadow-lg relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--lime)]/5 to-transparent pointer-events-none" />
+              <div className="relative z-10">
+                <div className="badge-lime mb-6 inline-flex rounded-full border border-[var(--lime)]/20 bg-[var(--lime)]/10 px-4 py-1.5 text-sm font-bold text-[var(--lime)] uppercase tracking-wider">
+                  {t("home.pact.badge")}
+                </div>
+                <h3 className="mb-4 font-display text-2xl md:text-3xl font-extrabold text-[var(--text-main)]">
+                  {t("home.pact.title")}
+                </h3>
+                <p className="text-base md:text-lg leading-relaxed text-[var(--text-sub)]">
+                  {t("home.pact.body")}
+                </p>
+              </div>
+            </div>
+          </AnimatedSection>
+        </Container>
+      </section>
+
+      {/* The Two Pillars of Growth (Двата пътя на успеха) */}
+      <section className="py-20 bg-transparent animate-fade-in">
+        <Container>
+          <AnimatedSection className="mb-12 text-center">
+            <h2 className="mb-4 font-display text-3xl font-[800] md:text-5xl">
+              {t("home.pillars.title")}
+            </h2>
+            <p className="mx-auto max-w-2xl text-lg text-[var(--text-sub)]">
+              {t("home.pillars.sub")}
+            </p>
+          </AnimatedSection>
+
+          <div className="grid gap-8 md:grid-cols-2">
+            {/* Pillar A: Web Presence */}
+            <AnimatedSection direction="left">
+              <div className="h-full rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-8 shadow-apple transition-all duration-400 hover:shadow-apple-hover hover:border-[var(--border-hover)] flex flex-col">
+                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-blue-500/10 text-blue-500">
+                  <Code className="h-8 w-8" />
+                </div>
+                <h3 className="mb-3 font-display text-2xl font-bold text-[var(--text-main)]">
+                  {t("home.pillars.a.title")}
+                </h3>
+                <p className="mb-6 text-[15px] leading-relaxed text-[var(--text-sub)] flex-1">
+                  {t("home.pillars.a.body")}
+                </p>
+                <div className="mt-auto border-t border-[var(--border)] pt-6 flex items-center justify-between">
+                  <span className="text-sm font-bold badge-violet rounded-full px-3 py-1">
+                    {locale === "bg" ? "690 € старт + 49 €/месец" : "690 € setup + 49 €/month"}
+                  </span>
+                  <Link href="/services" className="flex items-center text-sm font-bold text-[var(--violet)]">
+                    {locale === "bg" ? "Научи повече" : "Learn more"} <ArrowRight className="ml-1 h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            {/* Pillar B: AI Autopilot */}
+            <AnimatedSection direction="right">
+              <div className="h-full rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-8 shadow-apple transition-all duration-400 hover:shadow-apple-hover hover:border-[var(--border-hover)] flex flex-col">
+                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-[var(--lime)]/10 text-[var(--lime)]">
+                  <Bot className="h-8 w-8" />
+                </div>
+                <h3 className="mb-3 font-display text-2xl font-bold text-[var(--text-main)]">
+                  {t("home.pillars.b.title")}
+                </h3>
+                <p className="mb-6 text-[15px] leading-relaxed text-[var(--text-sub)] flex-1">
+                  {t("home.pillars.b.body")}
+                </p>
+                <div className="mt-auto border-t border-[var(--border)] pt-6 flex items-center justify-between">
+                  <span className="text-sm font-bold badge-lime rounded-full px-3 py-1">
+                    {locale === "bg" ? "290 € старт + 199 €/месец" : "290 € setup + 199 €/month"}
+                  </span>
+                  <Link href="/services" className="flex items-center text-sm font-bold text-[var(--lime)]">
+                    {locale === "bg" ? "Научи повече" : "Learn more"} <ArrowRight className="ml-1 h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
+        </Container>
+      </section>
+
       {/* Social Proof Bar */}
+
       {/* <section className="flex w-full items-center overflow-hidden border-y border-[var(--border)] bg-[var(--bg-section)] py-4">
         <Container>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
@@ -443,17 +506,13 @@ export default function HomeContent() {
         <Container>
           <AnimatedSection className="mb-20 text-center">
             <div className="badge-neutral mb-6 inline-flex rounded-full border border-[var(--border)] px-3 py-1 text-sm font-bold tracking-wider uppercase">
-              {locale === "bg" ? "Услуги" : "Services"}
+              {t("home.services.badge")}
             </div>
             <h2 className="mb-6 font-display text-4xl font-[800] text-[var(--text-main)] lg:text-5xl">
-              {locale === "bg"
-                ? "Как помагаме на твоя бизнес"
-                : "How we help your business"}
+              {t("home.services.title")}
             </h2>
             <p className="mx-auto max-w-2xl text-[20px] text-[var(--text-sub)]">
-              {locale === "bg"
-                ? "От автоматичен отговор на имейли до AI помощник, който говори с клиентите вместо теб. Избираш с какво да започнеш."
-                : "From automatic email replies to an AI assistant that talks to clients for you. You choose where to start."}
+              {t("home.services.sub")}
             </p>
           </AnimatedSection>
 
@@ -768,39 +827,44 @@ export default function HomeContent() {
             </p>
           </AnimatedSection>
 
-          <StaggerContainer className="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-3">
-            {/* Starter */}
+          <StaggerContainer className="mx-auto grid max-w-5xl items-stretch gap-8 md:grid-cols-3">
+            {/* Start (Web Foundation) */}
             <StaggerItem>
-              <div className="card rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-8 text-center shadow-apple">
-                <h3 className="mb-2 font-display text-2xl font-[800] text-[var(--text-main)]">
-                  Starter
-                </h3>
-                <p className="mb-6 text-sm font-bold tracking-wider text-[var(--text-muted)] uppercase">
-                  {locale === "bg"
-                    ? "Микро бизнес старт"
-                    : "Micro business start"}
-                </p>
-                <div className="mb-8 font-['JetBrains_Mono',monospace] text-4xl font-[800] text-[var(--text-main)]">
-                  {locale === "bg" ? "149 €" : "149 EUR"}
+              <div className="card rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-8 text-center shadow-apple h-full flex flex-col justify-between">
+                <div>
+                  <h3 className="mb-2 font-display text-2xl font-[800] text-[var(--text-main)]">
+                    Start
+                  </h3>
+                  <p className="mb-6 text-xs font-bold tracking-wider text-[var(--text-muted)] uppercase">
+                    {locale === "bg"
+                      ? "Уеб Основа & Google карти"
+                      : "Web Foundation & Google Maps"}
+                  </p>
+                  <div className="mb-1 font-['JetBrains_Mono',monospace] text-4xl font-[800] text-[var(--text-main)]">
+                    {locale === "bg" ? "49 €" : "49 EUR"}
+                  </div>
+                  <div className="text-xs font-bold text-[var(--text-muted)] mb-8 uppercase tracking-wide">
+                    {locale === "bg" ? "/месец + 690 € старт" : "/month + 690 € setup"}
+                  </div>
+                  <ul className="mb-10 space-y-4 text-left border-t border-[var(--border)] pt-6">
+                    <li className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-main)]">
+                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
+                      {locale === "bg" ? "Професионален сайт (Код или CMS)" : "Professional website (Code or CMS)"}
+                    </li>
+                    <li className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-main)]">
+                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
+                      {locale === "bg" ? "Скорост под 1.2 секунди" : "Speed index < 1.2s"}
+                    </li>
+                    <li className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-main)]">
+                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
+                      {locale === "bg" ? "Google Карти & Локално SEO" : "Google Maps & Local SEO"}
+                    </li>
+                    <li className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-main)]">
+                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
+                      {locale === "bg" ? "Edge хостинг & SSL защита" : "Edge hosting & SSL security"}
+                    </li>
+                  </ul>
                 </div>
-                <ul className="mb-10 space-y-4 text-left">
-                  <li className="flex items-center gap-3 text-[16px] font-medium text-[var(--text-main)]">
-                    <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
-                    {locale === "bg"
-                      ? "1 автоматичен отговор"
-                      : "1 automatic reply flow"}
-                  </li>
-                  <li className="flex items-center gap-3 text-[16px] font-medium text-[var(--text-main)]">
-                    <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
-                    Email {locale === "bg" ? "интеграция" : "integration"}
-                  </li>
-                  <li className="flex items-center gap-3 text-[16px] font-medium text-[var(--text-main)]">
-                    <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
-                    {locale === "bg"
-                      ? "месечен мини отчет"
-                      : "monthly mini report"}
-                  </li>
-                </ul>
                 <Link
                   href="/contact?source=pricing-home&offer=first-order-bonus&intent=starter-pack&pack=start"
                   className="block"
@@ -809,51 +873,54 @@ export default function HomeContent() {
                     variant="secondary"
                     className="w-full rounded-xl border-2 border-[var(--text-main)] py-4 text-lg font-bold text-[var(--text-main)] transition-colors hover:bg-[var(--text-main)] hover:text-white"
                   >
-                    {locale === "bg" ? "Започни" : "Get started"}
+                    {locale === "bg" ? "Избери Start" : "Select Start"}
                   </Button>
                 </Link>
               </div>
             </StaggerItem>
 
-            {/* Pro (Popular) */}
+            {/* Grow (Smart AI Agent) */}
             <StaggerItem>
-              <div className="card relative z-10 scale-100 transform rounded-2xl border border-[var(--violet)] bg-[var(--bg-card)] p-10 text-center shadow-apple-hover md:scale-105">
+              <div className="card relative z-10 scale-100 transform rounded-2xl border border-[var(--violet)] bg-[var(--bg-card)] p-8 text-center shadow-apple-hover md:scale-105 h-full flex flex-col justify-between">
                 <div className="absolute -top-5 left-1/2 -translate-x-1/2">
-                  <span className="rounded-full bg-[var(--coral)] px-6 py-2 text-sm font-bold tracking-wider text-white uppercase shadow-lg">
-                    Popular
+                  <span className="rounded-full bg-gradient-to-r from-[var(--violet)] to-[#b185ff] px-6 py-2 text-xs font-bold tracking-wider text-white uppercase shadow-lg">
+                    {locale === "bg" ? "Популярен" : "Popular"}
                   </span>
                 </div>
-                <h3 className="mb-2 font-display text-2xl font-[800] text-[var(--text-main)]">
-                  Pro
-                </h3>
-                <p className="mb-6 text-sm font-bold tracking-wider text-[var(--text-muted)] uppercase">
-                  {locale === "bg"
-                    ? "Grow пакет за локален бизнес"
-                    : "Grow package for local business"}
-                </p>
-                <div className="mb-8 font-['JetBrains_Mono',monospace] text-5xl font-[800] text-[var(--violet)]">
-                  {locale === "bg" ? "299 €" : "299 EUR"}
-                </div>
-                <ul className="mb-10 space-y-4 text-left">
-                  <li className="flex items-center gap-3 text-[16px] font-bold text-[var(--text-main)]">
-                    <Check className="h-6 w-6 flex-shrink-0 text-[var(--violet)]" />{" "}
-                    3 {locale === "bg" ? "автоматизации" : "automations"}
-                  </li>
-                  <li className="flex items-center gap-3 text-[16px] font-bold text-[var(--text-main)]">
-                    <Check className="h-6 w-6 flex-shrink-0 text-[var(--violet)]" />{" "}
-                    {locale === "bg" ? "AI чатбот" : "AI chatbot"}
-                  </li>
-                  <li className="flex items-center gap-3 text-[16px] font-bold text-[var(--text-main)]">
-                    <Check className="h-6 w-6 flex-shrink-0 text-[var(--violet)]" />{" "}
-                    {locale === "bg" ? "Следене на клиентите" : "Client tracking"}
-                  </li>
-                  <li className="flex items-center gap-3 text-[16px] font-bold text-[var(--text-main)]">
-                    <Check className="h-6 w-6 flex-shrink-0 text-[var(--violet)]" />{" "}
+                <div>
+                  <h3 className="mb-2 font-display text-2xl font-[800] text-[var(--text-main)]">
+                    Grow
+                  </h3>
+                  <p className="mb-6 text-xs font-bold tracking-wider text-[var(--violet)] uppercase">
                     {locale === "bg"
-                      ? "2 оптимизации месечно"
-                      : "2 monthly optimizations"}
-                  </li>
-                </ul>
+                      ? "AI секретар във Viber & Уебсайт"
+                      : "AI Agent in Viber & Website"}
+                  </p>
+                  <div className="mb-1 font-['JetBrains_Mono',monospace] text-4xl font-[800] text-[var(--violet)]">
+                    {locale === "bg" ? "199 €" : "199 EUR"}
+                  </div>
+                  <div className="text-xs font-bold text-[var(--text-muted)] mb-8 uppercase tracking-wide">
+                    {locale === "bg" ? "/месец + 49 € AI Ядро + 290 € старт" : "/month + 49 € AI Core + 290 € setup"}
+                  </div>
+                  <ul className="mb-10 space-y-4 text-left border-t border-[var(--border)] pt-6">
+                    <li className="flex items-center gap-3 text-[15px] font-bold text-[var(--text-main)]">
+                      <Check className="h-6 w-6 flex-shrink-0 text-[var(--violet)]" />{" "}
+                      {locale === "bg" ? "AI асистент денонощно" : "24/7 AI chat receptionist"}
+                    </li>
+                    <li className="flex items-center gap-3 text-[15px] font-bold text-[var(--text-main)]">
+                      <Check className="h-6 w-6 flex-shrink-0 text-[var(--violet)]" />{" "}
+                      {locale === "bg" ? "Интеграция във Viber & Уебсайт" : "Viber & Web integration"}
+                    </li>
+                    <li className="flex items-center gap-3 text-[15px] font-bold text-[var(--text-main)]">
+                      <Check className="h-6 w-6 flex-shrink-0 text-[var(--violet)]" />{" "}
+                      {locale === "bg" ? "Автоматично записване на часове" : "Automated bookings"}
+                    </li>
+                    <li className="flex items-center gap-3 text-[15px] font-bold text-[var(--text-main)]">
+                      <Check className="h-6 w-6 flex-shrink-0 text-[var(--violet)]" />{" "}
+                      {locale === "bg" ? "Сейф за Клиенти (CRM база)" : "Secure Client Vault CRM"}
+                    </li>
+                  </ul>
+                </div>
                 <Link
                   href="/contact?source=pricing-home&offer=first-order-bonus&intent=grow-pack&pack=grow"
                   className="block"
@@ -862,48 +929,49 @@ export default function HomeContent() {
                     variant="primary"
                     className="w-full rounded-xl border-none bg-[var(--violet)] py-4 text-lg font-bold text-white shadow-[var(--violet)]/30 shadow-lg transition-transform hover:-translate-y-1 hover:bg-[var(--violet-hover)]"
                   >
-                    {locale === "bg" ? "Започни" : "Get started"}
+                    {locale === "bg" ? "Избери Grow" : "Select Grow"}
                   </Button>
                 </Link>
               </div>
             </StaggerItem>
 
-            {/* Enterprise */}
+            {/* Pro (Complete Digital Machine) */}
             <StaggerItem>
-              <div className="card rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-8 text-center shadow-apple">
-                <h3 className="mb-2 font-display text-2xl font-[800] text-[var(--text-main)]">
-                  Enterprise
-                </h3>
-                <p className="mb-6 text-sm font-bold tracking-wider text-[var(--text-muted)] uppercase">
-                  {locale === "bg"
-                    ? "За бизнеси с активен растеж"
-                    : "For growth-focused businesses"}
-                </p>
-                <div className="mb-8 font-['JetBrains_Mono',monospace] text-4xl font-[800] text-[var(--text-main)]">
-                  {locale === "bg" ? "549 €" : "549 EUR"}
+              <div className="card rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-8 text-center shadow-apple h-full flex flex-col justify-between">
+                <div>
+                  <h3 className="mb-2 font-display text-2xl font-[800] text-[var(--text-main)]">
+                    Pro
+                  </h3>
+                  <p className="mb-6 text-xs font-bold tracking-wider text-[var(--text-muted)] uppercase">
+                    {locale === "bg"
+                      ? "Дигитален Автопилот: Сайт + AI"
+                      : "Digital Autopilot: Website + AI"}
+                  </p>
+                  <div className="mb-1 font-['JetBrains_Mono',monospace] text-4xl font-[800] text-[var(--text-main)]">
+                    {locale === "bg" ? "249 €" : "249 EUR"}
+                  </div>
+                  <div className="text-xs font-bold text-[var(--text-muted)] mb-8 uppercase tracking-wide">
+                    {locale === "bg" ? "/месец + 49 € AI Ядро + 990 € старт" : "/month + 49 € AI Core + 990 € setup"}
+                  </div>
+                  <ul className="mb-10 space-y-4 text-left border-t border-[var(--border)] pt-6">
+                    <li className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-main)]">
+                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
+                      {locale === "bg" ? "Цялостен нов премиум уебсайт" : "Custom premium website build"}
+                    </li>
+                    <li className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-main)]">
+                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
+                      {locale === "bg" ? "AI по всички чат канали" : "Viber, WhatsApp & Messenger AI"}
+                    </li>
+                    <li className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-main)]">
+                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
+                      {locale === "bg" ? "Синхронизация в реално време" : "Real-time catalog & stock sync"}
+                    </li>
+                    <li className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-main)]">
+                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
+                      {locale === "bg" ? "Лична техническа поддръжка" : "Dedicated developer support"}
+                    </li>
+                  </ul>
                 </div>
-                <ul className="mb-10 space-y-4 text-left">
-                  <li className="flex items-center gap-3 text-[16px] font-medium text-[var(--text-main)]">
-                    <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
-                    6+ {locale === "bg" ? "автоматизации" : "automations"}
-                  </li>
-                  <li className="flex items-center gap-3 text-[16px] font-medium text-[var(--text-main)]">
-                    <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
-                    Dedicated {locale === "bg" ? "AI агент" : "AI agent"}
-                  </li>
-                  <li className="flex items-center gap-3 text-[16px] font-medium text-[var(--text-main)]">
-                    <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
-                    {locale === "bg"
-                      ? "Персонализирани интеграции"
-                      : "Custom integrations"}
-                  </li>
-                  <li className="flex items-center gap-3 text-[16px] font-medium text-[var(--text-main)]">
-                    <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
-                    {locale === "bg"
-                      ? "Приоритетна поддръжка"
-                      : "Priority support"}
-                  </li>
-                </ul>
                 <Link
                   href="/contact?source=pricing-home&offer=first-order-bonus&intent=pro-pack&pack=pro"
                   className="block"
@@ -912,7 +980,7 @@ export default function HomeContent() {
                     variant="secondary"
                     className="w-full rounded-xl border-2 border-[var(--text-main)] py-4 text-lg font-bold text-[var(--text-main)] transition-colors hover:bg-[var(--text-main)] hover:text-white"
                   >
-                    {locale === "bg" ? "Свържи се" : "Contact us"}
+                    {locale === "bg" ? "Избери Pro" : "Select Pro"}
                   </Button>
                 </Link>
               </div>

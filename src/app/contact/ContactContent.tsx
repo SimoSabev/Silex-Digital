@@ -1,17 +1,17 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   Mail,
   Phone,
   MapPin,
-  ArrowRight,
   Send,
   Clock,
-  CalendarDays,
+  MessageCircle,
   Zap,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import { useI18n } from "@/lib/i18n";
@@ -24,7 +24,7 @@ export default function ContactContent() {
   const rawPack = searchParams.get("pack") ?? "";
   const rawIntent = searchParams.get("intent") ?? "";
 
-  const industry = ["restaurants", "beauty", "clinics", "real-estate"].includes(
+  const industry = ["retail", "food", "beauty", "medical", "automotive", "property", "professional", "other"].includes(
     rawIndustry,
   )
     ? rawIndustry
@@ -71,6 +71,7 @@ export default function ContactContent() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     company: "",
     projectType: defaultProjectType,
     budget: defaultBudget,
@@ -79,9 +80,14 @@ export default function ContactContent() {
     industry,
     requestedPack: pack,
   });
+  const [showProjectDetails, setShowProjectDetails] = useState(
+    intent !== "consultation",
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  const isConsultation = formData.leadIntent === "consultation";
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -105,6 +111,7 @@ export default function ContactContent() {
       `offer: ${offer}`,
       `source: ${source}`,
       `intent: ${formData.leadIntent || "consultation"}`,
+      `phone: ${formData.phone.trim() || "n/a"}`,
       `industry: ${formData.industry || "n/a"}`,
       `pack: ${formData.requestedPack || "n/a"}`,
       `monthlyLeads: ${monthlyLeads || "n/a"}`,
@@ -114,9 +121,11 @@ export default function ContactContent() {
     const payload = {
       name: formData.name,
       email: formData.email,
-      company: formData.company,
-      projectType: formData.projectType,
-      budget: formData.budget,
+      company:
+        formData.company.trim() ||
+        (isConsultation ? "Consultation request" : "N/A"),
+      projectType: isConsultation ? "consultation" : formData.projectType,
+      budget: isConsultation ? "consultation" : formData.budget,
       message: `${formData.message}${contextLines}`,
     };
 
@@ -143,6 +152,7 @@ export default function ContactContent() {
         ...prev,
         name: "",
         email: "",
+        phone: "",
         company: "",
         message: "",
       }));
@@ -165,12 +175,14 @@ export default function ContactContent() {
               {locale === "bg" ? "Свържи се с нас" : "Contact us"}
             </span>
             <h1 className="mb-6 font-[family-name:var(--font-display)] text-4xl leading-tight font-[700] tracking-tight md:text-5xl lg:text-[56px]">
-              {locale === "bg" ? "Не изпускай повече клиенти - Свържи се с нас!" : "Don't miss any more clients - Contact Us"}
+              {locale === "bg"
+                ? "Заяви безплатна консултация"
+                : "Request a free consultation"}
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-[var(--text-sub)] md:text-xl">
               {locale === "bg"
-                ? "30 минути разговор, без ангажимент. Ще предложим решение за твоя бизнес."
-                : "30 minutes, no commitment. We will reccomend solution for your business."}
+                ? "Попълнете формата по-долу — ще ви пишем или ще ви се обадим. Можете и директно на телефона."
+                : "Fill in the form below — we will email or call you back. You can also call us anytime."}
             </p>
           </div>
 
@@ -178,6 +190,7 @@ export default function ContactContent() {
             {/* Form (Left - 60%) */}
             <div className="order-2 lg:order-1">
               <form
+                id="consultation-form"
                 onSubmit={handleSubmit}
                 className="card space-y-6 p-8 md:p-10"
               >
@@ -193,18 +206,25 @@ export default function ContactContent() {
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-2">
-                  <div>
+                  <div className={isConsultation ? "md:col-span-2" : ""}>
                     <label
                       htmlFor="leadIntent"
                       className="mb-2 block font-[family-name:var(--font-display)] text-sm font-[600] text-[var(--text-sub)]"
                     >
-                      {locale === "bg" ? "Тип заявка" : "Lead intent"}
+                      {locale === "bg" ? "Тип заявка" : "Request type"}
                     </label>
                     <select
                       id="leadIntent"
                       name="leadIntent"
                       value={formData.leadIntent}
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        handleChange(e);
+                        if (e.target.value === "consultation") {
+                          setShowProjectDetails(false);
+                        } else {
+                          setShowProjectDetails(true);
+                        }
+                      }}
                       className="input"
                     >
                       <option value="consultation">
@@ -226,6 +246,8 @@ export default function ContactContent() {
                     </select>
                   </div>
 
+                  {showProjectDetails && (
+                  <>
                   <div>
                     <label
                       htmlFor="industry"
@@ -241,17 +263,31 @@ export default function ContactContent() {
                       className="input"
                     >
                       <option value="">
-                        {locale === "bg" ? "Избери сектор" : "Select industry"}
+                        {locale === "bg" ? "Избери сектор" : "Select sector"}
                       </option>
-                      <option value="restaurants">
-                        {locale === "bg" ? "Ресторанти" : "Restaurants"}
+                      <option value="retail">
+                        {locale === "bg" ? "Магазини и Търговски обекти" : "Shops & Retail"}
                       </option>
-                      <option value="beauty">Beauty</option>
-                      <option value="clinics">
-                        {locale === "bg" ? "Клиники" : "Clinics"}
+                      <option value="food">
+                        {locale === "bg" ? "Заведения и Ресторанти" : "Restaurants & Cafes"}
                       </option>
-                      <option value="real-estate">
-                        {locale === "bg" ? "Недвижими имоти" : "Real estate"}
+                      <option value="beauty">
+                        {locale === "bg" ? "Салони за красота и СПА" : "Beauty Salons & Spa"}
+                      </option>
+                      <option value="medical">
+                        {locale === "bg" ? "Лекарски и зъболекарски кабинети" : "Medical & Dental Clinics"}
+                      </option>
+                      <option value="automotive">
+                        {locale === "bg" ? "Автокъщи, автосалони и автосервизи" : "Car Dealerships & Auto Repairs"}
+                      </option>
+                      <option value="property">
+                        {locale === "bg" ? "Имоти, наеми и строителство" : "Real Estate & Property Management"}
+                      </option>
+                      <option value="professional">
+                        {locale === "bg" ? "Свободни професии и услуги" : "Professional Services"}
+                      </option>
+                      <option value="other">
+                        {locale === "bg" ? "Друга сфера" : "Other Sector"}
                       </option>
                     </select>
                   </div>
@@ -334,7 +370,35 @@ export default function ContactContent() {
                       <option value="3000-plus">3000+ EUR</option>
                     </select>
                   </div>
+                  </>
+                  )}
                 </div>
+
+                {isConsultation && !showProjectDetails && (
+                  <button
+                    type="button"
+                    onClick={() => setShowProjectDetails(true)}
+                    className="flex w-full items-center justify-center gap-2 text-sm font-medium text-[var(--violet)] transition-colors hover:text-[var(--violet)]/80"
+                  >
+                    {locale === "bg"
+                      ? "Добави детайли за проекта (по избор)"
+                      : "Add project details (optional)"}
+                    <ChevronDown className="h-4 w-4" />
+                  </button>
+                )}
+
+                {isConsultation && showProjectDetails && (
+                  <button
+                    type="button"
+                    onClick={() => setShowProjectDetails(false)}
+                    className="flex w-full items-center justify-center gap-2 text-sm font-medium text-[var(--text-muted)] transition-colors hover:text-[var(--text-sub)]"
+                  >
+                    {locale === "bg"
+                      ? "Скрий детайлите за проекта"
+                      : "Hide project details"}
+                    <ChevronUp className="h-4 w-4" />
+                  </button>
+                )}
 
                 <div className="section-divider my-4" />
 
@@ -381,16 +445,43 @@ export default function ContactContent() {
 
                   <div>
                     <label
+                      htmlFor="phone"
+                      className="mb-2 block font-[family-name:var(--font-display)] text-sm font-[600] text-[var(--text-sub)]"
+                    >
+                      {locale === "bg" ? "Телефон" : "Phone"}
+                      <span className="ml-1 font-normal text-[var(--text-muted)]">
+                        ({locale === "bg" ? "по избор" : "optional"})
+                      </span>
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="input"
+                      placeholder="+359 ..."
+                    />
+                  </div>
+
+                  {(showProjectDetails || !isConsultation) && (
+                  <div>
+                    <label
                       htmlFor="company"
                       className="mb-2 block font-[family-name:var(--font-display)] text-sm font-[600] text-[var(--text-sub)]"
                     >
                       {locale === "bg" ? "Компания" : "Company"}
+                      {isConsultation && (
+                        <span className="ml-1 font-normal text-[var(--text-muted)]">
+                          ({locale === "bg" ? "по избор" : "optional"})
+                        </span>
+                      )}
                     </label>
                     <input
                       type="text"
                       id="company"
                       name="company"
-                      required
+                      required={!isConsultation}
                       value={formData.company}
                       onChange={handleChange}
                       className="input"
@@ -399,6 +490,7 @@ export default function ContactContent() {
                       }
                     />
                   </div>
+                  )}
 
                   <div>
                     <label
@@ -417,8 +509,8 @@ export default function ContactContent() {
                       className="input resize-none"
                       placeholder={
                         locale === "bg"
-                          ? "Как можем да помогнем?"
-                          : "How can we help?"
+                          ? "Кратко опишете бизнеса и какво ви трябва — ще се обадим."
+                          : "Briefly describe your business and what you need — we will contact you."
                       }
                     />
                   </div>
@@ -433,8 +525,8 @@ export default function ContactContent() {
                 {submitSuccess && (
                   <p className="rounded-xl border border-[var(--lime)]/30 bg-[var(--lime)]/10 p-4 text-sm font-medium text-[var(--lime)]">
                     {locale === "bg"
-                      ? "Успешно изпратихме запитването. Ще се свържем с вас скоро."
-                      : "Your inquiry was sent successfully. We will get back to you shortly."}
+                      ? "Получихме заявката ви. Ще ви пишем или ще ви се обадим в рамките на 2 часа в работни дни."
+                      : "We received your request. We will email or call you within 2 hours on business days."}
                   </p>
                 )}
 
@@ -447,9 +539,13 @@ export default function ContactContent() {
                     ? locale === "bg"
                       ? "Изпращане..."
                       : "Sending..."
-                    : locale === "bg"
-                      ? "Изпрати съобщение"
-                      : "Send message"}
+                    : isConsultation
+                      ? locale === "bg"
+                        ? "Заяви безплатна консултация"
+                        : "Request free consultation"
+                      : locale === "bg"
+                        ? "Изпрати съобщение"
+                        : "Send message"}
                   <Send className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </button>
               </form>
@@ -556,30 +652,40 @@ export default function ContactContent() {
                 </div>
               </div>
 
-              {/* Calendar Booking Card */}
+              {/* Consultation — email or call */}
               <div className="card-featured flex flex-col items-center p-6 text-center md:p-8">
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--coral)]/10 text-[var(--coral)]">
-                  <CalendarDays className="h-6 w-6" />
+                  <MessageCircle className="h-6 w-6" />
                 </div>
                 <h3 className="mb-2 font-[family-name:var(--font-display)] text-xl font-[700] text-[var(--text-main)]">
                   {locale === "bg"
-                    ? "Безплатна консултация"
-                    : "Free consultation"}
+                    ? "Предпочитате да говорите сега?"
+                    : "Prefer to talk now?"}
                 </h3>
                 <p className="mb-6 text-sm text-[var(--text-sub)]">
                   {locale === "bg"
-                    ? "Запази безплатна 30-минутна консултация със специалист."
-                    : "Book a free 30-minute consultation with a specialist."}
+                    ? "Изпратете формата вляво и ще ви отговорим по имейл или телефон. Или се обадете сами — ще уговорим удобен час."
+                    : "Submit the form on the left and we will reply by email or phone. Or call us — we will find a time that works."}
                 </p>
-                <Link
-                  href="https://calendar.google.com/calendar/u/0/r"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary group w-full"
-                >
-                  {locale === "bg" ? "Запази консултация" : "Book consultation"}
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
+                <div className="flex w-full flex-col gap-3">
+                  <a href="#consultation-form" className="btn-primary w-full">
+                    {locale === "bg"
+                      ? "Към формата за консултация"
+                      : "Go to consultation form"}
+                  </a>
+                  <a
+                    href="tel:+359885031865"
+                    className="btn-secondary w-full"
+                  >
+                    {locale === "bg" ? "Обади се сега" : "Call us now"}
+                  </a>
+                  <a
+                    href="mailto:info@silexbrand.com?subject=Consultation%20request"
+                    className="text-sm font-medium text-[var(--violet)] underline-offset-2 hover:underline"
+                  >
+                    info@silexbrand.com
+                  </a>
+                </div>
               </div>
             </div>
           </div>
