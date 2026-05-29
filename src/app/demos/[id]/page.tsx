@@ -60,7 +60,7 @@ export default async function DemoPage({
   const { Icon, Component, heading, description } = demo;
 
   return (
-    <main className="min-h-screen bg-[var(--bg-page)] pt-24 pb-20">
+    <main className="min-h-dvh overflow-x-hidden bg-[var(--bg-page)] pt-20 sm:pt-24 pb-12 sm:pb-20">
       <Container>
         <div className="mx-auto max-w-3xl">
           <div className="mb-8 text-center">
@@ -80,6 +80,7 @@ export default async function DemoPage({
             icon={<Icon className="h-6 w-6" />}
             ctaText="Book this exact setup"
             ctaLink={`/contact?source=demo-share&demo=${id}`}
+            displayMode="inline"
           >
             <Component />
           </DemoContainer>

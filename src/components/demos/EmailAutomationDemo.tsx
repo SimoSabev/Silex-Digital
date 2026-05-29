@@ -140,7 +140,7 @@ export default function EmailAutomationDemo() {
   };
 
   return (
-    <div className="flex flex-col rounded-[24px] bg-[var(--bg-card)] border border-[var(--border)] shadow-2xl overflow-hidden min-h-[700px] relative font-[family-name:var(--font-main)]">
+    <div className="flex flex-col rounded-2xl sm:rounded-[24px] bg-[var(--bg-card)] border border-[var(--border)] shadow-2xl overflow-hidden min-h-[min(520px,85dvh)] sm:min-h-[600px] lg:min-h-[700px] relative font-[family-name:var(--font-main)]">
 
       {/* Header */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between p-5 md:p-6 border-b border-[var(--border)] bg-transparent relative z-20 gap-4">
@@ -167,7 +167,7 @@ export default function EmailAutomationDemo() {
       </div>
 
       {/* Channel selector bar */}
-      <div className="px-6 py-4 bg-[var(--bg-section)] border-b border-[var(--border)] flex flex-wrap gap-2 md:gap-3 justify-center z-20 relative">
+      <div className="px-3 sm:px-6 py-3 sm:py-4 bg-[var(--bg-section)] border-b border-[var(--border)] flex flex-wrap gap-1.5 sm:gap-2 md:gap-3 justify-center z-20 relative">
         {(Object.keys(CHANNELS) as Source[]).map(source => {
           const isActive = activeSources.includes(source);
           const c = CHANNELS[source];
@@ -224,10 +224,10 @@ export default function EmailAutomationDemo() {
           </AnimatePresence>
         </svg>
 
-        <div className="relative z-20 w-full max-w-4xl px-4 flex flex-col h-full items-center justify-between pointer-events-none py-10">
+        <div className="relative z-20 w-full max-w-4xl px-2 sm:px-4 flex flex-col h-full items-center justify-between pointer-events-none py-6 sm:py-10 min-h-[380px] sm:min-h-0">
 
           {/* TOP: channel icons */}
-          <div className="w-full flex justify-center gap-4 sm:gap-8 md:gap-16 relative mb-16">
+          <div className="w-full flex flex-wrap justify-center gap-3 sm:gap-8 md:gap-16 relative mb-8 sm:mb-16 max-w-full">
             <AnimatePresence>
               {activeSources.map(channel => {
                 const c = CHANNELS[channel];
@@ -268,7 +268,8 @@ export default function EmailAutomationDemo() {
               {messages.map(msg => {
                 const sourceIdx = activeSources.indexOf(msg.source);
                 const offset = sourceIdx - (activeSources.length - 1) / 2;
-                const startX = `calc(50% + ${offset * 80}px)`;
+                const spread = activeSources.length > 4 ? 48 : 64;
+                const startX = `calc(50% + ${offset * spread}px)`;
                 const c = CHANNELS[msg.source];
                 return (
                   <motion.div
@@ -281,7 +282,7 @@ export default function EmailAutomationDemo() {
                       left: { duration: 1.5, ease: "linear" },
                       opacity: { duration: 0.3 },
                     }}
-                    className="absolute -translate-x-1/2 -translate-y-1/2 p-3 rounded-[24px] border border-[var(--border)] shadow-xl backdrop-blur-2xl max-w-[200px] min-w-[160px] bg-[var(--bg-card)]/95"
+                    className="absolute -translate-x-1/2 -translate-y-1/2 p-2.5 sm:p-3 rounded-2xl sm:rounded-[24px] border border-[var(--border)] shadow-xl backdrop-blur-2xl max-w-[min(200px,42vw)] min-w-[120px] sm:min-w-[160px] bg-[var(--bg-card)]/95"
                   >
                     <div className={`absolute inset-0 rounded-[24px] ${c.bgColor} opacity-40`} />
                     <div className="relative z-10 flex gap-2 items-center mb-1.5 border-b border-[var(--border)] pb-1.5">
@@ -342,7 +343,7 @@ export default function EmailAutomationDemo() {
                   animate={{ opacity: 1, x: 0, rotateY: 0 }}
                   exit={{ opacity: 0, scale: 0.9, filter: "blur(5px)" }}
                   transition={{ type: "spring", damping: 20 }}
-                  className="absolute left-full ml-6 top-1/2 -translate-y-1/2 w-48 p-3.5 rounded-xl bg-[var(--bg-card)]/90 border border-[var(--violet)]/30 shadow-2xl backdrop-blur-xl z-50 overflow-hidden"
+                  className="absolute left-1/2 -translate-x-1/2 top-full mt-4 sm:left-full sm:ml-4 sm:translate-x-0 sm:top-1/2 sm:-translate-y-1/2 sm:mt-0 w-[min(100%,12rem)] sm:w-48 p-3 sm:p-3.5 rounded-xl bg-[var(--bg-card)]/90 border border-[var(--violet)]/30 shadow-2xl backdrop-blur-xl z-50 overflow-hidden"
                 >
                   <motion.div
                     animate={{ top: ["0%", "100%", "0%"] }}
@@ -369,7 +370,7 @@ export default function EmailAutomationDemo() {
             <div className="text-center font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] text-[var(--text-muted)] mb-3 md:mb-4">
               {t("demo.multichannel.vaultTitle")}
             </div>
-            <div className="w-full max-w-3xl mx-auto h-52 bg-[var(--bg-card)]/80 border border-[var(--border)] rounded-[24px] shadow-xl backdrop-blur-2xl p-4 overflow-hidden relative flex flex-col gap-2">
+            <div className="w-full max-w-3xl mx-auto h-40 sm:h-52 bg-[var(--bg-card)]/80 border border-[var(--border)] rounded-2xl sm:rounded-[24px] shadow-xl backdrop-blur-2xl p-3 sm:p-4 overflow-hidden relative flex flex-col gap-2">
               {orders.length === 0 && !isRunning && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center opacity-50 text-[var(--text-muted)]">
                   <Server size={32} className="mb-3 opacity-60" />

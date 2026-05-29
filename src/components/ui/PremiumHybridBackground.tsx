@@ -38,7 +38,7 @@ export default function PremiumHybridBackground() {
       </div>
 
       {/* Overlay Layer: Universal Premium Texture (Noise + Dot Grid) */}
-      <div className="pointer-events-none fixed inset-0 z-[9999]">
+      <div className="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
         {/* Apple-like Custom Film Grain / Paper Texture */}
         <div 
           className="absolute inset-0 opacity-[0.035] mix-blend-multiply"

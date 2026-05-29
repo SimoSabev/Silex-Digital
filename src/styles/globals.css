@@ -401,3 +401,23 @@ button, a {
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* Touch-friendly targets & safe areas (mobile demos / modals) */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.safe-area-pt {
+  padding-top: max(0.75rem, env(safe-area-inset-top, 0px));
+}
+
+.safe-area-pb {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+}
+
+/* Horizontal scroll hint for wide tables */
+.scroll-hint-x {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}

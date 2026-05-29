@@ -89,7 +89,7 @@ export default function DemosPage() {
   const { locale } = useI18n();
 
   return (
-    <div className="relative min-h-dvh overflow-hidden bg-[var(--bg-page)] pt-[88px] pb-20">
+    <div className="relative min-h-dvh overflow-x-hidden bg-[var(--bg-page)] pt-20 sm:pt-[88px] pb-12 sm:pb-20">
       {/* Subtle animated grid pattern background */}
       <div className="bg-grid-pattern animate-float-slow pointer-events-none absolute inset-0 opacity-50" />
 
@@ -104,7 +104,7 @@ export default function DemosPage() {
                   ? "Интерактивни демонстрации"
                   : "Interactive demos"}
               </span>
-              <h1 className="mb-6 font-[family-name:var(--font-display)] text-4xl leading-tight font-[700] tracking-tight text-[var(--text-main)] md:text-5xl lg:text-[56px]">
+              <h1 className="mb-4 sm:mb-6 font-[family-name:var(--font-display)] text-3xl sm:text-4xl leading-tight font-[700] tracking-tight text-[var(--text-main)] md:text-5xl lg:text-[56px]">
                 {locale === "bg" ? "Виж как изглежда " : "See what it looks like "}
                 <span className="text-gradient-hero">
                   {locale === "bg"
@@ -112,7 +112,7 @@ export default function DemosPage() {
                     : "when everything runs itself"}
                 </span>
               </h1>
-              <p className="text-lg text-[var(--text-sub)]">
+              <p className="text-base sm:text-lg text-[var(--text-sub)] px-2 sm:px-0">
                 {locale === "bg"
                   ? "Кликни върху всяка карта и виж как изглежда в твоя бизнес — интерактивна симулация, без регистрация."
                   : "Click on any card and see how it looks in your business — interactive simulation, no sign-up needed."}
@@ -125,12 +125,12 @@ export default function DemosPage() {
       {/* Demos Grid - High End Bento Box Style */}
       <section className="section relative z-10 pt-0">
         <Container>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 lg:gap-8 max-w-7xl mx-auto">
+          <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:gap-8 max-w-7xl mx-auto">
             {demos.slice(0, 3).map((demo, idx) => (
               <LazyReveal 
                 key={demo.id} 
                 delay={0.2 + (idx * 0.1)} 
-                className={idx === 2 ? "md:col-span-2 lg:col-span-2" : ""}
+                className={idx === 2 ? "md:col-span-2" : ""}
               >
                 <DemoContainer
                   demoId={demo.id}
@@ -154,17 +154,17 @@ export default function DemosPage() {
       </section>
 
       {/* Coming Soon Grid */}
-      <section className="section bg-[var(--bg-section)]/50 relative z-10 py-24 border-t border-[var(--border)]/50">
+      <section className="section bg-[var(--bg-section)]/50 relative z-10 py-12 sm:py-16 md:py-24 border-t border-[var(--border)]/50">
         <Container>
           <LazyReveal delay={0.1}>
             <div className="mb-12 text-center">
-              <h2 className="font-display text-3xl font-bold text-[var(--text-main)]">
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-[var(--text-main)]">
                 {locale === "bg" ? "Очаквайте скоро" : "Coming Soon"}
               </h2>
             </div>
           </LazyReveal>
           
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
             {/* Coming Soon Cards */}
             {demos.slice(3).map((demo, idx) => (
               <LazyReveal key={demo.id} delay={0.2 + (idx * 0.1)}>
@@ -190,16 +190,16 @@ export default function DemosPage() {
                     </p>
                   </div>
 
-                  <div className="mt-auto border-t border-[var(--border)] pt-6">
-                    <div className="flex gap-2">
+                  <div className="mt-auto border-t border-[var(--border)] pt-4 sm:pt-6">
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-stretch">
                       <input
                         type="email"
                         placeholder={
                           locale === "bg" ? "Твоят имейл..." : "Your email..."
                         }
-                        className="input flex-1 px-3 py-2 text-sm"
+                        className="input min-h-[44px] flex-1 px-3 py-2.5 text-sm"
                       />
-                      <button className="btn-secondary btn-sm whitespace-nowrap">
+                      <button className="btn-secondary btn-sm min-h-[44px] w-full sm:w-auto whitespace-nowrap shrink-0">
                         {locale === "bg" ? "Извести ме" : "Notify me"}
                       </button>
                     </div>
@@ -215,8 +215,8 @@ export default function DemosPage() {
       <section className="relative z-10 py-12 md:py-16">
         <Container>
           <LazyReveal delay={0.3}>
-            <div className="card-featured mx-auto max-w-4xl p-8 text-center md:p-12 shadow-2xl hover:shadow-[var(--violet)]/20 transition-all duration-700">
-              <h2 className="mb-4 font-[family-name:var(--font-display)] text-2xl font-[700] text-[var(--text-main)] md:text-3xl">
+            <div className="card-featured mx-auto max-w-4xl p-6 sm:p-8 text-center md:p-12 shadow-2xl hover:shadow-[var(--violet)]/20 transition-all duration-700">
+              <h2 className="mb-3 sm:mb-4 font-[family-name:var(--font-display)] text-xl sm:text-2xl font-[700] text-[var(--text-main)] md:text-3xl">
                 {locale === "bg"
                   ? "Искаш персонализирана демонстрация?"
                   : "Need a personalized demo?"}

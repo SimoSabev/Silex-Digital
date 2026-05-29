@@ -144,20 +144,20 @@ export default function LeadQualificationDemo() {
   };
 
   return (
-    <div className="flex flex-col rounded-[24px] bg-[var(--bg-card)] border border-[var(--border)] shadow-2xl overflow-hidden min-h-[500px]">
+    <div className="flex flex-col rounded-2xl sm:rounded-[24px] bg-[var(--bg-card)] border border-[var(--border)] shadow-2xl overflow-hidden min-h-[min(480px,80dvh)] sm:min-h-[500px]">
       
       {/* Header */}
-      <div className="flex items-center justify-between p-5 border-b border-[var(--border)] bg-transparent relative z-10">
-        <div>
-          <h3 className="font-display text-lg font-bold text-[var(--text-main)] leading-tight flex items-center gap-2">
-             <Activity className="text-[var(--violet)]" size={20}/>
-             {locale === "bg" ? "AI Квалификация на Лийдове" : "AI Lead Qualification"}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between p-4 sm:p-5 border-b border-[var(--border)] bg-transparent relative z-10">
+        <div className="min-w-0">
+          <h3 className="font-display text-base sm:text-lg font-bold text-[var(--text-main)] leading-tight flex items-center gap-2">
+             <Activity className="text-[var(--violet)] shrink-0" size={20}/>
+             <span className="truncate">{locale === "bg" ? "AI Квалификация на Лийдове" : "AI Lead Qualification"}</span>
           </h3>
-          <p className="text-xs text-[var(--text-sub)]">
+          <p className="text-xs text-[var(--text-sub)] mt-0.5">
              {locale === "bg" ? "Извличане на стойност от свободен текст." : "Extracting value from unstructured text."}
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 w-full sm:w-auto shrink-0">
           {typedText.length > 0 && !isRunning && (
             <button onClick={resetDemo} className="p-2.5 rounded-full border border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors">
                <RotateCcw size={16} />
@@ -166,7 +166,7 @@ export default function LeadQualificationDemo() {
           <button
             onClick={startDemo}
             disabled={isRunning}
-            className="flex items-center justify-center gap-2 rounded-full bg-[var(--violet)] px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-[var(--violet)]/25 transition-all duration-300 hover:scale-105 hover:bg-[#8b5cf6] hover:shadow-[var(--violet)]/50 disabled:opacity-50 disabled:hover:scale-100 disabled:hover:bg-[var(--violet)]"
+            className="flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full bg-[var(--violet)] px-5 py-3 sm:py-2.5 text-sm font-bold text-white shadow-lg shadow-[var(--violet)]/25 transition-all duration-300 hover:scale-105 hover:bg-[#8b5cf6] hover:shadow-[var(--violet)]/50 disabled:opacity-50 disabled:hover:scale-100 disabled:hover:bg-[var(--violet)] min-h-[44px]"
           >
             {isRunning ? (
               <>
@@ -188,7 +188,7 @@ export default function LeadQualificationDemo() {
       <div className="grid grid-cols-1 md:grid-cols-2 flex-1 divide-y md:divide-y-0 md:divide-x divide-[var(--border)] relative bg-transparent">
         
         {/* LEFT: Raw Input */}
-        <div className="p-6 md:p-8 flex flex-col bg-[url('/img/grid.svg')] bg-[length:32px_32px]">
+        <div className="p-4 sm:p-6 md:p-8 flex flex-col bg-[url('/img/grid.svg')] bg-[length:32px_32px] min-h-[200px]">
            <div className="mb-4 flex items-center gap-2">
              <div className="w-2 h-2 rounded-full bg-[var(--text-muted)] animate-pulse" />
              <span className="text-xs font-bold uppercase tracking-widest text-[var(--text-sub)]">
@@ -209,7 +209,7 @@ export default function LeadQualificationDemo() {
         </div>
 
         {/* RIGHT: Live Extraction & Scoring */}
-        <div className="p-6 md:p-8 flex flex-col bg-[var(--bg-section)] relative overflow-hidden">
+        <div className="p-4 sm:p-6 md:p-8 flex flex-col bg-[var(--bg-section)] relative overflow-hidden">
            {/* Background Glow */}
            <AnimatePresence>
              {score === 100 && (
@@ -258,7 +258,7 @@ export default function LeadQualificationDemo() {
            </div>
 
            {/* Scoring Gauge at bottom */}
-           <div className="mt-auto pt-6 w-full flex items-center justify-between border-t border-[var(--border)] relative z-10">
+           <div className="mt-auto pt-6 w-full flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-t border-[var(--border)] relative z-10">
               <div>
                 <div className="text-[10px] uppercase font-bold text-[var(--text-muted)] mb-1">
                   {locale === "bg" ? "Качество" : "Quality Score"}
@@ -281,7 +281,7 @@ export default function LeadQualificationDemo() {
                    <motion.div 
                      initial={{ scale: 0.8, opacity: 0 }} 
                      animate={{ scale: 1, opacity: 1 }}
-                     className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider border ${
+                     className={`self-start sm:self-auto px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider border ${
                        score === 100 ? "border-red-500/30 bg-red-500/10 text-red-500 shadow-[0_0_15px_rgba(239,68,68,0.2)]" :
                        score >= 50 ? "border-orange-500/30 bg-orange-500/10 text-orange-500" :
                        "border-blue-500/30 bg-blue-500/10 text-blue-500"

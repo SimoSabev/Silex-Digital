@@ -573,7 +573,7 @@ export default function HomeContent() {
       {/* Interactive Demo Preview */}
       <section
         id="home-interactive-demo"
-        className="scroll-mt-24 overflow-hidden border-y border-[var(--border)] bg-[var(--bg-section)] py-16 md:py-[120px] lg:py-[160px]"
+        className="scroll-mt-20 sm:scroll-mt-24 overflow-hidden border-y border-[var(--border)] bg-[var(--bg-section)] py-12 sm:py-16 md:py-[120px] lg:py-[160px]"
       >
         <Container>
           <div className="grid items-center gap-10 md:gap-16 lg:grid-cols-2">
@@ -581,14 +581,14 @@ export default function HomeContent() {
               <div className="badge-violet mb-6 inline-flex rounded-full border border-[var(--violet)]/20 bg-[var(--violet)]/10 px-3 py-1 text-sm font-bold tracking-wider text-[var(--violet)] uppercase">
                 {t("home.demo.badge")}
               </div>
-              <h2 className="mb-6 font-display text-4xl leading-tight font-[800] text-[var(--text-main)] lg:text-5xl">
+              <h2 className="mb-4 sm:mb-6 font-display text-3xl sm:text-4xl leading-tight font-[800] text-[var(--text-main)] lg:text-5xl">
                 {t("home.demo.title")}
                 <br />
                 <span className="text-gradient-hero">
                   {t("home.demo.titleHighlight")}
                 </span>
               </h2>
-              <p className="mb-8 text-[20px] leading-relaxed text-[var(--text-sub)]">
+              <p className="mb-6 sm:mb-8 text-base sm:text-lg md:text-[20px] leading-relaxed text-[var(--text-sub)]">
                 {t("home.demo.body")}
               </p>
               <ul className="mb-6 space-y-4">
@@ -626,8 +626,8 @@ export default function HomeContent() {
 
             <AnimatedSection direction="right" className="relative">
               <div className="absolute inset-0 -z-10 rounded-full bg-gradient-to-tr from-[var(--violet)]/20 to-[var(--coral)]/20 blur-3xl" />
-              <div className="card rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-2 shadow-apple-hover">
-                <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-transparent">
+              <div className="card rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-1.5 sm:p-2 shadow-apple-hover overflow-hidden">
+                <div className="overflow-x-hidden overflow-y-auto rounded-xl border border-[var(--border)] bg-transparent max-h-[min(85dvh,720px)] sm:max-h-none">
                   <EmailAutomationDemo />
                 </div>
               </div>

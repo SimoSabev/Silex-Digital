@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Menu, X, ArrowRight, Sparkles } from "lucide-react";
 import LanguageToggle from "@/components/ui/LanguageToggle";
 import ThemeToggle from "@/components/ui/ThemeToggle";
@@ -13,6 +14,7 @@ import { useI18n } from "@/lib/i18n";
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { t } = useI18n();
   const pathname = usePathname();
 
@@ -23,6 +25,8 @@ export default function Navbar() {
     { label: t("nav.pricing"), href: "/pricing" },
   ];
 
+  useEffect(() => setMounted(true), []);
+
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -30,91 +34,160 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    window.dispatchEvent(
-      new CustomEvent("silex-menu-toggle", { detail: { open: isMobileMenuOpen } })
-    );
-    return () => {
+    if (isMobileMenuOpen) {
+      document.body.classList.add("menu-open");
+      window.dispatchEvent(
+        new CustomEvent("silex-menu-toggle", { detail: { open: true } })
+      );
+    } else {
+      document.body.classList.remove("menu-open");
       window.dispatchEvent(
         new CustomEvent("silex-menu-toggle", { detail: { open: false } })
       );
-    };
+    }
   }, [isMobileMenuOpen]);
 
-  // Framer Motion variants
-  const mobileMenuVariants = {
-    closed: {
-      opacity: 0,
-      scale: 0.95,
-      transition: { duration: 0.2, ease: "easeIn" as const }
-    },
-    open: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.4, ease: "easeOut" as const, staggerChildren: 0.1, keyframes: undefined }
-    }
-  };
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
-  const mobileLinkVariants = {
-    closed: { y: 20, opacity: 0 },
-    open: { y: 0, opacity: 1, transition: { duration: 0.4, ease: "easeOut" as const } }
-  };
+  const closeMenu = () => setIsMobileMenuOpen(false);
+
+  const mobileMenu =
+    mounted && isMobileMenuOpen
+      ? createPortal(
+          <div
+            id="mobile-nav-menu"
+            className="fixed inset-0 z-[9998] flex flex-col bg-[var(--bg-page)] lg:hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
+          >
+            <div className="flex shrink-0 items-center justify-between border-b border-[var(--border)] px-4 py-3 safe-area-pt">
+              <Link
+                href="/"
+                onClick={closeMenu}
+                className="relative flex h-11 w-[150px] items-center justify-start overflow-hidden"
+              >
+                <Image
+                  src="/long-logo.png"
+                  alt="Silex Digital"
+                  width={220}
+                  height={55}
+                  className="h-[120px] w-auto max-w-none object-contain object-left"
+                  priority
+                />
+              </Link>
+              <button
+                type="button"
+                onClick={closeMenu}
+                className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--coral)] text-white shadow-md touch-target"
+                aria-label="Close menu"
+              >
+                <X size={22} />
+              </button>
+            </div>
+
+            <nav className="flex flex-1 flex-col items-center justify-center gap-6 overflow-y-auto px-6 py-8">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={closeMenu}
+                    className="group flex flex-col items-center text-center"
+                  >
+                    <span
+                      className={`font-display text-3xl font-bold transition-colors sm:text-4xl ${
+                        isActive
+                          ? "text-[var(--violet)]"
+                          : "text-[var(--text-sub)] group-hover:text-[var(--violet)]"
+                      }`}
+                    >
+                      {link.label}
+                    </span>
+                    {isActive && (
+                      <span className="mt-2 h-[3px] w-12 rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--coral)]" />
+                    )}
+                  </Link>
+                );
+              })}
+
+              <div className="mt-4 w-full max-w-sm space-y-4">
+                <Link
+                  href="/contact"
+                  onClick={closeMenu}
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--coral)] px-6 py-4 text-lg font-bold text-white shadow-[0_10px_30px_rgba(124,58,237,0.3)]"
+                >
+                  <Sparkles size={18} />
+                  {t("nav.getStarted") || t("common.contactUs")}
+                </Link>
+                <div className="flex items-center justify-center gap-4 pt-2">
+                  <LanguageToggle />
+                  <ThemeToggle />
+                </div>
+              </div>
+            </nav>
+          </div>,
+          document.body
+        )
+      : null;
 
   return (
     <>
-      {/* Desktop Navbar container */}
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 flex justify-center w-full ${
-          isScrolled ? "pt-4 px-4 pb-4" : "pt-0 px-0"
+        className={`fixed top-0 left-0 right-0 z-[200] flex w-full justify-center transition-all duration-500 ${
+          isScrolled ? "px-4 pb-4 pt-4" : "px-0 pt-0"
         }`}
       >
-        <div className={`w-full max-w-7xl transition-all duration-500 flex h-[72px] items-center justify-between gap-6 ${
-          isScrolled 
-            ? "px-6 bg-[var(--bg-card)]/80 backdrop-blur-xl border border-[var(--border)] rounded-full shadow-apple" 
-            : "px-6 sm:px-8 border-b border-transparent"
-        }`}>
-
-          {/* Logo */}
+        <div
+          className={`flex h-[72px] w-full max-w-7xl items-center justify-between gap-6 transition-all duration-500 ${
+            isScrolled
+              ? "rounded-full border border-[var(--border)] bg-[var(--bg-card)]/80 px-6 shadow-apple backdrop-blur-xl"
+              : "border-b border-transparent px-6 sm:px-8"
+          }`}
+        >
           <Link
             href="/"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="group flex flex-col shrink-0 justify-center relative overflow-hidden"
+            onClick={closeMenu}
+            className="group relative flex h-11 w-[150px] shrink-0 items-center justify-start overflow-hidden sm:h-12 sm:w-[170px]"
           >
-            <Image 
-              src="/long-logo.png" 
-              alt="Silex Digital" 
-              width={140} 
-              height={35} 
-              className="h-64w-auto object-contain"
+            <Image
+              src="/long-logo.png"
+              alt="Silex Digital"
+              width={220}
+              height={55}
+              className="h-[120px] w-auto max-w-none object-contain object-left sm:h-[140px]"
               priority
             />
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center justify-center gap-1">
+          <div className="hidden items-center justify-center gap-1 lg:flex">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="relative px-4 py-2 group"
+                  className="group relative px-4 py-2"
                 >
-                  <span className={`relative z-10 text-[15px] font-[600] transition-colors duration-300 ${
-                    isActive ? "text-[var(--violet)]" : "text-[var(--text-sub)] group-hover:text-[var(--violet)]"
-                  }`}>
+                  <span
+                    className={`relative z-10 text-[15px] font-[600] transition-colors duration-300 ${
+                      isActive
+                        ? "text-[var(--violet)]"
+                        : "text-[var(--text-sub)] group-hover:text-[var(--violet)]"
+                    }`}
+                  >
                     {link.label}
                   </span>
-                  
-                  {/* Hover effect */}
-                  <motion.div 
-                    className="absolute inset-0 rounded-full bg-[var(--bg-section)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" 
-                    layoutId="nav-hover-pill" 
+                  <motion.div
+                    className="absolute inset-0 rounded-full bg-[var(--bg-section)] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    layoutId="nav-hover-pill"
                   />
-
-                  {/* Active effect */}
                   {isActive && (
                     <motion.div
                       layoutId="nav-active-indicator"
@@ -127,99 +200,39 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* Desktop Right side settings / CTA */}
           <div className="hidden shrink-0 items-center gap-4 lg:flex">
-            <div className="flex items-center bg-[var(--bg-section)]/50 rounded-full p-1 border border-[var(--border)]">
+            <div className="flex items-center rounded-full border border-[var(--border)] bg-[var(--bg-section)]/50 p-1">
               <LanguageToggle />
             </div>
             <ThemeToggle />
-            
             <Link href="/contact" className="group relative">
-              <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-[var(--violet)] via-[var(--coral)] to-[var(--lime)] opacity-30 blur-sm group-hover:opacity-100 group-hover:blur transition duration-500"></div>
+              <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-[var(--violet)] via-[var(--coral)] to-[var(--lime)] opacity-30 blur-sm transition duration-500 group-hover:opacity-100 group-hover:blur" />
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="relative flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--coral)] px-5 py-2.5 text-[14px] font-[700] text-white shadow-lg transition-all duration-300"
               >
-                <Sparkles className="w-4 h-4 text-[var(--lime)] group-hover:animate-pulse" />
+                <Sparkles className="h-4 w-4 text-[var(--lime)] group-hover:animate-pulse" />
                 {t("common.contactUs")}
-                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </motion.button>
             </Link>
           </div>
 
-          {/* Mobile hamburger — only button, no language toggle here */}
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            className="relative z-[60] flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-transparent bg-gradient-to-r from-[var(--violet)] to-[var(--coral)] text-white shadow-md transition-colors lg:hidden"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
+          <button
+            type="button"
+            className="relative z-[201] flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-transparent bg-gradient-to-r from-[var(--violet)] to-[var(--coral)] text-white shadow-md transition-colors lg:hidden touch-target"
+            onClick={() => setIsMobileMenuOpen((open) => !open)}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-nav-menu"
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
           >
             {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-          </motion.button>
-
+          </button>
         </div>
       </motion.nav>
 
-      {/* Mobile Full-Screen Menu Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            variants={mobileMenuVariants}
-            initial="closed"
-            animate="open"
-            exit="closed"
-            className="fixed inset-0 z-[55] flex flex-col items-center justify-center overflow-hidden bg-[var(--bg-page)]/95 backdrop-blur-2xl lg:hidden"
-          >
-            {/* Ambient Background Glow in Mobile Menu */}
-            <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-[var(--violet)]/10 rounded-full blur-[100px] pointer-events-none" />
-            <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-[var(--coral)]/10 rounded-full blur-[100px] pointer-events-none" />
-
-            <div className="flex flex-col items-center justify-center space-y-6 w-full px-6 relative z-10">
-              {navLinks.map((link, i) => {
-                const isActive = pathname === link.href;
-                return (
-                  <motion.div key={link.href} variants={mobileLinkVariants}>
-                    <Link
-                      href={link.href}
-                      className="group flex flex-col items-center"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <span className={`text-[32px] sm:text-[40px] font-display font-bold transition-colors duration-300 ${
-                        isActive ? "text-[var(--violet)]" : "text-[var(--text-sub)] group-hover:text-[var(--violet)]"
-                      }`}>
-                        {link.label}
-                      </span>
-                      {isActive && (
-                        <motion.div 
-                          layoutId="mobile-active-indicator"
-                          className="h-[3px] w-12 rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--coral)] mt-2" 
-                        />
-                      )}
-                    </Link>
-                  </motion.div>
-                );
-              })}
-
-              <motion.div variants={mobileLinkVariants} className="w-full max-w-sm mt-8 space-y-4">
-                <Link
-                  href="/contact"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--coral)] px-6 py-4 text-[18px] font-[700] text-white shadow-[0_10px_30px_rgba(124,58,237,0.3)] transition-all hover:scale-[1.02]"
-                >
-                  <Sparkles size={18} />
-                  {t("nav.getStarted") || t("common.contactUs")}
-                </Link>
-                <div className="flex justify-center items-center gap-4 pt-2">
-                  <LanguageToggle />
-                  <ThemeToggle />
-                </div>
-              </motion.div>
-
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {mobileMenu}
     </>
   );
 }

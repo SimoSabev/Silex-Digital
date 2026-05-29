@@ -653,12 +653,15 @@ export default function PricingPage() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-32 overflow-x-auto relative z-10"
+            className="mb-32 scroll-hint-x overflow-x-auto relative z-10 -mx-4 px-4 sm:mx-0 sm:px-0"
           >
-            <div className="mb-12 text-center">
-              <h2 className="mb-4 font-display text-3xl font-bold md:text-5xl">
+            <div className="mb-8 sm:mb-12 text-center">
+              <h2 className="mb-2 sm:mb-4 font-display text-2xl sm:text-3xl font-bold md:text-5xl">
                 {locale === "bg" ? "Сравни плановете" : "Compare plans"}
               </h2>
+              <p className="text-sm text-[var(--text-muted)] md:hidden">
+                {locale === "bg" ? "Плъзни наляво/надясно за пълната таблица" : "Swipe sideways for the full table"}
+              </p>
             </div>
             <div className="bg-[var(--bg-card)] rounded-[24px] border border-[var(--border)] overflow-hidden shadow-2xl">
               <table className="w-full min-w-[800px] border-collapse text-left">

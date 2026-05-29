@@ -110,12 +110,12 @@ export default function ChatbotDemo() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-5 gap-0 rounded-[2rem] bg-[var(--bg-card)] overflow-hidden border border-[var(--border)] shadow-2xl flex-1 min-h-[600px] font-[family-name:var(--font-main)]">
+    <div className="grid grid-cols-1 lg:grid-cols-5 gap-0 rounded-2xl sm:rounded-[2rem] bg-[var(--bg-card)] overflow-hidden border border-[var(--border)] shadow-2xl flex-1 min-h-[min(560px,88dvh)] lg:min-h-[600px] font-[family-name:var(--font-main)]">
       
       {/* Left: Chat Interface */}
-      <div className="lg:col-span-3 flex flex-col h-full border-r border-[var(--border)] relative bg-transparent z-10 shadow-lg">
+      <div className="lg:col-span-3 flex flex-col min-h-[320px] lg:min-h-0 lg:h-full border-b lg:border-b-0 lg:border-r border-[var(--border)] relative bg-transparent z-10 shadow-lg">
         {/* Chat header */}
-        <div className="flex items-center gap-4 border-b border-[var(--border)] bg-[var(--bg-card)]/80 backdrop-blur-xl p-5 sticky top-0 z-20">
+        <div className="flex items-center gap-3 sm:gap-4 border-b border-[var(--border)] bg-[var(--bg-card)]/80 backdrop-blur-xl p-4 sm:p-5 sticky top-0 z-20">
           <div className="relative">
             <div className="flex h-12 w-12 items-center justify-center rounded-[1rem] bg-gradient-to-br from-[var(--violet)] to-[var(--coral)] text-white shadow-lg">
               <Bot size={24} />
@@ -140,7 +140,7 @@ export default function ChatbotDemo() {
         </div>
 
         {/* Chat Messages */}
-        <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-5 md:p-6 space-y-6 scroll-smooth bg-[url('/img/grid.svg')] bg-[length:32px_32px]">
+        <div ref={chatContainerRef} className="flex-1 min-h-[200px] max-h-[50dvh] lg:max-h-none overflow-y-auto overscroll-contain p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-6 scroll-smooth bg-[url('/img/grid.svg')] bg-[length:32px_32px]">
           <AnimatePresence>
             {messages.map((msg) => (
               <motion.div
@@ -232,7 +232,7 @@ export default function ChatbotDemo() {
       </div>
 
       {/* Right: AI Brain Activity Panel (Light Theme) */}
-      <div className="lg:col-span-2 bg-[var(--bg-section)] border-l border-[var(--border)] p-6 md:p-8 relative overflow-hidden flex flex-col justify-between">
+      <div className="lg:col-span-2 bg-[var(--bg-section)] lg:border-l border-[var(--border)] p-4 sm:p-6 md:p-8 relative overflow-hidden flex flex-col justify-between max-h-[45dvh] lg:max-h-none">
         
         {/* Radar Background grid */}
         <div className="absolute inset-0 bg-[url('/img/grid.svg')] bg-[length:24px_24px] opacity-40 pointer-events-none" />
@@ -269,7 +269,7 @@ export default function ChatbotDemo() {
                 </div>
               </motion.div>
             ) : (
-               <div className="h-64 sm:h-auto overflow-y-auto hide-scrollbar space-y-3 pb-8">
+               <div className="max-h-[28dvh] lg:max-h-none overflow-y-auto hide-scrollbar space-y-3 pb-4 lg:pb-8">
                  <AnimatePresence>
                    {activeThoughts.map((thought, idx) => (
                      <motion.div
