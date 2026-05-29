@@ -213,7 +213,7 @@ export default function HomeContent() {
                       </Button>
                     </Magnetic>
                   </Link>
-                  <Link href="/demos" className="w-full sm:w-auto">
+                  <Link href="#home-interactive-demo" className="w-full sm:w-auto">
                     <Magnetic className="block w-full sm:w-auto">
                       <Button
                         variant="secondary"
@@ -384,7 +384,7 @@ export default function HomeContent() {
           {/* Section label */}
           <AnimatedSection className="mb-10 text-center md:mb-16">
             <p className="font-display text-sm font-[700] tracking-[0.15em] text-[var(--text-muted)] uppercase">
-              {locale === "bg" ? "Преди SilexBrand vs. След SilexBrand" : "Before SilexBrand vs. After SilexBrand"}
+              {t("home.beforeAfter.label")}
             </p>
           </AnimatedSection>
 
@@ -398,23 +398,25 @@ export default function HomeContent() {
                     <AlertTriangle className="h-6 w-6 text-[var(--coral)]" />
                   </div>
                   <h2 className="font-display text-2xl font-[800] text-red-700 dark:text-red-400">
-                    {locale === "bg" ? "Преди" : "Before"}
+                    {t("home.beforeAfter.before")}
                   </h2>
                 </div>
                 <ul className="space-y-4">
-                  {[
-                    locale === "bg" ? "Ръчно отговаряш на едни и същи въпроси всеки ден" : "Manually answering the same questions every day",
-                    locale === "bg" ? "Клиент пише в 22:00 — ти го виждаш сутринта, той вече е при конкурента" : "Client messages at 10pm — you see it next morning, they've already gone to a competitor",
-                    locale === "bg" ? "Половин работен ден губиш за неща, които могат да стават сами" : "Half your workday lost to things that could run themselves",
-                    locale === "bg" ? "Не знаеш колко запитвания изпускаш всяка седмица" : "You don't know how many enquiries you're losing each week",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-[15px] font-[500] text-red-700 dark:text-red-400">
+                  {(
+                    [
+                      "home.beforeAfter.before1",
+                      "home.beforeAfter.before2",
+                      "home.beforeAfter.before3",
+                      "home.beforeAfter.before4",
+                    ] as const
+                  ).map((key) => (
+                    <li key={key} className="flex items-start gap-3 text-[15px] font-[500] text-red-700 dark:text-red-400">
                       <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--coral)]/20">
                         <svg viewBox="0 0 12 12" fill="none" className="h-3 w-3">
                           <path d="M3 3l6 6M9 3l-6 6" stroke="var(--coral)" strokeWidth="1.8" strokeLinecap="round"/>
                         </svg>
                       </span>
-                      {item}
+                      {t(key)}
                     </li>
                   ))}
                 </ul>
@@ -444,23 +446,25 @@ export default function HomeContent() {
                     <Sparkles className="h-6 w-6 text-[var(--lime)]" />
                   </div>
                   <h2 className="font-display text-2xl font-[800] text-[var(--lime)]">
-                    {locale === "bg" ? "След SilexBrand" : "After SilexBrand"}
+                    {t("home.beforeAfter.after")}
                   </h2>
                 </div>
                 <ul className="space-y-4">
-                  {[
-                    locale === "bg" ? "Клиентът получава отговор за секунди — дори в 23:00" : "Client gets a reply in seconds — even at 11pm",
-                    locale === "bg" ? "Записваш клиенти докато спиш, без да вдигаш телефона" : "You book clients while sleeping, without answering calls",
-                    locale === "bg" ? "Знаеш точно колко запитвания идват и колко се превръщат в поръчки" : "You know exactly how many inquiries come in and how many convert",
-                    locale === "bg" ? "Работиш по-малко часа, вземаш повече" : "Work fewer hours, earn more",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-[15px] font-[700] text-[var(--lime)]">
+                  {(
+                    [
+                      "home.beforeAfter.after1",
+                      "home.beforeAfter.after2",
+                      "home.beforeAfter.after3",
+                      "home.beforeAfter.after4",
+                    ] as const
+                  ).map((key) => (
+                    <li key={key} className="flex items-start gap-3 text-[15px] font-[700] text-[var(--lime)]">
                       <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--lime)]/20">
                         <svg viewBox="0 0 12 12" fill="none" className="h-3 w-3">
                           <path d="M2.5 6l2.5 2.5 4.5-5" stroke="var(--lime)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                       </span>
-                      {item}
+                      {t(key)}
                     </li>
                   ))}
                 </ul>
@@ -479,19 +483,17 @@ export default function HomeContent() {
           <div className="grid items-start gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
             <AnimatedSection direction="left">
               <div className="badge-lime mb-6 inline-flex rounded-full border border-[var(--lime)]/20 bg-[var(--lime)]/10 px-3 py-1 text-sm font-bold tracking-wider text-[var(--lime)] uppercase">
-                {locale === "bg" ? "Как работи" : "How it works"}
+                {t("home.how.badge")}
               </div>
               <h2 className="mb-6 font-display text-4xl font-[800] text-[var(--text-main)] leading-tight lg:text-5xl">
-                {locale === "bg" ? "От съобщение до клиент" : "From message to client"}
+                {t("home.how.title")}
                 <br />
                 <span className="text-gradient-hero">
-                  {locale === "bg" ? "за 47 секунди" : "in 47 seconds"}
+                  {t("home.how.titleHighlight")}
                 </span>
               </h2>
               <p className="text-[18px] leading-relaxed text-[var(--text-sub)]">
-                {locale === "bg"
-                  ? "Платформата улавя всяко взаимодействие, отговаря мигновено и ти праща нотификация — ти трябва само да потвърдиш резервацията."
-                  : "The platform captures every interaction, replies instantly and sends you a notification — you just confirm the booking."}
+                {t("home.how.body")}
               </p>
             </AnimatedSection>
             <AnimatedSection direction="right" className="lg:pt-2">
@@ -569,61 +571,54 @@ export default function HomeContent() {
       </section>
 
       {/* Interactive Demo Preview */}
-      <section className="overflow-hidden border-y border-[var(--border)] bg-[var(--bg-section)] py-16 md:py-[120px] lg:py-[160px]">
+      <section
+        id="home-interactive-demo"
+        className="scroll-mt-24 overflow-hidden border-y border-[var(--border)] bg-[var(--bg-section)] py-16 md:py-[120px] lg:py-[160px]"
+      >
         <Container>
           <div className="grid items-center gap-10 md:gap-16 lg:grid-cols-2">
             <AnimatedSection direction="left">
               <div className="badge-violet mb-6 inline-flex rounded-full border border-[var(--violet)]/20 bg-[var(--violet)]/10 px-3 py-1 text-sm font-bold tracking-wider text-[var(--violet)] uppercase">
-                {locale === "bg"
-                  ? "Интерактивна демонстрация"
-                  : "Interactive demo"}
+                {t("home.demo.badge")}
               </div>
               <h2 className="mb-6 font-display text-4xl leading-tight font-[800] text-[var(--text-main)] lg:text-5xl">
-                {locale === "bg" ? "Виж как работи" : "See how"}
+                {t("home.demo.title")}
                 <br />
                 <span className="text-gradient-hero">
-                  {locale === "bg"
-                    ? "email автоматизацията"
-                    : "email automation works"}
+                  {t("home.demo.titleHighlight")}
                 </span>
               </h2>
               <p className="mb-8 text-[20px] leading-relaxed text-[var(--text-sub)]">
-                {locale === "bg"
-                  ? 'Натисни "Тествай" и виж как изглежда, когато клиент пише и получава отговор автоматично — без ти да правиш нищо.'
-                  : 'Press "Test" and see what it looks like when a client messages and gets an automatic reply — without you doing anything.'}
+                {t("home.demo.body")}
               </p>
-              <ul className="mb-10 space-y-4">
-                <li className="flex items-center gap-4 text-lg font-bold text-[var(--text-main)]">
-                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[var(--lime)]">
-                    <Check className="h-5 w-5 text-white" />
-                  </div>
-                  {locale === "bg" ? "Безплатно за изпробване" : "Free to try"}
-                </li>
-                <li className="flex items-center gap-4 text-lg font-bold text-[var(--text-main)]">
-                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[var(--lime)]">
-                    <Check className="h-5 w-5 text-white" />
-                  </div>
-                  {locale === "bg"
-                    ? "Само за 2 минути"
-                    : "Takes only 2 minutes"}
-                </li>
-                <li className="flex items-center gap-4 text-lg font-bold text-[var(--text-main)]">
-                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[var(--lime)]">
-                    <Check className="h-5 w-5 text-white" />
-                  </div>
-                  {locale === "bg"
-                    ? "Виж резултата веднага"
-                    : "See results instantly"}
-                </li>
+              <ul className="mb-6 space-y-4">
+                {(
+                  [
+                    "home.demo.bullet1",
+                    "home.demo.bullet2",
+                    "home.demo.bullet3",
+                  ] as const
+                ).map((key) => (
+                  <li
+                    key={key}
+                    className="flex items-center gap-4 text-lg font-bold text-[var(--text-main)]"
+                  >
+                    <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[var(--lime)]">
+                      <Check className="h-5 w-5 text-white" />
+                    </div>
+                    {t(key)}
+                  </li>
+                ))}
               </ul>
+              <p className="mb-8 text-sm leading-relaxed text-[var(--text-muted)]">
+                {t("home.demo.note")}
+              </p>
               <Link href="/demos">
                 <Button
                   variant="ghost"
                   className="rounded-xl px-6 py-3 text-lg font-bold text-[var(--violet)] transition-colors hover:bg-[var(--violet)]/10"
                 >
-                  {locale === "bg"
-                    ? "Виж всички демонстрации"
-                    : "View all demos"}
+                  {t("home.demo.cta")}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>

@@ -37,7 +37,7 @@ const ALL_MOCK_MESSAGES: Record<Source, { text: { bg: string; en: string }; prod
 };
 
 export default function EmailAutomationDemo() {
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
   const { trackEvent } = useDemoAnalytics("email-automation", locale);
 
   const [activeSources, setActiveSources] = useState<Source[]>(["viber", "messenger", "instagram"]);
@@ -146,12 +146,10 @@ export default function EmailAutomationDemo() {
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between p-5 md:p-6 border-b border-[var(--border)] bg-transparent relative z-20 gap-4">
         <div className="flex-1">
           <h3 className="font-display text-xl font-bold text-[var(--text-main)] leading-tight tracking-tight mb-1">
-            {locale === "bg" ? "Свържи каналите си" : "Connect Your Channels"}
+            {t("demo.multichannel.title")}
           </h3>
           <p className="text-sm text-[var(--text-sub)]">
-            {locale === "bg"
-              ? "Избери платформите, които твоите клиенти използват, и остави AI да автоматизира поръчките ти."
-              : "Select the platforms your customers use and let AI automate your orders."}
+            {t("demo.multichannel.sub")}
           </p>
         </div>
 
@@ -161,9 +159,9 @@ export default function EmailAutomationDemo() {
           className="flex-shrink-0 w-full md:w-auto flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[var(--violet)] to-[#8b5cf6] px-6 py-3 text-sm font-bold text-white shadow-[0_0_20px_rgba(124,58,237,0.3)] transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(124,58,237,0.5)] disabled:opacity-50 disabled:hover:scale-100 disabled:shadow-none"
         >
           {isRunning ? (
-            <><RefreshCw size={18} className="animate-spin" /><span>{locale === "bg" ? "Работа в реално време..." : "Processing Live..."}</span></>
+            <><RefreshCw size={18} className="animate-spin" /><span>{t("demo.multichannel.running")}</span></>
           ) : (
-            <><Play size={18} fill="currentColor" /><span>{locale === "bg" ? "Започни автоматизация" : "Start Automation"}</span></>
+            <><Play size={18} fill="currentColor" /><span>{t("demo.multichannel.run")}</span></>
           )}
         </button>
       </div>
@@ -288,7 +286,7 @@ export default function EmailAutomationDemo() {
                     <div className={`absolute inset-0 rounded-[24px] ${c.bgColor} opacity-40`} />
                     <div className="relative z-10 flex gap-2 items-center mb-1.5 border-b border-[var(--border)] pb-1.5">
                       <div className={`scale-75 p-1 rounded-md ${c.bgColor} ${c.activeColor.replace("bg-", "text-")}`}>{c.icon}</div>
-                      <span className="text-[10px] font-bold uppercase text-[var(--text-sub)] tracking-widest">{locale === "bg" ? "Нова Поръчка" : "New Order"}</span>
+                      <span className="text-[10px] font-bold uppercase text-[var(--text-sub)] tracking-widest">{t("demo.multichannel.newInquiry")}</span>
                     </div>
                     <p className="relative z-10 text-xs text-[var(--text-main)] font-medium line-clamp-2 leading-relaxed">{msg.text}</p>
                   </motion.div>
@@ -321,7 +319,7 @@ export default function EmailAutomationDemo() {
             >
               <Bot size={processingMsg ? 32 : 28} className={processingMsg ? "drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]" : ""} />
               <span className={`text-[9px] md:text-[10px] font-black uppercase tracking-widest mt-2 ${processingMsg ? "opacity-90" : "opacity-60"}`}>
-                {processingMsg ? (locale === "bg" ? "Извличане..." : "Extracting...") : (locale === "bg" ? "AI Ядро" : "AI Core")}
+                {processingMsg ? t("demo.multichannel.extracting") : t("demo.multichannel.aiCore")}
               </span>
               <AnimatePresence>
                 {processingMsg && (
@@ -357,8 +355,8 @@ export default function EmailAutomationDemo() {
                       <div className="text-[9px] text-[var(--violet)] font-mono uppercase tracking-[0.2em]">{"<Data_Map>"}</div>
                     </div>
                     <div className="text-[10px] sm:text-xs text-[var(--text-sub)] font-mono flex flex-col gap-1.5">
-                      <span className="flex justify-between">{locale === "bg" ? "Канал:" : "Source:"} <span className="text-[var(--text-main)] font-bold">{CHANNELS[processingMsg.source][locale === "bg" ? "bgName" : "enName"]}</span></span>
-                      <span className="flex justify-between items-center gap-2">{locale === "bg" ? "Продукт:" : "Item:"} <span className="text-[var(--lime)] font-bold truncate">{processingMsg.product}</span></span>
+                      <span className="flex justify-between">{t("demo.multichannel.source")} <span className="text-[var(--text-main)] font-bold">{CHANNELS[processingMsg.source][locale === "bg" ? "bgName" : "enName"]}</span></span>
+                      <span className="flex justify-between items-center gap-2">{t("demo.multichannel.item")} <span className="text-[var(--lime)] font-bold truncate">{processingMsg.product}</span></span>
                     </div>
                   </div>
                 </motion.div>
@@ -369,14 +367,14 @@ export default function EmailAutomationDemo() {
           {/* BOTTOM: ERP table */}
           <div className="w-full mt-auto relative z-50 px-2 sm:px-0">
             <div className="text-center font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] text-[var(--text-muted)] mb-3 md:mb-4">
-              {locale === "bg" ? "Синхронизация с ERP" : "ERP Dashboard Sync"}
+              {t("demo.multichannel.vaultTitle")}
             </div>
             <div className="w-full max-w-3xl mx-auto h-52 bg-[var(--bg-card)]/80 border border-[var(--border)] rounded-[24px] shadow-xl backdrop-blur-2xl p-4 overflow-hidden relative flex flex-col gap-2">
               {orders.length === 0 && !isRunning && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center opacity-50 text-[var(--text-muted)]">
                   <Server size={32} className="mb-3 opacity-60" />
                   <span className="text-xs uppercase tracking-widest font-semibold font-mono">
-                    {locale === "bg" ? "Системата е в готовност" : "System ready for deployment"}
+                    {t("demo.multichannel.vaultEmpty")}
                   </span>
                 </div>
               )}
@@ -410,13 +408,13 @@ export default function EmailAutomationDemo() {
                           </span>
                         </div>
                         <div className="text-[10px] sm:text-xs text-[var(--text-sub)] truncate mt-0.5 font-mono">
-                          from: "{order.text}"
+                          {t("demo.multichannel.from")} &quot;{order.text}&quot;
                         </div>
                       </div>
                     </div>
                     <div className="hidden sm:flex shrink-0 items-center gap-1.5 text-[9px] font-bold text-[var(--lime)] py-1 px-2.5 rounded border border-[var(--lime)]/20 uppercase tracking-widest bg-[var(--lime)]/10">
                       <span className="w-1.5 h-1.5 rounded-full bg-[var(--lime)] animate-pulse" />
-                      {locale === "bg" ? "Записано" : "Stored"}
+                      {t("demo.multichannel.stored")}
                     </div>
                   </motion.div>
                 ))}
