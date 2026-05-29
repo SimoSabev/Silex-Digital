@@ -81,24 +81,18 @@ export async function POST(request: NextRequest) {
       updated_at: now,
     };
 
-    // Store lead in Supabase
-    if (!supabase) {
-      return NextResponse.json(
-        { error: 'Database not configured' },
-        { status: 503 }
-      );
-    }
+    // Store lead in Supabase (optional)
+    if (supabase) {
+      const { error: supabaseError } = await supabase
+        .from('leads')
+        .insert(leadData);
 
-    const { error: supabaseError } = await supabase
-      .from('leads')
-      .insert(leadData);
-
-    if (supabaseError) {
-      console.error('Supabase error:', supabaseError);
-      return NextResponse.json(
-        { error: 'Failed to store lead data', details: supabaseError.message },
-        { status: 500 }
-      );
+      if (supabaseError) {
+        console.error('Supabase error:', supabaseError);
+        // We log the error but don't fail the request so that emails still send
+      }
+    } else {
+      console.warn('Database not configured, skipping lead database storage.');
     }
 
     // Create lead object for email templates
@@ -116,32 +110,45 @@ export async function POST(request: NextRequest) {
     };
 
     // Send confirmation email to the submitter
+    console.log('Attempting to send emails. Resend client:', resend ? 'Initialized' : 'NULL');
+    console.log('From Email:', FROM_EMAIL, 'Admin Email:', ADMIN_EMAIL);
+
+    if (!resend) {
+      console.warn('Skipping email delivery because RESEND_API_KEY is not set or resend client is NULL.');
+    }
+
     try {
-      await resend?.emails.send({
-        from: FROM_EMAIL,
-        to: data.email,
-        subject: 'Благодарим ви за вашето запитване | SilexBrand',
-        html: createConfirmationEmail(data.name, data.email, data.projectType),
-        text: createConfirmationEmailText(data.name, data.email, data.projectType),
-      });
+      if (resend) {
+        console.log(`Sending confirmation email to: ${data.email}...`);
+        const result = await resend.emails.send({
+          from: FROM_EMAIL,
+          to: data.email,
+          subject: 'Благодарим ви за вашето запитване | SilexBrand',
+          html: createConfirmationEmail(data.name, data.email, data.projectType),
+          text: createConfirmationEmailText(data.name, data.email, data.projectType),
+        });
+        console.log('Confirmation email send response:', result);
+      }
     } catch (emailError) {
-      console.error('Failed to send confirmation email:', emailError);
-      // Don't fail the request if email fails, just log it
+      console.error('Failed to send confirmation email. Error details:', emailError);
     }
 
     // Send notification email to admin
     try {
-      await resend?.emails.send({
-        from: FROM_EMAIL,
-        to: ADMIN_EMAIL,
-        subject: `🎯 New Lead: ${data.name} - ${data.company}`,
-        html: createNotificationEmail(lead),
-        text: createNotificationEmailText(lead),
-        replyTo: data.email,
-      });
+      if (resend) {
+        console.log(`Sending admin notification email to: ${ADMIN_EMAIL}...`);
+        const result = await resend.emails.send({
+          from: FROM_EMAIL,
+          to: ADMIN_EMAIL,
+          subject: `🎯 New Lead: ${data.name} - ${data.company}`,
+          html: createNotificationEmail(lead),
+          text: createNotificationEmailText(lead),
+          replyTo: data.email,
+        });
+        console.log('Admin notification email send response:', result);
+      }
     } catch (emailError) {
-      console.error('Failed to send notification email:', emailError);
-      // Don't fail the request if email fails, just log it
+      console.error('Failed to send notification email. Error details:', emailError);
     }
 
     // Return success response

@@ -9,9 +9,9 @@ const SCENARIOS = [
     tab:   { bg: "Съобщение", en: "Message" },
     steps: [
       { icon: "💬", color: "slate",  label: { bg: 'Клиент: "Имате ли свободна дата?"', en: 'Client: "Do you have availability?"' } },
-      { icon: "⏳", color: "yellow", label: { bg: "1 ч… 3 ч… 5 ч без отговор",         en: "1 hr… 3 hrs… 5 hrs with no reply"   } },
-      { icon: "😤", color: "red",    label: { bg: "Клиентът се обажда на конкурента",   en: "Client calls your competitor"       } },
-      { icon: "🏆", color: "red",    label: { bg: "Конкурентът спечелва клиента",       en: "Competitor wins the client"         } },
+      { icon: "🤖", color: "lime",   label: { bg: "AI асистентът отговаря мигновено (за 47с)", en: "AI assistant replies instantly (in 47s)" } },
+      { icon: "📅", color: "lime",   label: { bg: "Клиентът избира час и резервира",         en: "Client chooses a time and books" } },
+      { icon: "🎉", color: "green",  label: { bg: "Спечелен нов клиент! Резервацията е записана", en: "New client booked! Booking saved in CRM" } },
     ],
     delay: 4600,
   },
@@ -19,10 +19,10 @@ const SCENARIOS = [
     id: "call",
     tab:   { bg: "Обаждане", en: "Call" },
     steps: [
-      { icon: "📞", color: "slate",  label: { bg: "Телефонът звъни…",              en: "Phone is ringing…"             } },
-      { icon: "🔕", color: "yellow", label: { bg: "Пропуснато обаждане — отново",  en: "Missed call — again and again" } },
-      { icon: "📱", color: "red",    label: { bg: "Клиентът пише на конкурента",   en: "Client messages a competitor"  } },
-      { icon: "💸", color: "red",    label: { bg: "-1 клиент | -150 лв приход",    en: "-1 client | -150 BGN revenue"  } },
+      { icon: "📞", color: "slate",  label: { bg: "Телефонът звъни извън работно време", en: "Phone rings after hours" } },
+      { icon: "📲", color: "lime",   label: { bg: "Автоматичен SMS с линк за записване", en: "Automatic SMS sent with booking link" } },
+      { icon: "🕒", color: "lime",   label: { bg: "Клиентът се записва сам за 30 секунди", en: "Client books themselves in 30 seconds" } },
+      { icon: "💰", color: "green",  label: { bg: "Защитен приход (+150 лв)", en: "Captured revenue (+150 BGN)" } },
     ],
     delay: 4600,
   },
@@ -30,10 +30,10 @@ const SCENARIOS = [
     id: "visitor",
     tab:   { bg: "Посетители", en: "Visitors" },
     steps: [
-      { icon: "👥", color: "slate",  label: { bg: "50 посетители на сайта",       en: "50 visitors land on site"       } },
-      { icon: "🚶", color: "yellow", label: { bg: "46 напускат без действие",      en: "46 leave without taking action" } },
-      { icon: "😔", color: "red",    label: { bg: "92 % без лийд",                en: "92 % vanish, no lead captured"  } },
-      { icon: "💰", color: "red",    label: { bg: "~690 лв / ден изгубен приход", en: "~690 BGN / day missed revenue"  } },
+      { icon: "👥", color: "slate",  label: { bg: "50 посетители на сайта", en: "50 visitors land on site" } },
+      { icon: "💬", color: "lime",   label: { bg: "AI чатботът ги ангажира веднага", en: "AI chatbot engages them instantly" } },
+      { icon: "⚡", color: "lime",   label: { bg: "18 запитвания уловени автоматично", en: "18 leads captured automatically" } },
+      { icon: "🚀", color: "green",  label: { bg: "Забележителен ръст в продажбите (+18%)", en: "Significant growth in sales (+18% lift)" } },
     ],
     delay: 4600,
   },
@@ -41,17 +41,17 @@ const SCENARIOS = [
 
 const stepColor: Record<string, string> = {
   slate:  "text-[var(--text-main)]",
-  yellow: "text-yellow-600 dark:text-yellow-400",
-  red:    "text-red-600 dark:text-red-400",
+  lime:   "text-[var(--lime)]",
+  green:  "text-emerald-700 dark:text-emerald-400 font-bold",
 };
 
 const stepBg: Record<string, string> = {
   slate:  "bg-[var(--bg-card)] border border-[var(--border)]",
-  yellow: "bg-yellow-50/50 dark:bg-yellow-900/10 border border-yellow-200/50 dark:border-yellow-900/20",
-  red:    "bg-red-100/50 dark:bg-red-900/20 border border-red-200/55 dark:border-red-900/20",
+  lime:   "bg-emerald-50/40 dark:bg-emerald-950/10 border border-emerald-100/50 dark:border-emerald-900/20",
+  green:  "bg-emerald-100/55 dark:bg-emerald-900/25 border border-emerald-200/50 dark:border-emerald-800/30",
 };
 
-export default function ProblemVisualization() {
+export default function SolutionVisualization() {
   const { locale } = useI18n();
   const [activeIdx, setActiveIdx]       = useState(0);
   const [cycleKey, setCycleKey]         = useState(0);
@@ -73,7 +73,7 @@ export default function ProblemVisualization() {
   const scenario = SCENARIOS[activeIdx]!;
 
   return (
-    <div className="w-full rounded-xl border border-red-200 bg-red-50/50 dark:border-red-800/40 dark:bg-red-950/15 p-4">
+    <div className="w-full rounded-xl border border-emerald-200/80 bg-emerald-50/20 dark:border-emerald-800/30 dark:bg-emerald-950/10 p-4">
       {/* Tab row */}
       <div className="mb-4 flex gap-1.5">
         {SCENARIOS.map((s, i) => (
@@ -82,8 +82,8 @@ export default function ProblemVisualization() {
             onClick={() => { setActiveIdx(i); setCycleKey((k) => k + 1); }}
             className={`flex-1 rounded-lg px-2 py-1.5 text-xs font-semibold transition-all ${
               i === activeIdx
-                ? "bg-red-500 text-white shadow-sm"
-                : "bg-red-100/80 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-300 dark:hover:bg-red-900/50"
+                ? "bg-emerald-600 text-white shadow-sm"
+                : "bg-emerald-100/80 text-emerald-700 hover:bg-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:hover:bg-emerald-900/50"
             }`}
           >
             {s.tab[locale as Locale]}

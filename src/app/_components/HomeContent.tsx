@@ -39,6 +39,11 @@ const ProblemVisualization = dynamic(
   { ssr: false, loading: () => <div className="min-h-[200px] rounded-2xl bg-red-50/60 dark:bg-red-950/20 animate-pulse" /> },
 );
 
+const SolutionVisualization = dynamic(
+  () => import("@/components/animations/SolutionVisualization"),
+  { ssr: false, loading: () => <div className="min-h-[200px] rounded-2xl bg-emerald-50/60 dark:bg-emerald-950/20 animate-pulse" /> },
+);
+
 const HowItWorksVisualization = dynamic(
   () => import("@/components/animations/HowItWorksVisualization"),
   { ssr: false, loading: () => <div className="min-h-[320px] rounded-xl animate-pulse bg-[var(--bg-card)]" /> },
@@ -329,7 +334,7 @@ export default function HomeContent() {
                   <div className="flex h-12 w-12 items-center justify-center rounded-[24px] bg-[var(--coral)]/10">
                     <AlertTriangle className="h-6 w-6 text-[var(--coral)]" />
                   </div>
-                  <h2 className="font-display text-2xl font-[800] text-[var(--coral-hover)]">
+                  <h2 className="font-display text-2xl font-[800] text-red-700 dark:text-red-400">
                     {locale === "bg" ? "Преди" : "Before"}
                   </h2>
                 </div>
@@ -340,7 +345,7 @@ export default function HomeContent() {
                     locale === "bg" ? "Половин работен ден губиш за неща, които могат да стават сами" : "Half your workday lost to things that could run themselves",
                     locale === "bg" ? "Не знаеш колко запитвания изпускаш всяка седмица" : "You don't know how many enquiries you're losing each week",
                   ].map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-[15px] font-[500] text-[var(--coral-hover)]">
+                    <li key={item} className="flex items-start gap-3 text-[15px] font-[500] text-red-700 dark:text-red-400">
                       <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--coral)]/20">
                         <svg viewBox="0 0 12 12" fill="none" className="h-3 w-3">
                           <path d="M3 3l6 6M9 3l-6 6" stroke="var(--coral)" strokeWidth="1.8" strokeLinecap="round"/>
@@ -375,7 +380,7 @@ export default function HomeContent() {
                   <div className="flex h-12 w-12 items-center justify-center rounded-[24px] bg-[var(--lime)]/10">
                     <Sparkles className="h-6 w-6 text-[var(--lime)]" />
                   </div>
-                  <h2 className="font-display text-2xl font-[800] text-[var(--lime-hover)]">
+                  <h2 className="font-display text-2xl font-[800] text-[var(--lime)]">
                     {locale === "bg" ? "След SilexBrand" : "After SilexBrand"}
                   </h2>
                 </div>
@@ -396,6 +401,9 @@ export default function HomeContent() {
                     </li>
                   ))}
                 </ul>
+                <div className="mt-6">
+                  <SolutionVisualization />
+                </div>
               </div>
             </AnimatedSection>
           </div>

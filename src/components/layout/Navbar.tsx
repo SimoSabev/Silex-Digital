@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowRight, Sparkles } from "lucide-react";
 import LanguageToggle from "@/components/ui/LanguageToggle";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 import { useI18n } from "@/lib/i18n";
 
 export default function Navbar() {
@@ -132,6 +133,7 @@ export default function Navbar() {
             <div className="flex items-center bg-[var(--bg-section)]/50 rounded-full p-1 border border-[var(--border)]">
               <LanguageToggle />
             </div>
+            <ThemeToggle />
             
             <Link href="/contact" className="group relative">
               <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-[var(--violet)] via-[var(--coral)] to-[var(--lime)] opacity-30 blur-sm group-hover:opacity-100 group-hover:blur transition duration-500"></div>
@@ -209,8 +211,9 @@ export default function Navbar() {
                   <Sparkles size={18} />
                   {t("nav.getStarted") || t("common.contactUs")}
                 </Link>
-                <div className="flex justify-center pt-2">
+                <div className="flex justify-center items-center gap-4 pt-2">
                   <LanguageToggle />
+                  <ThemeToggle />
                 </div>
               </motion.div>
 

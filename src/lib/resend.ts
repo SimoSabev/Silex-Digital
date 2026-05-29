@@ -8,5 +8,5 @@ if (!resendApiKey) {
 
 export const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
-export const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? 'noreply@yourdomain.com';
-export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? 'admin@yourdomain.com';
+export const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? 'info@silexbrand.com';
+export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? 'info@silexbrand.com';
