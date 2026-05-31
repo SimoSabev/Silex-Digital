@@ -39,12 +39,12 @@ const EmailAutomationDemo = dynamic(
 
 const ProblemVisualization = dynamic(
   () => import("@/components/animations/ProblemVisualization"),
-  { ssr: false, loading: () => <div className="min-h-[200px] rounded-2xl bg-red-50/60 dark:bg-red-950/20 animate-pulse" /> },
+  { ssr: false, loading: () => <div className="min-h-[200px] rounded-2xl bg-accent/10 animate-pulse" /> },
 );
 
 const SolutionVisualization = dynamic(
   () => import("@/components/animations/SolutionVisualization"),
-  { ssr: false, loading: () => <div className="min-h-[200px] rounded-2xl bg-emerald-50/60 dark:bg-emerald-950/20 animate-pulse" /> },
+  { ssr: false, loading: () => <div className="min-h-[200px] rounded-2xl bg-success/10 animate-pulse" /> },
 );
 
 const HowItWorksVisualization = dynamic(
@@ -445,13 +445,13 @@ export default function HomeContent() {
 
             {/* After */}
             <AnimatedSection direction="right">
-              <div className="h-full rounded-2xl border-2 border-[var(--lime)]/20 bg-[var(--lime)]/5 p-5 shadow-apple sm:p-8 lg:p-10">
+              <div className="h-full rounded-2xl border-2 border-success/20 bg-success/5 p-5 shadow-apple sm:p-8 lg:p-10">
                 {/* Header */}
                 <div className="mb-8 flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-[24px] bg-[var(--lime)]/10">
-                    <Sparkles className="h-6 w-6 text-[var(--lime)]" />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-[24px] bg-success/10">
+                    <Sparkles className="h-6 w-6 text-success" />
                   </div>
-                  <h2 className="font-display text-2xl font-[800] text-[var(--lime)]">
+                  <h2 className="font-display text-2xl font-[800] text-success">
                     {t("home.beforeAfter.after")}
                   </h2>
                 </div>
@@ -464,10 +464,10 @@ export default function HomeContent() {
                       "home.beforeAfter.after4",
                     ] as const
                   ).map((key) => (
-                    <li key={key} className="flex items-start gap-3 text-[15px] font-[700] text-[var(--lime)]">
-                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--lime)]/20">
+                    <li key={key} className="flex items-start gap-3 text-[15px] font-[700] text-success">
+                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-success/20">
                         <svg viewBox="0 0 12 12" fill="none" className="h-3 w-3">
-                          <path d="M2.5 6l2.5 2.5 4.5-5" stroke="var(--lime)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M2.5 6l2.5 2.5 4.5-5" stroke="var(--color-success)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                       </span>
                       {t(key)}
