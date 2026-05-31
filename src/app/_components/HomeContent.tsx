@@ -6,7 +6,6 @@ import {
   Zap,
   Bot,
   Code,
-  Database,
   ArrowRight,
   Check,
   Play,
@@ -23,15 +22,19 @@ import AnimatedSection, {
   StaggerContainer,
   StaggerItem,
 } from "@/components/ui/AnimatedSection";
-import EmailAutomationDemo from "@/components/demos/EmailAutomationDemo";
 import { useI18n } from "@/lib/i18n";
-import TextReveal from "@/components/ui/TextReveal";
 import Magnetic from "@/components/ui/Magnetic";
 import dynamic from "next/dynamic";
+import TextReveal from "@/components/ui/TextReveal";
 
 const HeroVisualization = dynamic(
   () => import("@/components/animations/HeroVisualization"),
   { ssr: false, loading: () => <div className="w-full h-full rounded-2xl bg-[var(--bg-section)] animate-pulse" /> },
+);
+
+const EmailAutomationDemo = dynamic(
+  () => import("@/components/demos/EmailAutomationDemo"),
+  { ssr: false, loading: () => <div className="min-h-[400px] rounded-xl animate-pulse bg-[var(--bg-card)]" /> },
 );
 
 const ProblemVisualization = dynamic(
@@ -48,6 +51,7 @@ const HowItWorksVisualization = dynamic(
   () => import("@/components/animations/HowItWorksVisualization"),
   { ssr: false, loading: () => <div className="min-h-[320px] rounded-xl animate-pulse bg-[var(--bg-card)]" /> },
 );
+
 
 const heroStats = [
   { icon: <Clock className="h-5 w-5" />, valueKey: "hero.stat1Value", labelKey: "hero.stat1Label" },
@@ -175,31 +179,33 @@ export default function HomeContent() {
           <div className="relative z-10 mx-auto max-w-6xl">
 
             <div className="mx-auto mb-10 max-w-3xl text-center sm:mb-12">
-              <AnimatedSection delay={0}>
+              {/* Badge — immediate mount, no scroll gate */}
+              <AnimatedSection delay={0} mode="immediate">
                 <p className="mb-6 inline-flex max-w-[95%] items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--bg-card)]/80 px-4 py-2 text-[13px] font-medium leading-snug text-[var(--text-sub)] backdrop-blur-sm sm:max-w-none sm:text-sm">
                   <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--violet)]" />
                   {t("hero.badge")}
                 </p>
               </AnimatedSection>
 
-              <AnimatedSection delay={0.08}>
+              {/* H1 — plain CSS fade, no per-word stagger */}
+              <AnimatedSection delay={0.08} mode="immediate">
                 <h1 className="text-balance font-display text-[1.75rem] font-extrabold leading-[1.12] tracking-tight sm:text-[2.5rem] sm:leading-[1.1] lg:text-[3.25rem]">
                   <span className="block text-[var(--text-main)]">
-                    <TextReveal key={`${locale}-1`} text={t("hero.headlineLine1")} delay={0.05} />
+                    {t("hero.headlineLine1")}
                   </span>
-                  <span className="text-gradient-hero mt-2 block sm:mt-3">
-                    <TextReveal key={`${locale}-2`} text={t("hero.headlineLine2")} delay={0.12} />
+                  <span className="text-gradient-hero py-3 mt-2 block sm:mt-3">
+                    {t("hero.headlineLine2")}
                   </span>
                 </h1>
               </AnimatedSection>
 
-              <AnimatedSection delay={0.16}>
+              <AnimatedSection delay={0.14} mode="immediate">
                 <p className="mx-auto mt-6 max-w-[34rem] text-pretty text-[17px] leading-[1.65] text-[var(--text-sub)] sm:mt-7 sm:text-lg sm:leading-relaxed">
                   {t("hero.sub")}
                 </p>
               </AnimatedSection>
 
-              <AnimatedSection delay={0.22}>
+              <AnimatedSection delay={0.2} mode="immediate">
                 <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:mt-9 sm:flex-row sm:items-center">
                   <Link href="/contact" className="w-full sm:w-auto">
                     <Magnetic className="block w-full sm:w-auto">
@@ -229,13 +235,13 @@ export default function HomeContent() {
               </AnimatedSection>
             </div>
 
-            <AnimatedSection delay={0.28}>
+            <AnimatedSection delay={0.26} mode="immediate">
               <div className="hero-visual mx-auto h-[280px] w-full max-w-5xl overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] shadow-apple sm:h-[340px] md:h-[400px] lg:h-[440px]">
                 <HeroVisualization />
               </div>
             </AnimatedSection>
 
-            <AnimatedSection delay={0.38}>
+            <AnimatedSection delay={0.34} mode="immediate">
               <ul className="mx-auto mt-6 flex max-w-3xl flex-col divide-y divide-[var(--border)] rounded-2xl border border-[var(--border)] bg-[var(--bg-card)]/50 backdrop-blur-sm sm:mt-8 sm:flex-row sm:divide-x sm:divide-y-0">
                 {heroStats.map((stat) => (
                   <li
@@ -279,8 +285,8 @@ export default function HomeContent() {
         </Container>
       </section>
 
-      {/* The Two Pillars of Growth (Двата пътя на успеха) */}
-      <section className="py-20 bg-transparent animate-fade-in">
+      {/* The Two Pillars of Growth */}
+      <section className="py-20 bg-transparent">
         <Container>
           <AnimatedSection className="mb-12 text-center">
             <h2 className="mb-4 font-display text-3xl font-[800] md:text-5xl">
@@ -774,7 +780,7 @@ export default function HomeContent() {
               >
                 <Quote className="absolute top-8 right-8 h-20 w-20 text-[var(--violet)]/10" />
                 <div className="relative z-10 mb-6 flex gap-1">
-                  {[...Array<unknown>(5)].map((_, i: number) => (
+                  {Array.from({ length: 5 }).map((_, i: number) => (
                     <svg
                       key={i}
                       className="h-6 w-6 fill-current text-[#F59E0B]"
@@ -878,7 +884,7 @@ export default function HomeContent() {
             <StaggerItem>
               <div className="card relative z-10 scale-100 transform rounded-2xl border border-[var(--violet)] bg-[var(--bg-card)] p-8 text-center shadow-apple-hover md:scale-105 h-full flex flex-col justify-between">
                 <div className="absolute -top-5 left-1/2 -translate-x-1/2">
-                  <span className="rounded-full bg-gradient-to-r from-[var(--violet)] to-[#b185ff] px-6 py-2 text-xs font-bold tracking-wider text-white uppercase shadow-lg">
+                  <span className="rounded-full bg-[var(--accent)] px-6 py-2 text-xs font-bold tracking-wider text-white uppercase shadow-lg">
                     {locale === "bg" ? "Популярен" : "Popular"}
                   </span>
                 </div>

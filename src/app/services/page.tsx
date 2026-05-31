@@ -143,7 +143,7 @@ export default function ServicesPage() {
   return (
     <div className="min-h-dvh bg-[var(--bg-page)] font-body text-[var(--text-main)]">
       {/* Hero */}
-      <section className="section bg-gradient-to-b from-[var(--violet)]/10 to-transparent pt-24 pb-20">
+      <section className="section bg-[var(--accent)]/10 pt-24 pb-20">
         <Container>
           <div className="mx-auto max-w-4xl text-center">
             <h1 className="text-gradient-hero mb-6 font-display text-3xl leading-tight font-bold sm:text-4xl md:text-[48px] lg:text-[56px]">
@@ -211,7 +211,7 @@ export default function ServicesPage() {
                     <div
                       className={`aspect-square w-full rounded-2xl border-4 ${service.color} relative flex items-center justify-center overflow-hidden bg-[var(--bg-card)] p-8 shadow-xl md:p-12`}
                     >
-                      <div className="absolute inset-0 bg-gradient-to-tr from-transparent to-current opacity-5" />
+                      <div className="absolute inset-0 bg-[var(--accent)]/5 opacity-5" />
                       {service.icon}
                     </div>
                   </div>
@@ -236,7 +236,7 @@ export default function ServicesPage() {
             <div className="absolute top-10 right-[10%] left-[10%] hidden h-1.5 md:block">
               <div className="h-full w-full overflow-hidden rounded-full bg-[var(--border)]">
                 <motion.div
-                  className="h-full bg-gradient-to-r from-[var(--violet)] to-[var(--coral)]"
+                  className="h-full bg-[var(--accent)]"
                   initial={{ width: "0%" }}
                   whileInView={{ width: "100%" }}
                   viewport={{ once: true }}
@@ -250,13 +250,13 @@ export default function ServicesPage() {
                 key={idx}
                 className="relative z-10 mx-auto flex max-w-[200px] flex-col items-center text-center md:max-w-xs"
               >
-                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full border-2 border-[var(--violet)] bg-[var(--bg-section)] shadow-xl md:h-20 md:w-20 md:border-4">
+                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full border-2 border-[var(--accent)] bg-[var(--bg-section)] shadow-xl md:h-20 md:w-20 md:border-4">
                   {step.icon}
                 </div>
                 <h3 className="mb-3 font-display text-lg font-bold md:text-2xl">
                   {step.title[locale]}
                 </h3>
-                <p className="text-sm text-[var(--text-sub)] md:text-base lg:text-lg">
+                <p className="text-sm text-sub md:text-base lg:text-lg">
                   {step.description[locale]}
                 </p>
               </div>
@@ -268,21 +268,21 @@ export default function ServicesPage() {
       {/* CTA Banner */}
       <section className="section py-24">
         <Container>
-          <div className="card-featured relative overflow-hidden rounded-2xl bg-[var(--violet)] p-8 text-center text-white md:rounded-[24px] md:p-12 lg:p-16">
+          <div className="card-featured relative overflow-hidden rounded-2xl bg-[var(--accent)] p-8 text-center text-white md:rounded-[24px] md:p-12 lg:p-16">
             <div className="absolute top-0 right-0 h-64 w-64 translate-x-1/2 -translate-y-1/2 rounded-full bg-white opacity-10 blur-3xl" />
-            <h2 className="relative z-10 mb-6 font-display text-4xl font-bold md:text-5xl">
+            <h2 className="relative z-10 mb-6 font-display text-4xl font-bold md:text-5xl text-black dark:text-white">
               {locale === "bg"
                 ? "Не си сигурен откъде да започнеш?"
                 : "Not sure where to start?"}
             </h2>
-            <p className="relative z-10 mx-auto mb-10 max-w-2xl text-xl opacity-90">
+            <p className="relative text-black dark:text-white z-10 mx-auto mb-10 max-w-2xl text-xl opacity-90">
               {locale === "bg"
                 ? "30 минути разговор и ще ти кажем точно кое решение ще донесе най-бързи резултати за твоя бизнес."
                 : "30 minutes and we will tell you exactly which solution will bring the fastest results for your business."}
             </p>
             <div className="relative z-10">
               <Link href="/contact">
-                <Button className="rounded-xl border-none bg-[var(--coral)] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:bg-[#e63e3e] hover:shadow-xl">
+                <Button className="rounded-xl border-none bg-[var(--accent)] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:bg-[var(--accent-hover)] hover:shadow-xl">
                   {locale === "bg" ? "Заяви безплатна консултация" : "Request free consultation"}
                 </Button>
               </Link>

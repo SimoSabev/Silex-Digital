@@ -202,7 +202,7 @@ export const organizationSchema = {
   name: siteConfig.business.name,
   legalName: siteConfig.business.legalName,
   url: siteConfig.url,
-  logo: `${siteConfig.url}/logo.png`,
+  logo: `${siteConfig.url}/logo-new.png`,
   foundingDate: siteConfig.business.foundingDate,
   description: siteConfig.description,
   contactPoint: {
@@ -227,7 +227,7 @@ export const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   name: siteConfig.business.name,
-  image: `${siteConfig.url}/logo.png`,
+  image: `${siteConfig.url}/logo-new.png`,
   url: siteConfig.url,
   telephone: siteConfig.contact.phone,
   email: siteConfig.contact.email,

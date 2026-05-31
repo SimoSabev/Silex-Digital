@@ -41,14 +41,14 @@ const SCENARIOS = [
 
 const stepColor: Record<string, string> = {
   slate:  "text-[var(--text-main)]",
-  yellow: "text-yellow-600 dark:text-yellow-400",
-  red:    "text-red-600 dark:text-red-400",
+  yellow: "text-accent/70",
+  red:    "text-accent",
 };
 
 const stepBg: Record<string, string> = {
   slate:  "bg-[var(--bg-card)] border border-[var(--border)]",
-  yellow: "bg-yellow-50/50 dark:bg-yellow-900/10 border border-yellow-200/50 dark:border-yellow-900/20",
-  red:    "bg-red-100/50 dark:bg-red-900/20 border border-red-200/55 dark:border-red-900/20",
+  yellow: "bg-accent/5 border border-accent/10",
+  red:    "bg-accent/10 border border-accent/20",
 };
 
 export default function ProblemVisualization() {
@@ -73,7 +73,7 @@ export default function ProblemVisualization() {
   const scenario = SCENARIOS[activeIdx]!;
 
   return (
-    <div className="w-full rounded-xl border border-red-200 bg-red-50/50 dark:border-red-800/40 dark:bg-red-950/15 p-4">
+    <div className="w-full rounded-xl border border-accent/20 bg-accent/5 p-4">
       {/* Tab row */}
       <div className="mb-4 flex gap-1.5">
         {SCENARIOS.map((s, i) => (
@@ -82,8 +82,8 @@ export default function ProblemVisualization() {
             onClick={() => { setActiveIdx(i); setCycleKey((k) => k + 1); }}
             className={`flex-1 rounded-lg px-2 py-1.5 text-xs font-semibold transition-all ${
               i === activeIdx
-                ? "bg-red-500 text-white shadow-sm"
-                : "bg-red-100/80 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-300 dark:hover:bg-red-900/50"
+                ? "bg-accent text-white shadow-sm"
+                : "bg-accent/10 text-accent hover:bg-accent/20"
             }`}
           >
             {s.tab[locale as Locale]}

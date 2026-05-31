@@ -48,9 +48,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       outline: "btn-secondary",
       ghost: "btn-ghost",
       success:
-        "btn-primary !bg-[var(--lime)] hover:!bg-[var(--lime)] hover:!shadow-[0_0_40px_rgba(101,163,13,0.2)]", // Overlaying primary with lime
+        "btn-primary !bg-[var(--accent)] hover:!bg-[var(--accent-hover)] hover:!shadow-[0_0_40px_rgba(212,115,94,0.18)]",
       accent:
-        "btn-primary !bg-gradient-to-r !from-[var(--coral)] !to-[var(--color-accent-amber)] hover:!shadow-[0_0_40px_rgba(245,158,11,0.2)]",
+        "btn-primary !bg-[var(--accent)] hover:!bg-[var(--accent-hover)] hover:!shadow-[0_0_40px_rgba(212,115,94,0.18)]",
     };
 
     const sizes: Record<string, string> = {

@@ -166,7 +166,7 @@ export default function LeadQualificationDemo() {
           <button
             onClick={startDemo}
             disabled={isRunning}
-            className="flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full bg-[var(--violet)] px-5 py-3 sm:py-2.5 text-sm font-bold text-white shadow-lg shadow-[var(--violet)]/25 transition-all duration-300 hover:scale-105 hover:bg-[#8b5cf6] hover:shadow-[var(--violet)]/50 disabled:opacity-50 disabled:hover:scale-100 disabled:hover:bg-[var(--violet)] min-h-[44px]"
+            className="flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-5 py-3 sm:py-2.5 text-sm font-bold text-white shadow-lg shadow-[var(--accent)]/25 transition-all duration-300 hover:scale-105 hover:bg-[var(--accent-hover)] hover:shadow-[var(--accent)]/50 disabled:opacity-50 disabled:hover:scale-100 disabled:hover:bg-[var(--accent)] min-h-[44px]"
           >
             {isRunning ? (
               <>

@@ -72,7 +72,7 @@ export function AdminSidebar({ onLogout }: AdminSidebarProps) {
       <div className="flex items-center gap-3 px-6 py-4 border-b border-border">
         <Link href="/admin" className="flex items-center relative">
           <Image 
-            src="/long-logo.png" 
+            src="/new-logo.png" 
             alt="Silex Admin" 
             width={120} 
             height={30} 

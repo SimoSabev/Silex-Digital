@@ -41,14 +41,14 @@ const SCENARIOS = [
 
 const stepColor: Record<string, string> = {
   slate:  "text-[var(--text-main)]",
-  lime:   "text-[var(--lime)]",
-  green:  "text-emerald-700 dark:text-emerald-400 font-bold",
+  lime:   "text-accent",
+  green:  "text-success font-bold",
 };
 
 const stepBg: Record<string, string> = {
   slate:  "bg-[var(--bg-card)] border border-[var(--border)]",
-  lime:   "bg-emerald-50/40 dark:bg-emerald-950/10 border border-emerald-100/50 dark:border-emerald-900/20",
-  green:  "bg-emerald-100/55 dark:bg-emerald-900/25 border border-emerald-200/50 dark:border-emerald-800/30",
+  lime:   "bg-accent/5 border border-accent/15",
+  green:  "bg-success/10 border border-success/20",
 };
 
 export default function SolutionVisualization() {
@@ -73,7 +73,7 @@ export default function SolutionVisualization() {
   const scenario = SCENARIOS[activeIdx]!;
 
   return (
-    <div className="w-full rounded-xl border border-emerald-200/80 bg-emerald-50/20 dark:border-emerald-800/30 dark:bg-emerald-950/10 p-4">
+    <div className="w-full rounded-xl border border-accent/20 bg-accent/5 p-4">
       {/* Tab row */}
       <div className="mb-4 flex gap-1.5">
         {SCENARIOS.map((s, i) => (
@@ -82,8 +82,8 @@ export default function SolutionVisualization() {
             onClick={() => { setActiveIdx(i); setCycleKey((k) => k + 1); }}
             className={`flex-1 rounded-lg px-2 py-1.5 text-xs font-semibold transition-all ${
               i === activeIdx
-                ? "bg-emerald-600 text-white shadow-sm"
-                : "bg-emerald-100/80 text-emerald-700 hover:bg-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:hover:bg-emerald-900/50"
+                ? "bg-accent text-white shadow-sm"
+                : "bg-accent/10 text-accent hover:bg-accent/20"
             }`}
           >
             {s.tab[locale as Locale]}

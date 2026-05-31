@@ -10,7 +10,7 @@ export function generateOrganizationSchema() {
     name: siteConfig.business.name,
     legalName: siteConfig.business.legalName,
     url: siteConfig.url,
-    logo: `${siteConfig.url}/logo.png`,
+    logo: `${siteConfig.url}/logo-new.png`,
     foundingDate: siteConfig.business.foundingDate,
     description: siteConfig.description,
     contactPoint: {
@@ -40,7 +40,7 @@ export function generateLocalBusinessSchema() {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: siteConfig.business.name,
-    image: `${siteConfig.url}/logo.png`,
+    image: `${siteConfig.url}/logo-new.png`,
     url: siteConfig.url,
     telephone: siteConfig.contact.phone,
     email: siteConfig.contact.email,
@@ -128,7 +128,7 @@ export function generateArticleSchema(options: ArticleSchemaOptions) {
       name: siteConfig.name,
       logo: {
         '@type': 'ImageObject',
-        url: `${siteConfig.url}/logo.png`,
+        url: `${siteConfig.url}/logo-new.png`,
       },
     },
     mainEntityOfPage: {

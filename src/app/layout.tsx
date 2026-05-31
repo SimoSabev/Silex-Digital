@@ -31,16 +31,16 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "SilexBrand | Автоматизация на бизнеса в България",
+    default: "SilexBrand | Сайт, Google и Viber за местния бизнес",
     template: "%s | SilexBrand",
   },
   description:
-    "Автоматизирай бизнеса си с SilexBrand — AI чатбот, CRM интеграция, омниканална автоматизация и уеб разработка за малкия бизнес в България. Безплатна консултация.",
+    "Не губете клиенти, защото отговаряте късно. Viber помощник и сайт, изградени за вашия бизнес — знае цените ви, записва час и отговаря денем и нощем. Безплатна консултация.",
   keywords: [
     "автоматизация на бизнеса",
     "бизнес автоматизация България",
     "AI чатбот за бизнес",
-    "CRM система малък бизнес",
+    "Viber бот за бизнес",
     "уеб сайт за малкия бизнес",
     "автоматизация на процеси",
     "дигитализация на бизнес",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     "business automation Bulgaria",
     "AI chatbot Bulgaria",
     "web development Bulgaria",
-    "CRM integration Bulgaria",
+    "Viber chatbot Bulgaria",
     "automation agency Bulgaria",
   ],
   metadataBase: new URL("https://silexbrand.com"),
@@ -67,9 +67,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "SilexBrand | Автоматизация на бизнеса в България",
+    title: "SilexBrand | Не губете клиенти заради бавен отговор",
     description:
-      "AI чатбот, CRM интеграция и омниканална автоматизация за малкия бизнес. Отговаряй моментално, улавяй всеки клиент — 24/7.",
+      "Viber помощник и сайт за местния бизнес — записва час, знае цените ви, отговаря денем и нощем. Изграден специално за вас.",
     type: "website",
     locale: "bg_BG",
     alternateLocale: ["en_US"],
@@ -79,15 +79,15 @@ export const metadata: Metadata = {
         url: "/images/og-default.jpg",
         width: 1200,
         height: 630,
-        alt: "SilexBrand — Автоматизация на бизнеса в България",
+        alt: "SilexBrand — Сайт и Viber помощник за местния бизнес в България",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "SilexBrand | Автоматизация на бизнеса в България",
+    title: "SilexBrand | Не губете клиенти заради бавен отговор",
     description:
-      "AI чатбот, CRM и омниканална автоматизация за малкия бизнес в България. Безплатна консултация.",
+      "Viber помощник и сайт за местния бизнес — записва час и отговаря 24/7. Безплатна консултация.",
     creator: "@silexbrand",
     site: "@silexbrand",
   },

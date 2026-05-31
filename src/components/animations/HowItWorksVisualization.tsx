@@ -5,41 +5,34 @@ import { useI18n, type Locale } from "@/lib/i18n";
 
 type StepDef = {
   icon: string;
-  color: "blue" | "green" | "orange";
+  color: "accent" | "success";
   title: Record<Locale, string>;
   detail: Record<Locale, string>;
 };
 
 const STEPS: readonly StepDef[] = [
-  { icon: "💬", color: "blue",   title: { bg: "Клиентът пише",           en: "Client reaches out"       }, detail: { bg: "Съобщение, обаждане, форма или WhatsApp", en: "Message, call, form or WhatsApp"     } },
-  { icon: "⚡", color: "blue",   title: { bg: "Системата улавя",          en: "System captures it"       }, detail: { bg: "Автоматично разпознаване на намерение",  en: "Automatic intent recognition"        } },
-  { icon: "🤖", color: "green",  title: { bg: "Мигновен отговор",         en: "Instant reply"            }, detail: { bg: "Персонализиран AI отговор за секунди",   en: "Personalised AI reply in seconds"    } },
-  { icon: "🎯", color: "green",  title: { bg: "Лийд квалифициран",        en: "Lead qualified"           }, detail: { bg: "Автоматично оценяване и категоризиране", en: "Automatic scoring and categorisation"} },
-  { icon: "🔔", color: "orange", title: { bg: "Получаваш нотификация",    en: "You get notified"         }, detail: { bg: "Dashboard + SMS + Email",                en: "Dashboard + SMS + Email"             } },
-  { icon: "💰", color: "green",  title: { bg: "Конверсия",                en: "Conversion"               }, detail: { bg: "Резервация потвърдена за 47 секунди",    en: "Booking confirmed in 47 seconds"     } },
+  { icon: "💬", color: "accent",   title: { bg: "Клиентът пише",           en: "Client reaches out"       }, detail: { bg: "Съобщение, обаждане, форма или WhatsApp", en: "Message, call, form or WhatsApp"     } },
+  { icon: "⚡", color: "accent",   title: { bg: "Системата улавя",          en: "System captures it"       }, detail: { bg: "Автоматично разпознаване на намерение",  en: "Automatic intent recognition"        } },
+  { icon: "🤖", color: "success", title: { bg: "Мигновен отговор",         en: "Instant reply"            }, detail: { bg: "Персонализиран AI отговор за секунди",   en: "Personalised AI reply in seconds"    } },
+  { icon: "🎯", color: "success", title: { bg: "Лийд квалифициран",        en: "Lead qualified"           }, detail: { bg: "Автоматично оценяване и категоризиране", en: "Automatic scoring and categorisation"} },
+  { icon: "🔔", color: "accent",  title: { bg: "Получаваш нотификация",    en: "You get notified"         }, detail: { bg: "Dashboard + SMS + Email",                en: "Dashboard + SMS + Email"             } },
+  { icon: "💰", color: "success", title: { bg: "Конверсия",                en: "Conversion"               }, detail: { bg: "Резервация потвърдена за 47 секунди",    en: "Booking confirmed in 47 seconds"     } },
 ] as const;
 
 const colorConfig: Record<StepDef["color"], { dot: string; bg: string; border: string; text: string; subtext: string }> = {
-  blue: {
-    dot:     "bg-blue-500",
-    bg:      "bg-blue-50 dark:bg-blue-900/20",
-    border:  "border-blue-200 dark:border-blue-800",
-    text:    "text-blue-800 dark:text-blue-200",
-    subtext: "text-blue-600 dark:text-blue-400",
+  accent: {
+    dot:     "bg-accent",
+    bg:      "bg-accent/10",
+    border:  "border-accent/20",
+    text:    "text-accent",
+    subtext: "text-accent/80",
   },
-  green: {
-    dot:     "bg-emerald-500",
-    bg:      "bg-emerald-50 dark:bg-emerald-900/20",
-    border:  "border-emerald-200 dark:border-emerald-800",
-    text:    "text-emerald-800 dark:text-emerald-200",
-    subtext: "text-emerald-600 dark:text-emerald-400",
-  },
-  orange: {
-    dot:     "bg-orange-500",
-    bg:      "bg-orange-50 dark:bg-orange-900/20",
-    border:  "border-orange-200 dark:border-orange-800",
-    text:    "text-orange-800 dark:text-orange-200",
-    subtext: "text-orange-600 dark:text-orange-400",
+  success: {
+    dot:     "bg-success",
+    bg:      "bg-success/10",
+    border:  "border-success/20",
+    text:    "text-success",
+    subtext: "text-success/80",
   },
 };
 
@@ -125,7 +118,7 @@ export default function HowItWorksVisualization() {
             <div
               key={i}
               className={`h-1 flex-1 rounded-full transition-all duration-300 ${
-                i === active ? "bg-[var(--lime)]" : i < active ? "bg-[var(--lime)]/40" : "bg-[var(--border)]"
+                i === active ? "bg-accent" : i < active ? "bg-accent/40" : "bg-[var(--border)]"
               }`}
             />
           ))}

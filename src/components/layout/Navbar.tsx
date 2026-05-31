@@ -64,24 +64,11 @@ export default function Navbar() {
             aria-label="Navigation menu"
           >
             <div className="flex shrink-0 items-center justify-between border-b border-[var(--border)] px-4 py-3 safe-area-pt">
-              <Link
-                href="/"
-                onClick={closeMenu}
-                className="relative flex h-11 w-[150px] items-center justify-start overflow-hidden"
-              >
-                <Image
-                  src="/long-logo.png"
-                  alt="Silex Digital"
-                  width={220}
-                  height={55}
-                  className="h-[120px] w-auto max-w-none object-contain object-left"
-                  priority
-                />
-              </Link>
+              <Image src="/new-logo.png" alt="Silex Digital" width={160} height={40} className="h-10 w-auto object-contain" />
               <button
                 type="button"
                 onClick={closeMenu}
-                className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--coral)] text-white shadow-md touch-target"
+                className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--accent)] text-white shadow-md touch-target"
                 aria-label="Close menu"
               >
                 <X size={22} />
@@ -108,7 +95,7 @@ export default function Navbar() {
                       {link.label}
                     </span>
                     {isActive && (
-                      <span className="mt-2 h-[3px] w-12 rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--coral)]" />
+                      <span className="mt-2 h-[3px] w-12 rounded-full bg-[var(--accent)]" />
                     )}
                   </Link>
                 );
@@ -118,7 +105,7 @@ export default function Navbar() {
                 <Link
                   href="/contact"
                   onClick={closeMenu}
-                  className="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--coral)] px-6 py-4 text-lg font-bold text-white shadow-[0_10px_30px_rgba(124,58,237,0.3)]"
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-6 py-4 text-lg font-bold text-white shadow-[0_10px_30px_rgba(212,115,94,0.18)]"
                 >
                   <Sparkles size={18} />
                   {t("nav.getStarted") || t("common.contactUs")}
@@ -151,19 +138,8 @@ export default function Navbar() {
               : "border-b border-transparent px-6 sm:px-8"
           }`}
         >
-          <Link
-            href="/"
-            onClick={closeMenu}
-            className="group relative flex h-11 w-[150px] shrink-0 items-center justify-start overflow-hidden sm:h-12 sm:w-[170px]"
-          >
-            <Image
-              src="/long-logo.png"
-              alt="Silex Digital"
-              width={220}
-              height={55}
-              className="h-[120px] w-auto max-w-none object-contain object-left sm:h-[140px]"
-              priority
-            />
+          <Link href="/" className="flex justify-center items-center">
+            <Image src="/logo-new.png" alt="Silex Digital" width={180} height={44} className="h-20 w-auto object-contain" />
           </Link>
 
           <div className="hidden items-center justify-center gap-1 lg:flex">
@@ -191,7 +167,7 @@ export default function Navbar() {
                   {isActive && (
                     <motion.div
                       layoutId="nav-active-indicator"
-                      className="absolute -bottom-1 left-1/2 h-[3px] w-6 -translate-x-1/2 rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--coral)]"
+                      className="absolute -bottom-1 left-1/2 h-[3px] w-6 -translate-x-1/2 rounded-full bg-[var(--accent)]"
                       transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
                   )}
@@ -206,13 +182,13 @@ export default function Navbar() {
             </div>
             <ThemeToggle />
             <Link href="/contact" className="group relative">
-              <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-[var(--violet)] via-[var(--coral)] to-[var(--lime)] opacity-30 blur-sm transition duration-500 group-hover:opacity-100 group-hover:blur" />
+              <div className="absolute -inset-1 rounded-full bg-[var(--accent)] opacity-30 blur-sm transition duration-500 group-hover:opacity-50" />
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="relative flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--coral)] px-5 py-2.5 text-[14px] font-[700] text-white shadow-lg transition-all duration-300"
+                className="relative flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-5 py-2.5 text-[14px] font-[700] text-white shadow-lg transition-all duration-300"
               >
-                <Sparkles className="h-4 w-4 text-[var(--lime)] group-hover:animate-pulse" />
+                <Sparkles className="h-4 w-4 text-white group-hover:animate-pulse" />
                 {t("common.contactUs")}
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </motion.button>
@@ -221,7 +197,7 @@ export default function Navbar() {
 
           <button
             type="button"
-            className="relative z-[201] flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-transparent bg-gradient-to-r from-[var(--violet)] to-[var(--coral)] text-white shadow-md transition-colors lg:hidden touch-target"
+            className="relative z-[201] flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-transparent bg-[var(--accent)] text-white shadow-md transition-colors lg:hidden touch-target"
             onClick={() => setIsMobileMenuOpen((open) => !open)}
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-nav-menu"

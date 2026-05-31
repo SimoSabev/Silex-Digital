@@ -161,7 +161,7 @@ export default function ChatbotDemo() {
                   <div
                     className={`px-5 py-3.5 text-[15px] leading-relaxed shadow-md backdrop-blur-md relative ${
                       msg.role === "user"
-                        ? "bg-gradient-to-r from-[var(--violet)] to-[#8b5cf6] text-white rounded-[1.5rem] rounded-br-sm"
+                        ? "bg-[var(--accent)] text-white rounded-[1.5rem] rounded-br-sm"
                         : "bg-[var(--bg-card)]/90 text-[var(--text-main)] border border-[var(--border)] rounded-[1.5rem] rounded-bl-sm"
                     }`}
                   >

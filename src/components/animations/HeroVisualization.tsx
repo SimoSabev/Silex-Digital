@@ -108,30 +108,30 @@ const CONVERSATIONS: Conversation[] = [
   },
 ];
 
-const TOASTS: { icon: string; label: Localized; sub: Localized; accent: string }[] = [
+const TOASTS: { icon: string; label: Localized; sub: Localized; type: "accent" | "success" }[] = [
   {
     icon: "💰",
     label: { bg: "Нова резервация", en: "New booking" },
     sub: { bg: "Maria K. · сега", en: "Maria K. · just now" },
-    accent: "#4ADE80",
+    type: "success",
   },
   {
     icon: "📈",
     label: { bg: "+3 запитвания днес", en: "+3 leads today" },
     sub: { bg: "Над план с 40%", en: "40% above target" },
-    accent: "#818CF8",
+    type: "accent",
   },
   {
     icon: "⚡",
     label: { bg: "Автоматизацията е готова", en: "Workflow complete" },
     sub: { bg: "Изпълнено за 0.6s", en: "Finished in 0.6s" },
-    accent: "#CCFF00",
+    type: "accent",
   },
   {
     icon: "🔔",
     label: { bg: "Репорт изпратен", en: "Report sent" },
     sub: { bg: "Месечен отчет", en: "Monthly report" },
-    accent: "#FB923C",
+    type: "success",
   },
 ];
 
@@ -139,22 +139,22 @@ const METRICS = [
   {
     label: { bg: "Ср. отговор", en: "Avg reply" },
     value: "0.8s",
-    accent: "#CCFF00",
+    accent: "var(--accent)",
   },
   {
     label: { bg: "Запитвания / ден", en: "Leads / day" },
     value: "24",
-    accent: "#4ADE80",
+    accent: "var(--color-success)",
   },
   {
     label: { bg: "Конверсия", en: "Conversion" },
     value: "94%",
-    accent: "#818CF8",
+    accent: "var(--accent)",
   },
   {
     label: { bg: "Спест. часа", en: "Saved hrs" },
     value: "15h",
-    accent: "#FB923C",
+    accent: "var(--color-success)",
   },
 ];
 
@@ -186,8 +186,8 @@ function pick(locale: Locale, text: Localized): string {
 function LiveDot() {
   return (
     <span className="relative flex h-2 w-2 flex-none">
-      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#4ADE80] opacity-60" />
-      <span className="relative inline-flex h-2 w-2 rounded-full bg-[#4ADE80]" />
+      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-success)] opacity-60" />
+      <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--color-success)]" />
     </span>
   );
 }
@@ -198,7 +198,7 @@ function TypingDots() {
       {[0, 1, 2].map((i) => (
         <motion.div
           key={i}
-          className="h-1.5 w-1.5 rounded-full bg-[#CCFF00]/80"
+          className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]/80"
           animate={{ y: [0, -4, 0] }}
           transition={{
             duration: 0.5,
@@ -256,13 +256,13 @@ export default function HeroVisualization() {
 
   return (
     <div
-      className="relative flex h-full w-full overflow-hidden bg-[#08080E]"
+      className="relative flex h-full w-full overflow-hidden bg-[var(--color-bg-dark)]"
       aria-hidden="true"
     >
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-20 left-1/4 h-64 w-64 rounded-full bg-[#4A90E2]/12 blur-3xl" />
-        <div className="absolute -bottom-20 right-1/4 h-64 w-64 rounded-full bg-[#CCFF00]/10 blur-3xl" />
-        <div className="absolute top-1/3 right-0 h-48 w-48 rounded-full bg-[#818CF8]/10 blur-3xl" />
+        <div className="absolute -top-20 left-1/4 h-64 w-64 rounded-full bg-[var(--accent)]/12 blur-3xl" />
+        <div className="absolute -bottom-20 right-1/4 h-64 w-64 rounded-full bg-[var(--accent)]/10 blur-3xl" />
+        <div className="absolute top-1/3 right-0 h-48 w-48 rounded-full bg-[var(--accent)]/10 blur-3xl" />
       </div>
 
       <div
@@ -322,7 +322,7 @@ export default function HeroVisualization() {
                 <svg viewBox="0 0 10 10" className="h-3 w-3 flex-none" fill="none">
                   <path
                     d="M2 5l2 2 4-4"
-                    stroke="#4ADE80"
+                    stroke="var(--color-success)"
                     strokeWidth="1.6"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -405,7 +405,7 @@ export default function HeroVisualization() {
                       <div className="flex items-center gap-1.5">
                         <svg
                           viewBox="0 0 12 12"
-                          className="h-3 w-3 text-[#4ADE80]"
+                          className="h-3 w-3 text-[var(--color-success)]"
                           fill="none"
                         >
                           <path
@@ -416,7 +416,7 @@ export default function HeroVisualization() {
                             strokeLinejoin="round"
                           />
                         </svg>
-                        <span className="text-[10px] font-semibold text-[#4ADE80]">
+                        <span className="text-[10px] font-semibold text-[var(--color-success)]">
                           {pick(locale, COPY.sentIn)} {conv.time}
                         </span>
                       </div>
@@ -434,7 +434,7 @@ export default function HeroVisualization() {
           <span className="text-[10px] font-bold tracking-widest text-white/40 uppercase">
             {pick(locale, COPY.performance)}
           </span>
-          <div className="rounded-full bg-[#CCFF00]/15 px-2.5 py-1 text-[9px] font-bold text-[#CCFF00]">
+          <div className="rounded-full bg-accent/15 px-2.5 py-1 text-[9px] font-bold text-accent">
             {pick(locale, COPY.weekTrend)}
           </div>
         </div>
@@ -466,13 +466,10 @@ export default function HeroVisualization() {
             {BAR_DATA.map((v, i) => (
               <motion.div
                 key={i}
-                className="flex-1 rounded-sm"
+                className={`flex-1 rounded-sm ${i === 6 ? "bg-accent" : "bg-accent/20"}`}
                 initial={{ height: "0%" }}
                 animate={{ height: `${(v / 31) * 100}%` }}
                 transition={{ duration: 0.5, delay: i * 0.06, ease: "easeOut" }}
-                style={{
-                  backgroundColor: i === 6 ? "#CCFF00" : "#CCFF0038",
-                }}
               />
             ))}
           </div>
@@ -488,21 +485,21 @@ export default function HeroVisualization() {
             {
               label: { bg: "Имейл отговор", en: "Email reply" },
               status: { bg: "активен", en: "running" },
-              color: "#4ADE80",
+              color: "var(--color-success)",
               key: "email",
               running: true,
             },
             {
               label: { bg: "Квалификация", en: "Lead qualification" },
               status: { bg: "активен", en: "running" },
-              color: "#4ADE80",
+              color: "var(--color-success)",
               key: "lead",
               running: true,
             },
             {
               label: { bg: "Напомняне за среща", en: "Booking reminder" },
               status: { bg: "на опашка", en: "queued" },
-              color: "#FB923C",
+              color: "var(--accent)",
               key: "book",
               running: false,
             },
@@ -537,7 +534,7 @@ export default function HeroVisualization() {
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 z-20 flex border-t border-white/8 bg-[#08080E]/90 px-4 py-2.5 backdrop-blur-sm lg:hidden">
+      <div className="absolute bottom-0 left-0 right-0 z-20 flex border-t border-white/8 bg-[var(--color-bg-dark)]/90 px-4 py-2.5 backdrop-blur-sm lg:hidden">
         {METRICS.map((m) => (
           <div key={m.label.en} className="flex-1 text-center">
             <div className="text-sm font-black" style={{ color: m.accent }}>
@@ -556,11 +553,10 @@ export default function HeroVisualization() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 340, damping: 28 }}
-            className="absolute bottom-14 left-1/2 z-30 flex -translate-x-1/2 items-center gap-3 rounded-2xl border border-white/10 bg-[#14141E]/95 px-4 py-2.5 shadow-2xl backdrop-blur-xl lg:bottom-5"
+            className="absolute bottom-14 left-1/2 z-30 flex -translate-x-1/2 items-center gap-3 rounded-2xl border border-white/10 bg-[var(--color-bg-dark)]/95 px-4 py-2.5 shadow-2xl backdrop-blur-xl lg:bottom-5"
           >
             <div
-              className="flex h-8 w-8 flex-none items-center justify-center rounded-xl text-base"
-              style={{ backgroundColor: `${toast.accent}1A` }}
+              className={`flex h-8 w-8 flex-none items-center justify-center rounded-xl text-base ${toast.type === "success" ? "bg-success/10" : "bg-accent/10"}`}
             >
               {toast.icon}
             </div>
@@ -568,13 +564,12 @@ export default function HeroVisualization() {
               <p className="text-xs font-bold text-white">
                 {pick(locale, toast.label)}
               </p>
-              <p className="text-[10px]" style={{ color: toast.accent }}>
+              <p className={`text-[10px] ${toast.type === "success" ? "text-success" : "text-accent"}`}>
                 {pick(locale, toast.sub)}
               </p>
             </div>
             <div
-              className="ml-1 h-1.5 w-1.5 flex-none animate-pulse rounded-full"
-              style={{ backgroundColor: toast.accent }}
+              className={`ml-1 h-1.5 w-1.5 flex-none animate-pulse rounded-full ${toast.type === "success" ? "bg-success" : "bg-accent"}`}
             />
           </motion.div>
         )}

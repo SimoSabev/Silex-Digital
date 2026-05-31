@@ -28,10 +28,10 @@ export default function Footer() {
   const { t, locale } = useI18n();
 
   const solutions = [
-    { label: t("footer.automation"), href: "#demos" },
-    { label: t("footer.cmsLayer"), href: "#demos" },
-    { label: t("footer.codeLayer"), href: "#demos" },
-    { label: t("footer.integrations"), href: "#features" },
+    { label: t("footer.automation"), href: "/services" },
+    { label: t("footer.cmsLayer"), href: "/services" },
+    { label: t("footer.codeLayer"), href: "/services" },
+    { label: t("footer.integrations"), href: "/demos" },
   ];
 
   const socials = [
@@ -68,7 +68,7 @@ export default function Footer() {
                     className="h-[44px] sm:h-[52px] w-[180px] sm:w-[220px] overflow-hidden flex items-center justify-start relative -ml-1.5"
                   >
                     <Image 
-                      src="/long-logo.png" 
+                      src="/new-logo.png" 
                       alt="Silex Digital" 
                       width={220} 
                       height={55} 

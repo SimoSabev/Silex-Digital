@@ -156,7 +156,7 @@ export default function EmailAutomationDemo() {
         <button
           onClick={startSimulation}
           disabled={isRunning || activeSources.length === 0}
-          className="flex-shrink-0 w-full md:w-auto flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[var(--violet)] to-[#8b5cf6] px-6 py-3 text-sm font-bold text-white shadow-[0_0_20px_rgba(124,58,237,0.3)] transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(124,58,237,0.5)] disabled:opacity-50 disabled:hover:scale-100 disabled:shadow-none"
+          className="flex-shrink-0 w-full md:w-auto flex items-center justify-center gap-2 rounded-xl bg-[var(--accent)] px-6 py-3 text-sm font-bold text-white shadow-[0_0_20px_rgba(212,115,94,0.18)] transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(212,115,94,0.28)] disabled:opacity-50 disabled:hover:scale-100 disabled:shadow-none"
         >
           {isRunning ? (
             <><RefreshCw size={18} className="animate-spin" /><span>{t("demo.multichannel.running")}</span></>

@@ -416,12 +416,12 @@ export default function PricingPage() {
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: `linear-gradient(135deg, transparent 0%, ${plan.bgColor} 100%)` }}></div>
 
                   {isPopular && (
-                    <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[var(--violet)] to-[#b185ff]"></div>
+                    <div className="absolute top-0 left-0 w-full h-1.5 bg-[var(--accent)]"></div>
                   )}
 
                   {isPopular && (
                     <div className="absolute top-4 right-4 z-20">
-                      <span className="rounded-full bg-gradient-to-r from-[var(--violet)] to-[#b185ff] px-3 py-1.5 text-xs font-bold tracking-wider text-white uppercase shadow-lg flex items-center gap-1">
+                      <span className="rounded-full bg-[var(--accent)] px-3 py-1.5 text-xs font-bold tracking-wider text-white uppercase shadow-lg flex items-center gap-1">
                         <Sparkles size={12} /> {locale === "bg" ? "Популярен" : "Popular"}
                       </span>
                     </div>
