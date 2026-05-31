@@ -19,10 +19,10 @@
   --color-border: #E4E4E7;
   --color-border-hover: #18181B;
 
-  /* Brand palette (terracotta / warm earthy) */
-  --color-accent: #D4735E;        /* Primary accent — terracotta-rose */
-  --color-accent-hover: #B85C4A;  /* Darker accent for hover/active */
-  --color-accent-10: #E8D5C4;     /* Subtle accent (light stone) for backgrounds/borders */
+  /* Brand palette (deep wine burgundy — warm, premium, automotive-tech) */
+  --color-accent: #6A2E3A;        /* Primary — deep wine burgundy */
+  --color-accent-hover: #4E2028;  /* Darker for hover/active */
+  --color-accent-10: #E0C8CC;     /* Light warm rose tint for backgrounds/borders */
   --color-text-on-dark: #F5F0EB;  /* Warm cream for text on dark backgrounds */
   --color-text-on-light: #2B2B2B; /* Warm charcoal for text on light backgrounds */
   --color-bg-dark: #1A1817;       /* Deep warm charcoal */

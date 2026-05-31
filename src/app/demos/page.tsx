@@ -105,7 +105,7 @@ export default function DemosPage() {
                   : "Interactive demos"}
               </span>
               <h1 className="mb-4 sm:mb-6 font-[family-name:var(--font-display)] text-3xl sm:text-4xl leading-tight font-[700] tracking-tight text-[var(--text-main)] md:text-5xl lg:text-[56px]">
-                {locale === "bg" ? "Виж как изглежда " : "See what it looks like "}
+                {locale === "bg" ? "Виж как изглежда, " : "See what it looks like "}
                 <span className="text-gradient-hero">
                   {locale === "bg"
                     ? "когато всичко работи само"

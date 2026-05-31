@@ -48,9 +48,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       outline: "btn-secondary",
       ghost: "btn-ghost",
       success:
-        "btn-primary !bg-[var(--accent)] hover:!bg-[var(--accent-hover)] hover:!shadow-[0_0_40px_rgba(212,115,94,0.18)]",
+        "btn-primary !bg-[var(--accent)] hover:!bg-[var(--accent-hover)] hover:!shadow-[0_0_40px_rgba(106,46,58,0.35)]",
       accent:
-        "btn-primary !bg-[var(--accent)] hover:!bg-[var(--accent-hover)] hover:!shadow-[0_0_40px_rgba(212,115,94,0.18)]",
+        "btn-primary !bg-[var(--accent)] hover:!bg-[var(--accent-hover)] hover:!shadow-[0_0_40px_rgba(106,46,58,0.35)]",
     };
 
     const sizes: Record<string, string> = {

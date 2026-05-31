@@ -268,14 +268,14 @@ export default function ServicesPage() {
       {/* CTA Banner */}
       <section className="section py-24">
         <Container>
-          <div className="card-featured relative overflow-hidden rounded-2xl bg-[var(--accent)] p-8 text-center text-white md:rounded-[24px] md:p-12 lg:p-16">
-            <div className="absolute top-0 right-0 h-64 w-64 translate-x-1/2 -translate-y-1/2 rounded-full bg-white opacity-10 blur-3xl" />
-            <h2 className="relative z-10 mb-6 font-display text-4xl font-bold md:text-5xl text-black dark:text-white">
+          <div className="card-featured relative overflow-hidden rounded-2xl bg-[var(--accent-10)] p-8 text-center md:rounded-[24px] md:p-12 lg:p-16">
+            <div className="absolute top-0 right-0 h-64 w-64 translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--accent)] opacity-10 blur-3xl" />
+            <h2 className="relative z-10 mb-6 font-display text-4xl font-bold md:text-5xl text-[var(--text-main)]">
               {locale === "bg"
                 ? "Не си сигурен откъде да започнеш?"
                 : "Not sure where to start?"}
             </h2>
-            <p className="relative text-black dark:text-white z-10 mx-auto mb-10 max-w-2xl text-xl opacity-90">
+            <p className="relative text-[var(--text-sub)] z-10 mx-auto mb-10 max-w-2xl text-xl">
               {locale === "bg"
                 ? "30 минути разговор и ще ти кажем точно кое решение ще донесе най-бързи резултати за твоя бизнес."
                 : "30 minutes and we will tell you exactly which solution will bring the fastest results for your business."}

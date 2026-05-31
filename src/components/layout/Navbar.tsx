@@ -105,7 +105,7 @@ export default function Navbar() {
                 <Link
                   href="/contact"
                   onClick={closeMenu}
-                  className="flex w-full items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-6 py-4 text-lg font-bold text-white shadow-[0_10px_30px_rgba(212,115,94,0.18)]"
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-6 py-4 text-lg font-bold text-white shadow-[0_10px_30px_rgba(106,46,58,0.35)]"
                 >
                   <Sparkles size={18} />
                   {t("nav.getStarted") || t("common.contactUs")}

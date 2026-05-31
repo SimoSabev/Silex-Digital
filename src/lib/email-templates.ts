@@ -48,7 +48,7 @@ export function createConfirmationEmail(
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     .header {
-      background: linear-gradient(135deg, #D4735E 0%, #B85C4A 100%);
+      background: linear-gradient(135deg, #6A2E3A 0%, #4E2028 100%);
       padding: 40px 30px;
       text-align: center;
     }
@@ -73,7 +73,7 @@ export function createConfirmationEmail(
     }
     .info-box {
       background-color: #f8f9fa;
-      border-left: 4px solid #D4735E;
+      border-left: 4px solid #6A2E3A;
       padding: 20px;
       margin: 24px 0;
       border-radius: 4px;
@@ -83,7 +83,7 @@ export function createConfirmationEmail(
       color: #333;
     }
     .info-box strong {
-      color: #D4735E;
+      color: #6A2E3A;
     }
     .footer {
       background-color: #f8f9fa;
@@ -97,12 +97,12 @@ export function createConfirmationEmail(
       font-size: 14px;
     }
     .footer a {
-      color: #D4735E;
+      color: #6A2E3A;
       text-decoration: none;
     }
     .button {
       display: inline-block;
-      background: linear-gradient(135deg, #D4735E 0%, #B85C4A 100%);
+      background: linear-gradient(135deg, #6A2E3A 0%, #4E2028 100%);
       color: #ffffff;
       padding: 14px 32px;
       border-radius: 8px;
