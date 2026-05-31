@@ -180,7 +180,6 @@ export default function Navbar() {
             <div className="flex items-center rounded-full border border-[var(--border)] bg-[var(--bg-section)]/50 p-1">
               <LanguageToggle />
             </div>
-            <ThemeToggle />
             <Link href="/contact" className="group relative">
               <div className="absolute -inset-1 rounded-full bg-[var(--accent)] opacity-30 blur-sm transition duration-500 group-hover:opacity-50" />
               <motion.button
