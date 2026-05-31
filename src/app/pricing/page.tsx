@@ -284,7 +284,7 @@ export default function PricingPage() {
 
   const toggleAddon = (planName: string, addonId: string) => {
     setSelectedAddons((prev) => {
-      const planAddons = prev[planName] || [];
+      const planAddons = prev[planName] ?? [];
       const hasAddon = planAddons.includes(addonId);
       return {
         ...prev,
@@ -296,10 +296,10 @@ export default function PricingPage() {
   };
 
   const getCalculatedPrice = (basePrice: number, planName: string) => {
-    const addons = selectedAddons[planName] || [];
+    const addons = selectedAddons[planName] ?? [];
     const addonsTotal = addons.reduce((total, addonId) => {
       const addon = availableAddons.find((a) => a.id === addonId);
-      return total + (addon?.price || 0);
+      return total + (addon?.price ?? 0);
     }, 0);
     return basePrice + addonsTotal;
   };
@@ -338,7 +338,7 @@ export default function PricingPage() {
               </h1>
               <p className="mx-auto max-w-2xl text-[18px] md:text-[20px] text-[var(--text-sub)]">
                 {locale === "bg"
-                  ? "Ние ще се съобразим с нуждите ви. Добавяйте само онова, от което имате нужда, и изградете планът за вашия бизнес."
+                  ? "Ние ще се съобразим с нуждите ви. Добавяйте само онова, от което имате нужда и изградете планът за вашия бизнес."
                   : "We adjust to your needs. Add only what you require and build the plan for your business."}
               </p>
             </motion.div>
@@ -416,12 +416,12 @@ export default function PricingPage() {
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: `linear-gradient(135deg, transparent 0%, ${plan.bgColor} 100%)` }}></div>
 
                   {isPopular && (
-                    <div className="absolute top-0 left-0 w-full h-1.5 bg-[var(--accent)]"></div>
+                    <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[var(--violet)] to-[#b185ff]"></div>
                   )}
 
                   {isPopular && (
                     <div className="absolute top-4 right-4 z-20">
-                      <span className="rounded-full bg-[var(--accent)] px-3 py-1.5 text-xs font-bold tracking-wider text-white uppercase shadow-lg flex items-center gap-1">
+                      <span className="rounded-full bg-gradient-to-r from-[var(--violet)] to-[#b185ff] px-3 py-1.5 text-xs font-bold tracking-wider text-white uppercase shadow-lg flex items-center gap-1">
                         <Sparkles size={12} /> {locale === "bg" ? "Популярен" : "Popular"}
                       </span>
                     </div>
