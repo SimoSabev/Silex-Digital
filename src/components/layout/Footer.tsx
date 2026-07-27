@@ -31,6 +31,7 @@ export default function Footer() {
     { label: t("footer.automation"), href: "/services" },
     { label: t("footer.cmsLayer"), href: "/services" },
     { label: t("footer.codeLayer"), href: "/services" },
+    { label: t("footer.seo"), href: "/pricing/seo" },
     { label: t("footer.integrations"), href: "/demos" },
   ];
 

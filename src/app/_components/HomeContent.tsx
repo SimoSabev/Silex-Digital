@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import {
   Zap,
@@ -26,6 +27,7 @@ import { useI18n } from "@/lib/i18n";
 import Magnetic from "@/components/ui/Magnetic";
 import dynamic from "next/dynamic";
 import TextReveal from "@/components/ui/TextReveal";
+import MarqueeStrip from "@/components/ui/MarqueeStrip";
 
 const HeroVisualization = dynamic(
   () => import("@/components/animations/HeroVisualization"),
@@ -87,7 +89,7 @@ const services = [
       bg: "Помощник във Viber и на сайта — знае цените ви, отговаря бързо и записва час. За бизнеси, където всеки разговор е пари.",
       en: "A helper on Viber and your site — knows your prices, replies fast, books appointments. For businesses where every chat is money.",
     },
-    price: { bg: "от 290 € старт + 199 €/мес", en: "from 290 EUR setup + 199 EUR/mo" },
+    price: { bg: "от 290 € старт + 248 €/мес", en: "from 290 EUR setup + 248 EUR/mo" },
     color: "green" as const,
   },
   {
@@ -97,7 +99,7 @@ const services = [
       bg: "Когато ви трябва и силен бранд онлайн, и отговори денонощно — съчетаваме сайт, Google и Viber в едно решение за вас.",
       en: "When you need both a strong online brand and round-the-clock replies — we combine site, Google, and Viber in one solution built for you.",
     },
-    price: { bg: "от 990 € старт + 249 €/мес", en: "from 990 EUR setup + 249 EUR/mo" },
+    price: { bg: "от 990 € старт + 298 €/мес", en: "from 990 EUR setup + 298 EUR/mo" },
     color: "purple" as const,
   },
 ];
@@ -166,41 +168,46 @@ export default function HomeContent() {
 
   return (
     <div className="min-h-dvh bg-[var(--bg-page)] font-body text-[var(--text-main)]">
-      {/* Hero */}
-      <section className="hero-section relative overflow-hidden pt-16 pb-16 sm:pt-20 sm:pb-20 lg:pt-28 lg:pb-24">
-        <div
-          className="pointer-events-none absolute inset-0 -z-0"
-          aria-hidden
-        >
-          <div className="absolute left-1/2 top-0 h-[420px] w-[min(100%,720px)] -translate-x-1/2 rounded-full bg-[var(--violet)]/[0.07] blur-[100px]" />
-          <div className="absolute right-[10%] top-[28%] h-48 w-48 rounded-full bg-[var(--coral)]/[0.06] blur-[80px]" />
+      {/* Hero — dark cinematic band: charcoal + wine ribbon + glass panels */}
+      <section className="atelier-band-dark hero-section relative overflow-hidden pt-20 pb-16 sm:pt-24 sm:pb-20 lg:pt-32 lg:pb-24">
+        {/* Atmospheric wine-glass ribbon (glows on dark via screen blend) */}
+        <div className="pointer-events-none absolute inset-0" aria-hidden>
+          <Image
+            src="/images/hero-ribbon-dark.png"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-55 mix-blend-screen"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--color-bg-dark)]/80" />
         </div>
         <Container>
           <div className="relative z-10 mx-auto max-w-6xl">
 
             <div className="mx-auto mb-10 max-w-3xl text-center sm:mb-12">
-              {/* Badge — immediate mount, no scroll gate */}
+              {/* Badge — glass pill on dark */}
               <AnimatedSection delay={0} mode="immediate">
-                <p className="mb-6 inline-flex max-w-[95%] items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--bg-card)]/80 px-4 py-2 text-[13px] font-medium leading-snug text-[var(--text-sub)] backdrop-blur-sm sm:max-w-none sm:text-sm">
-                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--violet)]" />
+                <p className="mb-6 inline-flex max-w-[95%] items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-2 text-[13px] font-medium leading-snug text-[var(--color-text-on-dark)]/85 backdrop-blur-md sm:max-w-none sm:text-sm">
+                  <span className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-[var(--accent-10)]" />
                   {t("hero.badge")}
                 </p>
               </AnimatedSection>
 
               {/* H1 — plain CSS fade, no per-word stagger */}
               <AnimatedSection delay={0.08} mode="immediate">
-                <h1 className="text-balance font-display text-[1.75rem] font-extrabold leading-[1.12] tracking-tight sm:text-[2.5rem] sm:leading-[1.1] lg:text-[3.25rem]">
-                  <span className="block text-[var(--text-main)]">
+                <h1 className="text-balance font-display text-[2rem] font-extrabold leading-[1.1] tracking-tight sm:text-[2.75rem] sm:leading-[1.06] lg:text-[3.75rem]">
+                  <span className="block text-[var(--color-text-on-dark)]">
                     {t("hero.headlineLine1")}
                   </span>
-                  <span className="text-gradient-hero py-3 mt-2 block sm:mt-3">
+                  <span className="py-3 mt-2 block text-[var(--accent-10)] sm:mt-3">
                     {t("hero.headlineLine2")}
                   </span>
                 </h1>
               </AnimatedSection>
 
               <AnimatedSection delay={0.14} mode="immediate">
-                <p className="mx-auto mt-6 max-w-[34rem] text-pretty text-[17px] leading-[1.65] text-[var(--text-sub)] sm:mt-7 sm:text-lg sm:leading-relaxed">
+                <p className="mx-auto mt-6 max-w-[34rem] text-pretty text-[17px] leading-[1.65] text-[var(--color-text-on-dark)]/70 sm:mt-7 sm:text-lg sm:leading-relaxed">
                   {t("hero.sub")}
                 </p>
               </AnimatedSection>
@@ -224,9 +231,9 @@ export default function HomeContent() {
                       <Button
                         variant="secondary"
                         size="lg"
-                        className="h-12 w-full rounded-full border border-[var(--border)] bg-[var(--bg-card)]/60 px-7 text-[15px] font-semibold text-[var(--text-main)] backdrop-blur-sm transition-colors hover:border-[var(--violet)]/40 hover:bg-[var(--bg-card)] sm:h-11 sm:w-auto"
+                        className="h-12 w-full rounded-full border border-white/15 bg-white/[0.07] px-7 text-[15px] font-semibold text-[var(--color-text-on-dark)] backdrop-blur-md transition-colors hover:border-white/30 hover:bg-white/[0.12] sm:h-11 sm:w-auto"
                       >
-                        <Play className="h-4 w-4 text-[var(--violet)]" />
+                        <Play className="h-4 w-4 text-[var(--accent-10)]" />
                         {t("hero.ctaSecondary")}
                       </Button>
                     </Magnetic>
@@ -235,23 +242,28 @@ export default function HomeContent() {
               </AnimatedSection>
             </div>
 
-            <AnimatedSection delay={0.26} mode="immediate">
-              <div className="hero-visual mx-auto h-[280px] w-full max-w-5xl overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] shadow-apple sm:h-[340px] md:h-[400px] lg:h-[440px]">
+            <AnimatedSection delay={0.26} mode="immediate" className="relative mx-auto max-w-6xl">
+              {/* Wine glow behind the live product — floating product-shot presence on dark */}
+              <div
+                className="pointer-events-none absolute -inset-6 -z-10 rounded-[44px] bg-[var(--accent)]/25 blur-3xl sm:-inset-10"
+                aria-hidden
+              />
+              <div className="hero-visual h-[320px] w-full overflow-hidden rounded-[28px] border border-white/10 bg-[var(--bg-card)] shadow-[0_40px_90px_-30px_rgba(0,0,0,0.7)] ring-1 ring-white/10 sm:h-[380px] md:h-[460px] lg:h-[520px]">
                 <HeroVisualization />
               </div>
             </AnimatedSection>
 
             <AnimatedSection delay={0.34} mode="immediate">
-              <ul className="mx-auto mt-6 flex max-w-3xl flex-col divide-y divide-[var(--border)] rounded-2xl border border-[var(--border)] bg-[var(--bg-card)]/50 backdrop-blur-sm sm:mt-8 sm:flex-row sm:divide-x sm:divide-y-0">
+              <ul className="mx-auto mt-6 flex max-w-3xl flex-col divide-y divide-white/10 rounded-2xl border border-white/10 bg-white/[0.05] backdrop-blur-md sm:mt-8 sm:flex-row sm:divide-x sm:divide-y-0">
                 {heroStats.map((stat) => (
                   <li
                     key={stat.labelKey}
                     className="flex flex-1 flex-col items-center gap-0.5 px-4 py-4 text-center sm:py-5"
                   >
-                    <span className="font-['JetBrains_Mono',monospace] text-2xl font-bold tabular-nums text-[var(--violet)] sm:text-3xl">
+                    <span className="font-['JetBrains_Mono',monospace] text-2xl font-bold tabular-nums text-[var(--accent-10)] sm:text-3xl">
                       {t(stat.valueKey)}
                     </span>
-                    <span className="max-w-[11rem] text-[13px] leading-snug text-[var(--text-sub)] sm:max-w-[10.5rem] sm:text-sm">
+                    <span className="max-w-[11rem] text-[13px] leading-snug text-[var(--color-text-on-dark)]/65 sm:max-w-[10.5rem] sm:text-sm">
                       {t(stat.labelKey)}
                     </span>
                   </li>
@@ -262,6 +274,15 @@ export default function HomeContent() {
           </div>
         </Container>
       </section>
+
+      {/* Keyword ticker — bridges the dark hero into the light page */}
+      <MarqueeStrip
+        items={
+          locale === "bg"
+            ? ["Уебсайтове", "AI Асистенти", "CRM Системи", "Локално SEO", "Viber Автоматизация", "Онлайн Магазини", "Google Присъствие"]
+            : ["Websites", "AI Assistants", "CRM Systems", "Local SEO", "Viber Automation", "Online Stores", "Google Presence"]
+        }
+      />
 
       {/* The Silex Pact (Сделката с бизнеса) */}
       <section className="relative py-12 border-y border-[var(--border)] bg-[var(--bg-section)]">
@@ -335,7 +356,7 @@ export default function HomeContent() {
                 </p>
                 <div className="mt-auto border-t border-[var(--border)] pt-6 flex items-center justify-between">
                   <span className="text-sm font-bold badge-lime rounded-full px-3 py-1">
-                    {locale === "bg" ? "290 € старт + 199 €/месец" : "290 € setup + 199 €/month"}
+                    {locale === "bg" ? "290 € старт + 248 €/месец" : "290 € setup + 248 €/month"}
                   </span>
                   <Link href="/services" className="flex items-center text-sm font-bold text-[var(--lime)]">
                     {locale === "bg" ? "Научи повече" : "Learn more"} <ArrowRight className="ml-1 h-4 w-4" />
@@ -524,16 +545,19 @@ export default function HomeContent() {
             </p>
           </AnimatedSection>
 
-          <StaggerContainer className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {services.map((service) => {
+          <StaggerContainer className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {services.map((service, serviceIdx) => {
               const accentKey = serviceColorMap[service.color] || "violet";
+              // Bento rhythm: first and last cells stretch wide on desktop
+              const bentoSpan =
+                serviceIdx === 0 || serviceIdx === 3 ? "lg:col-span-2" : "";
               return (
-                <StaggerItem key={service.title.bg}>
+                <StaggerItem key={service.title.bg} className={bentoSpan}>
                   <Link
                     href="/services"
                     className="group block h-full outline-none"
                   >
-                    <div className="card relative h-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-8 shadow-apple transition-all duration-400 hover:-translate-y-2 hover:border-[var(--border-hover)] hover:shadow-apple-hover">
+                    <div className="card-2026 relative h-full overflow-hidden rounded-2xl p-8 shadow-apple transition-all duration-400 hover:-translate-y-2">
                       <div
                         className={`mb-8 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--${accentKey})]/10 origin-center transition-transform duration-300 group-hover:scale-110`}
                       >
@@ -760,11 +784,11 @@ export default function HomeContent() {
         </Container>
       </section>
 
-      {/* Testimonials */}
-      <section className="overflow-hidden border-y border-[var(--border)] bg-[var(--bg-section)] py-[120px] lg:py-[160px]">
-        <Container className="px-0 md:px-6">
+      {/* Testimonials — dark "punch" section for rhythm against the light pages around it */}
+      <section className="atelier-band-dark relative overflow-hidden border-y border-white/10 py-[120px] lg:py-[160px]">
+        <Container className="relative px-0 md:px-6">
           <AnimatedSection className="mb-16 px-6 text-center">
-            <h2 className="font-display text-4xl font-[800] text-[var(--text-main)] lg:text-5xl">
+            <h2 className="font-display text-4xl font-[800] text-[var(--color-text-on-dark)] lg:text-5xl">
               {locale === "bg"
                 ? "Какво казват нашите клиенти"
                 : "What our clients say"}
@@ -776,9 +800,9 @@ export default function HomeContent() {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="card relative w-[85vw] shrink-0 snap-center rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-10 shadow-apple md:w-[400px]"
+                className="relative w-[85vw] shrink-0 snap-center rounded-2xl border border-white/10 bg-white/[0.06] p-10 shadow-2xl backdrop-blur-md md:w-[400px]"
               >
-                <Quote className="absolute top-8 right-8 h-20 w-20 text-[var(--violet)]/10" />
+                <Quote className="absolute top-8 right-8 h-20 w-20 text-white/10" />
                 <div className="relative z-10 mb-6 flex gap-1">
                   {Array.from({ length: 5 }).map((_, i: number) => (
                     <svg
@@ -790,18 +814,18 @@ export default function HomeContent() {
                     </svg>
                   ))}
                 </div>
-                <p className="relative z-10 mb-10 text-[18px] leading-relaxed font-medium text-[var(--text-main)]">
+                <p className="relative z-10 mb-10 text-[18px] leading-relaxed font-medium text-[var(--color-text-on-dark)]">
                   &ldquo;{testimonial.quote[locale]}&rdquo;
                 </p>
                 <div className="relative z-10 flex items-center gap-4">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--violet)] text-xl font-bold text-white">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--accent)] text-xl font-bold text-white">
                     {testimonial.initials}
                   </div>
                   <div>
-                    <div className="font-display text-lg font-[800] text-[var(--text-main)]">
+                    <div className="font-display text-lg font-[800] text-[var(--color-text-on-dark)]">
                       {testimonial.author}
                     </div>
-                    <div className="text-sm font-bold text-[var(--text-sub)]">
+                    <div className="text-sm font-bold text-white/60">
                       {testimonial.role[locale]}
                     </div>
                   </div>
@@ -841,11 +865,19 @@ export default function HomeContent() {
                       ? "Уеб Основа & Google карти"
                       : "Web Foundation & Google Maps"}
                   </p>
+                  <div className="mb-4 rounded-xl border border-[var(--border)] bg-[var(--bg-section)] px-4 py-3 text-left">
+                    <div className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--text-muted)]">
+                      {locale === "bg" ? "Изработка (еднократно)" : "Setup (one-time)"}
+                    </div>
+                    <div className="font-['JetBrains_Mono',monospace] text-xl font-[800] text-[var(--text-main)]">
+                      {locale === "bg" ? "от 690 €" : "from 690 EUR"}
+                    </div>
+                  </div>
                   <div className="mb-1 font-['JetBrains_Mono',monospace] text-4xl font-[800] text-[var(--text-main)]">
                     {locale === "bg" ? "49 €" : "49 EUR"}
                   </div>
                   <div className="text-xs font-bold text-[var(--text-muted)] mb-8 uppercase tracking-wide">
-                    {locale === "bg" ? "/месец + 690 € старт" : "/month + 690 € setup"}
+                    {locale === "bg" ? "/месец поддръжка (по желание)" : "/month support (optional)"}
                   </div>
                   <ul className="mb-10 space-y-4 text-left border-t border-[var(--border)] pt-6">
                     <li className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-main)]">
@@ -897,11 +929,19 @@ export default function HomeContent() {
                       ? "AI секретар във Viber & Уебсайт"
                       : "AI Agent in Viber & Website"}
                   </p>
+                  <div className="mb-4 rounded-xl border border-[var(--violet)]/30 bg-[var(--violet)]/5 px-4 py-3 text-left">
+                    <div className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--violet)]">
+                      {locale === "bg" ? "Изработка (еднократно)" : "Setup (one-time)"}
+                    </div>
+                    <div className="font-['JetBrains_Mono',monospace] text-xl font-[800] text-[var(--text-main)]">
+                      {locale === "bg" ? "от 290 €" : "from 290 EUR"}
+                    </div>
+                  </div>
                   <div className="mb-1 font-['JetBrains_Mono',monospace] text-4xl font-[800] text-[var(--violet)]">
-                    {locale === "bg" ? "199 €" : "199 EUR"}
+                    {locale === "bg" ? "248 €" : "248 EUR"}
                   </div>
                   <div className="text-xs font-bold text-[var(--text-muted)] mb-8 uppercase tracking-wide">
-                    {locale === "bg" ? "/месец + 49 € AI Ядро + 290 € старт" : "/month + 49 € AI Core + 290 € setup"}
+                    {locale === "bg" ? "/месец абонамент" : "/month subscription"}
                   </div>
                   <ul className="mb-10 space-y-4 text-left border-t border-[var(--border)] pt-6">
                     <li className="flex items-center gap-3 text-[15px] font-bold text-[var(--text-main)]">
@@ -948,11 +988,19 @@ export default function HomeContent() {
                       ? "Дигитален Автопилот: Сайт + AI"
                       : "Digital Autopilot: Website + AI"}
                   </p>
+                  <div className="mb-4 rounded-xl border border-[var(--border)] bg-[var(--bg-section)] px-4 py-3 text-left">
+                    <div className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--text-muted)]">
+                      {locale === "bg" ? "Изработка (еднократно)" : "Setup (one-time)"}
+                    </div>
+                    <div className="font-['JetBrains_Mono',monospace] text-xl font-[800] text-[var(--text-main)]">
+                      {locale === "bg" ? "от 990 €" : "from 990 EUR"}
+                    </div>
+                  </div>
                   <div className="mb-1 font-['JetBrains_Mono',monospace] text-4xl font-[800] text-[var(--text-main)]">
-                    {locale === "bg" ? "249 €" : "249 EUR"}
+                    {locale === "bg" ? "298 €" : "298 EUR"}
                   </div>
                   <div className="text-xs font-bold text-[var(--text-muted)] mb-8 uppercase tracking-wide">
-                    {locale === "bg" ? "/месец + 49 € AI Ядро + 990 € старт" : "/month + 49 € AI Core + 990 € setup"}
+                    {locale === "bg" ? "/месец абонамент" : "/month subscription"}
                   </div>
                   <ul className="mb-10 space-y-4 text-left border-t border-[var(--border)] pt-6">
                     <li className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-main)]">

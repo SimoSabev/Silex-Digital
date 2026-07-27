@@ -104,6 +104,63 @@
     -webkit-text-fill-color: unset;
   }
 
+  /* Atelier band — a section-level "cut" of the global pinstripe system:
+     stronger wine wash + denser stripe for hero bands on light pages. */
+  .atelier-band {
+    background:
+      repeating-linear-gradient(115deg,
+        color-mix(in srgb, var(--accent) 12%, transparent) 0px,
+        color-mix(in srgb, var(--accent) 12%, transparent) 1px,
+        transparent 1px, transparent 44px),
+      radial-gradient(130% 110% at 50% -30%,
+        color-mix(in srgb, var(--accent) 30%, transparent) 0%,
+        color-mix(in srgb, var(--accent-10) 55%, transparent) 42%,
+        color-mix(in srgb, var(--accent-10) 20%, transparent) 70%,
+        transparent 100%);
+  }
+
+  /* Dark variant — cream threads on charcoal for dark punch sections. */
+  .atelier-band-dark {
+    background:
+      repeating-linear-gradient(115deg,
+        color-mix(in srgb, var(--color-text-on-dark) 7%, transparent) 0px,
+        color-mix(in srgb, var(--color-text-on-dark) 7%, transparent) 1px,
+        transparent 1px, transparent 44px),
+      radial-gradient(120% 100% at 50% -20%,
+        color-mix(in srgb, var(--accent) 55%, transparent) 0%,
+        color-mix(in srgb, var(--accent) 22%, transparent) 45%,
+        transparent 80%),
+      var(--color-bg-dark);
+  }
+
+  /* 2026 card — gradient hairline border + lifted hover glow. */
+  .card-2026 {
+    border: 1px solid transparent;
+    background:
+      linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+      linear-gradient(150deg,
+        color-mix(in srgb, var(--accent) 45%, transparent) 0%,
+        color-mix(in srgb, var(--accent-10) 70%, transparent) 35%,
+        color-mix(in srgb, var(--accent-10) 25%, transparent) 65%,
+        color-mix(in srgb, var(--accent) 20%, transparent) 100%) border-box;
+    transition: box-shadow 0.4s ease, transform 0.4s ease;
+  }
+  .card-2026:hover {
+    box-shadow:
+      0 1px 2px color-mix(in srgb, var(--accent) 8%, transparent),
+      0 24px 48px -20px color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+
+  /* Marquee ticker — creator-site staple; duplicated track scrolls 50%. */
+  .animate-marquee {
+    animation: marquee-scroll 36s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee {
+      animation: none;
+    }
+  }
+
   .badge-violet {
     background-color: color-mix(in srgb, var(--violet) 10%, transparent);
     color: color-mix(in srgb, var(--violet) 90%, black);
@@ -356,6 +413,11 @@ button, a {
   66% { transform: translate(-20px, 40px) rotate(-5deg) scale(0.95); }
 }
 
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 .animate-float-slow {
   animation: float-slow 25s ease-in-out infinite;
 }
@@ -367,15 +429,6 @@ button, a {
 
 .animate-pulse-dot {
   animation: pulse-dot 2s ease-in-out infinite;
-}
-
-@keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
-}
-
-.animate-marquee {
-  animation: marquee 20s linear infinite;
 }
 
 @keyframes shimmer {

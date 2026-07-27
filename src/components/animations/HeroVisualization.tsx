@@ -71,8 +71,8 @@ const CONVERSATIONS: Conversation[] = [
       en: "How much is the standard package?",
     },
     reply: {
-      bg: "Grow е 199 €/мес — AI асистент + автоматизации.",
-      en: "Grow is 199 EUR/mo — AI assistant + automations.",
+      bg: "Grow е 248 €/мес — AI асистент + автоматизации.",
+      en: "Grow is 248 EUR/mo — AI assistant + automations.",
     },
     time: "1.1s",
   },

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
+import { useReducedMotion } from "@/lib/motion";
 
 export const APPLE_EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -12,13 +13,18 @@ interface LazyRevealProps {
   className?: string;
 }
 
-export default function LazyReveal({ 
-  children, 
-  delay = 0, 
+export default function LazyReveal({
+  children,
+  delay = 0,
   direction = "up",
   className = ""
 }: LazyRevealProps) {
-  
+  const prefersReduced = useReducedMotion();
+
+  if (prefersReduced) {
+    return <div className={className}>{children}</div>;
+  }
+
   const getInitial = () => {
     switch(direction) {
       case "up": return { opacity: 0, y: 40 };

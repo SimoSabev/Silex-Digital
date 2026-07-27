@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import Image from "next/image";
 import { X, Maximize2, ArrowRight, Share2, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "@/components/ui/Button";
@@ -18,6 +19,8 @@ interface DemoContainerProps {
   ctaText?: string;
   ctaLink?: string;
   badge?: string;
+  /** Premium preview visual shown in the card before it's launched. */
+  previewImage?: string;
   /** Open the interactive demo immediately (e.g. dedicated /demos/[id] pages). */
   startExpanded?: boolean;
   /** Render demo inline without preview card / modal (for /demos/[id] pages). */
@@ -33,6 +36,7 @@ export default function DemoContainer({
   ctaText = "View full demo",
   ctaLink = "/contact",
   badge,
+  previewImage,
   startExpanded = false,
   displayMode = "modal",
 }: DemoContainerProps) {
@@ -138,24 +142,40 @@ export default function DemoContainer({
         </div>
 
         {/* Preview Visual */}
-        <div className="relative h-52 overflow-hidden flex items-center justify-center bg-[var(--bg-section)]">
-           {/* Dot mesh */}
-           <div className="absolute inset-0 opacity-[0.15] pointer-events-none" style={{ backgroundImage: 'radial-gradient(var(--text-muted) 1px, transparent 1px)', backgroundSize: '18px 18px' }} />
+        <div className="relative h-52 overflow-hidden bg-[var(--bg-section)]">
+           {previewImage ? (
+             <Image
+               src={previewImage}
+               alt=""
+               fill
+               sizes="(min-width: 768px) 50vw, 100vw"
+               className="object-cover transition-transform duration-700 ease-[0.16,1,0.3,1] group-hover:scale-105"
+             />
+           ) : (
+             <div className="flex h-full w-full items-center justify-center">
+               {/* Dot mesh */}
+               <div className="absolute inset-0 opacity-[0.15] pointer-events-none" style={{ backgroundImage: 'radial-gradient(var(--text-muted) 1px, transparent 1px)', backgroundSize: '18px 18px' }} />
 
-           {/* Gradient glow behind icon */}
-           <div className="absolute w-40 h-40 rounded-full bg-gradient-to-br from-[var(--violet)]/25 to-[var(--coral)]/15 blur-2xl" />
+               {/* Gradient glow behind icon */}
+               <div className="absolute w-40 h-40 rounded-full bg-gradient-to-br from-[var(--violet)]/25 to-[var(--coral)]/15 blur-2xl" />
 
-           {/* Center icon with rings */}
-           <div className="relative flex items-center justify-center group-hover:scale-110 transition-transform duration-700 ease-[0.16,1,0.3,1]">
-             <div className="absolute w-20 h-20 rounded-full border border-[var(--violet)]/25 animate-[ping_3.5s_cubic-bezier(0,0,0.2,1)_infinite]" />
-             <div className="absolute w-28 h-28 rounded-full border border-[var(--coral)]/15 animate-[ping_5s_cubic-bezier(0,0,0.2,1)_infinite]" style={{ animationDelay: '1s' }} />
-             <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--violet)] to-[var(--coral)] flex items-center justify-center text-white shadow-[0_0_32px_rgba(124,58,237,0.45)]">
-               {icon}
+               {/* Center icon with rings */}
+               <div className="relative flex items-center justify-center group-hover:scale-110 transition-transform duration-700 ease-[0.16,1,0.3,1]">
+                 <div className="absolute w-20 h-20 rounded-full border border-[var(--violet)]/25 animate-[ping_3.5s_cubic-bezier(0,0,0.2,1)_infinite]" />
+                 <div className="absolute w-28 h-28 rounded-full border border-[var(--coral)]/15 animate-[ping_5s_cubic-bezier(0,0,0.2,1)_infinite]" style={{ animationDelay: '1s' }} />
+                 <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--violet)] to-[var(--coral)] flex items-center justify-center text-white shadow-[0_0_32px_rgba(124,58,237,0.45)]">
+                   {icon}
+                 </div>
+               </div>
              </div>
-           </div>
+           )}
+
+           {previewImage && (
+             <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+           )}
 
            {/* Launch pill — visible always, brighter on hover */}
-           <div className="absolute bottom-5 left-1/2 -translate-x-1/2 opacity-60 group-hover:opacity-100 transition-opacity duration-300">
+           <div className="absolute bottom-5 left-1/2 -translate-x-1/2 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
              <div className="flex items-center gap-2 bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-main)] px-4 py-2 rounded-full text-sm font-semibold shadow-lg backdrop-blur-md whitespace-nowrap">
                <Maximize2 size={14} className="text-[var(--violet)] shrink-0" />
                {locale === "bg" ? "Интерактивно демо" : "Launch Demo"}

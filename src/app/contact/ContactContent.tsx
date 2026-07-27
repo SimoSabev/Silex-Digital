@@ -14,6 +14,7 @@ import {
   ChevronUp,
 } from "lucide-react";
 import Container from "@/components/ui/Container";
+import DarkHero from "@/components/ui/DarkHero";
 import { useI18n } from "@/lib/i18n";
 
 export default function ContactContent() {
@@ -167,25 +168,22 @@ export default function ContactContent() {
 
   return (
     <div className="min-h-dvh bg-[var(--bg-page)] font-[family-name:var(--font-body)] text-[var(--text-main)]">
-      <Container>
-        <section className="section">
-          {/* Header */}
-          <div className="mb-12 text-center md:mb-16">
-            <span className="badge badge-violet mb-4">
-              {locale === "bg" ? "Свържи се с нас" : "Contact us"}
-            </span>
-            <h1 className="mb-6 font-[family-name:var(--font-display)] text-4xl leading-tight font-[700] tracking-tight md:text-5xl lg:text-[56px]">
-              {locale === "bg"
-                ? "Заяви безплатна консултация"
-                : "Request a free consultation"}
-            </h1>
-            <p className="mx-auto max-w-2xl text-lg text-[var(--text-sub)] md:text-xl">
-              {locale === "bg"
-                ? "Попълнете формата по-долу — ще ви пишем или ще ви се обадим. Можете и директно на телефона."
-                : "Fill in the form below — we will email or call you back. You can also call us anytime."}
-            </p>
-          </div>
+      {/* Hero — cinematic dark band */}
+      <DarkHero
+        image="/images/hero-sphere-dark.png"
+        eyebrow={locale === "bg" ? "Свържи се с нас" : "Contact us"}
+        title={
+          locale === "bg" ? "Заяви безплатна консултация" : "Request a free consultation"
+        }
+        subtitle={
+          locale === "bg"
+            ? "Попълнете формата по-долу — ще ви пишем или ще ви се обадим. Можете и директно на телефона."
+            : "Fill in the form below — we will email or call you back. You can also call us anytime."
+        }
+      />
 
+      <Container>
+        <section className="section pt-16 md:pt-20">
           <div className="grid gap-12 lg:grid-cols-[60%_1fr] lg:gap-16">
             {/* Form (Left - 60%) */}
             <div className="order-2 lg:order-1">

@@ -19,7 +19,6 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const navLinks = [
-    { label: t("nav.home"), href: "/" },
     { label: t("nav.services"), href: "/services" },
     { label: t("nav.demos"), href: "/demos" },
     { label: t("nav.pricing"), href: "/pricing" },
@@ -127,15 +126,15 @@ export default function Navbar() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
-        className={`fixed top-0 left-0 right-0 z-[200] flex w-full justify-center transition-all duration-500 ${
-          isScrolled ? "px-4 pb-4 pt-4" : "px-0 pt-0"
+        className={`fixed top-0 left-0 right-0 z-[200] flex w-full justify-center px-3 transition-all duration-500 sm:px-4 ${
+          isScrolled ? "pt-2 pb-2 sm:pt-3" : "pt-3 pb-3 sm:pt-5"
         }`}
       >
         <div
-          className={`flex h-[72px] w-full max-w-7xl items-center justify-between gap-6 transition-all duration-500 ${
+          className={`flex h-[64px] w-full max-w-6xl items-center justify-between gap-6 rounded-full border px-5 backdrop-blur-xl transition-all duration-500 sm:h-[68px] sm:px-6 ${
             isScrolled
-              ? "rounded-full border border-[var(--border)] bg-[var(--bg-card)]/80 px-6 shadow-apple backdrop-blur-xl"
-              : "border-b border-transparent px-6 sm:px-8"
+              ? "border-[var(--border)] bg-[var(--bg-card)]/85 shadow-apple"
+              : "border-[var(--accent)]/12 bg-[var(--bg-card)]/60 shadow-[0_8px_30px_-16px_rgba(0,0,0,0.25)]"
           }`}
         >
           <Link href="/" className="flex justify-center items-center">

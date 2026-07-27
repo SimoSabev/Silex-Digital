@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
-  Zap,
   Bot,
   Code,
-  Database,
   ArrowRight,
   Check,
   Search,
@@ -17,11 +16,14 @@ import {
 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
+import DarkHero from "@/components/ui/DarkHero";
+import { Reveal } from "@/components/ui/Reveal";
 import { useI18n } from "@/lib/i18n";
 
 const services = [
   {
     icon: <Code size={64} className="text-[var(--violet)]" />,
+    image: "/images/service-presence-visual.png",
     title: { bg: "Уебсайт & Google Търсене (Присъствие)", en: "Website & Google Search (Presence)" },
     description: {
       bg: "Модерен сайт, блог или дигитална визитка (код или CMS платформа по избор), за да имате перфектно присъствие пред клиентите. Включва излизане напред в Google Карти и търсене за вашия град.",
@@ -49,12 +51,13 @@ const services = [
   },
   {
     icon: <Bot size={64} className="text-[var(--lime)]" />,
+    image: "/images/service-automate-visual.png",
     title: { bg: "AI Дигитален секретар & Канали", en: "AI Autopilot Agent & Channels" },
     description: {
       bg: "Интелигентен секретар, който се обучава по вашите фирмени цени, продукти и каталози. Той отговаря за 12 секунди на български във Viber, Facebook и сайта ви, като записва часовете и поръчките сам.",
       en: "Smart conversational agent trained on your pricing, catalogs, and rules. It responds within 12 seconds in Viber, Facebook, and Web chat, scheduling appointments autonomously.",
     },
-    price: { bg: "290 € старт + 199 €/мес + 49 € AI Ядро", en: "290 € setup + 199 €/mo + 49 € AI Core" },
+    price: { bg: "290 € старт + 248 €/мес", en: "290 € setup + 248 €/mo" },
     color: "bg-[var(--lime)]/10 border-[var(--lime)]",
     iconBg: "bg-[var(--lime)]/20 text-[var(--lime)]",
     badge: "badge-lime",
@@ -76,12 +79,13 @@ const services = [
   },
   {
     icon: <Sparkles size={64} className="text-[var(--coral)]" />,
+    image: "/images/service-autopilot-visual.png",
     title: { bg: "Цялостен Дигитален Автопилот (Сайт + AI)", en: "Complete Digital Autopilot (Website + AI)" },
     description: {
       bg: "Цялостна автоматизирана машина за оборот. Комбинираме премиум уебсайт, постоянна Google доминация и мултиканален AI асистент в една синхронизирана система.",
       en: "The ultimate hands-free growth system. We combine a custom premium website, continuous Google dominance, and a multi-channel AI assistant into one synced engine.",
     },
-    price: { bg: "990 € старт + 249 €/мес + 49 € AI Ядро", en: "990 € setup + 249 €/mo + 49 € AI Core" },
+    price: { bg: "990 € старт + 298 €/мес", en: "990 € setup + 298 €/mo" },
     color: "bg-[var(--coral)]/10 border-[var(--coral)]",
     iconBg: "bg-[var(--coral)]/20 text-[var(--coral)]",
     badge: "badge-coral",
@@ -105,7 +109,7 @@ const services = [
 
 const processSteps = [
   {
-    icon: <Search className="h-8 w-8 text-[var(--violet)]" />,
+    icon: <Search className="h-8 w-8" />,
     title: { bg: "Откриване", en: "Discovery" },
     description: {
       bg: "Разбираме твоя бизнес, цели и предизвикателства. Среща от 30 минути.",
@@ -113,7 +117,7 @@ const processSteps = [
     },
   },
   {
-    icon: <PenTool className="h-8 w-8 text-[var(--violet)]" />,
+    icon: <PenTool className="h-8 w-8" />,
     title: { bg: "Проектиране", en: "Design" },
     description: {
       bg: "Създаваме архитектура на решението. Виждаш визуализация преди да започнем.",
@@ -121,7 +125,7 @@ const processSteps = [
     },
   },
   {
-    icon: <Wrench className="h-8 w-8 text-[var(--violet)]" />,
+    icon: <Wrench className="h-8 w-8" />,
     title: { bg: "Разработка", en: "Build" },
     description: {
       bg: "Изграждаме решението стъпка по стъпка. Редовно те информираме за напредъка.",
@@ -129,7 +133,7 @@ const processSteps = [
     },
   },
   {
-    icon: <Rocket className="h-8 w-8 text-[var(--violet)]" />,
+    icon: <Rocket className="h-8 w-8" />,
     title: { bg: "Пускане", en: "Launch" },
     description: {
       bg: "Тестваме, оптимизираме и пускаме. 14 дни от идея до работеща система.",
@@ -142,33 +146,30 @@ export default function ServicesPage() {
   const { locale } = useI18n();
   return (
     <div className="min-h-dvh bg-[var(--bg-page)] font-body text-[var(--text-main)]">
-      {/* Hero */}
-      <section className="section bg-[var(--accent)]/10 pt-24 pb-20">
-        <Container>
-          <div className="mx-auto max-w-4xl text-center">
-            <h1 className="text-gradient-hero mb-6 font-display text-3xl leading-tight font-bold sm:text-4xl md:text-[48px] lg:text-[56px]">
-              {locale === "bg"
-                ? "Как помагаме на твоя бизнес"
-                : "How we help your business"}
-            </h1>
-            <p className="mx-auto mb-8 max-w-2xl font-body text-[18px] text-[var(--text-sub)]">
-              {locale === "bg"
-                ? "От автоматичен отговор на клиентски съобщения до пълен сайт или AI помощник. Ясен бюджет, бърза доставка, реални резултати."
-                : "From automatic client message replies to a full website or AI assistant. Clear budget, fast delivery, real results."}
-            </p>
-          </div>
-        </Container>
-      </section>
+      {/* Hero — cinematic dark band */}
+      <DarkHero
+        image="/images/hero-ribbon-streams.png"
+        eyebrow={locale === "bg" ? "Услуги" : "Services"}
+        title={
+          locale === "bg" ? "Как помагаме на твоя бизнес" : "How we help your business"
+        }
+        subtitle={
+          locale === "bg"
+            ? "От автоматичен отговор на клиентски съобщения до пълен сайт или AI помощник. Ясен бюджет, бърза доставка, реални резултати."
+            : "From automatic client message replies to a full website or AI assistant. Clear budget, fast delivery, real results."
+        }
+      />
 
       {/* Services Deep-Dives */}
-      <section className="section">
+      <section className="section pt-20 md:pt-28">
         <Container>
           <div className="space-y-16 md:space-y-24 lg:space-y-32">
             {services.map((service, idx) => {
               const isEven = idx % 2 === 0;
               return (
-                <div
+                <Reveal
                   key={service.title.bg}
+                  variant={isEven ? "left" : "right"}
                   className={`flex flex-col items-center gap-10 md:gap-16 md:flex-row ${isEven ? "" : "md:flex-row-reverse"}`}
                 >
                   <div className="flex-1 w-full">
@@ -195,9 +196,6 @@ export default function ServicesPage() {
                       ))}
                     </ul>
                     <div className="flex flex-wrap items-center gap-4">
-                      <span className={`rounded-full px-4 py-2 text-sm font-bold ${service.badge}`}>
-                        {service.price[locale]}
-                      </span>
                       <Link
                         href={service.demo}
                         className="flex items-center text-base font-bold text-[var(--violet)] transition-opacity hover:opacity-80 md:text-lg"
@@ -208,35 +206,45 @@ export default function ServicesPage() {
                     </div>
                   </div>
                   <div className="w-full flex-1 md:max-w-[45%]">
-                    <div
-                      className={`aspect-square w-full rounded-2xl border-4 ${service.color} relative flex items-center justify-center overflow-hidden bg-[var(--bg-card)] p-8 shadow-xl md:p-12`}
-                    >
-                      <div className="absolute inset-0 bg-[var(--accent)]/5 opacity-5" />
-                      {service.icon}
+                    <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-[28px] shadow-2xl ring-1 ring-[var(--border)] transition-transform duration-500 hover:-translate-y-1">
+                      <Image
+                        src={service.image}
+                        alt={service.title[locale]}
+                        fill
+                        sizes="(min-width: 768px) 45vw, 100vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg-dark)]/35 via-transparent to-transparent" />
+                      <span className={`absolute bottom-5 left-5 rounded-full px-4 py-2 text-sm font-bold shadow-lg backdrop-blur-md ${service.badge}`}>
+                        {service.price[locale]}
+                      </span>
                     </div>
                   </div>
-                </div>
+                </Reveal>
               );
             })}
           </div>
         </Container>
       </section>
 
-      {/* Process Timeline */}
-      <section className="section relative overflow-hidden bg-[var(--bg-section)] py-16 md:py-24 lg:py-32">
+      {/* Process Timeline — dark punch section */}
+      <section className="atelier-band-dark section relative overflow-hidden py-16 md:py-24 lg:py-32">
         <Container>
-          <div className="mb-12 text-center md:mb-20">
-            <h2 className="mb-6 font-display text-3xl font-bold md:text-4xl lg:text-5xl">
+          <Reveal className="mb-12 text-center md:mb-20">
+            <span className="mb-4 inline-block text-xs font-bold tracking-[0.14em] text-[var(--accent-10)]/80 uppercase">
+              {locale === "bg" ? "Процес" : "Process"}
+            </span>
+            <h2 className="font-display text-3xl font-bold text-[var(--color-text-on-dark)] md:text-4xl lg:text-5xl">
               {locale === "bg" ? "Как работим" : "How we work"}
             </h2>
-          </div>
+          </Reveal>
 
           <div className="relative flex flex-col items-start justify-between gap-10 md:flex-row md:gap-4">
             {/* Animated Line */}
             <div className="absolute top-10 right-[10%] left-[10%] hidden h-1.5 md:block">
-              <div className="h-full w-full overflow-hidden rounded-full bg-[var(--border)]">
+              <div className="h-full w-full overflow-hidden rounded-full bg-white/10">
                 <motion.div
-                  className="h-full bg-[var(--accent)]"
+                  className="h-full bg-[var(--accent-10)]"
                   initial={{ width: "0%" }}
                   whileInView={{ width: "100%" }}
                   viewport={{ once: true }}
@@ -246,20 +254,22 @@ export default function ServicesPage() {
             </div>
 
             {processSteps.map((step, idx) => (
-              <div
+              <Reveal
                 key={idx}
+                variant="rise"
+                delay={idx * 0.12}
                 className="relative z-10 mx-auto flex max-w-[200px] flex-col items-center text-center md:max-w-xs"
               >
-                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full border-2 border-[var(--accent)] bg-[var(--bg-section)] shadow-xl md:h-20 md:w-20 md:border-4">
+                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-white/15 bg-white/[0.07] text-[var(--accent-10)] shadow-xl backdrop-blur-md md:h-20 md:w-20">
                   {step.icon}
                 </div>
-                <h3 className="mb-3 font-display text-lg font-bold md:text-2xl">
+                <h3 className="mb-3 font-display text-lg font-bold text-[var(--color-text-on-dark)] md:text-2xl">
                   {step.title[locale]}
                 </h3>
-                <p className="text-sm text-sub md:text-base lg:text-lg">
+                <p className="text-sm text-[var(--color-text-on-dark)]/65 md:text-base lg:text-lg">
                   {step.description[locale]}
                 </p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </Container>
@@ -268,26 +278,29 @@ export default function ServicesPage() {
       {/* CTA Banner */}
       <section className="section py-24">
         <Container>
-          <div className="card-featured relative overflow-hidden rounded-2xl bg-[var(--accent-10)] p-8 text-center md:rounded-[24px] md:p-12 lg:p-16">
-            <div className="absolute top-0 right-0 h-64 w-64 translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--accent)] opacity-10 blur-3xl" />
-            <h2 className="relative z-10 mb-6 font-display text-4xl font-bold md:text-5xl text-[var(--text-main)]">
-              {locale === "bg"
-                ? "Не си сигурен откъде да започнеш?"
-                : "Not sure where to start?"}
-            </h2>
-            <p className="relative text-[var(--text-sub)] z-10 mx-auto mb-10 max-w-2xl text-xl">
-              {locale === "bg"
-                ? "30 минути разговор и ще ти кажем точно кое решение ще донесе най-бързи резултати за твоя бизнес."
-                : "30 minutes and we will tell you exactly which solution will bring the fastest results for your business."}
-            </p>
-            <div className="relative z-10">
-              <Link href="/contact">
-                <Button className="rounded-xl border-none bg-[var(--accent)] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:bg-[var(--accent-hover)] hover:shadow-xl">
-                  {locale === "bg" ? "Заяви безплатна консултация" : "Request free consultation"}
-                </Button>
-              </Link>
+          <Reveal variant="scale">
+            <div className="card-2026 relative overflow-hidden rounded-[24px] p-8 text-center md:p-12 lg:p-16">
+              <div className="absolute top-0 right-0 h-64 w-64 translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--accent)] opacity-15 blur-3xl" />
+              <div className="absolute bottom-0 left-0 h-56 w-56 -translate-x-1/2 translate-y-1/2 rounded-full bg-[var(--accent-10)] opacity-40 blur-3xl" />
+              <h2 className="relative z-10 mb-6 font-display text-4xl font-bold md:text-5xl text-[var(--text-main)]">
+                {locale === "bg"
+                  ? "Не си сигурен откъде да започнеш?"
+                  : "Not sure where to start?"}
+              </h2>
+              <p className="relative text-[var(--text-sub)] z-10 mx-auto mb-10 max-w-2xl text-xl">
+                {locale === "bg"
+                  ? "30 минути разговор и ще ти кажем точно кое решение ще донесе най-бързи резултати за твоя бизнес."
+                  : "30 minutes and we will tell you exactly which solution will bring the fastest results for your business."}
+              </p>
+              <div className="relative z-10">
+                <Link href="/contact">
+                  <Button className="rounded-full border-none bg-[var(--accent)] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:bg-[var(--accent-hover)] hover:-translate-y-0.5 hover:shadow-xl">
+                    {locale === "bg" ? "Заяви безплатна консултация" : "Request free consultation"}
+                  </Button>
+                </Link>
+              </div>
             </div>
-          </div>
+          </Reveal>
         </Container>
       </section>
     </div>

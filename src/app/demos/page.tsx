@@ -2,13 +2,13 @@
 
 import {
   Zap,
-  Mail,
   MessageSquare,
   Database,
   FileText,
   Code,
 } from "lucide-react";
 import Container from "@/components/ui/Container";
+import DarkHero from "@/components/ui/DarkHero";
 import DemoContainer from "@/components/demos/DemoContainer";
 import EmailAutomationDemo from "@/components/demos/EmailAutomationDemo";
 import LeadQualificationDemo from "@/components/demos/LeadQualificationDemo";
@@ -26,6 +26,7 @@ const demos = [
     },
     icon: <MessageSquare className="h-6 w-6" />,
     component: <EmailAutomationDemo />,
+    previewImage: "/images/demo-email-automation-visual.png",
     color: "blue" as const,
   },
   {
@@ -37,6 +38,7 @@ const demos = [
     },
     icon: <Zap className="h-6 w-6" />,
     component: <LeadQualificationDemo />,
+    previewImage: "/images/demo-lead-qualification-visual.png",
     color: "green" as const,
   },
   {
@@ -48,6 +50,7 @@ const demos = [
     },
     icon: <MessageSquare className="h-6 w-6" />,
     component: <ChatbotDemo />,
+    previewImage: "/images/demo-chatbot-visual.png",
     color: "purple" as const,
   },
   {
@@ -89,41 +92,28 @@ export default function DemosPage() {
   const { locale } = useI18n();
 
   return (
-    <div className="relative min-h-dvh overflow-x-hidden bg-[var(--bg-page)] pt-20 sm:pt-[88px] pb-12 sm:pb-20">
-      {/* Subtle animated grid pattern background */}
-      <div className="bg-grid-pattern animate-float-slow pointer-events-none absolute inset-0 opacity-50" />
-
-      {/* Hero */}
-      <section className="relative z-10 py-12 md:py-16">
-        <Container>
-          <LazyReveal delay={0.1}>
-            <div className="mx-auto max-w-3xl text-center">
-              <span className="badge badge-violet mb-4 inline-flex">
-                <span className="animate-pulse-dot h-1.5 w-1.5 rounded-full bg-[var(--violet)]" />
-                {locale === "bg"
-                  ? "Интерактивни демонстрации"
-                  : "Interactive demos"}
-              </span>
-              <h1 className="mb-4 sm:mb-6 font-[family-name:var(--font-display)] text-3xl sm:text-4xl leading-tight font-[700] tracking-tight text-[var(--text-main)] md:text-5xl lg:text-[56px]">
-                {locale === "bg" ? "Виж как изглежда, " : "See what it looks like "}
-                <span className="text-gradient-hero">
-                  {locale === "bg"
-                    ? "когато всичко работи само"
-                    : "when everything runs itself"}
-                </span>
-              </h1>
-              <p className="text-base sm:text-lg text-[var(--text-sub)] px-2 sm:px-0">
-                {locale === "bg"
-                  ? "Кликни върху всяка карта и виж как изглежда в твоя бизнес — интерактивна симулация, без регистрация."
-                  : "Click on any card and see how it looks in your business — interactive simulation, no sign-up needed."}
-              </p>
-            </div>
-          </LazyReveal>
-        </Container>
-      </section>
+    <div className="relative min-h-dvh overflow-x-hidden bg-[var(--bg-page)] pb-12 sm:pb-20">
+      {/* Hero — cinematic dark band */}
+      <DarkHero
+        image="/images/hero-ribbon-streams.png"
+        eyebrow={locale === "bg" ? "Интерактивни демонстрации" : "Interactive demos"}
+        title={
+          <>
+            {locale === "bg" ? "Виж как изглежда, " : "See what it looks like "}
+            <span className="text-[var(--accent-10)]">
+              {locale === "bg" ? "когато всичко работи само" : "when everything runs itself"}
+            </span>
+          </>
+        }
+        subtitle={
+          locale === "bg"
+            ? "Кликни върху всяка карта и виж как изглежда в твоя бизнес — интерактивна симулация, без регистрация."
+            : "Click on any card and see how it looks in your business — interactive simulation, no sign-up needed."
+        }
+      />
 
       {/* Demos Grid - High End Bento Box Style */}
-      <section className="section relative z-10 pt-0">
+      <section className="section relative z-10 pt-16 md:pt-20">
         <Container>
           <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:gap-8 max-w-7xl mx-auto">
             {demos.slice(0, 3).map((demo, idx) => (
@@ -138,6 +128,7 @@ export default function DemosPage() {
                   description={demo.description[locale]}
                   icon={demo.icon}
                   badge={demo.badge?.[locale]}
+                  previewImage={demo.previewImage}
                   ctaText={
                     locale === "bg"
                       ? "Заяви тази конфигурация"
