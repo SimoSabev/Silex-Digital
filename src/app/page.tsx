@@ -7,10 +7,6 @@ export const metadata: Metadata = {
     "Спести над 15 часа на месец с AI автоматизация. Чатбот за бизнес, CRM интеграция, омниканални съобщения (Viber, Messenger, WhatsApp). Безплатна консултация за малкия бизнес в България.",
   alternates: {
     canonical: "/",
-    languages: {
-      "bg-BG": "/",
-      "en-US": "/en",
-    },
   },
 };
 

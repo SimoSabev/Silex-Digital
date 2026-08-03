@@ -3,8 +3,9 @@
   "configurations": [
     {
       "name": "next-dev",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["next", "dev"],
+      "//": "Must go through `npm run dev`, not a bare `next dev`. The project's dev script uses --turbo (Turbopack); a bare `next dev` uses Webpack. Both write to the same .next directory in incompatible formats, which corrupts the React Client Manifest and produces 404s/500s across every route. A single entrypoint guarantees one bundler.",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
       "port": 3000,
       "autoPort": true
     }

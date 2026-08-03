@@ -91,7 +91,7 @@ export default async function DemoPage({
             </p>
             <a
               href={`/contact?source=demo-share&demo=${id}`}
-              className="inline-flex items-center gap-2 rounded-xl bg-[var(--violet)] px-7 py-3 text-white font-bold hover:opacity-90 transition-opacity shadow-lg"
+              className="inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-7 py-3 text-white font-bold hover:opacity-90 transition-opacity shadow-lg"
             >
               Get a free consultation →
             </a>

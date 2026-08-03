@@ -31,7 +31,7 @@ export default function ScenarioPicker({
               onClick={() => onSelect(scenario.id)}
               className={`rounded-xl border p-3 text-left transition-all ${
                 selected
-                  ? "border-[var(--violet)]/40 bg-[var(--violet)]/15"
+                  ? "border-[var(--accent)]/40 bg-[var(--accent)]/15"
                   : "border-[var(--border)] bg-[var(--bg-card)] hover:border-[var(--border-hover)]"
               }`}
             >

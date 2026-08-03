@@ -94,7 +94,7 @@ const seoTiers = [
   },
 ];
 
-export default function SeoPricingPage() {
+export default function SeoPricingContent() {
   const { locale } = useI18n();
 
   return (
@@ -169,7 +169,7 @@ export default function SeoPricingPage() {
                 {locale === "bg" ? "Еднократно" : "One-time"}
               </div>
               <div className="font-display text-4xl font-extrabold text-[var(--text-main)]">
-                {locale === "bg" ? "от €190" : "from €190"}
+                {locale === "bg" ? "от 190 €" : "from 190 €"}
               </div>
               <div className="mt-1 text-xs text-[var(--text-muted)]">
                 {locale === "bg" ? "финална цена спрямо обхвата" : "final price depends on scope"}
@@ -226,7 +226,7 @@ export default function SeoPricingPage() {
                   <Image src={tier.icon} alt="" width={40} height={40} className="h-10 w-10 shrink-0" />
                 </div>
                 <div className="mb-1 flex items-baseline gap-1.5">
-                  <span className="font-display text-3xl font-extrabold">€{tier.price}</span>
+                  <span className="font-display text-3xl font-extrabold">{tier.price} €</span>
                   <span className="text-sm text-[var(--text-muted)]">/{locale === "bg" ? "мес" : "mo"}</span>
                 </div>
                 <p className="mb-5 min-h-[2.6em] text-sm text-[var(--text-sub)]">{tier.description[locale]}</p>
@@ -310,9 +310,9 @@ export default function SeoPricingPage() {
               </h4>
               <p className="text-sm text-[var(--text-sub)]">
                 {locale === "bg" ? (
-                  <>Първите <b className="text-[var(--text-main)]">5 клиента</b> получават <span className="line-through">€190</span> <b className="text-[var(--accent)]">€145</b> за SEO Старт, срещу отзив. Ограничено по време — редовната цена е ясна и на двете страни.</>
+                  <>Първите <b className="text-[var(--text-main)]">5 клиента</b> получават <span className="line-through">190 €</span> <b className="text-[var(--accent)]">145 €</b> за SEO Старт, срещу отзив (отзивът се публикува с ясно обозначение, че е получил отстъпка). Ограничено по време — редовната цена е ясна и на двете страни.</>
                 ) : (
-                  <>The first <b className="text-[var(--text-main)]">5 clients</b> get <span className="line-through">€190</span> <b className="text-[var(--accent)]">€145</b> for SEO Start, in exchange for a review. Time-limited — the regular price is clear to both sides.</>
+                  <>The first <b className="text-[var(--text-main)]">5 clients</b> get <span className="line-through">190 €</span> <b className="text-[var(--accent)]">145 €</b> for SEO Start, in exchange for a review (published with a clear disclosure that a discount was received). Time-limited — the regular price is clear to both sides.</>
                 )}
               </p>
             </div>

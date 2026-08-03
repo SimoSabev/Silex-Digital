@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
   Mail,
@@ -14,7 +15,7 @@ import {
   ChevronUp,
 } from "lucide-react";
 import Container from "@/components/ui/Container";
-import DarkHero from "@/components/ui/DarkHero";
+import { Reveal } from "@/components/ui/Reveal";
 import { useI18n } from "@/lib/i18n";
 
 export default function ContactContent() {
@@ -87,6 +88,7 @@ export default function ContactContent() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [consentGiven, setConsentGiven] = useState(false);
 
   const isConsultation = formData.leadIntent === "consultation";
 
@@ -103,6 +105,16 @@ export default function ContactContent() {
     e.preventDefault();
     setSubmitError(null);
     setSubmitSuccess(false);
+
+    if (!consentGiven) {
+      setSubmitError(
+        locale === "bg"
+          ? "Моля, потвърдете съгласието си за обработка на личните данни."
+          : "Please confirm consent to the processing of your personal data.",
+      );
+      return;
+    }
+
     setIsSubmitting(true);
 
     const contextLines = [
@@ -168,19 +180,32 @@ export default function ContactContent() {
 
   return (
     <div className="min-h-dvh bg-[var(--bg-page)] font-[family-name:var(--font-body)] text-[var(--text-main)]">
-      {/* Hero — cinematic dark band */}
-      <DarkHero
-        image="/images/hero-sphere-dark.png"
-        eyebrow={locale === "bg" ? "Свържи се с нас" : "Contact us"}
-        title={
-          locale === "bg" ? "Заяви безплатна консултация" : "Request a free consultation"
-        }
-        subtitle={
-          locale === "bg"
-            ? "Попълнете формата по-долу — ще ви пишем или ще ви се обадим. Можете и директно на телефона."
-            : "Fill in the form below — we will email or call you back. You can also call us anytime."
-        }
-      />
+      {/* Hero — leads with the one concrete, honest promise the page already makes elsewhere */}
+      <section className="atelier-band-dark relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-24">
+        <Container>
+          <div className="mx-auto max-w-2xl text-center">
+            <Reveal variant="blur">
+              <p className="mb-5 font-mono text-xs font-bold tracking-[0.2em] text-[var(--color-text-on-dark)]/40 uppercase">
+                {locale === "bg" ? "Контакти · SilexBrand" : "Contact · SilexBrand"}
+              </p>
+            </Reveal>
+            <h1 className="font-display text-[2.5rem] leading-[1.02] font-extrabold tracking-tight text-[var(--color-text-on-dark)] sm:text-[3.5rem] md:text-[4rem]">
+              {locale === "bg" ? (
+                <>Отговор до <span className="text-[var(--accent-10)]">2 часа</span>.<br />Не до 2 дни.</>
+              ) : (
+                <>A reply in <span className="text-[var(--accent-10)]">2 hours</span>.<br />Not 2 days.</>
+              )}
+            </h1>
+            <Reveal variant="rise" delay={0.14}>
+              <p className="mx-auto mt-7 max-w-lg text-[17px] leading-relaxed text-[var(--color-text-on-dark)]/60 md:text-[19px]">
+                {locale === "bg"
+                  ? "Попълнете формата — ще ви пишем или се обадим. Или просто вдигнете телефона, посочен долу дясно."
+                  : "Fill in the form — we'll email or call you back. Or just call the number in the panel on the right."}
+              </p>
+            </Reveal>
+          </div>
+        </Container>
+      </section>
 
       <Container>
         <section className="section pt-16 md:pt-20">
@@ -192,8 +217,8 @@ export default function ContactContent() {
                 onSubmit={handleSubmit}
                 className="card space-y-6 p-8 md:p-10"
               >
-                <div className="flex items-start gap-3 rounded-xl border border-[var(--lime)]/30 bg-[var(--lime)]/10 p-5 text-sm font-medium text-[var(--text-main)]">
-                  <div className="mt-0.5 shrink-0 text-[var(--lime)]">
+                <div className="flex items-start gap-3 rounded-xl border border-[var(--accent)]/30 bg-[var(--accent)]/10 p-5 text-sm font-medium text-[var(--text-main)]">
+                  <div className="mt-0.5 shrink-0 text-[var(--accent)]">
                     <Zap className="h-5 w-5" />
                   </div>
                   <p>
@@ -376,7 +401,7 @@ export default function ContactContent() {
                   <button
                     type="button"
                     onClick={() => setShowProjectDetails(true)}
-                    className="flex w-full items-center justify-center gap-2 text-sm font-medium text-[var(--violet)] transition-colors hover:text-[var(--violet)]/80"
+                    className="flex w-full items-center justify-center gap-2 text-sm font-medium text-[var(--accent)] transition-colors hover:text-[var(--accent)]/80"
                   >
                     {locale === "bg"
                       ? "Добави детайли за проекта (по избор)"
@@ -514,14 +539,53 @@ export default function ContactContent() {
                   </div>
                 </div>
 
+                <label htmlFor="consent" className="flex items-start gap-3 text-sm text-[var(--text-sub)]">
+                  <input
+                    type="checkbox"
+                    id="consent"
+                    name="consent"
+                    required
+                    checked={consentGiven}
+                    onChange={(e) => setConsentGiven(e.target.checked)}
+                    className="mt-1 h-4 w-4 shrink-0 rounded border-[var(--border)] accent-[var(--accent)]"
+                  />
+                  <span>
+                    {locale === "bg" ? (
+                      <>
+                        Съгласен съм личните ми данни да бъдат обработени съгласно{" "}
+                        <Link
+                          href="/privacy"
+                          target="_blank"
+                          className="text-[var(--accent)] underline-offset-2 hover:underline"
+                        >
+                          Политиката за поверителност
+                        </Link>
+                        , за да получа отговор на заявката си.
+                      </>
+                    ) : (
+                      <>
+                        I agree to have my personal data processed under the{" "}
+                        <Link
+                          href="/privacy"
+                          target="_blank"
+                          className="text-[var(--accent)] underline-offset-2 hover:underline"
+                        >
+                          Privacy Policy
+                        </Link>
+                        , so I can receive a reply to my request.
+                      </>
+                    )}
+                  </span>
+                </label>
+
                 {submitError && (
-                  <p className="rounded-xl border border-[var(--coral)]/30 bg-[var(--coral)]/10 p-4 text-sm font-medium text-[var(--coral)]">
+                  <p className="rounded-xl border border-[var(--accent)]/30 bg-[var(--accent)]/10 p-4 text-sm font-medium text-[var(--accent)]">
                     {submitError}
                   </p>
                 )}
 
                 {submitSuccess && (
-                  <p className="rounded-xl border border-[var(--lime)]/30 bg-[var(--lime)]/10 p-4 text-sm font-medium text-[var(--lime)]">
+                  <p className="rounded-xl border border-[var(--accent)]/30 bg-[var(--accent)]/10 p-4 text-sm font-medium text-[var(--accent)]">
                     {locale === "bg"
                       ? "Получихме заявката ви. Ще ви пишем или ще ви се обадим в рамките на 2 часа в работни дни."
                       : "We received your request. We will email or call you within 2 hours on business days."}
@@ -530,7 +594,7 @@ export default function ContactContent() {
 
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !consentGiven}
                   className="btn-primary btn-lg group w-full"
                 >
                   {isSubmitting
@@ -561,7 +625,7 @@ export default function ContactContent() {
                       href="mailto:info@silexbrand.com"
                       className="group card flex items-center gap-4 bg-[var(--bg-card)] p-4"
                     >
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--violet)]/10 text-[var(--violet)] transition-colors group-hover:bg-[var(--violet)] group-hover:text-white">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--accent)]/10 text-[var(--accent)] transition-colors group-hover:bg-[var(--accent)] group-hover:text-white">
                         <Mail className="h-5 w-5" />
                       </div>
                       <div>
@@ -578,7 +642,7 @@ export default function ContactContent() {
                       href="tel:+359885031865"
                       className="group card flex items-center gap-4 bg-[var(--bg-card)] p-4"
                     >
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--coral)]/10 text-[var(--coral)] transition-colors group-hover:bg-[var(--coral)] group-hover:text-white">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--accent)]/10 text-[var(--accent)] transition-colors group-hover:bg-[var(--accent)] group-hover:text-white">
                         <Phone className="h-5 w-5" />
                       </div>
                       <div>
@@ -592,7 +656,7 @@ export default function ContactContent() {
                     </a>
 
                     <div className="card flex items-center gap-4 bg-[var(--bg-card)] p-4">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--lime)]/10 text-[var(--lime)]">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--accent)]/10 text-[var(--accent)]">
                         <MapPin className="h-5 w-5" />
                       </div>
                       <div>
@@ -652,7 +716,7 @@ export default function ContactContent() {
 
               {/* Consultation — email or call */}
               <div className="card-featured flex flex-col items-center p-6 text-center md:p-8">
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--coral)]/10 text-[var(--coral)]">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--accent)]/10 text-[var(--accent)]">
                   <MessageCircle className="h-6 w-6" />
                 </div>
                 <h3 className="mb-2 font-[family-name:var(--font-display)] text-xl font-[700] text-[var(--text-main)]">
@@ -679,7 +743,7 @@ export default function ContactContent() {
                   </a>
                   <a
                     href="mailto:info@silexbrand.com?subject=Consultation%20request"
-                    className="text-sm font-medium text-[var(--violet)] underline-offset-2 hover:underline"
+                    className="text-sm font-medium text-[var(--accent)] underline-offset-2 hover:underline"
                   >
                     info@silexbrand.com
                   </a>

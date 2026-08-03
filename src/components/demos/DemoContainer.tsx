@@ -126,13 +126,13 @@ export default function DemoContainer({
         <div className="p-6 pb-4 border-b border-[var(--border)]">
           {badge && (
             <span className="badge badge-primary mb-4 inline-flex">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--violet)]" />
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--accent)]" />
               {badge}
             </span>
           )}
           <div className="flex items-center gap-3 mb-3">
              {icon && (
-               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--bg-section)] text-[var(--violet)] group-hover:bg-[var(--violet)] group-hover:text-white transition-colors duration-500">
+               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--bg-section)] text-[var(--accent)] group-hover:bg-[var(--accent)] group-hover:text-white transition-colors duration-500">
                  {icon}
                </div>
              )}
@@ -157,13 +157,13 @@ export default function DemoContainer({
                <div className="absolute inset-0 opacity-[0.15] pointer-events-none" style={{ backgroundImage: 'radial-gradient(var(--text-muted) 1px, transparent 1px)', backgroundSize: '18px 18px' }} />
 
                {/* Gradient glow behind icon */}
-               <div className="absolute w-40 h-40 rounded-full bg-gradient-to-br from-[var(--violet)]/25 to-[var(--coral)]/15 blur-2xl" />
+               <div className="absolute w-40 h-40 rounded-full bg-gradient-to-br from-[var(--accent)]/25 to-[var(--accent)]/15 blur-2xl" />
 
                {/* Center icon with rings */}
                <div className="relative flex items-center justify-center group-hover:scale-110 transition-transform duration-700 ease-[0.16,1,0.3,1]">
-                 <div className="absolute w-20 h-20 rounded-full border border-[var(--violet)]/25 animate-[ping_3.5s_cubic-bezier(0,0,0.2,1)_infinite]" />
-                 <div className="absolute w-28 h-28 rounded-full border border-[var(--coral)]/15 animate-[ping_5s_cubic-bezier(0,0,0.2,1)_infinite]" style={{ animationDelay: '1s' }} />
-                 <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--violet)] to-[var(--coral)] flex items-center justify-center text-white shadow-[0_0_32px_rgba(124,58,237,0.45)]">
+                 <div className="absolute w-20 h-20 rounded-full border border-[var(--accent)]/25 animate-[ping_3.5s_cubic-bezier(0,0,0.2,1)_infinite]" />
+                 <div className="absolute w-28 h-28 rounded-full border border-[var(--accent)]/15 animate-[ping_5s_cubic-bezier(0,0,0.2,1)_infinite]" style={{ animationDelay: '1s' }} />
+                 <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--accent)] to-[var(--accent)] flex items-center justify-center text-white shadow-[0_0_32px_rgba(124,58,237,0.45)]">
                    {icon}
                  </div>
                </div>
@@ -177,7 +177,7 @@ export default function DemoContainer({
            {/* Launch pill — visible always, brighter on hover */}
            <div className="absolute bottom-5 left-1/2 -translate-x-1/2 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
              <div className="flex items-center gap-2 bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-main)] px-4 py-2 rounded-full text-sm font-semibold shadow-lg backdrop-blur-md whitespace-nowrap">
-               <Maximize2 size={14} className="text-[var(--violet)] shrink-0" />
+               <Maximize2 size={14} className="text-[var(--accent)] shrink-0" />
                {locale === "bg" ? "Интерактивно демо" : "Launch Demo"}
              </div>
            </div>
@@ -208,7 +208,7 @@ export default function DemoContainer({
               <div className="flex shrink-0 items-start justify-between gap-3 border-b border-[var(--border)] p-4 sm:p-6 bg-[var(--bg-card)]/95 backdrop-blur-md safe-area-pt">
                 <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
                   {icon && (
-                    <div className="flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl sm:rounded-[24px] bg-gradient-to-tr from-[var(--violet)] to-[var(--coral)] text-white shadow-lg">
+                    <div className="flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl sm:rounded-[24px] bg-gradient-to-tr from-[var(--accent)] to-[var(--accent)] text-white shadow-lg">
                       {icon}
                     </div>
                   )}
@@ -222,7 +222,7 @@ export default function DemoContainer({
                 <button
                   onClick={() => setIsExpanded(false)}
                   aria-label={locale === "bg" ? "Затвори" : "Close"}
-                  className="shrink-0 rounded-full bg-[var(--bg-section)] p-2.5 sm:p-3 text-[var(--text-sub)] transition-all hover:bg-[var(--violet)] hover:text-white touch-target"
+                  className="shrink-0 rounded-full bg-[var(--bg-section)] p-2.5 sm:p-3 text-[var(--text-sub)] transition-all hover:bg-[var(--accent)] hover:text-white touch-target"
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -230,8 +230,8 @@ export default function DemoContainer({
 
               {/* Modal Content - Fully Interactive */}
               <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden bg-[var(--bg-section)] p-3 sm:p-6 md:p-10 relative overscroll-contain">
-                <div className="absolute top-0 right-0 w-[min(100%,500px)] h-[min(100%,500px)] bg-[var(--violet)]/10 blur-[120px] rounded-full pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-[min(100%,500px)] h-[min(100%,500px)] bg-[var(--coral)]/5 blur-[120px] rounded-full pointer-events-none" />
+                <div className="absolute top-0 right-0 w-[min(100%,500px)] h-[min(100%,500px)] bg-[var(--accent)]/10 blur-[120px] rounded-full pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-[min(100%,500px)] h-[min(100%,500px)] bg-[var(--accent)]/5 blur-[120px] rounded-full pointer-events-none" />
                 
                 <div className="relative z-10 max-w-5xl mx-auto w-full">
                   {children}
@@ -268,7 +268,7 @@ export default function DemoContainer({
                       void trackEvent("demo_cta_clicked", { ctaLink, placement: "modal" });
                       window.location.href = ctaLink;
                     }}
-                    className="col-span-2 sm:col-span-1 btn-primary min-h-[48px] text-sm sm:text-base hover:scale-[1.02] transition-transform shadow-xl hover:shadow-[var(--violet)]/30"
+                    className="col-span-2 sm:col-span-1 btn-primary min-h-[48px] text-sm sm:text-base hover:scale-[1.02] transition-transform shadow-xl hover:shadow-[var(--accent)]/30"
                   >
                     <span className="truncate">
                       {locale === "bg" ? "Заяви за моя бизнес" : "Request for my business"}

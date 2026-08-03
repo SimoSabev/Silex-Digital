@@ -12,7 +12,6 @@
   --color-bg-secondary: #F4F4F5;
   --color-bg-elevated: rgba(255, 255, 255, 0.85);
 
-  /* Neo-Brutalist Structuring Colors */
   --color-text-primary: #09090B;
   --color-text-secondary: #52525B;
   --color-text-muted: #A1A1AA;
@@ -28,7 +27,13 @@
   --color-bg-dark: #1A1817;       /* Deep warm charcoal */
   --color-bg-light: #FCF9F6;      /* Warm off-white */
   --color-border-light: #E5DDD4;  /* Warm gray borders */
-  --color-success: #7EA87A;       /* Muted sage */
+  --color-success: #4E7A47;       /* Muted sage, darkened for WCAG AA — see AUDIT.md H3.
+                                      Original #7EA87A was 2.6-2.7:1 both as text-on-light
+                                      and as a bg under white text (needs 4.5:1). This value
+                                      clears ~5:1 in both directions, same hue family. */
+  --color-success-10: #BFE0B8;    /* Light sage tint for text ON DARK surfaces — mirrors
+                                      --color-accent-10's role. --color-success itself is
+                                      now too dark to read on a near-black card. */
 
   --radius-xs: 0.25rem;
   --radius-sm: 0.5rem;
@@ -49,21 +54,18 @@
     /* Text colors */
     --text-main: var(--color-text-on-light);
     --text-sub: #6B6B6B;
-    --text-muted: #9A9A9A;
+    /* Darkened from #9A9A9A (was ~2.7:1 on --bg-page, fails AA at the 12-14px
+       sizes it's used at for captions/labels — see AUDIT.md H3). First pass
+       (#767676) measured 4.33:1 against the real --bg-page off-white, just
+       under the 4.5:1 AA floor — #717171 clears ~4.65:1 while staying
+       visually lighter than --text-sub. */
+    --text-muted: #717171;
 
     /* Accent tokens (brand) */
     --accent: var(--color-accent);
     --accent-hover: var(--color-accent-hover);
     --accent-10: var(--color-accent-10);
     --accent-text: var(--color-text-on-dark);
-
-    /* Legacy semantic names aliased to the single brand accent for compatibility */
-    --violet: var(--accent);
-    --violet-hover: var(--accent-hover);
-    --coral: var(--accent);
-    --coral-hover: var(--accent-hover);
-    --lime: var(--accent);
-    --amber: var(--accent);
 
     /* Borders */
     --border: var(--color-border-light);
@@ -72,13 +74,19 @@
 
   /* Removed theme overrides — using a single, consistent brand palette */
 
+  /* `overflow-x: clip` — NOT `hidden`. Per spec, `overflow-x: hidden` forces
+     `overflow-y` to compute to `auto`, which turns html/body into a scroll
+     container and breaks every `position: sticky` descendant (and GSAP
+     ScrollTrigger pinning along with it). `clip` suppresses horizontal
+     overflow the same way without creating a scroll container, so sticky
+     keeps working. See HeroProductAssembly, which depends on this. */
   html {
-    overflow-x: hidden;
+    overflow-x: clip;
     scrollbar-gutter: stable;
   }
 
   body {
-    overflow-x: hidden;
+    overflow-x: clip;
     background-color: var(--bg-page);
     color: var(--text-main);
     font-family: var(--font-body);
@@ -161,45 +169,21 @@
     }
   }
 
-  .badge-violet {
-    background-color: color-mix(in srgb, var(--violet) 10%, transparent);
-    color: color-mix(in srgb, var(--violet) 90%, black);
-    border: 1px solid color-mix(in srgb, var(--violet) 20%, transparent);
+  /* Cut-corner — echoes the logo's sharp diagonal-cut mark as a reusable signature detail. */
+  .cut-corner-tr {
+    clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%);
   }
 
-  .badge-coral {
-    background-color: color-mix(in srgb, var(--coral) 10%, transparent);
-    color: color-mix(in srgb, var(--coral) 90%, black);
-    border: 1px solid color-mix(in srgb, var(--coral) 20%, transparent);
-  }
-
-  .badge-lime {
-    background-color: color-mix(in srgb, var(--lime) 12%, transparent);
-    color: var(--lime);
-    border: 1px solid color-mix(in srgb, var(--lime) 25%, transparent);
-  }
-
-  .badge-amber {
-    background-color: color-mix(in srgb, var(--amber) 12%, transparent);
-    color: color-mix(in srgb, var(--amber) 80%, black);
-    border: 1px solid color-mix(in srgb, var(--amber) 25%, transparent);
+  .badge-accent {
+    background-color: color-mix(in srgb, var(--accent) 10%, transparent);
+    color: color-mix(in srgb, var(--accent) 90%, black);
+    border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
   }
 
   .badge-neutral {
     background-color: var(--bg-page);
     color: var(--text-main);
     border: 1px solid var(--border);
-  }
-
-  /* Neo-Brutalist Border Shadows */
-  .shadow-neo {
-    box-shadow: 4px 4px 0px 0px var(--text-main);
-  }
-  .shadow-neo-hover {
-    box-shadow: 6px 6px 0px 0px var(--text-main);
-  }
-  .shadow-neo-active {
-    box-shadow: 2px 2px 0px 0px var(--text-main);
   }
 
   /* Deep Apple-like layered shadows */
@@ -222,6 +206,77 @@
     -webkit-backdrop-filter: blur(16px) saturate(180%);
     border: 1px solid rgba(255,255,255,0.4);
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+}
+
+/* ─── Custom range slider (replaces bare browser default) ──────────────────── */
+
+.roi-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(
+    to right,
+    var(--accent) 0%,
+    var(--accent) var(--slider-fill, 50%),
+    color-mix(in srgb, var(--accent) 14%, transparent) var(--slider-fill, 50%),
+    color-mix(in srgb, var(--accent) 14%, transparent) 100%
+  );
+  outline: none;
+  cursor: pointer;
+}
+
+.roi-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--bg-card);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 55%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--accent) 25%, transparent);
+  cursor: grab;
+  transition: transform 0.15s ease;
+}
+
+.roi-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.12);
+}
+
+.roi-slider::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(1.02);
+}
+
+.roi-slider::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--bg-card);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 55%, transparent);
+  cursor: grab;
+}
+
+.roi-slider::-moz-range-track {
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: transparent;
+}
+
+/* ─── Tilt card (mouse-follow 3D, see useTilt.ts) ───────────────────────────── */
+
+.tilt-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tilt-card {
+    transition: none;
   }
 }
 
@@ -269,19 +324,32 @@
 
 .input {
   width: 100%;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
   background-color: var(--bg-card);
-  padding: 0.625rem 0.875rem;
-  font-size: 0.875rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
   color: var(--text-main);
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
 }
 
-  .input:focus {
+.input:hover:not(:focus):not(:disabled) {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+}
+
+.input:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+.input-error {
+  border-color: var(--accent);
+}
+
+.input-error:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
 }
 
 .input::placeholder {

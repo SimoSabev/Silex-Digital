@@ -32,7 +32,7 @@ const ALL_MOCK_MESSAGES: Record<Source, { text: { bg: string; en: string }; prod
   viber:     [{ text: { bg: "Може ли да пратите обувките размер 43 до офис?", en: "Can you send the size 43 shoes to shipping office?" },     product: { bg: "Обувки р.43", en: "Shoes size 43" } }],
   whatsapp:  [{ text: { bg: "Търся части за колата, водна помпа за Голф 4.", en: "Looking for car parts, water pump for Golf 4." },            product: { bg: "Водна Помпа (Голф 4)", en: "Water Pump (Golf 4)" } }],
   telegram:  [{ text: { bg: "Здравейте, интересувам се от абонамента за 1 година.", en: "Hello, I am interested in the 1-year subscription." }, product: { bg: "Годишен Абонамент", en: "1-Year Subscription" } }],
-  instagram: [{ text: { bg: "Налична ли е синята рокля за 89лв?", en: "Is the blue dress for $89 available?" },                              product: { bg: "Синя Рокля", en: "Blue Dress" } }],
+  instagram: [{ text: { bg: "Налична ли е синята рокля за 45€?", en: "Is the blue dress for 45 EUR available?" },                              product: { bg: "Синя Рокля", en: "Blue Dress" } }],
   email:     [{ text: { bg: "Заявка за оферта: 5бр лаптопи Dell Latitude.", en: "Quote request: 5x Dell Latitude laptops." },                  product: { bg: "Dell Latitude (5бр)", en: "Dell Latitude (x5)" } }],
 };
 
@@ -178,15 +178,15 @@ export default function EmailAutomationDemo() {
               disabled={isRunning}
               className={`flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-xl border text-sm font-semibold transition-all duration-300 ${
                 isActive
-                  ? "border-[var(--violet)] bg-[var(--violet)]/10 text-[var(--violet)] shadow-[0_4px_15px_rgba(124,58,237,0.15)]"
+                  ? "border-[var(--accent)] bg-[var(--accent)]/10 text-[var(--accent)] shadow-[0_4px_15px_rgba(124,58,237,0.15)]"
                   : "border-[var(--border)] bg-transparent text-[var(--text-sub)] hover:border-[var(--text-muted)]"
               } ${isRunning ? "opacity-60 cursor-not-allowed" : "cursor-pointer hover:-translate-y-0.5"}`}
             >
-              <div className={isActive ? "text-[var(--violet)]" : ""}>{c.icon}</div>
+              <div className={isActive ? "text-[var(--accent)]" : ""}>{c.icon}</div>
               <span className="hidden sm:inline">{c[locale === "bg" ? "bgName" : "enName"]}</span>
               {isActive && (
                 <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="ml-1">
-                  <CheckCircle2 size={14} className="text-[var(--violet)]" />
+                  <CheckCircle2 size={14} className="text-[var(--accent)]" />
                 </motion.div>
               )}
             </button>
@@ -305,7 +305,7 @@ export default function EmailAutomationDemo() {
                   animate={{ opacity: [0.15, 0.4, 0.15], scale: [1, 1.5, 1] }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 1, repeat: Infinity }}
-                  className="absolute inset-0 rounded-full blur-3xl z-0 bg-[var(--violet)]"
+                  className="absolute inset-0 rounded-full blur-3xl z-0 bg-[var(--accent)]"
                 />
               )}
             </AnimatePresence>
@@ -314,7 +314,7 @@ export default function EmailAutomationDemo() {
               ref={aiCenterRef}
               className={`relative z-10 w-24 h-24 md:w-28 md:h-28 rounded-full border flex flex-col items-center justify-center transition-all duration-300 backdrop-blur-2xl ${
                 processingMsg
-                  ? "border-[var(--violet)] bg-[var(--violet)] text-white scale-110 shadow-[0_0_40px_rgba(124,58,237,0.3)]"
+                  ? "border-[var(--accent)] bg-[var(--accent)] text-white scale-110 shadow-[0_0_40px_rgba(124,58,237,0.3)]"
                   : "border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-muted)] shadow-xl"
               }`}
             >
@@ -343,21 +343,21 @@ export default function EmailAutomationDemo() {
                   animate={{ opacity: 1, x: 0, rotateY: 0 }}
                   exit={{ opacity: 0, scale: 0.9, filter: "blur(5px)" }}
                   transition={{ type: "spring", damping: 20 }}
-                  className="absolute left-1/2 -translate-x-1/2 top-full mt-4 sm:left-full sm:ml-4 sm:translate-x-0 sm:top-1/2 sm:-translate-y-1/2 sm:mt-0 w-[min(100%,12rem)] sm:w-48 p-3 sm:p-3.5 rounded-xl bg-[var(--bg-card)]/90 border border-[var(--violet)]/30 shadow-2xl backdrop-blur-xl z-50 overflow-hidden"
+                  className="absolute left-1/2 -translate-x-1/2 top-full mt-4 sm:left-full sm:ml-4 sm:translate-x-0 sm:top-1/2 sm:-translate-y-1/2 sm:mt-0 w-[min(100%,12rem)] sm:w-48 p-3 sm:p-3.5 rounded-xl bg-[var(--bg-card)]/90 border border-[var(--accent)]/30 shadow-2xl backdrop-blur-xl z-50 overflow-hidden"
                 >
                   <motion.div
                     animate={{ top: ["0%", "100%", "0%"] }}
                     transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                    className="absolute left-0 right-0 h-[2px] bg-[var(--violet)] shadow-[0_0_8px_var(--violet)] opacity-30 z-0"
+                    className="absolute left-0 right-0 h-[2px] bg-[var(--accent)] shadow-[0_0_8px_var(--accent)] opacity-30 z-0"
                   />
                   <div className="relative z-10">
                     <div className="flex items-center gap-2 mb-2">
-                      <Database size={10} className="text-[var(--violet)]" />
-                      <div className="text-[9px] text-[var(--violet)] font-mono uppercase tracking-[0.2em]">{"<Data_Map>"}</div>
+                      <Database size={10} className="text-[var(--accent)]" />
+                      <div className="text-[9px] text-[var(--accent)] font-mono uppercase tracking-[0.2em]">{"<Data_Map>"}</div>
                     </div>
                     <div className="text-[10px] sm:text-xs text-[var(--text-sub)] font-mono flex flex-col gap-1.5">
                       <span className="flex justify-between">{t("demo.multichannel.source")} <span className="text-[var(--text-main)] font-bold">{CHANNELS[processingMsg.source][locale === "bg" ? "bgName" : "enName"]}</span></span>
-                      <span className="flex justify-between items-center gap-2">{t("demo.multichannel.item")} <span className="text-[var(--lime)] font-bold truncate">{processingMsg.product}</span></span>
+                      <span className="flex justify-between items-center gap-2">{t("demo.multichannel.item")} <span className="text-[var(--accent)] font-bold truncate">{processingMsg.product}</span></span>
                     </div>
                   </div>
                 </motion.div>
@@ -390,7 +390,7 @@ export default function EmailAutomationDemo() {
                     className="w-full p-2.5 sm:p-3 bg-transparent/50 hover:bg-transparent border border-[var(--border)] rounded-xl flex items-center justify-between text-sm shrink-0 transition-colors"
                   >
                     <div className="flex items-center gap-3 md:gap-4 overflow-hidden pr-2">
-                      <div className="w-8 h-8 rounded-full bg-[var(--lime)]/10 text-[var(--lime)] flex items-center justify-center shrink-0 border border-[var(--lime)]/20 shadow-[0_0_10px_rgba(132,204,22,0.1)] relative">
+                      <div className="w-8 h-8 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] flex items-center justify-center shrink-0 border border-[var(--accent)]/20 shadow-[0_0_10px_rgba(132,204,22,0.1)] relative">
                         <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2 }}>
                           <Check size={16} strokeWidth={3} />
                         </motion.div>
@@ -398,7 +398,7 @@ export default function EmailAutomationDemo() {
                           initial={{ opacity: 1, scale: 1 }}
                           animate={{ opacity: 0, scale: 2 }}
                           transition={{ duration: 1 }}
-                          className="absolute inset-0 rounded-full border border-[var(--lime)]"
+                          className="absolute inset-0 rounded-full border border-[var(--accent)]"
                         />
                       </div>
                       <div className="truncate min-w-0 flex-1">
@@ -413,8 +413,8 @@ export default function EmailAutomationDemo() {
                         </div>
                       </div>
                     </div>
-                    <div className="hidden sm:flex shrink-0 items-center gap-1.5 text-[9px] font-bold text-[var(--lime)] py-1 px-2.5 rounded border border-[var(--lime)]/20 uppercase tracking-widest bg-[var(--lime)]/10">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[var(--lime)] animate-pulse" />
+                    <div className="hidden sm:flex shrink-0 items-center gap-1.5 text-[9px] font-bold text-[var(--accent)] py-1 px-2.5 rounded border border-[var(--accent)]/20 uppercase tracking-widest bg-[var(--accent)]/10">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
                       {t("demo.multichannel.stored")}
                     </div>
                   </motion.div>

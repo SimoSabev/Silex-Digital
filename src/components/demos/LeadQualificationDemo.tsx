@@ -150,7 +150,7 @@ export default function LeadQualificationDemo() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between p-4 sm:p-5 border-b border-[var(--border)] bg-transparent relative z-10">
         <div className="min-w-0">
           <h3 className="font-display text-base sm:text-lg font-bold text-[var(--text-main)] leading-tight flex items-center gap-2">
-             <Activity className="text-[var(--violet)] shrink-0" size={20}/>
+             <Activity className="text-[var(--accent)] shrink-0" size={20}/>
              <span className="truncate">{locale === "bg" ? "AI Квалификация на Лийдове" : "AI Lead Qualification"}</span>
           </h3>
           <p className="text-xs text-[var(--text-sub)] mt-0.5">
@@ -203,7 +203,7 @@ export default function LeadQualificationDemo() {
                     {locale === "bg" ? "Изчаква се входяща комуникация..." : "Waiting for incoming communication..."}
                   </span>
                 )}
-                {isRunning && <span className="inline-block w-2.5 h-4 ml-1 bg-[var(--violet)] animate-ping" />}
+                {isRunning && <span className="inline-block w-2.5 h-4 ml-1 bg-[var(--accent)] animate-ping" />}
               </div>
            </div>
         </div>
@@ -222,7 +222,7 @@ export default function LeadQualificationDemo() {
            </AnimatePresence>
 
            <div className="mb-6 flex items-center gap-2 relative z-10">
-             <Sparkles className="text-[var(--violet)]" size={18} />
+             <Sparkles className="text-[var(--accent)]" size={18} />
              <span className="text-xs font-bold uppercase tracking-widest text-[var(--text-main)]">
                {locale === "bg" ? "Live Lead Профил" : "Live Lead Profile"}
              </span>
@@ -236,7 +236,7 @@ export default function LeadQualificationDemo() {
                
                return (
                  <div key={key} className={`p-3 rounded-lg border transition-all duration-500 flex items-center gap-4 ${hasValue ? "bg-[var(--bg-card)] border-[var(--border)] shadow-md" : "bg-transparent border-dashed border-[var(--border)] opacity-40"}`}>
-                   <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-500 ${hasValue ? "bg-[var(--violet)]/10 text-[var(--violet)]" : "bg-transparent text-[var(--text-muted)]"}`}>
+                   <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-500 ${hasValue ? "bg-[var(--accent)]/10 text-[var(--accent)]" : "bg-transparent text-[var(--text-muted)]"}`}>
                      {rule.icon}
                    </div>
                    <div className="flex-1">

@@ -117,19 +117,19 @@ export default function ChatbotDemo() {
         {/* Chat header */}
         <div className="flex items-center gap-3 sm:gap-4 border-b border-[var(--border)] bg-[var(--bg-card)]/80 backdrop-blur-xl p-4 sm:p-5 sticky top-0 z-20">
           <div className="relative">
-            <div className="flex h-12 w-12 items-center justify-center rounded-[1rem] bg-gradient-to-br from-[var(--violet)] to-[var(--coral)] text-white shadow-lg">
+            <div className="flex h-12 w-12 items-center justify-center rounded-[1rem] bg-gradient-to-br from-[var(--accent)] to-[var(--accent)] text-white shadow-lg">
               <Bot size={24} />
             </div>
             <motion.div 
               animate={botPulsing ? { scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] } : {}} 
               transition={{ repeat: Infinity, duration: 1.5 }}
-              className={`absolute -bottom-1 -right-1 h-3.5 w-3.5 rounded-full border-[3px] border-[var(--bg-card)] ${isTyping ? "bg-[var(--coral)]" : "bg-[var(--lime)]"}`}
+              className={`absolute -bottom-1 -right-1 h-3.5 w-3.5 rounded-full border-[3px] border-[var(--bg-card)] ${isTyping ? "bg-[var(--accent)]" : "bg-[var(--accent)]"}`}
             />
           </div>
           <div>
             <h3 className="text-lg font-bold text-[var(--text-main)] leading-tight tracking-tight flex items-center gap-2">
               Silex AI Agent
-              <ShieldCheck size={16} className="text-[var(--violet)]" />
+              <ShieldCheck size={16} className="text-[var(--accent)]" />
             </h3>
             <p className="text-xs font-semibold text-[var(--text-sub)]">
                {isTyping 
@@ -152,7 +152,7 @@ export default function ChatbotDemo() {
                 className={`flex w-full ${msg.role === "user" ? "justify-end" : "justify-start"}`}
               >
                 {msg.role === "bot" && (
-                   <div className="shrink-0 h-8 w-8 rounded-full bg-gradient-to-tr from-[var(--violet)]/20 to-[var(--coral)]/20 flex md:hidden items-center justify-center text-[var(--violet)] mr-2 mt-auto">
+                   <div className="shrink-0 h-8 w-8 rounded-full bg-gradient-to-tr from-[var(--accent)]/20 to-[var(--accent)]/20 flex md:hidden items-center justify-center text-[var(--accent)] mr-2 mt-auto">
                      <Bot size={14} />
                    </div>
                 )}
@@ -180,13 +180,13 @@ export default function ChatbotDemo() {
                 transition={{ duration: 0.3 }}
                 className="flex items-end justify-start max-w-[80%]"
               >
-                <div className="shrink-0 h-8 w-8 rounded-lg bg-[var(--violet)]/10 flex items-center justify-center text-[var(--violet)] mr-3 border border-[var(--violet)]/20">
+                <div className="shrink-0 h-8 w-8 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent)] mr-3 border border-[var(--accent)]/20">
                    <Bot size={16} className="animate-pulse" />
                 </div>
                 <div className="bg-[var(--bg-card)]/80 border border-[var(--border)] rounded-[1.5rem] rounded-bl-sm px-5 py-4 flex gap-1.5 items-center w-20 shadow-sm backdrop-blur-md">
-                  <motion.div className="h-1.5 w-1.5 bg-[var(--violet)] rounded-full" animate={{ y: [0, -4, 0], scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0 }} />
-                  <motion.div className="h-1.5 w-1.5 bg-[var(--violet)] rounded-full" animate={{ y: [0, -4, 0], scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }} />
-                  <motion.div className="h-1.5 w-1.5 bg-[var(--violet)] rounded-full" animate={{ y: [0, -4, 0], scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.4 }} />
+                  <motion.div className="h-1.5 w-1.5 bg-[var(--accent)] rounded-full" animate={{ y: [0, -4, 0], scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0 }} />
+                  <motion.div className="h-1.5 w-1.5 bg-[var(--accent)] rounded-full" animate={{ y: [0, -4, 0], scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }} />
+                  <motion.div className="h-1.5 w-1.5 bg-[var(--accent)] rounded-full" animate={{ y: [0, -4, 0], scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.4 }} />
                 </div>
               </motion.div>
             )}
@@ -200,17 +200,17 @@ export default function ChatbotDemo() {
         <div className="p-4 md:p-5 bg-[var(--bg-card)] border-t border-[var(--border)] relative z-20">
           
           <div className="mb-4 flex gap-2 overflow-x-auto hide-scrollbar pb-1 px-1">
-             <button type="button" disabled={isTyping} onClick={() => setInputValue(locale === "bg" ? "Интересува ме цена." : "I need pricing.")} className="shrink-0 whitespace-nowrap rounded-full border border-[var(--border)] bg-transparent px-4 py-1.5 text-xs font-semibold text-[var(--text-sub)] hover:border-[var(--violet)] hover:text-[var(--violet)] hover:bg-[var(--violet)]/5 hover:shadow-sm transition-all disabled:opacity-50">
+             <button type="button" disabled={isTyping} onClick={() => setInputValue(locale === "bg" ? "Интересува ме цена." : "I need pricing.")} className="shrink-0 whitespace-nowrap rounded-full border border-[var(--border)] bg-transparent px-4 py-1.5 text-xs font-semibold text-[var(--text-sub)] hover:border-[var(--accent)] hover:text-[var(--accent)] hover:bg-[var(--accent)]/5 hover:shadow-sm transition-all disabled:opacity-50">
                💰 {locale === "bg" ? "Запитване за цена" : "Pricing Inquiry"}
              </button>
-             <button type="button" disabled={isTyping} onClick={() => setInputValue(locale === "bg" ? "Може ли интеграция с HubSpot?" : "Can we integrate with HubSpot?")} className="shrink-0 whitespace-nowrap rounded-full border border-[var(--border)] bg-transparent px-4 py-1.5 text-xs font-semibold text-[var(--text-sub)] hover:border-[var(--violet)] hover:text-[var(--violet)] hover:bg-[var(--violet)]/5 hover:shadow-sm transition-all disabled:opacity-50">
+             <button type="button" disabled={isTyping} onClick={() => setInputValue(locale === "bg" ? "Може ли интеграция с HubSpot?" : "Can we integrate with HubSpot?")} className="shrink-0 whitespace-nowrap rounded-full border border-[var(--border)] bg-transparent px-4 py-1.5 text-xs font-semibold text-[var(--text-sub)] hover:border-[var(--accent)] hover:text-[var(--accent)] hover:bg-[var(--accent)]/5 hover:shadow-sm transition-all disabled:opacity-50">
                🔌 {locale === "bg" ? "Въпрос за API" : "API Question"}
              </button>
           </div>
 
           <form onSubmit={handleSendMessage} className="relative flex items-center group">
             {/* Input Glow Effect */}
-            <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-[var(--violet)] to-[var(--coral)] opacity-20 blur transition-opacity duration-500 group-hover:opacity-40" />
+            <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent)] opacity-20 blur transition-opacity duration-500 group-hover:opacity-40" />
             
             <input
               type="text"
@@ -218,12 +218,12 @@ export default function ChatbotDemo() {
               onChange={(e) => setInputValue(e.target.value)}
               placeholder={locale === "bg" ? "Попитай нещо..." : "Ask something..."}
               disabled={isTyping}
-              className="relative w-full rounded-full border border-[var(--border)] bg-transparent py-3.5 pl-5 pr-14 text-sm font-medium text-[var(--text-main)] placeholder:text-[var(--text-muted)] focus:border-transparent focus:outline-none focus:ring-2 focus:ring-[var(--violet)] shadow-inner transition-all disabled:opacity-60"
+              className="relative w-full rounded-full border border-[var(--border)] bg-transparent py-3.5 pl-5 pr-14 text-sm font-medium text-[var(--text-main)] placeholder:text-[var(--text-muted)] focus:border-transparent focus:outline-none focus:ring-2 focus:ring-[var(--accent)] shadow-inner transition-all disabled:opacity-60"
             />
             <button
                type="submit"
                disabled={!inputValue.trim() || isTyping}
-               className="absolute right-2 h-10 w-10 rounded-full bg-[var(--violet)] flex items-center justify-center text-white transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(124,58,237,0.5)] disabled:opacity-30 disabled:hover:scale-100 disabled:shadow-none"
+               className="absolute right-2 h-10 w-10 rounded-full bg-[var(--accent)] flex items-center justify-center text-white transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(124,58,237,0.5)] disabled:opacity-30 disabled:hover:scale-100 disabled:shadow-none"
              >
                <Send size={18} className="translate-x-[1px]" />
             </button>
@@ -242,21 +242,21 @@ export default function ChatbotDemo() {
            <motion.div 
              animate={botPulsing ? { rotate: 360, scale: [1, 1.1, 1] } : { rotate: 0 }}
              transition={{ rotate: { repeat: Infinity, duration: 10, ease: "linear" }, scale: { repeat: Infinity, duration: 2 } }}
-             className="absolute inset-0 rounded-full border border-[var(--violet)]/10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[var(--violet)]/10 via-transparent to-transparent flex items-center justify-center"
+             className="absolute inset-0 rounded-full border border-[var(--accent)]/10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[var(--accent)]/10 via-transparent to-transparent flex items-center justify-center"
            >
-              <div className="w-[150px] h-[150px] rounded-full border border-[var(--violet)]/20 animate-[spin_15s_linear_infinite_reverse]" />
+              <div className="w-[150px] h-[150px] rounded-full border border-[var(--accent)]/20 animate-[spin_15s_linear_infinite_reverse]" />
            </motion.div>
         </div>
 
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[var(--border)]">
-            <div className="p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--violet)]/30 shadow-sm">
-               <Binary className="text-[var(--violet)] h-4 w-4" />
+            <div className="p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--accent)]/30 shadow-sm">
+               <Binary className="text-[var(--accent)] h-4 w-4" />
             </div>
             <h4 className="font-[family-name:var(--font-mono)] font-bold text-[var(--text-main)] uppercase tracking-widest text-[10px] md:text-xs">
               {locale === "bg" ? "Live: Лог на агента" : "Live: Agent Terminal"}
             </h4>
-            {botPulsing && <span className="ml-auto w-2 h-2 rounded-full bg-[var(--lime)] animate-pulse shadow-[0_0_8px_rgba(132,204,22,0.8)]" />}
+            {botPulsing && <span className="ml-auto w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse shadow-[0_0_8px_rgba(132,204,22,0.8)]" />}
           </div>
 
           <div className="flex flex-col space-y-3 font-[family-name:var(--font-mono)] text-sm">
@@ -265,7 +265,7 @@ export default function ChatbotDemo() {
                 <Database className="h-8 w-8 mb-4 opacity-50" />
                 <p className="text-xs tracking-wider uppercase font-semibold">{locale === "bg" ? "СИСТЕМАТА ОЧАКВА ДАННИ" : "SYSTEM STANDBY"}</p>
                 <div className="mt-2 w-12 h-1 bg-[var(--border)] rounded-full overflow-hidden">
-                   <motion.div className="h-full bg-[var(--violet)]/30" animate={{ x: ["-100%", "200%"] }} transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }} />
+                   <motion.div className="h-full bg-[var(--accent)]/30" animate={{ x: ["-100%", "200%"] }} transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }} />
                 </div>
               </motion.div>
             ) : (
@@ -279,23 +279,23 @@ export default function ChatbotDemo() {
                        animate={{ opacity: 1, x: 0, scale: 1 }}
                        exit={{ opacity: 0, scale: 0.9 }}
                        transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                       className="flex flex-col bg-[var(--bg-card)]/90 p-3.5 rounded-xl border border-[var(--violet)]/20 shadow-md backdrop-blur-xl relative overflow-hidden group"
+                       className="flex flex-col bg-[var(--bg-card)]/90 p-3.5 rounded-xl border border-[var(--accent)]/20 shadow-md backdrop-blur-xl relative overflow-hidden group"
                      >
                        {/* Scanner line inside log box */}
                        <motion.div 
                           initial={{ left: "-100%" }} animate={{ left: "100%" }} transition={{ duration: 1 }}
-                          className="absolute top-0 bottom-0 w-1/3 bg-gradient-to-r from-transparent via-[var(--violet)]/10 to-transparent skew-x-[-20deg]"
+                          className="absolute top-0 bottom-0 w-1/3 bg-gradient-to-r from-transparent via-[var(--accent)]/10 to-transparent skew-x-[-20deg]"
                        />
 
                        <div className="flex items-center gap-2 mb-1.5 opacity-80">
-                         {thought.type === "parsing" ? <Code2 className="h-3 w-3 text-[var(--coral)]" /> :
-                          thought.type === "searching" ? <Database className="h-3 w-3 text-[var(--violet)]" /> :
-                          <Zap className="h-3 w-3 text-[var(--lime)]" />}
+                         {thought.type === "parsing" ? <Code2 className="h-3 w-3 text-[var(--accent)]" /> :
+                          thought.type === "searching" ? <Database className="h-3 w-3 text-[var(--accent)]" /> :
+                          <Zap className="h-3 w-3 text-[var(--accent)]" />}
                          <span className="text-[9px] text-[var(--text-sub)] uppercase tracking-widest leading-none">{thought.log}</span>
                        </div>
                        
                        <div className="flex gap-2 relative z-10">
-                         <ChevronRight size={14} className="text-[var(--violet)] shrink-0 mt-0.5" />
+                         <ChevronRight size={14} className="text-[var(--accent)] shrink-0 mt-0.5" />
                          <span className="text-[11px] md:text-xs leading-relaxed text-[var(--text-main)] font-medium">
                            {thought.text[locale]}
                          </span>
@@ -307,8 +307,8 @@ export default function ChatbotDemo() {
                         initial={{ opacity: 0 }} animate={{ opacity: 1 }} 
                         className="flex items-center gap-2 h-6 pl-2"
                      >
-                        <div className="w-1 h-3 bg-[var(--violet)] animate-pulse" />
-                        <span className="text-[10px] text-[var(--violet)] uppercase tracking-widest font-bold font-mono">
+                        <div className="w-1 h-3 bg-[var(--accent)] animate-pulse" />
+                        <span className="text-[10px] text-[var(--accent)] uppercase tracking-widest font-bold font-mono">
                           {locale === "bg" ? "Процесиране_В_Ход..." : "Processing_Stream..."}
                         </span>
                      </motion.div>
@@ -323,7 +323,7 @@ export default function ChatbotDemo() {
         <div className="mt-auto border-t border-[var(--border)] pt-4 relative z-10 flex justify-between items-center px-1">
           <div className="flex flex-col">
             <span className="text-[9px] uppercase text-[var(--text-muted)] tracking-widest mb-0.5 font-mono">Latency</span>
-            <span className="text-xs font-bold text-[var(--lime)] font-mono animate-pulse">24ms</span>
+            <span className="text-xs font-bold text-[var(--accent)] font-mono animate-pulse">24ms</span>
           </div>
           <div className="flex flex-col text-right">
             <span className="text-[9px] uppercase text-[var(--text-muted)] tracking-widest mb-0.5 font-mono">Model</span>

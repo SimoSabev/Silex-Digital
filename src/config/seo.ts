@@ -50,13 +50,18 @@ export const siteConfig = {
 
   contact: {
     email: "info@silexbrand.com",
-    phone: "+359 888 123 456",
+    phone: "+359885031865",
     address: {
-      streetAddress: "ул. Витоша 100",
-      addressLocality: "София",
-      postalCode: "1000",
+      addressLocality: "Варна",
       addressCountry: "BG",
     },
+  },
+
+  // Varna city-center coordinates — used for LocalBusiness geo until a
+  // precise office address is confirmed and added to `address` above.
+  geo: {
+    latitude: "43.2141",
+    longitude: "27.9147",
   },
 
   business: {
@@ -82,7 +87,7 @@ export const siteConfig = {
 
 export const pageSeo = {
   home: {
-    title: "SilexBrand | Автоматизация на бизнеса в България — AI чатбот и CRM",
+    title: "Автоматизация на бизнеса в България — AI чатбот и CRM",
     description:
       "Спести над 15 часа на месец с AI автоматизация. Чатбот за бизнес, CRM интеграция, омниканални съобщения (Viber, Messenger, WhatsApp). Безплатна консултация за малкия бизнес в България.",
     keywords: [
@@ -100,9 +105,9 @@ export const pageSeo = {
     ],
   },
   pricing: {
-    title: "Цени | Автоматизация и AI чатбот за малкия бизнес | SilexBrand",
+    title: "Цени | Автоматизация и AI чатбот за малкия бизнес",
     description:
-      "Прозрачни цени за AI автоматизация, чатбот и уеб сайт. Пакети от 99 €/месец за малкия бизнес в България. Без скрити такси, безплатна консултация.",
+      "Прозрачни цени за AI автоматизация, чатбот и уеб сайт. Планове от 49 €/месец за малкия бизнес във Варна и България. Без скрити такси, безплатна консултация.",
     keywords: [
       "цена автоматизация бизнес",
       "цена AI чатбот",
@@ -114,7 +119,7 @@ export const pageSeo = {
     ],
   },
   blog: {
-    title: "Блог | Автоматизация, AI и Растеж на бизнеса | SilexBrand",
+    title: "Блог | Автоматизация, AI и Растеж на бизнеса",
     description:
       "Практични статии за бизнес автоматизация, AI инструменти и дигитализация за малкия бизнес в България. Как да спестиш време и да печелиш повече клиенти.",
     keywords: [
@@ -127,7 +132,7 @@ export const pageSeo = {
     ],
   },
   contact: {
-    title: "Безплатна консултация | Автоматизация на бизнеса | SilexBrand",
+    title: "Безплатна консултация | Автоматизация на бизнеса",
     description:
       "Свържи се с SilexBrand за безплатна консултация. Автоматизация, AI чатбот и уеб разработка за малкия бизнес в България. Отговаряме до 24 часа.",
     keywords: [
@@ -138,8 +143,21 @@ export const pageSeo = {
       "free consultation business automation Bulgaria",
     ],
   },
+  pricingSeo: {
+    title: "SEO Нива | Локално SEO и AI видимост",
+    description:
+      "Отделни SEO нива от €80/мес за малкия бизнес във Варна — Google бизнес профил, локални цитирания, съдържание и проследяване дали ChatGPT и Gemini ви споменават.",
+    keywords: [
+      "SEO услуги Варна",
+      "локално SEO България",
+      "Google бизнес профил оптимизация",
+      "GEO AI видимост",
+      "SEO цена малък бизнес",
+      "local SEO Varna Bulgaria",
+    ],
+  },
   services: {
-    title: "Услуги | AI Автоматизация, Чатбот и Уеб Разработка | SilexBrand",
+    title: "Услуги | AI Автоматизация, Чатбот и Уеб Разработка",
     description:
       "Пълен набор от дигитални услуги за малкия бизнес: AI чатбот, омниканална автоматизация, CRM интеграция, модерни уеб сайтове и персонализирани платформи за България.",
     keywords: [
@@ -156,7 +174,7 @@ export const pageSeo = {
     ],
   },
   demos: {
-    title: "Интерактивно Демо | AI Чатбот и Автоматизация в действие | SilexBrand",
+    title: "Интерактивно Демо | AI Чатбот и Автоматизация в действие",
     description:
       "Изпробвай AI чатбота, омниканалната автоматизация и квалификацията на лийдове директно в браузъра. Виж как SilexBrand работи за твоя бизнес.",
     keywords: [
@@ -169,7 +187,7 @@ export const pageSeo = {
     ],
   },
   industries: {
-    title: "Индустрии | Автоматизация за Ресторанти, Магазини и Услуги | SilexBrand",
+    title: "Индустрии | Автоматизация за Ресторанти, Магазини и Услуги",
     description:
       "Специализирана автоматизация по сектори: ресторанти, е-търговия, салони за красота, недвижими имоти, здравеопазване. Персонализирани решения за всяка индустрия в България.",
     keywords: [
@@ -183,7 +201,7 @@ export const pageSeo = {
     ],
   },
   portfolio: {
-    title: "Портфолио | Реализирани проекти за автоматизация | SilexBrand",
+    title: "Портфолио | Реализирани проекти за автоматизация",
     description:
       "Реални резултати: вижте проекти за автоматизация, уеб сайтове и AI решения, изградени от SilexBrand за всякакви бизнеси. Измерими резултати и доволни клиенти.",
     keywords: [
@@ -193,6 +211,18 @@ export const pageSeo = {
       "резултати автоматизация",
       "automation portfolio Bulgaria",
     ],
+  },
+  privacy: {
+    title: "Политика за поверителност",
+    description:
+      "Как SilexBrand събира, използва и защитава личните ви данни — заявки за консултация, аналитика на сайта и правата ви по GDPR.",
+    keywords: ["политика за поверителност", "GDPR SilexBrand", "лични данни автоматизация бизнес"],
+  },
+  terms: {
+    title: "Общи условия",
+    description:
+      "Общи условия за услугите на SilexBrand — уебсайтове, AI асистенти и автоматизация: плащане, срокове, анулиране и отговорности.",
+    keywords: ["общи условия", "договор автоматизация бизнес", "условия SilexBrand"],
   },
 };
 
@@ -216,11 +246,11 @@ export const organizationSchema = {
     "@type": "PostalAddress",
     ...siteConfig.contact.address,
   },
-  sameAs: [
-    siteConfig.social.facebook,
-    siteConfig.social.linkedin,
-    siteConfig.social.instagram,
-  ],
+  // `sameAs` intentionally omitted: siteConfig.social.* are placeholder handles
+  // (facebook.com/silexbrand etc.) with no confirmed live profile behind them —
+  // asserting them to Google as verified social profiles would be structured-data
+  // that doesn't match reality. Re-add here once the real profiles exist and are
+  // linked from the footer.
 };
 
 export const localBusinessSchema = {
@@ -237,8 +267,8 @@ export const localBusinessSchema = {
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: "42.6977",
-    longitude: "23.3219",
+    latitude: siteConfig.geo.latitude,
+    longitude: siteConfig.geo.longitude,
   },
   openingHoursSpecification: [
     {
@@ -273,8 +303,8 @@ export const softwareApplicationSchema = {
   operatingSystem: "Web",
   offers: {
     "@type": "AggregateOffer",
-    lowPrice: "99",
-    highPrice: "799",
+    lowPrice: "49",
+    highPrice: "298",
     priceCurrency: "EUR",
     offerCount: "3",
   },

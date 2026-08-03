@@ -19,11 +19,11 @@ interface LeadsTableProps {
 }
 
 const statusConfig = {
-  new: { label: 'New', color: 'bg-[var(--violet)]/10 text-[var(--violet)] border-[var(--violet)]/20' },
+  new: { label: 'New', color: 'bg-[var(--accent)]/10 text-[var(--accent)] border-[var(--accent)]/20' },
   contacted: { label: 'Contacted', color: 'bg-[var(--color-accent-amber)]/10 text-[var(--color-accent-amber)] border-[var(--color-accent-amber)]/20' },
-  qualified: { label: 'Qualified', color: 'bg-[var(--violet)]/10 text-[var(--violet)] border-[var(--violet)]/20' },
-  converted: { label: 'Converted', color: 'bg-[var(--lime)]/10 text-[var(--lime)] border-[var(--lime)]/20' },
-  lost: { label: 'Lost', color: 'bg-[var(--coral)]/10 text-[var(--coral)] border-[var(--coral)]/20' },
+  qualified: { label: 'Qualified', color: 'bg-[var(--accent)]/10 text-[var(--accent)] border-[var(--accent)]/20' },
+  converted: { label: 'Converted', color: 'bg-[var(--accent)]/10 text-[var(--accent)] border-[var(--accent)]/20' },
+  lost: { label: 'Lost', color: 'bg-[var(--accent)]/10 text-[var(--accent)] border-[var(--accent)]/20' },
 };
 
 export function LeadsTable({ 
@@ -138,7 +138,7 @@ export function LeadsTable({
                         }}
                         className="flex items-center gap-2 w-full px-4 py-2 text-left hover:bg-card/50 text-sm text-foreground"
                       >
-                        <CheckCircle className="w-4 h-4 text-[var(--violet)]" />
+                        <CheckCircle className="w-4 h-4 text-[var(--accent)]" />
                         Mark Qualified
                       </button>
                       <button
@@ -148,7 +148,7 @@ export function LeadsTable({
                         }}
                         className="flex items-center gap-2 w-full px-4 py-2 text-left hover:bg-card/50 text-sm text-foreground"
                       >
-                        <CheckCircle className="w-4 h-4 text-[var(--lime)]" />
+                        <CheckCircle className="w-4 h-4 text-[var(--accent)]" />
                         Mark Converted
                       </button>
                       <button
@@ -158,7 +158,7 @@ export function LeadsTable({
                         }}
                         className="flex items-center gap-2 w-full px-4 py-2 text-left hover:bg-card/50 text-sm text-foreground"
                       >
-                        <XCircle className="w-4 h-4 text-[var(--coral)]" />
+                        <XCircle className="w-4 h-4 text-[var(--accent)]" />
                         Mark Lost
                       </button>
                       <div className="border-t border-border" />

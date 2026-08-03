@@ -12,10 +12,10 @@ interface SimulationTimelineProps {
 
 function StatusIcon({ status }: { status: SimulationEvent["status"] }) {
   if (status === "completed") {
-    return <Check className="h-4 w-4 text-[var(--lime)]" />;
+    return <Check className="h-4 w-4 text-[var(--accent)]" />;
   }
   if (status === "processing") {
-    return <Loader2 className="h-4 w-4 animate-spin text-[var(--violet)]" />;
+    return <Loader2 className="h-4 w-4 animate-spin text-[var(--accent)]" />;
   }
   if (status === "failed") {
     return <X className="h-4 w-4 text-red-400" />;

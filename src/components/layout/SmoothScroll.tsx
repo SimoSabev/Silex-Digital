@@ -2,7 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import Lenis from "lenis";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/lib/motion";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function SmoothScroll({
   children,
@@ -10,7 +16,6 @@ export default function SmoothScroll({
   children: React.ReactNode;
 }) {
   const lenisRef = useRef<Lenis | null>(null);
-  const rafRef = useRef<number | null>(null);
   const prefersReduced = useReducedMotion();
 
   useEffect(() => {
@@ -29,12 +34,15 @@ export default function SmoothScroll({
 
     lenisRef.current = lenis;
 
-    function raf(time: number) {
-      lenis.raf(time);
-      rafRef.current = requestAnimationFrame(raf);
-    }
+    // Keep GSAP ScrollTrigger's scroll-position reads in sync with Lenis's
+    // virtual scroll instead of each running its own independent RAF loop.
+    lenis.on("scroll", ScrollTrigger.update);
 
-    rafRef.current = requestAnimationFrame(raf);
+    const tickerCallback = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+    gsap.ticker.add(tickerCallback);
+    gsap.ticker.lagSmoothing(0);
 
     const handleMenuToggle = (e: Event) => {
       const open = (e as CustomEvent<{ open: boolean }>).detail.open;
@@ -50,7 +58,7 @@ export default function SmoothScroll({
     window.addEventListener("silex-menu-toggle", handleMenuToggle);
 
     return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      gsap.ticker.remove(tickerCallback);
       lenis.destroy();
       window.removeEventListener("silex-menu-toggle", handleMenuToggle);
       document.body.classList.remove("menu-open");

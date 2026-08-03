@@ -1,38 +1,54 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import {
+  MessageSquare,
+  Zap,
+  Bot,
+  Target,
+  Bell,
+  Wallet,
+  type LucideIcon,
+} from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useI18n, type Locale } from "@/lib/i18n";
+import { useReducedMotion } from "@/lib/motion";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 type StepDef = {
-  icon: string;
+  icon: LucideIcon;
   color: "accent" | "success";
   title: Record<Locale, string>;
   detail: Record<Locale, string>;
 };
 
 const STEPS: readonly StepDef[] = [
-  { icon: "💬", color: "accent",   title: { bg: "Клиентът пише",           en: "Client reaches out"       }, detail: { bg: "Съобщение, обаждане, форма или WhatsApp", en: "Message, call, form or WhatsApp"     } },
-  { icon: "⚡", color: "accent",   title: { bg: "Системата улавя",          en: "System captures it"       }, detail: { bg: "Автоматично разпознаване на намерение",  en: "Automatic intent recognition"        } },
-  { icon: "🤖", color: "success", title: { bg: "Мигновен отговор",         en: "Instant reply"            }, detail: { bg: "Персонализиран AI отговор за секунди",   en: "Personalised AI reply in seconds"    } },
-  { icon: "🎯", color: "success", title: { bg: "Лийд квалифициран",        en: "Lead qualified"           }, detail: { bg: "Автоматично оценяване и категоризиране", en: "Automatic scoring and categorisation"} },
-  { icon: "🔔", color: "accent",  title: { bg: "Получаваш нотификация",    en: "You get notified"         }, detail: { bg: "Dashboard + SMS + Email",                en: "Dashboard + SMS + Email"             } },
-  { icon: "💰", color: "success", title: { bg: "Конверсия",                en: "Conversion"               }, detail: { bg: "Резервация потвърдена за 47 секунди",    en: "Booking confirmed in 47 seconds"     } },
+  { icon: MessageSquare, color: "accent",  title: { bg: "Клиентът пише",           en: "Client reaches out"       }, detail: { bg: "Съобщение, обаждане, форма или WhatsApp", en: "Message, call, form or WhatsApp"     } },
+  { icon: Zap,           color: "accent",  title: { bg: "Системата улавя",          en: "System captures it"       }, detail: { bg: "Автоматично разпознаване на намерение",  en: "Automatic intent recognition"        } },
+  { icon: Bot,           color: "success", title: { bg: "Мигновен отговор",         en: "Instant reply"            }, detail: { bg: "Персонализиран AI отговор за секунди",   en: "Personalised AI reply in seconds"    } },
+  { icon: Target,        color: "success", title: { bg: "Лийд квалифициран",        en: "Lead qualified"           }, detail: { bg: "Автоматично оценяване и категоризиране", en: "Automatic scoring and categorisation"} },
+  { icon: Bell,          color: "accent",  title: { bg: "Получаваш нотификация",    en: "You get notified"         }, detail: { bg: "Dashboard + SMS + Email",                en: "Dashboard + SMS + Email"             } },
+  { icon: Wallet,        color: "success", title: { bg: "Конверсия",                en: "Conversion"               }, detail: { bg: "Резервация потвърдена за 47 секунди",    en: "Booking confirmed in 47 seconds"     } },
 ] as const;
 
 const colorConfig: Record<StepDef["color"], { dot: string; bg: string; border: string; text: string; subtext: string }> = {
   accent: {
-    dot:     "bg-accent",
+    dot:     "bg-[var(--accent)]",
     bg:      "bg-accent/10",
     border:  "border-accent/20",
-    text:    "text-accent",
-    subtext: "text-accent/80",
+    text:    "text-[var(--accent)]",
+    subtext: "text-[var(--accent)]/80",
   },
   success: {
-    dot:     "bg-success",
+    dot:     "bg-[var(--color-success)]",
     bg:      "bg-success/10",
     border:  "border-success/20",
-    text:    "text-success",
-    subtext: "text-success/80",
+    text:    "text-[var(--color-success)]",
+    subtext: "text-[var(--color-success)]/80",
   },
 };
 
@@ -40,14 +56,41 @@ export default function HowItWorksVisualization() {
   const { locale } = useI18n();
   const [active, setActive] = useState(0);
   const [resetKey, setResetKey] = useState(0);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const prefersReduced = useReducedMotion();
 
+  // Fallback for reduced-motion users: a gentle timed cycle instead of scroll-scrubbing.
   useEffect(() => {
+    if (!prefersReduced) return;
     const t = setInterval(() => setActive((p) => (p + 1) % STEPS.length), 2200);
     return () => clearInterval(t);
-  }, [resetKey]);
+  }, [resetKey, prefersReduced]);
+
+  // Scroll-scrubbed: the active step advances in sync with how far this
+  // component has scrolled through the viewport — "discover on scroll"
+  // instead of a timer nobody asked for.
+  useEffect(() => {
+    if (prefersReduced || !containerRef.current) return;
+
+    const trigger = ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 0.6,
+      onUpdate: (self) => {
+        const idx = Math.min(
+          STEPS.length - 1,
+          Math.floor(self.progress * STEPS.length),
+        );
+        setActive(idx);
+      },
+    });
+
+    return () => trigger.kill();
+  }, [prefersReduced]);
 
   return (
-    <div className="w-full">
+    <div ref={containerRef} className="w-full">
       <div className="relative">
         {/* Vertical connecting line */}
         <div className="absolute left-[19px] top-5 bottom-5 w-px bg-gradient-to-b from-[var(--border)] via-[var(--border)] to-transparent" aria-hidden="true" />
@@ -61,7 +104,7 @@ export default function HowItWorksVisualization() {
                 key={i}
                 onClick={() => { setActive(i); setResetKey((k) => k + 1); }}
                 aria-pressed={isActive}
-                className="group relative w-full text-left focus:outline-none"
+                className="group relative w-full rounded-xl text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-page)]"
               >
                 <div className={`flex items-start gap-4 rounded-xl border px-4 py-3 transition-all duration-300 ${
                   isActive
@@ -75,9 +118,10 @@ export default function HowItWorksVisualization() {
                         ? `${cfg.bg} ${cfg.border}`
                         : "border-[var(--border)] bg-[var(--bg-page)]"
                     }`}>
-                      <span className={`text-base leading-none transition-opacity duration-300 ${isActive ? "opacity-100" : "opacity-40"}`}>
-                        {step.icon}
-                      </span>
+                      <step.icon
+                        className={`h-4 w-4 transition-opacity duration-300 ${cfg.text} ${isActive ? "opacity-100" : "opacity-40"}`}
+                        strokeWidth={2.25}
+                      />
                     </div>
                     {isActive && (
                       <span className={`absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full ${cfg.dot} ring-2 ring-[var(--bg-page)]`} />
@@ -118,7 +162,7 @@ export default function HowItWorksVisualization() {
             <div
               key={i}
               className={`h-1 flex-1 rounded-full transition-all duration-300 ${
-                i === active ? "bg-accent" : i < active ? "bg-accent/40" : "bg-[var(--border)]"
+                i === active ? "bg-[var(--accent)]" : i < active ? "bg-accent/40" : "bg-[var(--border)]"
               }`}
             />
           ))}

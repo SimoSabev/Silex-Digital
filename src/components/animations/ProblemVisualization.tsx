@@ -1,6 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import {
+  MessageCircle,
+  Clock,
+  PhoneOutgoing,
+  Trophy,
+  PhoneIncoming,
+  PhoneMissed,
+  Smartphone,
+  TrendingDown,
+  Users,
+  LogOut,
+  UserX,
+} from "lucide-react";
 import { useI18n, type Locale } from "@/lib/i18n";
 
 const SCENARIOS = [
@@ -8,10 +21,10 @@ const SCENARIOS = [
     id: "message",
     tab:   { bg: "Съобщение", en: "Message" },
     steps: [
-      { icon: "💬", color: "slate",  label: { bg: 'Клиент: "Имате ли свободна дата?"', en: 'Client: "Do you have availability?"' } },
-      { icon: "⏳", color: "yellow", label: { bg: "1 ч… 3 ч… 5 ч без отговор",         en: "1 hr… 3 hrs… 5 hrs with no reply"   } },
-      { icon: "😤", color: "red",    label: { bg: "Клиентът се обажда на конкурента",   en: "Client calls your competitor"       } },
-      { icon: "🏆", color: "red",    label: { bg: "Конкурентът спечелва клиента",       en: "Competitor wins the client"         } },
+      { icon: MessageCircle, color: "slate",  label: { bg: 'Клиент: "Имате ли свободна дата?"', en: 'Client: "Do you have availability?"' } },
+      { icon: Clock,         color: "yellow", label: { bg: "1 ч… 3 ч… 5 ч без отговор",         en: "1 hr… 3 hrs… 5 hrs with no reply"   } },
+      { icon: PhoneOutgoing, color: "red",    label: { bg: "Клиентът се обажда на конкурента",   en: "Client calls your competitor"       } },
+      { icon: Trophy,        color: "red",    label: { bg: "Конкурентът спечелва клиента",       en: "Competitor wins the client"         } },
     ],
     delay: 4600,
   },
@@ -19,10 +32,10 @@ const SCENARIOS = [
     id: "call",
     tab:   { bg: "Обаждане", en: "Call" },
     steps: [
-      { icon: "📞", color: "slate",  label: { bg: "Телефонът звъни…",              en: "Phone is ringing…"             } },
-      { icon: "🔕", color: "yellow", label: { bg: "Пропуснато обаждане — отново",  en: "Missed call — again and again" } },
-      { icon: "📱", color: "red",    label: { bg: "Клиентът пише на конкурента",   en: "Client messages a competitor"  } },
-      { icon: "💸", color: "red",    label: { bg: "-1 клиент | -150 лв приход",    en: "-1 client | -150 BGN revenue"  } },
+      { icon: PhoneIncoming, color: "slate",  label: { bg: "Телефонът звъни…",              en: "Phone is ringing…"             } },
+      { icon: PhoneMissed,   color: "yellow", label: { bg: "Пропуснато обаждане — отново",  en: "Missed call — again and again" } },
+      { icon: Smartphone,    color: "red",    label: { bg: "Клиентът пише на конкурента",   en: "Client messages a competitor"  } },
+      { icon: TrendingDown,  color: "red",    label: { bg: "-1 клиент | -75 € приход",    en: "-1 client | -75 EUR revenue"  } },
     ],
     delay: 4600,
   },
@@ -30,10 +43,10 @@ const SCENARIOS = [
     id: "visitor",
     tab:   { bg: "Посетители", en: "Visitors" },
     steps: [
-      { icon: "👥", color: "slate",  label: { bg: "50 посетители на сайта",       en: "50 visitors land on site"       } },
-      { icon: "🚶", color: "yellow", label: { bg: "46 напускат без действие",      en: "46 leave without taking action" } },
-      { icon: "😔", color: "red",    label: { bg: "92 % без лийд",                en: "92 % vanish, no lead captured"  } },
-      { icon: "💰", color: "red",    label: { bg: "~690 лв / ден изгубен приход", en: "~690 BGN / day missed revenue"  } },
+      { icon: Users,         color: "slate",  label: { bg: "50 посетители на сайта",       en: "50 visitors land on site"       } },
+      { icon: LogOut,        color: "yellow", label: { bg: "46 напускат без действие",      en: "46 leave without taking action" } },
+      { icon: UserX,         color: "red",    label: { bg: "92 % без лийд",                en: "92 % vanish, no lead captured"  } },
+      { icon: TrendingDown,  color: "red",    label: { bg: "~350 € / ден изгубен приход", en: "~350 EUR / day missed revenue"  } },
     ],
     delay: 4600,
   },
@@ -41,8 +54,8 @@ const SCENARIOS = [
 
 const stepColor: Record<string, string> = {
   slate:  "text-[var(--text-main)]",
-  yellow: "text-accent/70",
-  red:    "text-accent",
+  yellow: "text-[var(--accent)]/70",
+  red:    "text-[var(--accent)]",
 };
 
 const stepBg: Record<string, string> = {
@@ -80,10 +93,10 @@ export default function ProblemVisualization() {
           <button
             key={s.id}
             onClick={() => { setActiveIdx(i); setCycleKey((k) => k + 1); }}
-            className={`flex-1 rounded-lg px-2 py-1.5 text-xs font-semibold transition-all ${
+            className={`flex-1 rounded-lg px-2 py-1.5 text-xs font-semibold ${
               i === activeIdx
-                ? "bg-accent text-white shadow-sm"
-                : "bg-accent/10 text-accent hover:bg-accent/20"
+                ? "bg-[var(--accent)] text-white shadow-sm"
+                : "bg-accent/10 text-[var(--accent)] hover:bg-accent/20"
             }`}
           >
             {s.tab[locale as Locale]}
@@ -100,7 +113,10 @@ export default function ProblemVisualization() {
               visibleSteps.includes(i) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
             }`}
           >
-            <span className="flex-none text-lg leading-none">{step.icon}</span>
+            <step.icon
+              className={`h-4 w-4 flex-none ${stepColor[step.color] ?? stepColor.slate}`}
+              strokeWidth={2.25}
+            />
             <span className={`text-xs font-medium leading-snug ${stepColor[step.color] ?? stepColor.slate}`}>
               {step.label[locale as Locale]}
             </span>

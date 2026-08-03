@@ -14,12 +14,12 @@ interface BadgeProps {
 }
 
 const variantStyles: Record<string, string> = {
-  primary: "badge badge-violet",
+  primary: "badge badge-accent",
   secondary: "badge badge-neutral",
-  accent: "badge badge-amber",
-  success: "badge badge-lime",
-  warning: "badge badge-amber",
-  error: "badge badge-coral",
+  accent: "badge badge-accent",
+  success: "badge badge-accent",
+  warning: "badge badge-accent",
+  error: "badge badge-accent",
   neutral: "badge badge-neutral",
 };
 

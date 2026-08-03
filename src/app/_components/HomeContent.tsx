@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useRef, type CSSProperties } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   Zap,
   Bot,
@@ -15,7 +17,8 @@ import {
   TrendingUp,
   AlertTriangle,
   Sparkles,
-  Quote,
+  Gauge,
+  Euro,
 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
@@ -23,8 +26,14 @@ import AnimatedSection, {
   StaggerContainer,
   StaggerItem,
 } from "@/components/ui/AnimatedSection";
-import { useI18n } from "@/lib/i18n";
+import { useI18n, type Locale } from "@/lib/i18n";
+import { useTilt } from "@/lib/useTilt";
 import Magnetic from "@/components/ui/Magnetic";
+import { useReducedMotion } from "@/lib/motion";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 import dynamic from "next/dynamic";
 import TextReveal from "@/components/ui/TextReveal";
 import MarqueeStrip from "@/components/ui/MarqueeStrip";
@@ -32,6 +41,16 @@ import MarqueeStrip from "@/components/ui/MarqueeStrip";
 const HeroVisualization = dynamic(
   () => import("@/components/animations/HeroVisualization"),
   { ssr: false, loading: () => <div className="w-full h-full rounded-2xl bg-[var(--bg-section)] animate-pulse" /> },
+);
+
+const BrandDissolveMark = dynamic(
+  () => import("@/components/animations/BrandDissolveMark"),
+  { ssr: false },
+);
+
+const HeroProductReveal = dynamic(
+  () => import("@/components/animations/HeroProductReveal"),
+  { ssr: false, loading: () => <div className="h-[100dvh] w-full bg-[var(--color-bg-dark)]" /> },
 );
 
 const EmailAutomationDemo = dynamic(
@@ -70,7 +89,6 @@ const services = [
       en: "A website and Google presence that make your brand look serious and get you found locally — not a template, a fit for your business.",
     },
     price: { bg: "от 690 € старт + 49 €/мес", en: "from 690 EUR setup + 49 EUR/mo" },
-    color: "blue" as const,
   },
   {
     icon: <Zap className="h-6 w-6" />,
@@ -80,7 +98,6 @@ const services = [
       en: "When someone nearby searches for what you offer — you show up on Google. For businesses that depend on local clients.",
     },
     price: { bg: "включено в уеб услугите", en: "included with web services" },
-    color: "orange" as const,
   },
   {
     icon: <Bot className="h-6 w-6" />,
@@ -90,7 +107,6 @@ const services = [
       en: "A helper on Viber and your site — knows your prices, replies fast, books appointments. For businesses where every chat is money.",
     },
     price: { bg: "от 290 € старт + 248 €/мес", en: "from 290 EUR setup + 248 EUR/mo" },
-    color: "green" as const,
   },
   {
     icon: <Sparkles className="h-6 w-6" />,
@@ -100,7 +116,6 @@ const services = [
       en: "When you need both a strong online brand and round-the-clock replies — we combine site, Google, and Viber in one solution built for you.",
     },
     price: { bg: "от 990 € старт + 298 €/мес", en: "from 990 EUR setup + 298 EUR/mo" },
-    color: "purple" as const,
   },
 ];
 
@@ -116,6 +131,7 @@ const testimonials = [
       en: "Managing Director, TechStore.bg",
     },
     initials: "MP",
+    metric: { bg: "-20 ч/седмица", en: "-20 hrs/week" },
   },
   {
     quote: {
@@ -128,6 +144,7 @@ const testimonials = [
       en: "Owner, EcoShop.bg",
     },
     initials: "IK",
+    metric: { bg: "+35% поръчки", en: "+35% orders" },
   },
   {
     quote: {
@@ -140,15 +157,50 @@ const testimonials = [
       en: "Owner, Beauty Studio Elena",
     },
     initials: "ES",
+    metric: { bg: "3 дни за старт", en: "3 days to launch" },
   },
 ];
 
-const serviceColorMap = {
-  blue: "violet",
-  green: "lime",
-  purple: "coral",
-  orange: "amber",
-};
+function ServiceCard({
+  service,
+  bentoSpan,
+  locale,
+}: {
+  service: (typeof services)[number];
+  bentoSpan: string;
+  locale: Locale;
+}) {
+  const tilt = useTilt(6);
+
+  return (
+    <StaggerItem className={bentoSpan}>
+      <Link href="/services" className="group block h-full outline-none">
+        <div
+          ref={tilt.ref}
+          onMouseMove={tilt.onMouseMove}
+          onMouseLeave={tilt.onMouseLeave}
+          className="tilt-card card-2026 relative h-full overflow-hidden rounded-2xl p-8 shadow-apple hover:shadow-apple-hover"
+        >
+          <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--accent)]/10 origin-center transition-transform duration-300 group-hover:scale-110">
+            <div className="text-[var(--accent)]">{service.icon}</div>
+          </div>
+          <h3 className="mb-4 font-display text-2xl font-[700] text-[var(--text-main)]">
+            {service.title[locale]}
+          </h3>
+          <p className="mb-8 flex-1 text-[16px] leading-relaxed text-[var(--text-sub)]">
+            {service.description[locale]}
+          </p>
+          <div className="mt-auto flex items-center justify-between">
+            <span className="badge-accent text-sm font-bold rounded-full px-3 py-1">
+              {service.price[locale]}
+            </span>
+            <ArrowRight className="h-6 w-6 text-[var(--text-sub)] transition-transform duration-300 group-hover:translate-x-2" />
+          </div>
+        </div>
+      </Link>
+    </StaggerItem>
+  );
+}
 
 export default function HomeContent() {
   const { locale, t } = useI18n();
@@ -166,8 +218,51 @@ export default function HomeContent() {
     Math.round(estimatedMonthlyGain / referencePlanCost),
   );
 
+  const leadsSliderFillPct = ((monthlyLeads - 20) / (400 - 20)) * 100;
+  const dealSliderFillPct = ((averageDeal - 40) / (600 - 40)) * 100;
+
+  const beforeAfterRef = useRef<HTMLDivElement | null>(null);
+  const prefersReduced = useReducedMotion();
+
+  // Scroll-scrubbed reveal: the before/after bullets and the VS divider
+  // animate in step with how far the comparison has scrolled through the
+  // viewport, instead of firing once on enter.
+  useEffect(() => {
+    if (prefersReduced || !beforeAfterRef.current) return;
+    const root = beforeAfterRef.current;
+
+    const beforeItems = root.querySelectorAll(".before-item");
+    const afterItems = root.querySelectorAll(".after-item");
+    const divider = root.querySelector(".vs-divider");
+
+    gsap.set(beforeItems, { opacity: 0, x: -24 });
+    gsap.set(afterItems, { opacity: 0, x: 24 });
+    if (divider) gsap.set(divider, { opacity: 0, scale: 0.5, rotate: -15 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: root,
+        start: "top bottom",
+        end: "bottom center",
+        scrub: 0.6,
+      },
+    });
+
+    tl.to(beforeItems, { opacity: 1, x: 0, stagger: 0.15, ease: "power2.out" }, 0)
+      .to(afterItems, { opacity: 1, x: 0, stagger: 0.15, ease: "power2.out" }, 0.1)
+      .to(divider, { opacity: 1, scale: 1, rotate: 0, ease: "back.out(2)" }, 0.15);
+
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
+  }, [prefersReduced]);
+
   return (
     <div className="min-h-dvh bg-[var(--bg-page)] font-body text-[var(--text-main)]">
+      {/* Cinematic intro — real generated product video, frame-scrubbed by scroll, real SilexBrand mark overlaid */}
+      <HeroProductReveal />
+
       {/* Hero — dark cinematic band: charcoal + wine ribbon + glass panels */}
       <section className="atelier-band-dark hero-section relative overflow-hidden pt-20 pb-16 sm:pt-24 sm:pb-20 lg:pt-32 lg:pb-24">
         {/* Atmospheric wine-glass ribbon (glows on dark via screen blend) */}
@@ -181,6 +276,15 @@ export default function HomeContent() {
             className="object-cover opacity-55 mix-blend-screen"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--color-bg-dark)]/80" />
+        </div>
+
+        {/* Brand signature: the "S" mark assembling from pixels, echoing the
+            static logo's own dissolve — quiet ambient presence, not a competing focal point. */}
+        <div
+          className="pointer-events-none absolute -right-[10%] top-1/2 hidden h-[560px] w-[560px] -translate-y-1/2 opacity-[0.16] mix-blend-screen sm:block lg:h-[720px] lg:w-[720px]"
+          aria-hidden
+        >
+          <BrandDissolveMark className="h-full w-full" />
         </div>
         <Container>
           <div className="relative z-10 mx-auto max-w-6xl">
@@ -219,7 +323,7 @@ export default function HomeContent() {
                       <Button
                         variant="primary"
                         size="lg"
-                        className="h-12 w-full rounded-full border-none bg-[var(--coral)] px-7 text-[15px] font-bold text-white shadow-lg shadow-[var(--coral)]/25 transition-transform hover:-translate-y-0.5 hover:bg-[var(--coral-hover)] sm:h-11 sm:w-auto"
+                        className="h-12 w-full rounded-full border-none bg-[var(--accent)] px-7 text-[15px] font-bold text-white shadow-lg shadow-[var(--accent)]/25 transition-transform hover:-translate-y-0.5 hover:bg-[var(--accent-hover)] sm:h-11 sm:w-auto"
                       >
                         <Zap className="h-4 w-4" />
                         {t("hero.cta")}
@@ -251,6 +355,11 @@ export default function HomeContent() {
               <div className="hero-visual h-[320px] w-full overflow-hidden rounded-[28px] border border-white/10 bg-[var(--bg-card)] shadow-[0_40px_90px_-30px_rgba(0,0,0,0.7)] ring-1 ring-white/10 sm:h-[380px] md:h-[460px] lg:h-[520px]">
                 <HeroVisualization />
               </div>
+              <p className="mt-3 text-center text-xs text-[var(--color-text-on-dark)]/40">
+                {locale === "bg"
+                  ? "Илюстративен пример с примерни данни — не реални клиентски разговори."
+                  : "Illustrative example with sample data — not real client conversations."}
+              </p>
             </AnimatedSection>
 
             <AnimatedSection delay={0.34} mode="immediate">
@@ -284,37 +393,18 @@ export default function HomeContent() {
         }
       />
 
-      {/* The Silex Pact (Сделката с бизнеса) */}
-      <section className="relative py-12 border-y border-[var(--border)] bg-[var(--bg-section)]">
+      {/* How we work + Two Pillars — merged into one section (was two stacked, redundant blocks) */}
+      <section className="py-20 border-y border-[var(--border)] bg-[var(--bg-section)]">
         <Container>
-          <AnimatedSection delay={0.1}>
-            <div className="mx-auto max-w-4xl rounded-2xl border border-[var(--lime)]/30 bg-[var(--lime)]/5 p-8 md:p-12 text-center shadow-lg relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[var(--lime)]/5 to-transparent pointer-events-none" />
-              <div className="relative z-10">
-                <div className="badge-lime mb-6 inline-flex rounded-full border border-[var(--lime)]/20 bg-[var(--lime)]/10 px-4 py-1.5 text-sm font-bold text-[var(--lime)] uppercase tracking-wider">
-                  {t("home.pact.badge")}
-                </div>
-                <h3 className="mb-4 font-display text-2xl md:text-3xl font-extrabold text-[var(--text-main)]">
-                  {t("home.pact.title")}
-                </h3>
-                <p className="text-base md:text-lg leading-relaxed text-[var(--text-sub)]">
-                  {t("home.pact.body")}
-                </p>
-              </div>
+          <AnimatedSection className="mx-auto mb-14 max-w-3xl text-center">
+            <div className="badge-accent mb-6 inline-flex rounded-full border border-[var(--accent)]/20 bg-[var(--accent)]/10 px-4 py-1.5 text-sm font-bold text-[var(--accent)] uppercase tracking-wider">
+              {t("home.pact.badge")}
             </div>
-          </AnimatedSection>
-        </Container>
-      </section>
-
-      {/* The Two Pillars of Growth */}
-      <section className="py-20 bg-transparent">
-        <Container>
-          <AnimatedSection className="mb-12 text-center">
-            <h2 className="mb-4 font-display text-3xl font-[800] md:text-5xl">
-              {t("home.pillars.title")}
+            <h2 className="mb-4 font-display text-3xl font-[800] text-[var(--text-main)] md:text-5xl">
+              {t("home.pact.title")}
             </h2>
-            <p className="mx-auto max-w-2xl text-lg text-[var(--text-sub)]">
-              {t("home.pillars.sub")}
+            <p className="text-lg leading-relaxed text-[var(--text-sub)]">
+              {t("home.pact.body")}
             </p>
           </AnimatedSection>
 
@@ -322,7 +412,7 @@ export default function HomeContent() {
             {/* Pillar A: Web Presence */}
             <AnimatedSection direction="left">
               <div className="h-full rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-8 shadow-apple transition-all duration-400 hover:shadow-apple-hover hover:border-[var(--border-hover)] flex flex-col">
-                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-blue-500/10 text-blue-500">
+                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-[var(--accent)]/10 text-[var(--accent)]">
                   <Code className="h-8 w-8" />
                 </div>
                 <h3 className="mb-3 font-display text-2xl font-bold text-[var(--text-main)]">
@@ -332,10 +422,10 @@ export default function HomeContent() {
                   {t("home.pillars.a.body")}
                 </p>
                 <div className="mt-auto border-t border-[var(--border)] pt-6 flex items-center justify-between">
-                  <span className="text-sm font-bold badge-violet rounded-full px-3 py-1">
+                  <span className="text-sm font-bold badge-accent rounded-full px-3 py-1">
                     {locale === "bg" ? "690 € старт + 49 €/месец" : "690 € setup + 49 €/month"}
                   </span>
-                  <Link href="/services" className="flex items-center text-sm font-bold text-[var(--violet)]">
+                  <Link href="/services" className="flex items-center text-sm font-bold text-[var(--accent)]">
                     {locale === "bg" ? "Научи повече" : "Learn more"} <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
                 </div>
@@ -345,7 +435,7 @@ export default function HomeContent() {
             {/* Pillar B: AI Autopilot */}
             <AnimatedSection direction="right">
               <div className="h-full rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-8 shadow-apple transition-all duration-400 hover:shadow-apple-hover hover:border-[var(--border-hover)] flex flex-col">
-                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-[var(--lime)]/10 text-[var(--lime)]">
+                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-[var(--accent)]/10 text-[var(--accent)]">
                   <Bot className="h-8 w-8" />
                 </div>
                 <h3 className="mb-3 font-display text-2xl font-bold text-[var(--text-main)]">
@@ -355,10 +445,10 @@ export default function HomeContent() {
                   {t("home.pillars.b.body")}
                 </p>
                 <div className="mt-auto border-t border-[var(--border)] pt-6 flex items-center justify-between">
-                  <span className="text-sm font-bold badge-lime rounded-full px-3 py-1">
+                  <span className="text-sm font-bold badge-accent rounded-full px-3 py-1">
                     {locale === "bg" ? "290 € старт + 248 €/месец" : "290 € setup + 248 €/month"}
                   </span>
-                  <Link href="/services" className="flex items-center text-sm font-bold text-[var(--lime)]">
+                  <Link href="/services" className="flex items-center text-sm font-bold text-[var(--accent)]">
                     {locale === "bg" ? "Научи повече" : "Learn more"} <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
                 </div>
@@ -367,43 +457,6 @@ export default function HomeContent() {
           </div>
         </Container>
       </section>
-
-      {/* Social Proof Bar */}
-
-      {/* <section className="flex w-full items-center overflow-hidden border-y border-[var(--border)] bg-[var(--bg-section)] py-4">
-        <Container>
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <span className="font-display text-sm font-bold tracking-wider text-[var(--text-sub)] uppercase">
-              {locale === "bg"
-                ? "247+ бизнеса вече не изпускат клиенти"
-                : "247+ businesses already stop missing clients"}
-            </span>
-            <div className="relative h-6 flex-1 overflow-hidden"> */}
-              {/* Duplicated content for seamless marquee loop */}
-              {/* <div className="absolute flex animate-[marquee_20s_linear_infinite] items-center gap-2 text-sm font-medium whitespace-nowrap text-[var(--text-main)]">
-                <span className="h-2 w-2 animate-pulse rounded-full bg-[var(--lime)]" />
-                <span>{locale === "bg" ? "Ресторант в София — получи 3 резервации тази нощ" : "Restaurant in Sofia — got 3 bookings overnight"}</span>
-                <span className="mx-8 text-[var(--text-muted)]">•</span>
-                <span className="h-2 w-2 animate-pulse rounded-full bg-[var(--violet)]" />
-                <span>{locale === "bg" ? "Зъболекар във Варна — нула пропуснати обаждания" : "Dentist in Varna — zero missed calls"}</span>
-                <span className="mx-8 text-[var(--text-muted)]">•</span>
-                <span className="h-2 w-2 animate-pulse rounded-full bg-[var(--coral)]" />
-                <span>{locale === "bg" ? "Козметичен салон в Пловдив — записва клиенти докато спи" : "Beauty salon in Plovdiv — books clients while sleeping"}</span>
-                <span className="mx-8 text-[var(--text-muted)]">•</span>
-                <span className="h-2 w-2 animate-pulse rounded-full bg-[var(--lime)]" />
-                <span>{locale === "bg" ? "Ресторант в София — получи 3 резервации тази нощ" : "Restaurant in Sofia — got 3 bookings overnight"}</span>
-                <span className="mx-8 text-[var(--text-muted)]">•</span>
-                <span className="h-2 w-2 animate-pulse rounded-full bg-[var(--violet)]" />
-                <span>{locale === "bg" ? "Зъболекар във Варна — нула пропуснати обаждания" : "Dentist in Varna — zero missed calls"}</span>
-                <span className="mx-8 text-[var(--text-muted)]">•</span>
-                <span className="h-2 w-2 animate-pulse rounded-full bg-[var(--coral)]" />
-                <span>{locale === "bg" ? "Козметичен салон в Пловдив — записва клиенти докато спи" : "Beauty salon in Plovdiv — books clients while sleeping"}</span>
-                <span className="mx-8 text-[var(--text-muted)]">•</span>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section> */}
 
       {/* Problem -> Solution */}
       <section className="relative bg-[var(--bg-section)] py-16 md:py-[120px] lg:py-[160px]">
@@ -415,16 +468,16 @@ export default function HomeContent() {
             </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_auto_1fr]">
+          <div ref={beforeAfterRef} className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_auto_1fr]">
             {/* Before */}
             <AnimatedSection direction="left">
-              <div className="h-full rounded-2xl border border-[var(--coral)]/20 bg-[var(--coral)]/5 p-5 shadow-apple sm:p-8 lg:p-10">
+              <div className="h-full rounded-2xl border border-[var(--accent)]/20 bg-[var(--accent)]/5 p-5 shadow-apple sm:p-8 lg:p-10">
                 {/* Header */}
                 <div className="mb-8 flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-[24px] bg-[var(--coral)]/10">
-                    <AlertTriangle className="h-6 w-6 text-[var(--coral)]" />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-[24px] bg-[var(--accent)]/10">
+                    <AlertTriangle className="h-6 w-6 text-[var(--accent)]" />
                   </div>
-                  <h2 className="font-display text-2xl font-[800] text-red-700 dark:text-red-400">
+                  <h2 className="font-display text-2xl font-[800] text-[var(--accent)]">
                     {t("home.beforeAfter.before")}
                   </h2>
                 </div>
@@ -437,10 +490,10 @@ export default function HomeContent() {
                       "home.beforeAfter.before4",
                     ] as const
                   ).map((key) => (
-                    <li key={key} className="flex items-start gap-3 text-[15px] font-[500] text-red-700 dark:text-red-400">
-                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--coral)]/20">
+                    <li key={key} className="before-item flex items-start gap-3 text-[15px] font-[500] text-[var(--accent)]">
+                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--accent)]/20">
                         <svg viewBox="0 0 12 12" fill="none" className="h-3 w-3">
-                          <path d="M3 3l6 6M9 3l-6 6" stroke="var(--coral)" strokeWidth="1.8" strokeLinecap="round"/>
+                          <path d="M3 3l6 6M9 3l-6 6" stroke="var(--accent)" strokeWidth="1.8" strokeLinecap="round"/>
                         </svg>
                       </span>
                       {t(key)}
@@ -455,7 +508,7 @@ export default function HomeContent() {
 
             {/* VS Divider */}
             <div className="hidden items-center justify-center md:flex">
-              <div className="flex flex-col items-center gap-3">
+              <div className="vs-divider flex flex-col items-center gap-3">
                 <div className="h-20 w-px bg-gradient-to-b from-transparent via-[var(--border)] to-transparent" />
                 <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-[var(--border)] bg-transparent shadow-sm">
                   <span className="font-display text-xs font-[800] text-[var(--text-muted)]">VS</span>
@@ -470,9 +523,9 @@ export default function HomeContent() {
                 {/* Header */}
                 <div className="mb-8 flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-[24px] bg-success/10">
-                    <Sparkles className="h-6 w-6 text-success" />
+                    <Sparkles className="h-6 w-6 text-[var(--color-success)]" />
                   </div>
-                  <h2 className="font-display text-2xl font-[800] text-success">
+                  <h2 className="font-display text-2xl font-[800] text-[var(--color-success)]">
                     {t("home.beforeAfter.after")}
                   </h2>
                 </div>
@@ -485,7 +538,7 @@ export default function HomeContent() {
                       "home.beforeAfter.after4",
                     ] as const
                   ).map((key) => (
-                    <li key={key} className="flex items-start gap-3 text-[15px] font-[700] text-success">
+                    <li key={key} className="after-item flex items-start gap-3 text-[15px] font-[700] text-[var(--color-success)]">
                       <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-success/20">
                         <svg viewBox="0 0 12 12" fill="none" className="h-3 w-3">
                           <path d="M2.5 6l2.5 2.5 4.5-5" stroke="var(--color-success)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
@@ -509,7 +562,7 @@ export default function HomeContent() {
         <Container>
           <div className="grid items-start gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
             <AnimatedSection direction="left">
-              <div className="badge-lime mb-6 inline-flex rounded-full border border-[var(--lime)]/20 bg-[var(--lime)]/10 px-3 py-1 text-sm font-bold tracking-wider text-[var(--lime)] uppercase">
+              <div className="badge-accent mb-6 inline-flex rounded-full border border-[var(--accent)]/20 bg-[var(--accent)]/10 px-3 py-1 text-sm font-bold tracking-wider text-[var(--accent)] uppercase">
                 {t("home.how.badge")}
               </div>
               <h2 className="mb-6 font-display text-4xl font-[800] text-[var(--text-main)] leading-tight lg:text-5xl">
@@ -547,41 +600,16 @@ export default function HomeContent() {
 
           <StaggerContainer className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {services.map((service, serviceIdx) => {
-              const accentKey = serviceColorMap[service.color] || "violet";
               // Bento rhythm: first and last cells stretch wide on desktop
               const bentoSpan =
                 serviceIdx === 0 || serviceIdx === 3 ? "lg:col-span-2" : "";
               return (
-                <StaggerItem key={service.title.bg} className={bentoSpan}>
-                  <Link
-                    href="/services"
-                    className="group block h-full outline-none"
-                  >
-                    <div className="card-2026 relative h-full overflow-hidden rounded-2xl p-8 shadow-apple transition-all duration-400 hover:-translate-y-2">
-                      <div
-                        className={`mb-8 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--${accentKey})]/10 origin-center transition-transform duration-300 group-hover:scale-110`}
-                      >
-                        <div className={`text-[var(--${accentKey})]`}>
-                          {service.icon}
-                        </div>
-                      </div>
-                      <h3 className="mb-4 font-display text-2xl font-[700] text-[var(--text-main)]">
-                        {service.title[locale]}
-                      </h3>
-                      <p className="mb-8 flex-1 text-[16px] leading-relaxed text-[var(--text-sub)]">
-                        {service.description[locale]}
-                      </p>
-                      <div className="mt-auto flex items-center justify-between">
-                        <span
-                          className={`text-sm font-bold badge-${accentKey} rounded-full px-3 py-1`}
-                        >
-                          {service.price[locale]}
-                        </span>
-                        <ArrowRight className="h-6 w-6 text-[var(--text-sub)] transition-transform duration-300 group-hover:translate-x-2" />
-                      </div>
-                    </div>
-                  </Link>
-                </StaggerItem>
+                <ServiceCard
+                  key={service.title.bg}
+                  service={service}
+                  bentoSpan={bentoSpan}
+                  locale={locale}
+                />
               );
             })}
           </StaggerContainer>
@@ -608,7 +636,7 @@ export default function HomeContent() {
         <Container>
           <div className="grid items-center gap-10 md:gap-16 lg:grid-cols-2">
             <AnimatedSection direction="left">
-              <div className="badge-violet mb-6 inline-flex rounded-full border border-[var(--violet)]/20 bg-[var(--violet)]/10 px-3 py-1 text-sm font-bold tracking-wider text-[var(--violet)] uppercase">
+              <div className="badge-accent mb-6 inline-flex rounded-full border border-[var(--accent)]/20 bg-[var(--accent)]/10 px-3 py-1 text-sm font-bold tracking-wider text-[var(--accent)] uppercase">
                 {t("home.demo.badge")}
               </div>
               <h2 className="mb-4 sm:mb-6 font-display text-3xl sm:text-4xl leading-tight font-[800] text-[var(--text-main)] lg:text-5xl">
@@ -633,7 +661,7 @@ export default function HomeContent() {
                     key={key}
                     className="flex items-center gap-4 text-lg font-bold text-[var(--text-main)]"
                   >
-                    <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[var(--lime)]">
+                    <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[var(--accent)]">
                       <Check className="h-5 w-5 text-white" />
                     </div>
                     {t(key)}
@@ -646,7 +674,7 @@ export default function HomeContent() {
               <Link href="/demos">
                 <Button
                   variant="ghost"
-                  className="rounded-xl px-6 py-3 text-lg font-bold text-[var(--violet)] transition-colors hover:bg-[var(--violet)]/10"
+                  className="rounded-xl px-6 py-3 text-lg font-bold text-[var(--accent)] transition-colors hover:bg-[var(--accent)]/10"
                 >
                   {t("home.demo.cta")}
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -655,7 +683,7 @@ export default function HomeContent() {
             </AnimatedSection>
 
             <AnimatedSection direction="right" className="relative">
-              <div className="absolute inset-0 -z-10 rounded-full bg-gradient-to-tr from-[var(--violet)]/20 to-[var(--coral)]/20 blur-3xl" />
+              <div className="absolute inset-0 -z-10 rounded-full bg-gradient-to-tr from-[var(--accent)]/20 to-[var(--accent)]/20 blur-3xl" />
               <div className="card rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-1.5 sm:p-2 shadow-apple-hover overflow-hidden">
                 <div className="overflow-x-hidden overflow-y-auto rounded-xl border border-[var(--border)] bg-transparent max-h-[min(85dvh,720px)] sm:max-h-none">
                   <EmailAutomationDemo />
@@ -669,108 +697,137 @@ export default function HomeContent() {
       {/* ROI Estimator */}
       <section className="bg-transparent py-[120px] lg:py-[160px]">
         <Container>
-          <AnimatedSection className="mx-auto max-w-5xl">
-            <div className="card rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-8 shadow-apple-hover md:p-12">
-              <div className="badge-coral mb-6 inline-flex rounded-full border border-[var(--coral)] bg-[var(--coral)]/10 px-4 py-2 text-sm font-bold tracking-wider text-[var(--coral)] uppercase">
-                {locale === "bg"
-                  ? "Бърз ROI калкулатор"
-                  : "Quick ROI estimator"}
-              </div>
-              <h2 className="mb-4 font-display text-4xl font-[800] text-[var(--text-main)] lg:text-5xl">
-                {locale === "bg"
-                  ? "Колко консултации можеш да добавиш месечно"
-                  : "How many extra consultations you can add monthly"}
-              </h2>
-              <p className="mb-12 text-[20px] text-[var(--text-sub)]">
-                {locale === "bg"
-                  ? "Въведи приблизителни стойности и виж колко допълнителни клиенти можеш да спечелиш само с по-бърз отговор."
-                  : "Enter rough values and see how many extra clients you could win simply by responding faster."}
-              </p>
-
-              <div className="mb-12 grid gap-10 md:grid-cols-2">
-                <label className="block">
-                  <div className="mb-4 flex items-end justify-between">
-                    <span className="text-lg font-bold text-[var(--text-main)]">
-                      {locale === "bg"
-                        ? "Месечни запитвания"
-                        : "Monthly inquiries"}
-                    </span>
-                    <span className="font-['JetBrains_Mono',monospace] text-2xl font-bold text-[var(--violet)]">
-                      {monthlyLeads}
-                    </span>
-                  </div>
-                  <input
-                    type="range"
-                    min={20}
-                    max={400}
-                    value={monthlyLeads}
-                    onChange={(e) => setMonthlyLeads(Number(e.target.value))}
-                    className="h-3 w-full cursor-pointer appearance-none rounded-lg bg-[var(--bg-section)] accent-[var(--violet)]"
-                  />
-                </label>
-
-                <label className="block">
-                  <div className="mb-4 flex items-end justify-between">
-                    <span className="text-lg font-bold text-[var(--text-main)]">
-                      {locale === "bg"
-                        ? "Средна стойност на продажба"
-                        : "Average deal value"}
-                    </span>
-                    <span className="font-['JetBrains_Mono',monospace] text-2xl font-bold text-[var(--violet)]">
-                      {averageDeal} €
-                    </span>
-                  </div>
-                  <input
-                    type="range"
-                    min={40}
-                    max={600}
-                    step={10}
-                    value={averageDeal}
-                    onChange={(e) => setAverageDeal(Number(e.target.value))}
-                    className="h-3 w-full cursor-pointer appearance-none rounded-lg bg-[var(--bg-section)] accent-[var(--violet)]"
-                  />
-                </label>
-              </div>
-
-              <div className="grid gap-6 rounded-2xl border border-[var(--border)] bg-[var(--bg-section)] p-8 md:grid-cols-3">
-                <div>
-                  <p className="mb-2 text-sm font-bold tracking-wider text-[var(--text-muted)] uppercase">
+          <AnimatedSection className="mx-auto max-w-6xl">
+            <div className="card-2026 relative overflow-hidden rounded-[28px] shadow-apple-hover">
+              <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
+                {/* Inputs panel */}
+                <div className="p-8 md:p-12 lg:p-14">
+                  <div className="badge-accent mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--accent)] bg-[var(--accent)]/10 px-4 py-2 text-sm font-bold tracking-wider text-[var(--accent)] uppercase">
+                    <Gauge size={16} />
                     {locale === "bg"
-                      ? "Допълнителни консултации"
-                      : "Extra consultations"}
-                  </p>
-                  <p className="font-['JetBrains_Mono',monospace] text-4xl font-[800] text-[var(--text-main)] lg:text-5xl">
-                    +{estimatedExtraConsultations}
-                  </p>
-                </div>
-                <div>
-                  <p className="mb-2 text-sm font-bold tracking-wider text-[var(--text-muted)] uppercase">
+                      ? "Бърз ROI калкулатор"
+                      : "Quick ROI estimator"}
+                  </div>
+                  <h2 className="mb-4 font-display text-3xl font-[800] text-[var(--text-main)] lg:text-4xl">
                     {locale === "bg"
-                      ? "Потенциален месечен ефект"
-                      : "Potential monthly upside"}
+                      ? "Колко консултации можеш да добавиш месечно"
+                      : "How many extra consultations you can add monthly"}
+                  </h2>
+                  <p className="mb-10 text-[17px] leading-relaxed text-[var(--text-sub)]">
+                    {locale === "bg"
+                      ? "Въведи приблизителни стойности и виж колко допълнителни клиенти можеш да спечелиш само с по-бърз отговор."
+                      : "Enter rough values and see how many extra clients you could win simply by responding faster."}
                   </p>
-                  <p className="font-display text-4xl font-[800] text-[var(--lime)] xl:text-5xl">
-                    {estimatedMonthlyGain.toLocaleString("en-US")} €
-                  </p>
+
+                  <div className="space-y-10">
+                    <div>
+                      <div className="mb-4 flex items-end justify-between">
+                        <span className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-[var(--text-muted)]">
+                          <Users size={16} className="text-[var(--accent)]" />
+                          {locale === "bg"
+                            ? "Месечни запитвания"
+                            : "Monthly inquiries"}
+                        </span>
+                        <span className="font-mono text-2xl font-extrabold text-[var(--accent)]">
+                          {monthlyLeads}
+                        </span>
+                      </div>
+                      <input
+                        type="range"
+                        min={20}
+                        max={400}
+                        value={monthlyLeads}
+                        onChange={(e) => setMonthlyLeads(Number(e.target.value))}
+                        style={{ "--slider-fill": `${leadsSliderFillPct}%` } as CSSProperties}
+                        className="roi-slider w-full"
+                        aria-label={locale === "bg" ? "Месечни запитвания" : "Monthly inquiries"}
+                      />
+                      <div className="mt-2 flex justify-between text-xs font-medium text-[var(--text-muted)]">
+                        <span>20</span>
+                        <span>400</span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="mb-4 flex items-end justify-between">
+                        <span className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-[var(--text-muted)]">
+                          <Euro size={16} className="text-[var(--accent)]" />
+                          {locale === "bg"
+                            ? "Средна стойност на продажба"
+                            : "Average deal value"}
+                        </span>
+                        <span className="font-mono text-2xl font-extrabold text-[var(--accent)]">
+                          {averageDeal} €
+                        </span>
+                      </div>
+                      <input
+                        type="range"
+                        min={40}
+                        max={600}
+                        step={10}
+                        value={averageDeal}
+                        onChange={(e) => setAverageDeal(Number(e.target.value))}
+                        style={{ "--slider-fill": `${dealSliderFillPct}%` } as CSSProperties}
+                        className="roi-slider w-full"
+                        aria-label={locale === "bg" ? "Средна стойност на продажба" : "Average deal value"}
+                      />
+                      <div className="mt-2 flex justify-between text-xs font-medium text-[var(--text-muted)]">
+                        <span>40 €</span>
+                        <span>600 €</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <p className="mb-2 text-sm font-bold tracking-wider text-[var(--text-muted)] uppercase">
-                    {locale === "bg" ? "Ориентировъчен ROI" : "Estimated ROI"}
-                  </p>
-                  <p className="font-['JetBrains_Mono',monospace] text-4xl font-[800] text-[var(--violet)] lg:text-5xl">
-                    {estimatedRoi}x
-                  </p>
+
+                {/* Dark dashboard readout panel */}
+                <div className="atelier-band-dark relative flex flex-col justify-center gap-7 p-8 md:p-12 lg:p-14">
+                  <div className="relative z-10">
+                    <p className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[color-mix(in_srgb,var(--color-text-on-dark)_65%,transparent)]">
+                      <TrendingUp size={14} />
+                      {locale === "bg"
+                        ? "Допълнителни консултации"
+                        : "Extra consultations"}
+                    </p>
+                    <p className="font-display text-5xl font-black text-[var(--color-text-on-dark)]">
+                      +{estimatedExtraConsultations}
+                    </p>
+                  </div>
+
+                  <div className="relative z-10 h-px w-full bg-[color-mix(in_srgb,var(--color-text-on-dark)_15%,transparent)]" />
+
+                  <div className="relative z-10">
+                    <p className="mb-2 text-xs font-bold uppercase tracking-wider text-[color-mix(in_srgb,var(--color-text-on-dark)_65%,transparent)]">
+                      {locale === "bg"
+                        ? "Потенциален месечен ефект"
+                        : "Potential monthly upside"}
+                    </p>
+                    <p className="font-display text-5xl font-black text-[var(--accent-10)]">
+                      {estimatedMonthlyGain.toLocaleString("en-US")} €
+                    </p>
+                  </div>
+
+                  <div className="relative z-10 h-px w-full bg-[color-mix(in_srgb,var(--color-text-on-dark)_15%,transparent)]" />
+
+                  <div className="relative z-10">
+                    <p className="mb-2 text-xs font-bold uppercase tracking-wider text-[color-mix(in_srgb,var(--color-text-on-dark)_65%,transparent)]">
+                      {locale === "bg" ? "Ориентировъчен ROI" : "Estimated ROI"}
+                    </p>
+                    <p className="font-mono text-5xl font-black text-[var(--accent-10)]">
+                      {estimatedRoi}x
+                    </p>
+                  </div>
                 </div>
               </div>
 
-              <div className="mt-10 flex justify-center">
+              {/* CTA */}
+              <div className="flex justify-center border-t border-[var(--border)] bg-[var(--bg-card)] p-6 md:p-8">
                 <Link
                   href={`/contact?source=roi-home&offer=first-order-bonus&intent=roi-estimate&pack=grow&monthlyLeads=${monthlyLeads}&leadValue=${averageDeal}`}
                 >
                   <Button
                     variant="primary"
                     size="lg"
-                    className="rounded-xl bg-[var(--text-main)] px-10 py-5 text-lg font-bold text-white transition-transform hover:-translate-y-1 hover:bg-[#222]"
+                    className="rounded-xl bg-[var(--accent)] px-10 py-5 text-lg font-bold text-white transition-transform hover:-translate-y-1 hover:bg-[var(--accent-hover)]"
                   >
                     {locale === "bg"
                       ? "Искам персонална ROI сметка"
@@ -800,32 +857,31 @@ export default function HomeContent() {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="relative w-[85vw] shrink-0 snap-center rounded-2xl border border-white/10 bg-white/[0.06] p-10 shadow-2xl backdrop-blur-md md:w-[400px]"
+                className="cut-corner-tr relative w-[85vw] shrink-0 snap-center border border-white/10 bg-white/[0.06] p-10 shadow-2xl backdrop-blur-md md:w-[400px]"
               >
-                <Quote className="absolute top-8 right-8 h-20 w-20 text-white/10" />
-                <div className="relative z-10 mb-6 flex gap-1">
-                  {Array.from({ length: 5 }).map((_, i: number) => (
-                    <svg
-                      key={i}
-                      className="h-6 w-6 fill-current text-[#F59E0B]"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
+                <div className="relative z-10 mb-8 flex items-start justify-between gap-4">
+                  <span
+                    aria-hidden="true"
+                    className="font-display text-6xl leading-none text-[var(--accent-10)]/70"
+                  >
+                    &ldquo;
+                  </span>
+                  <span className="badge-accent rounded-full border !border-[var(--accent-10)]/30 !bg-white/10 px-3 py-1.5 text-xs font-bold tracking-wide whitespace-nowrap !text-[var(--accent-10)]">
+                    {testimonial.metric[locale]}
+                  </span>
                 </div>
                 <p className="relative z-10 mb-10 text-[18px] leading-relaxed font-medium text-[var(--color-text-on-dark)]">
-                  &ldquo;{testimonial.quote[locale]}&rdquo;
+                  {testimonial.quote[locale]}
                 </p>
                 <div className="relative z-10 flex items-center gap-4">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--accent)] text-xl font-bold text-white">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-[var(--radius-sm)] border border-white/15 bg-gradient-to-br from-[var(--accent)] to-[var(--accent-hover)] text-base font-bold text-white">
                     {testimonial.initials}
                   </div>
                   <div>
-                    <div className="font-display text-lg font-[800] text-[var(--color-text-on-dark)]">
+                    <div className="font-display text-base font-bold text-[var(--color-text-on-dark)]">
                       {testimonial.author}
                     </div>
-                    <div className="text-sm font-bold text-white/60">
+                    <div className="text-sm font-medium text-white/60">
                       {testimonial.role[locale]}
                     </div>
                   </div>
@@ -881,19 +937,19 @@ export default function HomeContent() {
                   </div>
                   <ul className="mb-10 space-y-4 text-left border-t border-[var(--border)] pt-6">
                     <li className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-main)]">
-                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
+                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--accent)]" />{" "}
                       {locale === "bg" ? "Професионален сайт (Код или CMS)" : "Professional website (Code or CMS)"}
                     </li>
                     <li className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-main)]">
-                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
+                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--accent)]" />{" "}
                       {locale === "bg" ? "Скорост под 1.2 секунди" : "Speed index < 1.2s"}
                     </li>
                     <li className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-main)]">
-                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
+                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--accent)]" />{" "}
                       {locale === "bg" ? "Google Карти & Локално SEO" : "Google Maps & Local SEO"}
                     </li>
                     <li className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-main)]">
-                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
+                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--accent)]" />{" "}
                       {locale === "bg" ? "Edge хостинг & SSL защита" : "Edge hosting & SSL security"}
                     </li>
                   </ul>
@@ -914,7 +970,7 @@ export default function HomeContent() {
 
             {/* Grow (Smart AI Agent) */}
             <StaggerItem>
-              <div className="card relative z-10 scale-100 transform rounded-2xl border border-[var(--violet)] bg-[var(--bg-card)] p-8 text-center shadow-apple-hover md:scale-105 h-full flex flex-col justify-between">
+              <div className="card relative z-10 scale-100 transform rounded-2xl border border-[var(--accent)] bg-[var(--bg-card)] p-8 text-center shadow-apple-hover md:scale-105 h-full flex flex-col justify-between">
                 <div className="absolute -top-5 left-1/2 -translate-x-1/2">
                   <span className="rounded-full bg-[var(--accent)] px-6 py-2 text-xs font-bold tracking-wider text-white uppercase shadow-lg">
                     {locale === "bg" ? "Популярен" : "Popular"}
@@ -924,20 +980,20 @@ export default function HomeContent() {
                   <h3 className="mb-2 font-display text-2xl font-[800] text-[var(--text-main)]">
                     Grow
                   </h3>
-                  <p className="mb-6 text-xs font-bold tracking-wider text-[var(--violet)] uppercase">
+                  <p className="mb-6 text-xs font-bold tracking-wider text-[var(--accent)] uppercase">
                     {locale === "bg"
                       ? "AI секретар във Viber & Уебсайт"
                       : "AI Agent in Viber & Website"}
                   </p>
-                  <div className="mb-4 rounded-xl border border-[var(--violet)]/30 bg-[var(--violet)]/5 px-4 py-3 text-left">
-                    <div className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--violet)]">
+                  <div className="mb-4 rounded-xl border border-[var(--accent)]/30 bg-[var(--accent)]/5 px-4 py-3 text-left">
+                    <div className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--accent)]">
                       {locale === "bg" ? "Изработка (еднократно)" : "Setup (one-time)"}
                     </div>
                     <div className="font-['JetBrains_Mono',monospace] text-xl font-[800] text-[var(--text-main)]">
                       {locale === "bg" ? "от 290 €" : "from 290 EUR"}
                     </div>
                   </div>
-                  <div className="mb-1 font-['JetBrains_Mono',monospace] text-4xl font-[800] text-[var(--violet)]">
+                  <div className="mb-1 font-['JetBrains_Mono',monospace] text-4xl font-[800] text-[var(--accent)]">
                     {locale === "bg" ? "248 €" : "248 EUR"}
                   </div>
                   <div className="text-xs font-bold text-[var(--text-muted)] mb-8 uppercase tracking-wide">
@@ -945,19 +1001,19 @@ export default function HomeContent() {
                   </div>
                   <ul className="mb-10 space-y-4 text-left border-t border-[var(--border)] pt-6">
                     <li className="flex items-center gap-3 text-[15px] font-bold text-[var(--text-main)]">
-                      <Check className="h-6 w-6 flex-shrink-0 text-[var(--violet)]" />{" "}
+                      <Check className="h-6 w-6 flex-shrink-0 text-[var(--accent)]" />{" "}
                       {locale === "bg" ? "AI асистент денонощно" : "24/7 AI chat receptionist"}
                     </li>
                     <li className="flex items-center gap-3 text-[15px] font-bold text-[var(--text-main)]">
-                      <Check className="h-6 w-6 flex-shrink-0 text-[var(--violet)]" />{" "}
+                      <Check className="h-6 w-6 flex-shrink-0 text-[var(--accent)]" />{" "}
                       {locale === "bg" ? "Интеграция във Viber & Уебсайт" : "Viber & Web integration"}
                     </li>
                     <li className="flex items-center gap-3 text-[15px] font-bold text-[var(--text-main)]">
-                      <Check className="h-6 w-6 flex-shrink-0 text-[var(--violet)]" />{" "}
+                      <Check className="h-6 w-6 flex-shrink-0 text-[var(--accent)]" />{" "}
                       {locale === "bg" ? "Автоматично записване на часове" : "Automated bookings"}
                     </li>
                     <li className="flex items-center gap-3 text-[15px] font-bold text-[var(--text-main)]">
-                      <Check className="h-6 w-6 flex-shrink-0 text-[var(--violet)]" />{" "}
+                      <Check className="h-6 w-6 flex-shrink-0 text-[var(--accent)]" />{" "}
                       {locale === "bg" ? "Сейф за Клиенти (CRM база)" : "Secure Client Vault CRM"}
                     </li>
                   </ul>
@@ -968,7 +1024,7 @@ export default function HomeContent() {
                 >
                   <Button
                     variant="primary"
-                    className="w-full rounded-xl border-none bg-[var(--violet)] py-4 text-lg font-bold text-white shadow-[var(--violet)]/30 shadow-lg transition-transform hover:-translate-y-1 hover:bg-[var(--violet-hover)]"
+                    className="w-full rounded-xl border-none bg-[var(--accent)] py-4 text-lg font-bold text-white shadow-[var(--accent)]/30 shadow-lg transition-transform hover:-translate-y-1 hover:bg-[var(--accent-hover)]"
                   >
                     {locale === "bg" ? "Избери Grow" : "Select Grow"}
                   </Button>
@@ -1004,19 +1060,19 @@ export default function HomeContent() {
                   </div>
                   <ul className="mb-10 space-y-4 text-left border-t border-[var(--border)] pt-6">
                     <li className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-main)]">
-                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
+                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--accent)]" />{" "}
                       {locale === "bg" ? "Цялостен нов премиум уебсайт" : "Custom premium website build"}
                     </li>
                     <li className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-main)]">
-                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
+                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--accent)]" />{" "}
                       {locale === "bg" ? "AI по всички чат канали" : "Viber, WhatsApp & Messenger AI"}
                     </li>
                     <li className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-main)]">
-                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
+                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--accent)]" />{" "}
                       {locale === "bg" ? "Синхронизация в реално време" : "Real-time catalog & stock sync"}
                     </li>
                     <li className="flex items-center gap-3 text-[15px] font-medium text-[var(--text-main)]">
-                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--lime)]" />{" "}
+                      <Check className="h-5 w-5 flex-shrink-0 text-[var(--accent)]" />{" "}
                       {locale === "bg" ? "Лична техническа поддръжка" : "Dedicated developer support"}
                     </li>
                   </ul>
@@ -1040,7 +1096,7 @@ export default function HomeContent() {
 
       {/* Final CTA */}
       <AnimatedSection>
-        <section className="bg-gradient-to-br from-[var(--violet)] to-[var(--coral)] py-[120px] lg:py-[160px]">
+        <section className="bg-gradient-to-br from-[var(--accent)] to-[var(--accent)] py-[120px] lg:py-[160px]">
           <Container>
             <div className="mx-auto max-w-4xl text-center">
               <h2 className="mb-8 font-display text-5xl leading-tight font-[800] text-white lg:text-7xl">

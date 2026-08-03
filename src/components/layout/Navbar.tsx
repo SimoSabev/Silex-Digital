@@ -63,7 +63,7 @@ export default function Navbar() {
             aria-label="Navigation menu"
           >
             <div className="flex shrink-0 items-center justify-between border-b border-[var(--border)] px-4 py-3 safe-area-pt">
-              <Image src="/new-logo.png" alt="Silex Digital" width={160} height={40} className="h-10 w-auto object-contain" />
+              <Image src="/new-logo.png" alt="SilexBrand" width={160} height={40} className="h-10 w-auto object-contain" />
               <button
                 type="button"
                 onClick={closeMenu}
@@ -87,8 +87,8 @@ export default function Navbar() {
                     <span
                       className={`font-display text-3xl font-bold transition-colors sm:text-4xl ${
                         isActive
-                          ? "text-[var(--violet)]"
-                          : "text-[var(--text-sub)] group-hover:text-[var(--violet)]"
+                          ? "text-[var(--accent)]"
+                          : "text-[var(--text-sub)] group-hover:text-[var(--accent)]"
                       }`}
                     >
                       {link.label}
@@ -138,7 +138,7 @@ export default function Navbar() {
           }`}
         >
           <Link href="/" className="flex justify-center items-center">
-            <Image src="/logo-new.png" alt="Silex Digital" width={180} height={44} className="h-20 w-auto object-contain" />
+            <Image src="/logo-new.png" alt="SilexBrand" width={180} height={44} className="h-20 w-auto object-contain" />
           </Link>
 
           <div className="hidden items-center justify-center gap-1 lg:flex">
@@ -153,8 +153,8 @@ export default function Navbar() {
                   <span
                     className={`relative z-10 text-[15px] font-[600] transition-colors duration-300 ${
                       isActive
-                        ? "text-[var(--violet)]"
-                        : "text-[var(--text-sub)] group-hover:text-[var(--violet)]"
+                        ? "text-[var(--accent)]"
+                        : "text-[var(--text-sub)] group-hover:text-[var(--accent)]"
                     }`}
                   >
                     {link.label}

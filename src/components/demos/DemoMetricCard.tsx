@@ -19,7 +19,7 @@ export default function DemoMetricCard({
     <div
       className={`rounded-xl border p-3 ${
         tone === "positive"
-          ? "border-[var(--lime)]/30 bg-[var(--lime)]/10"
+          ? "border-[var(--accent)]/30 bg-[var(--accent)]/10"
           : "border-[var(--border)] bg-[var(--bg-section)]"
       }`}
     >

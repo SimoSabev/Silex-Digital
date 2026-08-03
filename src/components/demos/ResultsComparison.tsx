@@ -33,7 +33,7 @@ export default function ResultsComparison({
               tone="positive"
             />
             {metric.delta ? (
-              <p className="text-xs font-semibold text-[var(--lime)]">
+              <p className="text-xs font-semibold text-[var(--accent)]">
                 {locale === "bg" ? "Промяна" : "Delta"}: {metric.delta}
               </p>
             ) : null}

@@ -1,5 +1,5 @@
 import type { SelectHTMLAttributes } from "react";
-import { forwardRef } from "react";
+import { forwardRef, useId } from "react";
 
 export interface SelectProps extends Omit<
   SelectHTMLAttributes<HTMLSelectElement>,
@@ -28,10 +28,11 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
     },
     ref,
   ) => {
-    const selectId = id ?? `select-${Math.random().toString(36).substr(2, 9)}`;
+    const generatedId = useId();
+    const selectId = id ?? generatedId;
 
     const baseStyles =
-      "w-full rounded-xl border bg-[var(--bg-card)] text-[var(--text-main)] transition-all duration-300 focus-visible:border-[var(--violet)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--violet)]/30 disabled:cursor-not-allowed disabled:opacity-50";
+      "w-full rounded-[var(--radius-sm)] border-[1.5px] bg-[var(--bg-card)] text-[var(--text-main)] shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] transition-all duration-200 hover:border-[color-mix(in_srgb,var(--accent)_35%,var(--border))] focus-visible:border-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/15 disabled:cursor-not-allowed disabled:opacity-50";
 
     const sizeStyles = {
       sm: "px-3 py-1.5 text-sm",
@@ -40,7 +41,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
     };
 
     const errorStyles = error
-      ? "border-[var(--coral)]/50 focus-visible:ring-[var(--coral)]/30"
+      ? "border-[var(--accent)]/50 focus-visible:ring-[var(--accent)]/30"
       : "border-[var(--border)]";
 
     return (
@@ -83,7 +84,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
           ))}
         </select>
         {error && (
-          <p id={`${selectId}-error`} className="text-sm text-red-400">
+          <p id={`${selectId}-error`} className="text-sm font-medium text-[var(--accent)]">
             {error}
           </p>
         )}

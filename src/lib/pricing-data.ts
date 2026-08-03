@@ -6,14 +6,34 @@
 
 export type LocalizedList = { bg: string[]; en: string[] };
 
+export type FaqItem = { q: string; a: string };
+
+// Bilingual pricing FAQ — single source of truth so the FAQPage JSON-LD
+// (src/app/pricing/page.tsx) always matches what's actually rendered on
+// the page (src/app/pricing/PricingContent.tsx), instead of two copies
+// silently drifting apart.
+export const pricingFaqsBg: FaqItem[] = [
+  { q: "Защо цената е разделена на изработка и поддръжка?", a: "Изработката е еднократна работа — дизайн, код, настройка. Месечната поддръжка е текуща услуга — хостинг, техническа поддръжка, а при Grow/Pro и работата на вашия AI асистент. Разделяме ги, за да виждате точно за какво плащате." },
+  { q: "Какво влиза в месечната такса на Grow и Pro?", a: "Една единствена сума, която покрива всичко необходимо AI асистентът ви да работи денонощно — разход по API към доставчиците на изкуствен интелект, седмични инженерни проверки за точност, хостинг и поддръжка. Няма скрита допълнителна такса отгоре." },
+  { q: "Има ли скрити условия?", a: "Не, ценообразуването е брутално прозрачно. Всички разходи за дизайн, код, SEO поддръжка и AI лицензи са описани до стотинка във финансовия одит на всеки план." },
+  { q: "Мога ли да променя плана?", a: "Да, можете да преминете на по-висок или по-нисък месечен план по всяко време без никакви допълнителни такси или глоби." },
+  { q: "Има ли дългосрочен договор?", a: "Не изискваме дългосрочни обвързващи договори. Работим с месечни условия и 30-дневно предизвестие, или с годишно предплащане на -10% отстъпка." },
+];
+
+export const pricingFaqsEn: FaqItem[] = [
+  { q: "Why is the price split into setup and support?", a: "Setup is one-time work — design, code, configuration. Monthly support is an ongoing service — hosting, technical maintenance, and on Grow/Pro, your AI assistant's operation. We separate them so you see exactly what you're paying for." },
+  { q: "What's included in the Grow and Pro monthly fee?", a: "One single number that covers everything your AI assistant needs to run 24/7 — AI provider API usage, weekly engineering accuracy checks, hosting, and support. No hidden extra fee on top." },
+  { q: "Are there any hidden terms?", a: "No, our pricing is brutally transparent. All costs for design, custom code, hosting, Local SEO, and AI licenses are detailed to the cent in each plan's financial audit." },
+  { q: "Can I change plans?", a: "Yes, you can upgrade or downgrade your monthly plan at any time without extra fees or penalties." },
+  { q: "Is there a long-term contract?", a: "No binding contracts are required. We operate on simple monthly terms with a standard 30-day notice period, or annual prepay at -10% off." },
+];
+
 export type Addon = { id: string; name: { bg: string; en: string }; price: number };
 
 export type PricingPlan = {
   id: "start" | "grow" | "pro";
   name: string;
   description: { bg: string; en: string };
-  color: string;
-  bgColor: string;
   popular: boolean;
   intent: string;
   pack: string;
@@ -52,8 +72,6 @@ export const pricingPlans: PricingPlan[] = [
       bg: "Уеб Основа & Локално търсене за перфектно присъствие",
       en: "Web Foundation & Local Search for perfect search visibility",
     },
-    color: "var(--lime)",
-    bgColor: "rgba(106, 46, 58, 0.08)",
     popular: false,
     intent: "starter-pack",
     pack: "start",
@@ -141,8 +159,6 @@ export const pricingPlans: PricingPlan[] = [
       bg: "AI Дигитален секретар във Viber & вашия сайт",
       en: "AI Smart Autopilot in Viber & your website",
     },
-    color: "var(--violet)",
-    bgColor: "rgba(106, 46, 58, 0.1)",
     popular: true,
     intent: "grow-pack",
     pack: "grow",
@@ -209,6 +225,7 @@ export const pricingPlans: PricingPlan[] = [
           { label: "Платформи и конектори лицензи", value: "50 €" },
           { label: "API разход към OpenAI/Claude", value: "24 €" },
           { label: "Седмични инженерни проверки за точност", value: "25 €" },
+          { label: "Оперативни разходи и абонаментна поддръжка", value: "50 €" },
         ],
       },
       en: {
@@ -223,6 +240,7 @@ export const pricingPlans: PricingPlan[] = [
           { label: "Connector licenses & APIs hosting", value: "50 €" },
           { label: "LLM API usage budget", value: "24 €" },
           { label: "Weekly human auditing & prompt tuning", value: "25 €" },
+          { label: "Operating overhead & subscription upkeep", value: "50 €" },
         ],
       },
     },
@@ -234,8 +252,6 @@ export const pricingPlans: PricingPlan[] = [
       bg: "Дигитален Автопилот: Премиум сайт + AI Асистент",
       en: "Digital Autopilot: Premium Website & AI Assistant",
     },
-    color: "var(--coral)",
-    bgColor: "rgba(106, 46, 58, 0.1)",
     popular: false,
     intent: "pro-pack",
     pack: "pro",

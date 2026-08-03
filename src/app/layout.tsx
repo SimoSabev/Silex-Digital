@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import { type Metadata } from "next";
-import { Inter, Lora, JetBrains_Mono } from "next/font/google";
+import { Golos_Text, Unbounded, JetBrains_Mono } from "next/font/google";
 
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from "@vercel/analytics/next"
@@ -10,15 +10,21 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import PremiumHybridBackground from "@/components/ui/PremiumHybridBackground";
+import {
+  organizationSchema,
+  localBusinessSchema,
+  websiteSchema,
+} from "@/config/seo";
 
-const inter = Inter({
+const golosText = Golos_Text({
   subsets: ["latin", "cyrillic"],
   variable: "--font-body",
   display: "swap",
 });
 
-const lora = Lora({
+const unbounded = Unbounded({
   subsets: ["latin", "cyrillic"],
+  weight: ["500", "600", "700", "800"],
   variable: "--font-display",
   display: "swap",
 });
@@ -59,12 +65,13 @@ export const metadata: Metadata = {
     "automation agency Bulgaria",
   ],
   metadataBase: new URL("https://silexbrand.com"),
+  // NOTE: no "en-US" alternate — locale switching today is client-side
+  // (I18nProvider), not routed. Declaring a hreflang to a URL that doesn't
+  // resolve (e.g. "/en") is worse than declaring none: it either gets
+  // ignored or logged as a Search Console error. Add the alternate back
+  // once real localized routes exist (see STRATEGY.md §2).
   alternates: {
     canonical: "/",
-    languages: {
-      "bg-BG": "/",
-      "en-US": "/en",
-    },
   },
   openGraph: {
     title: "SilexBrand | Не губете клиенти заради бавен отговор",
@@ -103,17 +110,31 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  verification: {
-    google: "your-google-site-verification-token",
-  },
+  // Google Search Console verification omitted on purpose: the previous
+  // value was a literal placeholder string, which is worse than no tag at
+  // all (it renders a meaningless meta tag and gives false confidence that
+  // verification is set up). Add the real token here once the site is
+  // verified in Search Console — see AUDIT.md C4.
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="bg" className={`${inter.variable} ${lora.variable} ${jetbrainsMono.variable}`}>
+    <html lang="bg" className={`${golosText.variable} ${unbounded.variable} ${jetbrainsMono.variable}`}>
       <body className="font-body flex min-h-dvh flex-col antialiased bg-(--bg-page) text-(--text-main)">
+        {[organizationSchema, localBusinessSchema, websiteSchema].map((schema) => (
+          <script
+            key={schema["@type"]}
+            type="application/ld+json"
+            // Schema objects are static, developer-authored config (src/config/seo.ts),
+            // not user input — safe to serialize directly. Escaping "<" prevents the
+            // JSON payload from accidentally closing the script tag early.
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
+            }}
+          />
+        ))}
         <SmoothScroll>
           <PremiumHybridBackground />
           <ThemeProvider>

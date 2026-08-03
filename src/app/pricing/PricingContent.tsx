@@ -8,24 +8,9 @@ import { Check, ArrowRight, Plus, X, Sparkles, TrendingUp, ChevronDown, CheckCir
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import Badge from "@/components/ui/Badge";
+import { Reveal } from "@/components/ui/Reveal";
 import { useI18n } from "@/lib/i18n";
-import { pricingPlans, availableAddons } from "@/lib/pricing-data";
-
-const faqsBg = [
-  { q: "Защо цената е разделена на изработка и поддръжка?", a: "Изработката е еднократна работа — дизайн, код, настройка. Месечната поддръжка е текуща услуга — хостинг, техническа поддръжка, а при Grow/Pro и работата на вашия AI асистент. Разделяме ги, за да виждате точно за какво плащате." },
-  { q: "Какво влиза в месечната такса на Grow и Pro?", a: "Една единствена сума, която покрива всичко необходимо AI асистентът ви да работи денонощно — разход по API към доставчиците на изкуствен интелект, седмични инженерни проверки за точност, хостинг и поддръжка. Няма скрита допълнителна такса отгоре." },
-  { q: "Има ли скрити условия?", a: "Не, ценообразуването е брутално прозрачно. Всички разходи за дизайн, код, SEO поддръжка и AI лицензи са описани до стотинка във финансовия одит на всеки план." },
-  { q: "Мога ли да променя плана?", a: "Да, можете да преминете на по-висок или по-нисък месечен план по всяко време без никакви допълнителни такси или глоби." },
-  { q: "Има ли дългосрочен договор?", a: "Не изискваме дългосрочни обвързващи договори. Работим с месечни условия и 30-дневно предизвестие, или с годишно предплащане на -10% отстъпка." },
-];
-
-const faqsEn = [
-  { q: "Why is the price split into setup and support?", a: "Setup is one-time work — design, code, configuration. Monthly support is an ongoing service — hosting, technical maintenance, and on Grow/Pro, your AI assistant's operation. We separate them so you see exactly what you're paying for." },
-  { q: "What's included in the Grow and Pro monthly fee?", a: "One single number that covers everything your AI assistant needs to run 24/7 — AI provider API usage, weekly engineering accuracy checks, hosting, and support. No hidden extra fee on top." },
-  { q: "Are there any hidden terms?", a: "No, our pricing is brutally transparent. All costs for design, custom code, hosting, Local SEO, and AI licenses are detailed to the cent in each plan's financial audit." },
-  { q: "Can I change plans?", a: "Yes, you can upgrade or downgrade your monthly plan at any time without extra fees or penalties." },
-  { q: "Is there a long-term contract?", a: "No binding contracts are required. We operate on simple monthly terms with a standard 30-day notice period, or annual prepay at -10% off." },
-];
+import { pricingPlans, availableAddons, pricingFaqsBg, pricingFaqsEn } from "@/lib/pricing-data";
 
 const comparisonFeatures = [
   { name: { bg: "Брой автоматизации", en: "Number of automations" }, start: "1", grow: "До 4", pro: "6+" },
@@ -36,7 +21,7 @@ const comparisonFeatures = [
   { name: { bg: "Поддръжка", en: "Support" }, start: "Стандартна", grow: "Приоритетна", pro: "24/7" },
 ];
 
-export default function PricingPage() {
+export default function PricingContent() {
   const { locale } = useI18n();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
@@ -91,7 +76,7 @@ export default function PricingPage() {
     }));
   };
 
-  const faqs = locale === "bg" ? faqsBg : faqsEn;
+  const faqs = locale === "bg" ? pricingFaqsBg : pricingFaqsEn;
 
   const toggleAddon = (planName: string, addonId: string) => {
     setSelectedAddons((prev) => {
@@ -121,48 +106,51 @@ export default function PricingPage() {
       <Container>
         <section className="py-24 md:py-32 relative">
           {/* Background decorations */}
-          <div className="pointer-events-none absolute left-0 top-1/4 h-[500px] w-[500px] -translate-x-1/2 translate-y-1/2 rounded-full bg-[var(--violet)]/10 blur-[120px]"></div>
-          <div className="pointer-events-none absolute right-0 top-1/2 h-[600px] w-[600px] translate-x-1/3 -translate-y-1/2 rounded-full bg-[var(--lime)]/10 blur-[150px]"></div>
+          <div className="pointer-events-none absolute left-0 top-1/4 h-[500px] w-[500px] -translate-x-1/2 translate-y-1/2 rounded-full bg-[var(--accent)]/10 blur-[120px]"></div>
+          <div className="pointer-events-none absolute right-0 top-1/2 h-[600px] w-[600px] translate-x-1/3 -translate-y-1/2 rounded-full bg-[var(--accent)]/10 blur-[150px]"></div>
 
-          {/* Hero — cinematic dark band with glass-ribbon atmosphere */}
-          <div className="atelier-band-dark relative z-10 mb-20 overflow-hidden rounded-[32px] border border-white/10 px-6 py-20 text-center shadow-[0_30px_70px_-30px_rgba(0,0,0,0.6)] md:py-24">
+          {/* Hero — asymmetric, oversized type, the receipt strip is the real
+              product device (mirrors the financial-audit breakdown below)
+              instead of a decorative badge + underline flourish. */}
+          <div className="atelier-band-dark relative z-10 mb-20 overflow-hidden rounded-[32px] border border-white/10 px-6 py-16 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.6)] sm:px-12 md:py-20">
             <Image
               src="/images/hero-ribbon-dark.png"
               alt=""
               fill
               priority
               sizes="100vw"
-              className="pointer-events-none object-cover opacity-45 mix-blend-screen"
+              className="pointer-events-none object-cover opacity-30 mix-blend-screen"
             />
-            <motion.div
-              className="relative z-10"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-2 text-xs font-bold tracking-[0.14em] text-[var(--color-text-on-dark)]/85 uppercase backdrop-blur-md">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--accent-10)]" />
-                {locale === "bg" ? "Прозрачност на всяка стъпка" : "Transparency at every step"}
-              </span>
-              <h1 className="mb-6 font-display text-[40px] font-bold text-[var(--color-text-on-dark)] md:text-[64px] leading-[1.06] flex flex-col md:block items-center justify-center">
-                {locale === "bg" ? "Собствени " : "Build your "}
-                <span className="relative inline-block mx-2">
-                  <span className="relative z-10 text-[var(--accent-10)]">
-                    {locale === "bg" ? "Условия" : "Terms"}
-                  </span>
-                  <motion.svg className="absolute -bottom-2 left-0 w-full z-0 text-[var(--accent-10)]/50" viewBox="0 0 200 20" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 0.5, duration: 1 }}>
-                    <path d="M5,15 Q100,-5 195,15" fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" />
-                  </motion.svg>
-                </span>
-                <br className="hidden md:block"/>
-                {locale === "bg" ? "На Отлична Цена" : "At Great Prices"}
+            <div className="relative z-10 max-w-3xl">
+              <Reveal variant="blur">
+                <p className="mb-5 font-mono text-xs font-bold tracking-[0.2em] text-[var(--color-text-on-dark)]/40 uppercase">
+                  {locale === "bg" ? "Цени · SilexBrand" : "Pricing · SilexBrand"}
+                </p>
+              </Reveal>
+              <h1 className="mb-6 font-display text-[2.5rem] leading-[0.98] font-extrabold tracking-tight text-[var(--color-text-on-dark)] sm:text-[3.5rem] md:text-[4.5rem]">
+                {locale === "bg" ? (
+                  <>Всяко евро,<br /><span className="text-[var(--accent-10)]">обяснено.</span></>
+                ) : (
+                  <>Every euro,<br /><span className="text-[var(--accent-10)]">explained.</span></>
+                )}
               </h1>
-              <p className="mx-auto max-w-2xl text-[18px] md:text-[20px] text-[var(--color-text-on-dark)]/70">
-                {locale === "bg"
-                  ? "Ние ще се съобразим с нуждите ви. Добавяйте само онова, от което имате нужда и изградете планът за вашия бизнес."
-                  : "We adjust to your needs. Add only what you require and build the plan for your business."}
-              </p>
-            </motion.div>
+              <Reveal variant="rise" delay={0.12}>
+                <p className="mb-8 max-w-lg text-[17px] leading-relaxed text-[var(--color-text-on-dark)]/60 md:text-[19px]">
+                  {locale === "bg"
+                    ? "Не блендирани абонаменти. Всеки план се разгъва до последното евро — вижте къде отива всяка стотинка, преди да платите."
+                    : "No blended subscriptions. Every plan unfolds down to the last euro — see where each cent goes before you pay."}
+                </p>
+              </Reveal>
+              <Reveal variant="rise" delay={0.2}>
+                <div className="flex flex-wrap gap-x-6 gap-y-2 border-t border-white/10 pt-5 font-mono text-[13px] text-[var(--color-text-on-dark)]/45">
+                  <span>{locale === "bg" ? "Дизайн" : "Design"} · €300</span>
+                  <span>{locale === "bg" ? "Текстове" : "Copy"} · €150</span>
+                  <span>SEO · €140</span>
+                  <span>{locale === "bg" ? "Хостинг" : "Hosting"} · €15{locale === "bg" ? "/мес" : "/mo"}</span>
+                  <span className="text-[var(--accent-10)]/70">{locale === "bg" ? "…всичко видимо" : "…all visible"}</span>
+                </div>
+              </Reveal>
+            </div>
           </div>
 
           {/* Free Trial Full Width Card */}
@@ -172,14 +160,14 @@ export default function PricingPage() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="card-featured relative mb-16 overflow-hidden rounded-[24px] border-2 border-[var(--accent)]/40 bg-gradient-to-br from-[var(--bg-card)] to-[var(--bg-card)] p-1 shadow-[0_20px_50px_-24px_color-mix(in_srgb,var(--accent)_45%,transparent)] group hover:shadow-[0_28px_60px_-24px_color-mix(in_srgb,var(--accent)_55%,transparent)] transition-all duration-500"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-[var(--lime)]/5 to-transparent z-0"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)]/5 to-transparent z-0"></div>
             <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-700">
-              <Sparkles size={250} className="translate-x-1/4 -translate-y-1/4 text-[var(--lime)]" />
+              <Sparkles size={250} className="translate-x-1/4 -translate-y-1/4 text-[var(--accent)]" />
             </div>
 
             <div className="relative z-10 bg-[var(--bg-card)]/80 backdrop-blur-md rounded-[1.3rem] p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-12">
               <div className="flex-1">
-                <Badge className="mb-4 border-none bg-[var(--lime)] px-4 py-1.5 text-sm font-bold text-black uppercase tracking-wider">
+                <Badge className="mb-4 border-none bg-[var(--accent)] px-4 py-1.5 text-sm font-bold text-black uppercase tracking-wider">
                   {locale === "bg" ? "Лимитирана оферта" : "Limited time offer"}
                 </Badge>
                 <h2 className="mb-6 font-display text-3xl font-bold md:text-5xl text-[var(--text-main)]">
@@ -195,8 +183,8 @@ export default function PricingPage() {
                     { bg: "Брандинг", en: "Branding" },
                   ].map((item) => (
                     <div key={item.bg} className="flex items-center gap-3">
-                      <div className="h-8 w-8 rounded-full bg-[var(--lime)]/20 flex items-center justify-center">
-                        <Check className="text-[var(--lime)]" size={18} />
+                      <div className="h-8 w-8 rounded-full bg-[var(--accent)]/20 flex items-center justify-center">
+                        <Check className="text-[var(--accent)]" size={18} />
                       </div>
                       {item[locale]}
                     </div>
@@ -224,6 +212,7 @@ export default function PricingPage() {
                 {billing === "monthly" && (
                   <motion.span
                     layoutId="billing-pill"
+                    initial={false}
                     className="absolute inset-0 rounded-full bg-[var(--accent)]"
                     transition={{ type: "spring", stiffness: 350, damping: 30 }}
                   />
@@ -240,6 +229,7 @@ export default function PricingPage() {
                 {billing === "annual" && (
                   <motion.span
                     layoutId="billing-pill"
+                    initial={false}
                     className="absolute inset-0 rounded-full bg-[var(--accent)]"
                     transition={{ type: "spring", stiffness: 350, damping: 30 }}
                   />
@@ -248,7 +238,7 @@ export default function PricingPage() {
                   {locale === "bg" ? "Годишно" : "Annual"}
                 </span>
                 <span className={`relative z-10 rounded-full px-2 py-0.5 text-[11px] font-extrabold uppercase tracking-wide ${
-                  billing === "annual" ? "bg-white/20 text-white" : "bg-[var(--lime)]/20 text-[var(--lime)]"
+                  billing === "annual" ? "bg-white/20 text-white" : "bg-[var(--accent)]/20 text-[var(--accent)]"
                 }`}>
                   {locale === "bg" ? "-10%" : "save 10%"}
                 </span>
@@ -285,7 +275,7 @@ export default function PricingPage() {
                   }`}
                 >
                   {/* Hover background injection */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: `linear-gradient(135deg, transparent 0%, ${plan.bgColor} 100%)` }}></div>
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "linear-gradient(135deg, transparent 0%, color-mix(in srgb, var(--accent) 8%, transparent) 100%)" }}></div>
 
                   {isPopular && (
                     <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-10)]"></div>
@@ -337,10 +327,10 @@ export default function PricingPage() {
                     {/* Block 2 — Месечна поддръжка / абонамент */}
                     <div
                       className="rounded-2xl border p-5"
-                      style={{ borderColor: `color-mix(in srgb, ${plan.color} 35%, var(--border))`, background: plan.bgColor }}
+                      style={{ borderColor: "color-mix(in srgb, var(--accent) 35%, var(--border))", background: "color-mix(in srgb, var(--accent) 8%, transparent)" }}
                     >
                       <div className="mb-2 flex items-center justify-between">
-                        <span className="text-[11px] font-extrabold uppercase tracking-wider" style={{ color: plan.color }}>
+                        <span className="text-[11px] font-extrabold uppercase tracking-wider" style={{ color: "var(--accent)" }}>
                           {locale === "bg" ? "Месечна поддръжка" : "Monthly support"}
                         </span>
                         {billing === "annual" && (
@@ -359,7 +349,7 @@ export default function PricingPage() {
                             exit={{ opacity: 0, y: 14, filter: "blur(4px)" }}
                             transition={{ duration: 0.3, type: "spring" }}
                             className="font-display text-4xl font-extrabold tracking-tighter"
-                            style={{ color: plan.color }}
+                            style={{ color: "var(--accent)" }}
                           >
                             {billing === "monthly" ? displayMonthlyPrice : displayAnnualPrice} €
                           </motion.span>
@@ -384,7 +374,7 @@ export default function PricingPage() {
                       <ul className="mt-4 space-y-2">
                         {plan.monthly.included[locale].map((item, i) => (
                           <li key={i} className="flex items-start gap-2 text-[13px] leading-relaxed text-[var(--text-main)]/90">
-                            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" style={{ color: plan.color }} />
+                            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" style={{ color: "var(--accent)" }} />
                             <span>{item}</span>
                           </li>
                         ))}
@@ -411,7 +401,7 @@ export default function PricingPage() {
                             </h4>
 
                             <div className="mb-3">
-                              <h5 className="font-extrabold mb-1.5 uppercase tracking-wide text-[10px]" style={{ color: plan.color }}>
+                              <h5 className="font-extrabold mb-1.5 uppercase tracking-wide text-[10px]" style={{ color: "var(--accent)" }}>
                                 {locale === "bg" ? `Еднократна такса (${plan.setup.price} €)` : `Setup Fee (${plan.setup.price} €)`}
                               </h5>
                               <div className="space-y-1">
@@ -425,7 +415,7 @@ export default function PricingPage() {
                             </div>
 
                             <div>
-                              <h5 className="font-extrabold mb-1.5 uppercase tracking-wide text-[10px]" style={{ color: plan.color }}>
+                              <h5 className="font-extrabold mb-1.5 uppercase tracking-wide text-[10px]" style={{ color: "var(--accent)" }}>
                                 {locale === "bg" ? `Месечен абонамент (${plan.monthly.price} €/мес)` : `Monthly Subscription (${plan.monthly.price} €/mo)`}
                               </h5>
                               <div className="space-y-1">
@@ -451,7 +441,7 @@ export default function PricingPage() {
                           exit={{ opacity: 0, height: 0, marginTop: 0 }}
                           className="w-full bg-[var(--bg-section)] border border-[var(--border)] rounded-lg p-3 text-xs md:text-sm font-medium flex items-start gap-2 shadow-inner"
                         >
-                          <TrendingUp className="text-[var(--coral)] shrink-0 w-4 h-4 mt-0.5" />
+                          <TrendingUp className="text-[var(--accent)] shrink-0 w-4 h-4 mt-0.5" />
                           <span>
                             {locale === "bg"
                               ? `За още малко доближавате плана ${plan.nextTierName}! Обмислете ъпгрейд.`
@@ -576,7 +566,7 @@ export default function PricingPage() {
                       <Button
                         className={`w-full rounded-xl py-4 flex items-center justify-center gap-2 text-lg font-bold transition-all relative overflow-hidden group/btn ${
                           isPopular
-                            ? "border-none bg-[var(--violet)] text-white shadow-[0_10px_20px_rgba(107,45,219,0.3)] hover:bg-[#5a22bd] hover:shadow-[0_15px_30px_rgba(107,45,219,0.4)] hover:-translate-y-1"
+                            ? "border-none bg-[var(--accent)] text-white shadow-[0_10px_20px_color-mix(in_srgb,var(--accent)_30%,transparent)] hover:bg-[var(--accent-hover)] hover:shadow-[0_15px_30px_color-mix(in_srgb,var(--accent)_40%,transparent)] hover:-translate-y-1"
                             : "border border-[var(--border)] bg-[var(--bg-section)] text-[var(--text-main)] hover:border-transparent hover:bg-[var(--text-main)] hover:text-black hover:shadow-[0_10px_20px_rgba(255,255,255,0.05)] hover:-translate-y-1"
                         }`}
                       >
@@ -644,8 +634,8 @@ export default function PricingPage() {
                     <th className="p-6 text-center text-xl font-bold text-[var(--text-main)] w-1/4">
                       Start
                     </th>
-                    <th className="p-6 text-center text-xl font-bold text-[var(--violet)] w-1/4 relative overflow-hidden group">
-                      <div className="absolute inset-0 bg-[var(--violet)]/5"></div>
+                    <th className="p-6 text-center text-xl font-bold text-[var(--accent)] w-1/4 relative overflow-hidden group">
+                      <div className="absolute inset-0 bg-[var(--accent)]/5"></div>
                       <span className="relative z-10">Grow</span>
                     </th>
                     <th className="p-6 text-center text-xl font-bold text-[var(--text-main)] w-1/4">
@@ -664,21 +654,51 @@ export default function PricingPage() {
                       </td>
                       <td className="p-6 text-center text-[var(--text-sub)]">
                         {typeof feature.start === "boolean" ? (
-                          feature.start ? <Check className="mx-auto text-[var(--lime)]" size={24} /> : <X className="mx-auto text-[var(--text-muted)] opacity-50" size={20} />
+                          feature.start ? (
+                            <>
+                              <Check className="mx-auto text-[var(--accent)]" size={24} aria-hidden="true" />
+                              <span className="sr-only">{locale === "bg" ? "Включено" : "Included"}</span>
+                            </>
+                          ) : (
+                            <>
+                              <X className="mx-auto text-[var(--text-muted)] opacity-50" size={20} aria-hidden="true" />
+                              <span className="sr-only">{locale === "bg" ? "Не е включено" : "Not included"}</span>
+                            </>
+                          )
                         ) : (
                           <span className="font-semibold">{feature.start}</span>
                         )}
                       </td>
-                      <td className="p-6 text-center font-bold text-[var(--violet)] bg-[var(--violet)]/[0.02] group-hover:bg-[var(--violet)]/[0.05] transition-colors relative">
+                      <td className="p-6 text-center font-bold text-[var(--accent)] bg-[var(--accent)]/[0.02] group-hover:bg-[var(--accent)]/[0.05] transition-colors relative">
                         {typeof feature.grow === "boolean" ? (
-                          feature.grow ? <Check className="mx-auto text-[var(--violet)]" size={24} /> : <X className="mx-auto text-[var(--text-muted)] opacity-50" size={20} />
+                          feature.grow ? (
+                            <>
+                              <Check className="mx-auto text-[var(--accent)]" size={24} aria-hidden="true" />
+                              <span className="sr-only">{locale === "bg" ? "Включено" : "Included"}</span>
+                            </>
+                          ) : (
+                            <>
+                              <X className="mx-auto text-[var(--text-muted)] opacity-50" size={20} aria-hidden="true" />
+                              <span className="sr-only">{locale === "bg" ? "Не е включено" : "Not included"}</span>
+                            </>
+                          )
                         ) : (
-                          <span className="font-bold text-[var(--violet)]">{feature.grow}</span>
+                          <span className="font-bold text-[var(--accent)]">{feature.grow}</span>
                         )}
                       </td>
                       <td className="p-6 text-center text-[var(--text-sub)]">
                         {typeof feature.pro === "boolean" ? (
-                          feature.pro ? <Check className="mx-auto text-[var(--coral)]" size={24} /> : <X className="mx-auto text-[var(--text-muted)] opacity-50" size={20} />
+                          feature.pro ? (
+                            <>
+                              <Check className="mx-auto text-[var(--accent)]" size={24} aria-hidden="true" />
+                              <span className="sr-only">{locale === "bg" ? "Включено" : "Included"}</span>
+                            </>
+                          ) : (
+                            <>
+                              <X className="mx-auto text-[var(--text-muted)] opacity-50" size={20} aria-hidden="true" />
+                              <span className="sr-only">{locale === "bg" ? "Не е включено" : "Not included"}</span>
+                            </>
+                          )
                         ) : (
                           <span className="font-semibold">{feature.pro}</span>
                         )}

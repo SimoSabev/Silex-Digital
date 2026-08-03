@@ -15,28 +15,28 @@ interface DemoCardProps {
 
 const colorStyles = {
   blue: {
-    bg: "bg-[var(--violet)]/10",
-    border: "border-[var(--violet)]/20 hover:border-[var(--violet)]/40",
-    icon: "text-[var(--violet)]",
-    accent: "group-hover:bg-[var(--violet)]/10",
+    bg: "bg-[var(--accent)]/10",
+    border: "border-[var(--accent)]/20 hover:border-[var(--accent)]/40",
+    icon: "text-[var(--accent)]",
+    accent: "group-hover:bg-[var(--accent)]/10",
   },
   green: {
-    bg: "bg-[var(--lime)]/10",
-    border: "border-[var(--lime)]/20 hover:border-[var(--lime)]/40",
-    icon: "text-[var(--lime)]",
-    accent: "group-hover:bg-[var(--lime)]/10",
+    bg: "bg-[var(--accent)]/10",
+    border: "border-[var(--accent)]/20 hover:border-[var(--accent)]/40",
+    icon: "text-[var(--accent)]",
+    accent: "group-hover:bg-[var(--accent)]/10",
   },
   orange: {
-    bg: "bg-[var(--coral)]/10",
-    border: "border-[var(--coral)]/20 hover:border-[var(--coral)]/40",
-    icon: "text-[var(--coral)]",
-    accent: "group-hover:bg-[var(--coral)]/10",
+    bg: "bg-[var(--accent)]/10",
+    border: "border-[var(--accent)]/20 hover:border-[var(--accent)]/40",
+    icon: "text-[var(--accent)]",
+    accent: "group-hover:bg-[var(--accent)]/10",
   },
   purple: {
-    bg: "bg-[var(--violet)]/10",
-    border: "border-[var(--violet)]/20 hover:border-[var(--violet)]/40",
-    icon: "text-[var(--violet)]",
-    accent: "group-hover:bg-[var(--violet)]/10",
+    bg: "bg-[var(--accent)]/10",
+    border: "border-[var(--accent)]/20 hover:border-[var(--accent)]/40",
+    icon: "text-[var(--accent)]",
+    accent: "group-hover:bg-[var(--accent)]/10",
   },
 };
 
@@ -65,7 +65,7 @@ export default function DemoCard({
         </div>
 
         {/* Content */}
-        <h3 className="mb-2 text-lg font-semibold text-[var(--text-main)] transition-colors group-hover:text-[var(--violet)]">
+        <h3 className="mb-2 text-lg font-semibold text-[var(--text-main)] transition-colors group-hover:text-[var(--accent)]">
           {title}
         </h3>
         <p className="mb-4 text-sm text-[var(--text-sub)]">{description}</p>

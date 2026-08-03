@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { CalendarCheck, TrendingUp, Zap, Mail, type LucideIcon } from "lucide-react";
 import { useI18n, type Locale } from "@/lib/i18n";
 
 type Localized = { bg: string; en: string };
@@ -108,53 +109,57 @@ const CONVERSATIONS: Conversation[] = [
   },
 ];
 
-const TOASTS: { icon: string; label: Localized; sub: Localized; type: "accent" | "success" }[] = [
+const TOASTS: { icon: LucideIcon; label: Localized; sub: Localized; type: "accent" | "success" }[] = [
   {
-    icon: "💰",
+    icon: CalendarCheck,
     label: { bg: "Нова резервация", en: "New booking" },
     sub: { bg: "Maria K. · сега", en: "Maria K. · just now" },
     type: "success",
   },
   {
-    icon: "📈",
+    icon: TrendingUp,
     label: { bg: "+3 запитвания днес", en: "+3 leads today" },
     sub: { bg: "Над план с 40%", en: "40% above target" },
     type: "accent",
   },
   {
-    icon: "⚡",
+    icon: Zap,
     label: { bg: "Автоматизацията е готова", en: "Workflow complete" },
     sub: { bg: "Изпълнено за 0.6s", en: "Finished in 0.6s" },
     type: "accent",
   },
   {
-    icon: "🔔",
+    icon: Mail,
     label: { bg: "Репорт изпратен", en: "Report sent" },
     sub: { bg: "Месечен отчет", en: "Monthly report" },
     type: "success",
   },
 ];
 
+// These metric values render on a near-black card (see the two METRICS.map
+// usages below) — they need the light "on-dark" tint variants, not the base
+// --accent/--color-success tokens, which are tuned for text on light
+// surfaces and read at ~1.7:1 contrast here (AUDIT.md H3).
 const METRICS = [
   {
     label: { bg: "Ср. отговор", en: "Avg reply" },
     value: "0.8s",
-    accent: "var(--accent)",
+    accent: "var(--accent-10)",
   },
   {
     label: { bg: "Запитвания / ден", en: "Leads / day" },
     value: "24",
-    accent: "var(--color-success)",
+    accent: "var(--color-success-10)",
   },
   {
     label: { bg: "Конверсия", en: "Conversion" },
     value: "94%",
-    accent: "var(--accent)",
+    accent: "var(--accent-10)",
   },
   {
     label: { bg: "Спест. часа", en: "Saved hrs" },
     value: "15h",
-    accent: "var(--color-success)",
+    accent: "var(--color-success-10)",
   },
 ];
 
@@ -170,7 +175,7 @@ const BAR_DAYS: Localized[] = [
 ];
 
 const COPY = {
-  liveInbox: { bg: "Входящи на живо", en: "Live inbox" },
+  liveInbox: { bg: "Демо: примерни входящи", en: "Demo: example inbox" },
   performance: { bg: "Показатели", en: "Performance" },
   weekTrend: { bg: "↑ 40% тази седмица", en: "↑ 40% this week" },
   leadsWeek: { bg: "Запитвания тази седмица", en: "Leads this week" },
@@ -416,7 +421,7 @@ export default function HeroVisualization() {
                             strokeLinejoin="round"
                           />
                         </svg>
-                        <span className="text-[10px] font-semibold text-[var(--color-success)]">
+                        <span className="text-[10px] font-semibold text-[var(--color-success-10)]">
                           {pick(locale, COPY.sentIn)} {conv.time}
                         </span>
                       </div>
@@ -434,7 +439,7 @@ export default function HeroVisualization() {
           <span className="text-[10px] font-bold tracking-widest text-white/40 uppercase">
             {pick(locale, COPY.performance)}
           </span>
-          <div className="rounded-full bg-accent/15 px-2.5 py-1 text-[9px] font-bold text-accent">
+          <div className="rounded-full bg-accent/15 px-2.5 py-1 text-[9px] font-bold text-[var(--accent-10)]">
             {pick(locale, COPY.weekTrend)}
           </div>
         </div>
@@ -466,7 +471,7 @@ export default function HeroVisualization() {
             {BAR_DATA.map((v, i) => (
               <motion.div
                 key={i}
-                className={`flex-1 rounded-sm ${i === 6 ? "bg-accent" : "bg-accent/20"}`}
+                className={`flex-1 rounded-sm ${i === 6 ? "bg-[var(--accent)]" : "bg-accent/20"}`}
                 initial={{ height: "0%" }}
                 animate={{ height: `${(v / 31) * 100}%` }}
                 transition={{ duration: 0.5, delay: i * 0.06, ease: "easeOut" }}
@@ -486,6 +491,7 @@ export default function HeroVisualization() {
               label: { bg: "Имейл отговор", en: "Email reply" },
               status: { bg: "активен", en: "running" },
               color: "var(--color-success)",
+              textColor: "var(--color-success-10)",
               key: "email",
               running: true,
             },
@@ -493,6 +499,7 @@ export default function HeroVisualization() {
               label: { bg: "Квалификация", en: "Lead qualification" },
               status: { bg: "активен", en: "running" },
               color: "var(--color-success)",
+              textColor: "var(--color-success-10)",
               key: "lead",
               running: true,
             },
@@ -500,9 +507,14 @@ export default function HeroVisualization() {
               label: { bg: "Напомняне за среща", en: "Booking reminder" },
               status: { bg: "на опашка", en: "queued" },
               color: "var(--accent)",
+              textColor: "var(--accent-10)",
               key: "book",
               running: false,
             },
+            // `color` stays the saturated brand token — it's only ever used as
+            // the small status-dot fill, a graphical element, not text, so it
+            // isn't held to WCAG text-contrast thresholds. `textColor` is the
+            // light on-dark variant for the actual status label (see below).
           ].map((item) => (
             <div
               key={item.key}
@@ -525,7 +537,7 @@ export default function HeroVisualization() {
               </span>
               <span
                 className="flex-none text-[9px] font-bold uppercase tracking-wider"
-                style={{ color: item.color }}
+                style={{ color: item.textColor }}
               >
                 {pick(locale, item.status)}
               </span>
@@ -556,20 +568,20 @@ export default function HeroVisualization() {
             className="absolute bottom-14 left-1/2 z-30 flex -translate-x-1/2 items-center gap-3 rounded-2xl border border-white/10 bg-[var(--color-bg-dark)]/95 px-4 py-2.5 shadow-2xl backdrop-blur-xl lg:bottom-5"
           >
             <div
-              className={`flex h-8 w-8 flex-none items-center justify-center rounded-xl text-base ${toast.type === "success" ? "bg-success/10" : "bg-accent/10"}`}
+              className={`flex h-8 w-8 flex-none items-center justify-center rounded-xl ${toast.type === "success" ? "bg-success/10 text-[var(--color-success)]" : "bg-accent/10 text-[var(--accent)]"}`}
             >
-              {toast.icon}
+              <toast.icon className="h-4 w-4" strokeWidth={2.25} />
             </div>
             <div>
               <p className="text-xs font-bold text-white">
                 {pick(locale, toast.label)}
               </p>
-              <p className={`text-[10px] ${toast.type === "success" ? "text-success" : "text-accent"}`}>
+              <p className={`text-[10px] ${toast.type === "success" ? "text-[var(--color-success-10)]" : "text-[var(--accent-10)]"}`}>
                 {pick(locale, toast.sub)}
               </p>
             </div>
             <div
-              className={`ml-1 h-1.5 w-1.5 flex-none animate-pulse rounded-full ${toast.type === "success" ? "bg-success" : "bg-accent"}`}
+              className={`ml-1 h-1.5 w-1.5 flex-none animate-pulse rounded-full ${toast.type === "success" ? "bg-[var(--color-success)]" : "bg-[var(--accent)]"}`}
             />
           </motion.div>
         )}

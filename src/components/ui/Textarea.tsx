@@ -1,5 +1,5 @@
 import type { TextareaHTMLAttributes } from "react";
-import { forwardRef } from "react";
+import { forwardRef, useId } from "react";
 
 export interface TextareaProps extends Omit<
   TextareaHTMLAttributes<HTMLTextAreaElement>,
@@ -16,11 +16,11 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     { label, error, helperText, size = "md", className = "", id, ...props },
     ref,
   ) => {
-    const textareaId =
-      id ?? `textarea-${Math.random().toString(36).substr(2, 9)}`;
+    const generatedId = useId();
+    const textareaId = id ?? generatedId;
 
     const baseStyles =
-      "w-full resize-y rounded-xl border bg-[var(--bg-card)] text-[var(--text-main)] placeholder:text-[var(--text-muted)] transition-all duration-300 focus-visible:border-[var(--violet)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--violet)]/30 disabled:cursor-not-allowed disabled:opacity-50";
+      "w-full resize-y rounded-[var(--radius-sm)] border-[1.5px] bg-[var(--bg-card)] text-[var(--text-main)] placeholder:text-[var(--text-muted)] shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] transition-all duration-200 hover:border-[color-mix(in_srgb,var(--accent)_35%,var(--border))] focus-visible:border-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/15 disabled:cursor-not-allowed disabled:opacity-50";
 
     const sizeStyles = {
       sm: "px-3 py-1.5 text-sm min-h-[80px]",
@@ -29,7 +29,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     };
 
     const errorStyles = error
-      ? "border-[var(--coral)]/50 focus-visible:ring-[var(--coral)]/30"
+      ? "border-[var(--accent)]/50 focus-visible:ring-[var(--accent)]/30"
       : "border-[var(--border)]";
 
     return (
@@ -57,7 +57,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           {...props}
         />
         {error && (
-          <p id={`${textareaId}-error`} className="text-sm text-red-400">
+          <p id={`${textareaId}-error`} className="text-sm font-medium text-[var(--accent)]">
             {error}
           </p>
         )}

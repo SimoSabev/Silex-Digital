@@ -6,14 +6,15 @@ import {
   Database,
   FileText,
   Code,
+  MousePointerClick,
 } from "lucide-react";
 import Container from "@/components/ui/Container";
-import DarkHero from "@/components/ui/DarkHero";
 import DemoContainer from "@/components/demos/DemoContainer";
 import EmailAutomationDemo from "@/components/demos/EmailAutomationDemo";
 import LeadQualificationDemo from "@/components/demos/LeadQualificationDemo";
 import ChatbotDemo from "@/components/demos/ChatbotDemo";
 import LazyReveal from "@/components/ui/LazyReveal";
+import { Reveal } from "@/components/ui/Reveal";
 import { useI18n } from "@/lib/i18n";
 
 const demos = [
@@ -26,7 +27,7 @@ const demos = [
     },
     icon: <MessageSquare className="h-6 w-6" />,
     component: <EmailAutomationDemo />,
-    previewImage: "/images/demo-email-automation-visual.png",
+    previewImage: "/images/demo-email-automation-mockup.png",
     color: "blue" as const,
   },
   {
@@ -38,7 +39,7 @@ const demos = [
     },
     icon: <Zap className="h-6 w-6" />,
     component: <LeadQualificationDemo />,
-    previewImage: "/images/demo-lead-qualification-visual.png",
+    previewImage: "/images/demo-lead-qualification-mockup.png",
     color: "green" as const,
   },
   {
@@ -50,7 +51,7 @@ const demos = [
     },
     icon: <MessageSquare className="h-6 w-6" />,
     component: <ChatbotDemo />,
-    previewImage: "/images/demo-chatbot-visual.png",
+    previewImage: "/images/demo-chatbot-mockup.png",
     color: "purple" as const,
   },
   {
@@ -88,29 +89,43 @@ const demos = [
   },
 ];
 
-export default function DemosPage() {
+export default function DemosContent() {
   const { locale } = useI18n();
 
   return (
     <div className="relative min-h-dvh overflow-x-hidden bg-[var(--bg-page)] pb-12 sm:pb-20">
-      {/* Hero — cinematic dark band */}
-      <DarkHero
-        image="/images/hero-ribbon-streams.png"
-        eyebrow={locale === "bg" ? "Интерактивни демонстрации" : "Interactive demos"}
-        title={
-          <>
-            {locale === "bg" ? "Виж как изглежда, " : "See what it looks like "}
-            <span className="text-[var(--accent-10)]">
-              {locale === "bg" ? "когато всичко работи само" : "when everything runs itself"}
-            </span>
-          </>
-        }
-        subtitle={
-          locale === "bg"
-            ? "Кликни върху всяка карта и виж как изглежда в твоя бизнес — интерактивна симулация, без регистрация."
-            : "Click on any card and see how it looks in your business — interactive simulation, no sign-up needed."
-        }
-      />
+      {/* Hero — not a claim, a dare: click something, right now */}
+      <section className="atelier-band-dark relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-24">
+        <Container>
+          <div className="mx-auto max-w-3xl text-center">
+            <Reveal variant="blur">
+              <p className="mb-5 font-mono text-xs font-bold tracking-[0.2em] text-[var(--color-text-on-dark)]/40 uppercase">
+                {locale === "bg" ? "Демонстрации · SilexBrand" : "Demos · SilexBrand"}
+              </p>
+            </Reveal>
+            <h1 className="font-display text-[2.5rem] leading-[1] font-extrabold tracking-tight text-[var(--color-text-on-dark)] sm:text-[3.5rem] md:text-[4.5rem]">
+              {locale === "bg" ? (
+                <>Три системи.<br /><span className="text-[var(--accent-10)]">Работещи точно сега.</span></>
+              ) : (
+                <>Three systems.<br /><span className="text-[var(--accent-10)]">Working right now.</span></>
+              )}
+            </h1>
+            <Reveal variant="rise" delay={0.14}>
+              <p className="mx-auto mt-7 max-w-xl text-[17px] leading-relaxed text-[var(--color-text-on-dark)]/60 md:text-[19px]">
+                {locale === "bg"
+                  ? "Не скрийншоти — истински интерактивни системи, точно под този текст. Кликнете и пробвайте директно, без регистрация."
+                  : "Not screenshots — real interactive systems, right below this text. Click in and try them directly, no sign-up needed."}
+              </p>
+            </Reveal>
+            <Reveal variant="rise" delay={0.24}>
+              <div className="mt-9 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-[var(--color-text-on-dark)]/70 backdrop-blur-md">
+                <MousePointerClick className="h-4 w-4 text-[var(--accent-10)]" />
+                {locale === "bg" ? "Скролни надолу и опитай" : "Scroll down and try one"}
+              </div>
+            </Reveal>
+          </div>
+        </Container>
+      </section>
 
       {/* Demos Grid - High End Bento Box Style */}
       <section className="section relative z-10 pt-16 md:pt-20">
@@ -167,7 +182,7 @@ export default function DemosPage() {
                       {locale === "bg" ? "Скоро" : "Soon"}
                     </span>
                     <div className="mb-3 flex items-center gap-4">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--bg-section)] text-[var(--text-main)] transition-colors hover:text-[var(--violet)]">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--bg-section)] text-[var(--text-main)] transition-colors hover:text-[var(--accent)]">
                         {demo.icon}
                       </div>
                       <div>
@@ -206,7 +221,7 @@ export default function DemosPage() {
       <section className="relative z-10 py-12 md:py-16">
         <Container>
           <LazyReveal delay={0.3}>
-            <div className="card-featured mx-auto max-w-4xl p-6 sm:p-8 text-center md:p-12 shadow-2xl hover:shadow-[var(--violet)]/20 transition-all duration-700">
+            <div className="card-featured mx-auto max-w-4xl p-6 sm:p-8 text-center md:p-12 shadow-2xl hover:shadow-[var(--accent)]/20 transition-all duration-700">
               <h2 className="mb-3 sm:mb-4 font-[family-name:var(--font-display)] text-xl sm:text-2xl font-[700] text-[var(--text-main)] md:text-3xl">
                 {locale === "bg"
                   ? "Искаш персонализирана демонстрация?"
