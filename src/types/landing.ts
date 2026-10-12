@@ -1,3 +1,6 @@
+// Legacy landing-page shapes. Not imported anywhere at the moment; prices
+// and plans now live in "@/lib/offer". Testimonial and "popular" badge types
+// were removed with the testimonials (no verifiable reviews yet).
 export interface Feature {
   id: string;
   title: string;
@@ -26,19 +29,10 @@ export interface PricingPlan {
   name: string;
   description: string;
   price: string;
-  popular: boolean;
   features: string[];
   cta: string;
   variant: "primary" | "secondary";
   gradient: string;
-}
-
-export interface Testimonial {
-  name: string;
-  role: string;
-  content: string;
-  rating: number;
-  accent: "purple" | "violet" | "pink";
 }
 
 export interface Benefit {

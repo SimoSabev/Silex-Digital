@@ -64,10 +64,10 @@ export default async function DemoPage({
       <Container>
         <div className="mx-auto max-w-3xl">
           <div className="mb-8 text-center">
-            <p className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-2">
+            <p className="mb-2 eyebrow text-[var(--text-muted)]">
               Interactive Demo · SilexBrand
             </p>
-            <h1 className="text-3xl font-bold text-[var(--text-main)] font-[family-name:var(--font-display)]">
+            <h1 className="text-h2 text-[var(--text-main)]">
               {heading}
             </h1>
             <p className="text-[var(--text-sub)] mt-2">{description}</p>
@@ -86,7 +86,7 @@ export default async function DemoPage({
           </DemoContainer>
 
           <div className="mt-10 text-center">
-            <p className="text-sm text-[var(--text-sub)] mb-4">
+            <p className="mb-4 text-small text-[var(--text-sub)]">
               Want this running for your business?
             </p>
             <a

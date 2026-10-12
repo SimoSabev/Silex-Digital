@@ -1,45 +1,45 @@
 /**
- * SEO Configuration for SilexBrand
- * Automation Platform — Bulgarian Market
+ * SEO configuration for SilexBrand — brand building for Bulgarian businesses.
+ * Prices in descriptions and structured data are derived from "@/lib/offer";
+ * never type an amount here.
  */
+import { bundles, formatEur, priceRange, services } from "@/lib/offer";
+
+const bg = (amount: number): string => formatEur(amount, "bg");
 
 export const siteConfig = {
   name: "SilexBrand",
-  title: "SilexBrand | Автоматизация на бизнеса в България",
+  title: "SilexBrand — изграждане на бранд от нулата, Варна",
   description:
-    "Автоматизирай бизнеса си с SilexBrand — AI чатбот, CRM интеграция, омниканална автоматизация и уеб разработка за малкия бизнес в България. Безплатна консултация.",
+    "Идентичност, уебсайт, съдържание, реклама, SEO и AI автоматизация от един екип. Купувате пакет или една услуга. Безплатна среща за български фирми.",
   url: "https://silexbrand.com",
   domain: "silexbrand.com",
   locale: "bg_BG",
   defaultImage: "/images/og-default.jpg",
 
   keywords: [
-    // BG Primary
+    // BG primary — brand building
+    "изграждане на бранд",
+    "брандинг за малък бизнес",
+    "уебсайт и лого",
+    "дигитална агенция Варна",
+    "SEO и реклама за малък бизнес",
+    "пакет за онлайн присъствие",
+    "изработка на лого",
+    "изработка на уебсайт Варна",
+    "бранд идентичност",
+    "реклама във Facebook и Google за малък бизнес",
+    "локално SEO Варна",
+    // BG secondary — automation
+    "AI асистент за бизнес",
+    "Viber бот за бизнес",
     "автоматизация на бизнеса",
-    "бизнес автоматизация България",
-    "AI чатбот за бизнес",
-    "CRM система малък бизнес",
-    "уеб сайт за малкия бизнес",
-    "автоматизация на процеси",
-    "дигитализация на бизнес",
-    "омниканална автоматизация",
-    "автоматизация маркетинг",
-    "уеб разработка България",
-    "чатбот за бизнес",
-    "интеграция Viber Messenger WhatsApp",
-    "генериране на лийдове",
-    "бизнес автоматизация София",
-    "бизнес автоматизация Варна",
-    "автоматизация поръчки",
-    "автоматизация клиентско обслужване",
-    // EN Secondary
-    "business automation Bulgaria",
-    "AI chatbot Bulgaria",
-    "web development Bulgaria",
-    "CRM integration Bulgaria",
-    "automation agency Bulgaria",
-    "small business automation",
-    "lead generation Bulgaria",
+    // EN secondary
+    "brand building Bulgaria",
+    "branding agency Varna",
+    "website and logo Bulgaria",
+    "small business SEO Bulgaria",
+    "AI assistant for business Bulgaria",
   ],
 
   social: {
@@ -68,7 +68,7 @@ export const siteConfig = {
     name: "SilexBrand",
     legalName: "SilexBrand EOOD",
     foundingDate: "2024",
-    priceRange: "$$",
+    priceRange: `${bg(priceRange.low)}–${bg(priceRange.high)}`,
   },
 
   openGraph: {
@@ -85,144 +85,64 @@ export const siteConfig = {
   },
 };
 
+// Only pages that still read their metadata from here. Pricing and services
+// pages own their metadata (written from "@/lib/offer" next to the page).
 export const pageSeo = {
   home: {
-    title: "Автоматизация на бизнеса в България — AI чатбот и CRM",
-    description:
-      "Спести над 15 часа на месец с AI автоматизация. Чатбот за бизнес, CRM интеграция, омниканални съобщения (Viber, Messenger, WhatsApp). Безплатна консултация за малкия бизнес в България.",
+    title: siteConfig.title,
+    description: siteConfig.description,
     keywords: [
-      "автоматизация на бизнеса",
-      "AI чатбот за бизнес",
-      "CRM система малък бизнес",
-      "бизнес автоматизация България",
-      "омниканална автоматизация",
-      "автоматизация Viber Messenger",
-      "дигитализация малък бизнес",
-      "уеб сайт за малкия бизнес",
-      "спести работно време автоматизация",
-      "business automation Bulgaria",
-      "AI chatbot Bulgaria",
-    ],
-  },
-  pricing: {
-    title: "Цени | Автоматизация и AI чатбот за малкия бизнес",
-    description:
-      "Прозрачни цени за AI автоматизация, чатбот и уеб сайт. Планове от 49 €/месец за малкия бизнес във Варна и България. Без скрити такси, безплатна консултация.",
-    keywords: [
-      "цена автоматизация бизнес",
-      "цена AI чатбот",
-      "цена уеб сайт малък бизнес",
-      "евтина автоматизация България",
-      "пакети автоматизация цени",
-      "CRM система цена",
-      "automation pricing Bulgaria",
-    ],
-  },
-  blog: {
-    title: "Блог | Автоматизация, AI и Растеж на бизнеса",
-    description:
-      "Практични статии за бизнес автоматизация, AI инструменти и дигитализация за малкия бизнес в България. Как да спестиш време и да печелиш повече клиенти.",
-    keywords: [
-      "блог автоматизация бизнес",
-      "AI инструменти за бизнес",
-      "дигитализация малък бизнес",
-      "бизнес растеж България",
-      "как да автоматизирам бизнеса",
-      "business automation tips Bulgaria",
+      "изграждане на бранд",
+      "брандинг за малък бизнес",
+      "уебсайт и лого",
+      "дигитална агенция Варна",
+      "SEO и реклама за малък бизнес",
+      "пакет за онлайн присъствие",
+      "AI асистент за бизнес",
+      "brand building Bulgaria",
     ],
   },
   contact: {
-    title: "Безплатна консултация | Автоматизация на бизнеса",
+    title: "Безплатна 30-минутна среща",
     description:
-      "Свържи се с SilexBrand за безплатна консултация. Автоматизация, AI чатбот и уеб разработка за малкия бизнес в България. Отговаряме до 24 часа.",
+      "Заявете безплатна 30-минутна среща със SilexBrand. Казваме ви какво ви трябва, какво може да почака и колко струва — писмено. Отговаряме до 24 часа.",
     keywords: [
-      "безплатна консултация автоматизация",
-      "контакти автоматизация бизнес",
-      "SilexBrand консултация",
-      "AI решения за бизнес България",
-      "free consultation business automation Bulgaria",
-    ],
-  },
-  pricingSeo: {
-    title: "SEO Нива | Локално SEO и AI видимост",
-    description:
-      "Отделни SEO нива от €80/мес за малкия бизнес във Варна — Google бизнес профил, локални цитирания, съдържание и проследяване дали ChatGPT и Gemini ви споменават.",
-    keywords: [
-      "SEO услуги Варна",
-      "локално SEO България",
-      "Google бизнес профил оптимизация",
-      "GEO AI видимост",
-      "SEO цена малък бизнес",
-      "local SEO Varna Bulgaria",
-    ],
-  },
-  services: {
-    title: "Услуги | AI Автоматизация, Чатбот и Уеб Разработка",
-    description:
-      "Пълен набор от дигитални услуги за малкия бизнес: AI чатбот, омниканална автоматизация, CRM интеграция, модерни уеб сайтове и персонализирани платформи за България.",
-    keywords: [
-      "AI чатбот услуга",
-      "омниканална автоматизация услуга",
-      "CRM интеграция България",
-      "уеб разработка малък бизнес",
-      "автоматизация поръчки",
-      "Viber WhatsApp Messenger автоматизация",
-      "уеб сайт за ресторант",
-      "уеб сайт за магазин",
-      "web development small business Bulgaria",
-      "CRM integration Bulgaria",
+      "безплатна консултация брандинг",
+      "среща дигитална агенция Варна",
+      "SilexBrand контакти",
+      "изграждане на бранд консултация",
+      "free consultation branding Bulgaria",
     ],
   },
   demos: {
-    title: "Интерактивно Демо | AI Чатбот и Автоматизация в действие",
+    title: "Демота | AI асистент и автоматизация на живо",
     description:
-      "Изпробвай AI чатбота, омниканалната автоматизация и квалификацията на лийдове директно в браузъра. Виж как SilexBrand работи за твоя бизнес.",
+      "Пробвайте AI асистента и автоматизациите директно в браузъра, без регистрация. Данните в демотата са примерни.",
     keywords: [
-      "демо AI чатбот",
+      "демо AI асистент",
       "демо автоматизация бизнес",
-      "интерактивно демо автоматизация",
-      "как работи AI чатбот",
-      "омниканална автоматизация демо",
+      "интерактивно демо чатбот",
+      "Viber бот демо",
       "AI chatbot demo Bulgaria",
-    ],
-  },
-  industries: {
-    title: "Индустрии | Автоматизация за Ресторанти, Магазини и Услуги",
-    description:
-      "Специализирана автоматизация по сектори: ресторанти, е-търговия, салони за красота, недвижими имоти, здравеопазване. Персонализирани решения за всяка индустрия в България.",
-    keywords: [
-      "автоматизация ресторант",
-      "автоматизация онлайн магазин",
-      "автоматизация салон красота",
-      "автоматизация недвижими имоти",
-      "чатбот за ресторант",
-      "автоматизация здравеопазване",
-      "restaurant automation Bulgaria",
-    ],
-  },
-  portfolio: {
-    title: "Портфолио | Реализирани проекти за автоматизация",
-    description:
-      "Реални резултати: вижте проекти за автоматизация, уеб сайтове и AI решения, изградени от SilexBrand за всякакви бизнеси. Измерими резултати и доволни клиенти.",
-    keywords: [
-      "портфолио автоматизация България",
-      "реализирани проекти уеб сайтове",
-      "примери AI чатбот бизнес",
-      "резултати автоматизация",
-      "automation portfolio Bulgaria",
     ],
   },
   privacy: {
     title: "Политика за поверителност",
     description:
-      "Как SilexBrand събира, използва и защитава личните ви данни — заявки за консултация, аналитика на сайта и правата ви по GDPR.",
-    keywords: ["политика за поверителност", "GDPR SilexBrand", "лични данни автоматизация бизнес"],
+      "Как SilexBrand събира, използва и защитава личните ви данни — заявки за среща, аналитика на сайта и правата ви по GDPR.",
+    keywords: ["политика за поверителност", "GDPR SilexBrand", "лични данни"],
   },
   terms: {
     title: "Общи условия",
     description:
-      "Общи условия за услугите на SilexBrand — уебсайтове, AI асистенти и автоматизация: плащане, срокове, анулиране и отговорности.",
-    keywords: ["общи условия", "договор автоматизация бизнес", "условия SilexBrand"],
+      "Общи условия за услугите на SilexBrand — бранд, уебсайтове, реклама, SEO и AI асистенти: плащане, срокове, анулиране и отговорности.",
+    keywords: ["общи условия", "договор дигитална агенция", "условия SilexBrand"],
+  },
+  dataDeletion: {
+    title: "Инструкции за изтриване на данни",
+    description:
+      "Как да поискате изтриване на съобщенията си, ако сте писали на бизнес, използващ AI асистента на SilexBrand във Viber, Messenger или WhatsApp.",
+    keywords: ["изтриване на данни", "data deletion Meta", "GDPR право на изтриване"],
   },
 };
 
@@ -247,10 +167,8 @@ export const organizationSchema = {
     ...siteConfig.contact.address,
   },
   // `sameAs` intentionally omitted: siteConfig.social.* are placeholder handles
-  // (facebook.com/silexbrand etc.) with no confirmed live profile behind them —
-  // asserting them to Google as verified social profiles would be structured-data
-  // that doesn't match reality. Re-add here once the real profiles exist and are
-  // linked from the footer.
+  // with no confirmed live profile behind them. Re-add once the real profiles
+  // exist and are linked from the footer.
 };
 
 export const localBusinessSchema = {
@@ -279,6 +197,7 @@ export const localBusinessSchema = {
     },
   ],
   priceRange: siteConfig.business.priceRange,
+  // No aggregateRating / review: there are no verifiable public reviews yet.
 };
 
 export const websiteSchema = {
@@ -288,26 +207,33 @@ export const websiteSchema = {
   url: siteConfig.url,
   description: siteConfig.description,
   inLanguage: ["bg", "en"],
-  potentialAction: {
-    "@type": "SearchAction",
-    target: `${siteConfig.url}/search?q={search_term_string}`,
-    "query-input": "required name=search_term_string",
-  },
+  // No SearchAction: the site has no /search route.
 };
 
-export const softwareApplicationSchema = {
+/** Whole catalog (single services + bundles) as one AggregateOffer. EUR, excl. VAT. */
+export const offerCatalogSchema = {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "SilexBrand Automation Platform",
-  applicationCategory: "BusinessApplication",
-  operatingSystem: "Web",
+  "@type": "Service",
+  name: "Изграждане на бранд — идентичност, уебсайт, съдържание, реклама, SEO и AI автоматизация",
+  serviceType: "Brand building",
+  description: siteConfig.description,
+  url: `${siteConfig.url}/pricing`,
+  areaServed: { "@type": "Country", name: "Bulgaria" },
+  provider: {
+    "@type": "LocalBusiness",
+    name: siteConfig.business.name,
+    url: siteConfig.url,
+  },
   offers: {
     "@type": "AggregateOffer",
-    lowPrice: "49",
-    highPrice: "298",
+    lowPrice: String(priceRange.low),
+    highPrice: String(priceRange.high),
     priceCurrency: "EUR",
-    offerCount: "3",
+    offerCount: String(bundles.length + services.length),
+    priceSpecification: {
+      "@type": "PriceSpecification",
+      priceCurrency: "EUR",
+      valueAddedTaxIncluded: false,
+    },
   },
-  description: siteConfig.description,
-  url: siteConfig.url,
 };

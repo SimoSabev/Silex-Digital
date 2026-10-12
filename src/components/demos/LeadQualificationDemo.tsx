@@ -149,7 +149,7 @@ export default function LeadQualificationDemo() {
       {/* Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between p-4 sm:p-5 border-b border-[var(--border)] bg-transparent relative z-10">
         <div className="min-w-0">
-          <h3 className="font-display text-base sm:text-lg font-bold text-[var(--text-main)] leading-tight flex items-center gap-2">
+          <h3 className="flex items-center gap-2 text-h4 text-[var(--text-main)]">
              <Activity className="text-[var(--accent)] shrink-0" size={20}/>
              <span className="truncate">{locale === "bg" ? "AI Квалификация на Лийдове" : "AI Lead Qualification"}</span>
           </h3>
@@ -191,13 +191,13 @@ export default function LeadQualificationDemo() {
         <div className="p-4 sm:p-6 md:p-8 flex flex-col bg-[url('/img/grid.svg')] bg-[length:32px_32px] min-h-[200px]">
            <div className="mb-4 flex items-center gap-2">
              <div className="w-2 h-2 rounded-full bg-[var(--text-muted)] animate-pulse" />
-             <span className="text-xs font-bold uppercase tracking-widest text-[var(--text-sub)]">
+             <span className="eyebrow text-[var(--text-sub)]">
                {locale === "bg" ? "Неструктуриран Текст (Имейл/Чат)" : "Unstructured Text (Email/Chat)"}
              </span>
            </div>
            
            <div className="flex-1 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl p-5 shadow-inner">
-              <div className="text-[15px] leading-relaxed text-[var(--text-main)] font-medium h-full">
+              <div className="h-full text-body font-medium text-[var(--text-main)]">
                 {typedText ? renderHighlightedText() : (
                   <span className="text-[var(--text-muted)] italic">
                     {locale === "bg" ? "Изчаква се входяща комуникация..." : "Waiting for incoming communication..."}
@@ -223,7 +223,7 @@ export default function LeadQualificationDemo() {
 
            <div className="mb-6 flex items-center gap-2 relative z-10">
              <Sparkles className="text-[var(--accent)]" size={18} />
-             <span className="text-xs font-bold uppercase tracking-widest text-[var(--text-main)]">
+             <span className="eyebrow text-[var(--text-main)]">
                {locale === "bg" ? "Live Lead Профил" : "Live Lead Profile"}
              </span>
            </div>
@@ -240,7 +240,7 @@ export default function LeadQualificationDemo() {
                      {rule.icon}
                    </div>
                    <div className="flex-1">
-                     <div className="text-[10px] uppercase font-bold text-[var(--text-muted)] mb-0.5">
+                     <div className="text-micro uppercase font-bold text-[var(--text-muted)] mb-0.5">
                        {key.charAt(0).toUpperCase() + key.slice(1)}
                      </div>
                      <div className={`text-sm font-semibold transition-all duration-300 ${hasValue ? "text-[var(--text-main)]" : "text-[var(--text-muted)] italic"}`}>
@@ -260,10 +260,10 @@ export default function LeadQualificationDemo() {
            {/* Scoring Gauge at bottom */}
            <div className="mt-auto pt-6 w-full flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-t border-[var(--border)] relative z-10">
               <div>
-                <div className="text-[10px] uppercase font-bold text-[var(--text-muted)] mb-1">
+                <div className="text-micro uppercase font-bold text-[var(--text-muted)] mb-1">
                   {locale === "bg" ? "Качество" : "Quality Score"}
                 </div>
-                <div className="text-2xl font-black text-[var(--text-main)] font-[family-name:var(--font-display)] flex items-end gap-1">
+                <div className="flex items-end gap-1 font-display nums text-2xl font-extrabold text-[var(--text-main)]">
                    <motion.span
                       key={score}
                       initial={{ y: -10, opacity: 0 }}
@@ -281,7 +281,7 @@ export default function LeadQualificationDemo() {
                    <motion.div 
                      initial={{ scale: 0.8, opacity: 0 }} 
                      animate={{ scale: 1, opacity: 1 }}
-                     className={`self-start sm:self-auto px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider border ${
+                     className={`self-start sm:self-auto px-4 py-2 rounded-full eyebrow border ${
                        score === 100 ? "border-red-500/30 bg-red-500/10 text-red-500 shadow-[0_0_15px_rgba(239,68,68,0.2)]" :
                        score >= 50 ? "border-orange-500/30 bg-orange-500/10 text-orange-500" :
                        "border-blue-500/30 bg-blue-500/10 text-blue-500"

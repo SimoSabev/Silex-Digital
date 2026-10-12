@@ -15,7 +15,7 @@ export default function ResultsComparison({
 }: ResultsComparisonProps) {
   return (
     <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-card)] p-4">
-      <h4 className="mb-3 text-sm font-semibold text-[var(--text-main)]">
+      <h4 className="mb-3 eyebrow text-[var(--text-main)]">
         {locale === "bg" ? "Преди vs След" : "Before vs After"}
       </h4>
       <div className="grid gap-3 md:grid-cols-3">

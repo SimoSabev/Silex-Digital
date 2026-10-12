@@ -15,7 +15,7 @@ export default function DemoStepper({
 }: DemoStepperProps) {
   return (
     <div className="rounded-xl border border-(--border) bg-(--bg-card) p-3">
-      <p className="mb-3 text-xs tracking-wide text-(--text-muted) uppercase">
+      <p className="mb-3 eyebrow font-medium text-(--text-muted)">
         {locale === "bg" ? "Прогрес" : "Progress"}
       </p>
       <div className="grid gap-2 sm:grid-cols-5">
@@ -34,7 +34,7 @@ export default function DemoStepper({
                       : "border-(--border) bg-(--bg-section) text-(--text-muted)"
               }`}
             >
-              <span className="mr-2 inline-flex h-4 w-4 items-center justify-center rounded-full border border-current text-[10px]">
+              <span className="mr-2 inline-flex h-4 w-4 items-center justify-center rounded-full border border-current text-micro">
                 {index + 1}
               </span>
               {step}

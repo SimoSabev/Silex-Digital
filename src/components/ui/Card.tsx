@@ -57,7 +57,7 @@ const CardTitle = ({
   ...props
 }: HTMLAttributes<HTMLHeadingElement>) => (
   <h3
-    className={`font-[family-name:var(--font-display)] text-xl font-semibold text-[var(--text-main)] ${className}`}
+    className={`text-h3 text-[var(--text-main)] ${className}`}
     {...props}
   >
     {children}
@@ -69,7 +69,7 @@ const CardDescription = ({
   className = "",
   ...props
 }: HTMLAttributes<HTMLParagraphElement>) => (
-  <p className={`mt-1 text-sm text-[var(--text-sub)] ${className}`} {...props}>
+  <p className={`mt-1 text-small text-[var(--text-sub)] ${className}`} {...props}>
     {children}
   </p>
 );

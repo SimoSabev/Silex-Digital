@@ -1,339 +1,76 @@
-// Single source of truth for the three core pricing plans.
-// Principle: "Изработка" (one-time setup) and "Поддръжка/абонамент" (recurring
-// monthly) are always separate numbers — never merged into one blended figure.
-// The AI Core cost for Grow/Pro is folded entirely into `monthly.price`; it
-// must never be rendered as its own visible line item anywhere in the UI.
-
-export type LocalizedList = { bg: string[]; en: string[] };
+// Pricing FAQ — single source of truth so the FAQPage JSON-LD
+// (src/app/pricing/page.tsx) always matches what's rendered on the page
+// (src/app/pricing/_components/PricingFaq.tsx).
+// Prices and savings are never written here: they live in "@/lib/offer".
 
 export type FaqItem = { q: string; a: string };
 
-// Bilingual pricing FAQ — single source of truth so the FAQPage JSON-LD
-// (src/app/pricing/page.tsx) always matches what's actually rendered on
-// the page (src/app/pricing/PricingContent.tsx), instead of two copies
-// silently drifting apart.
 export const pricingFaqsBg: FaqItem[] = [
-  { q: "Защо цената е разделена на изработка и поддръжка?", a: "Изработката е еднократна работа — дизайн, код, настройка. Месечната поддръжка е текуща услуга — хостинг, техническа поддръжка, а при Grow/Pro и работата на вашия AI асистент. Разделяме ги, за да виждате точно за какво плащате." },
-  { q: "Какво влиза в месечната такса на Grow и Pro?", a: "Една единствена сума, която покрива всичко необходимо AI асистентът ви да работи денонощно — разход по API към доставчиците на изкуствен интелект, седмични инженерни проверки за точност, хостинг и поддръжка. Няма скрита допълнителна такса отгоре." },
-  { q: "Има ли скрити условия?", a: "Не, ценообразуването е брутално прозрачно. Всички разходи за дизайн, код, SEO поддръжка и AI лицензи са описани до стотинка във финансовия одит на всеки план." },
-  { q: "Мога ли да променя плана?", a: "Да, можете да преминете на по-висок или по-нисък месечен план по всяко време без никакви допълнителни такси или глоби." },
-  { q: "Има ли дългосрочен договор?", a: "Не изискваме дългосрочни обвързващи договори. Работим с месечни условия и 30-дневно предизвестие, или с годишно предплащане на -10% отстъпка." },
+  {
+    q: "Защо пакетите излизат по-евтино от същите услуги поотделно?",
+    a: "Когато правим няколко неща наведнъж, работим по-бързо: един бриф, едни и същи снимки и текстове за сайта, профилите и рекламата, една среща за одобрение. Част от спестеното време връщаме в цената. На всяка карта е изписано колко струват услугите поотделно и колко е разликата.",
+  },
+  {
+    q: "Защо месечната част на пакета е с минимум 6 месеца?",
+    a: "Отстъпката на пакета се покрива от месечните услуги — поддръжка, SEO, социални мрежи. Те дават резултат след няколко месеца, затова цената на пакета важи при минимум 6 месеца за месечната част. След това продължавате месец за месец с 30 дни предизвестие.",
+  },
+  {
+    q: "Мога ли да сменя услуга в пакета?",
+    a: "Да. Една услуга в пакета може да се замени с друга на същата или по-ниска цена. Ако искате нещо по-скъпо, ще ви кажем разликата преди старта.",
+  },
+  {
+    q: "Цените с ДДС ли са?",
+    a: "Не. Всички цени на страницата са без ДДС. Във фактурата ДДС се начислява отделно.",
+  },
+  {
+    q: "Има ли договор за единичните услуги?",
+    a: "Няма минимален срок. Еднократните услуги плащате за конкретната работа, а месечните спират с 30 дни предизвестие.",
+  },
+  {
+    q: "Има ли отстъпка при годишно плащане?",
+    a: "Да — при годишно предплащане на месечна единична услуга цената е с 10 % по-ниска. Тази отстъпка не се натрупва с отстъпката на пакет.",
+  },
+  {
+    q: "Купих отделна услуга, а сега искам пакет. Какво става?",
+    a: "Ако сте я купили през последните 60 дни, платеното се приспада от цената на пакета.",
+  },
+  {
+    q: "Какво не е включено в цените?",
+    a: "Рекламният бюджет (плаща се директно на Meta или Google), печатът, домейнът и таксите за SMS. Ако някое от тях ви трябва, ще го видите като отделен ред, преди да започнем.",
+  },
 ];
 
 export const pricingFaqsEn: FaqItem[] = [
-  { q: "Why is the price split into setup and support?", a: "Setup is one-time work — design, code, configuration. Monthly support is an ongoing service — hosting, technical maintenance, and on Grow/Pro, your AI assistant's operation. We separate them so you see exactly what you're paying for." },
-  { q: "What's included in the Grow and Pro monthly fee?", a: "One single number that covers everything your AI assistant needs to run 24/7 — AI provider API usage, weekly engineering accuracy checks, hosting, and support. No hidden extra fee on top." },
-  { q: "Are there any hidden terms?", a: "No, our pricing is brutally transparent. All costs for design, custom code, hosting, Local SEO, and AI licenses are detailed to the cent in each plan's financial audit." },
-  { q: "Can I change plans?", a: "Yes, you can upgrade or downgrade your monthly plan at any time without extra fees or penalties." },
-  { q: "Is there a long-term contract?", a: "No binding contracts are required. We operate on simple monthly terms with a standard 30-day notice period, or annual prepay at -10% off." },
-];
-
-export type Addon = { id: string; name: { bg: string; en: string }; price: number };
-
-export type PricingPlan = {
-  id: "start" | "grow" | "pro";
-  name: string;
-  description: { bg: string; en: string };
-  popular: boolean;
-  intent: string;
-  pack: string;
-  cta: { bg: string; en: string };
-  ctaVariant: "primary" | "secondary";
-  nextTierTarget: number | null;
-  nextTierName: string | null;
-  setup: {
-    price: number;
-    included: LocalizedList;
-  };
-  monthly: {
-    price: number;
-    annualPrice: number;
-    annualListPrice: number;
-    included: LocalizedList;
-  };
-  notIncluded: LocalizedList;
-  audit: {
-    bg: { setup: { label: string; value: string }[]; monthly: { label: string; value: string }[] };
-    en: { setup: { label: string; value: string }[]; monthly: { label: string; value: string }[] };
-  };
-};
-
-export const availableAddons: Addon[] = [
-  { id: "extra-automation", name: { bg: "+1 Автоматичен отговор", en: "+1 Automation" }, price: 50 },
-  { id: "seo-audit", name: { bg: "Месечна SEO оптимизация", en: "Monthly SEO optimization" }, price: 70 },
-  { id: "priority-support", name: { bg: "24/7 Приоритетна поддръжка", en: "24/7 Priority support" }, price: 90 },
-];
-
-export const pricingPlans: PricingPlan[] = [
   {
-    id: "start",
-    name: "Start",
-    description: {
-      bg: "Уеб Основа & Локално търсене за перфектно присъствие",
-      en: "Web Foundation & Local Search for perfect search visibility",
-    },
-    popular: false,
-    intent: "starter-pack",
-    pack: "start",
-    cta: { bg: "Избери Start", en: "Select Start" },
-    ctaVariant: "secondary",
-    nextTierTarget: 248,
-    nextTierName: "Grow",
-    setup: {
-      price: 690,
-      included: {
-        bg: [
-          "Професионален сайт (Код или CMS)",
-          "Google Карти & Локално SEO от старта",
-          "Бърза доставка на проекта",
-        ],
-        en: [
-          "Professional website (Code or CMS)",
-          "Google Maps & Local SEO from day one",
-          "Fast project delivery",
-        ],
-      },
-    },
-    monthly: {
-      price: 49,
-      annualPrice: 529,
-      annualListPrice: 588,
-      included: {
-        bg: [
-          "Ultra-бързо зареждане, Edge хостинг & SSL защита",
-          "Технически проверки и дребни промени",
-          "Поддръжка по имейл",
-        ],
-        en: [
-          "Ultra-fast loading, Edge hosting & SSL security",
-          "Technical checks and small updates",
-          "Email support",
-        ],
-      },
-    },
-    notIncluded: {
-      bg: [
-        "Писане на текстове за сайта",
-        "Лого и брандинг",
-        "Домейн регистрация (съдействаме безплатно при избор)",
-      ],
-      en: [
-        "Website copywriting",
-        "Logo & branding",
-        "Domain registration (we assist for free when choosing one)",
-      ],
-    },
-    audit: {
-      bg: {
-        setup: [
-          { label: "Професионална изработка (код/CMS)", value: "300 €" },
-          { label: "Бизнес текстове и копирайтинг", value: "150 €" },
-          { label: "Google Карти и GEO/SEO настройки", value: "140 €" },
-          { label: "Защита и сигурност (GDPR)", value: "100 €" },
-        ],
-        monthly: [
-          { label: "Хостинг и SSL сертификат", value: "15 €" },
-          { label: "Google Maps поддръжка", value: "20 €" },
-          { label: "Сигурност и резервни копия", value: "14 €" },
-        ],
-      },
-      en: {
-        setup: [
-          { label: "Design & web engineering (code/CMS)", value: "300 €" },
-          { label: "Business Copywriting & Content", value: "150 €" },
-          { label: "Google Maps & SEO Metadata Schema", value: "140 €" },
-          { label: "Security Hardening & GDPR Privacy", value: "100 €" },
-        ],
-        monthly: [
-          { label: "Secure Edge Hosting & SSL Certificate", value: "15 €" },
-          { label: "Local Google Maps SEO Maintenance", value: "20 €" },
-          { label: "Backups, Speed & Core security checks", value: "14 €" },
-        ],
-      },
-    },
+    q: "Why are bundles cheaper than the same services bought separately?",
+    a: "When we do several things at once, we work faster: one brief, the same photos and copy for the site, the profiles and the ads, one approval meeting. We pass part of the saved time back in the price. Every card shows what the services cost separately and how big the difference is.",
   },
   {
-    id: "grow",
-    name: "Grow",
-    description: {
-      bg: "AI Дигитален секретар във Viber & вашия сайт",
-      en: "AI Smart Autopilot in Viber & your website",
-    },
-    popular: true,
-    intent: "grow-pack",
-    pack: "grow",
-    cta: { bg: "Най-желан - Grow", en: "Most popular - Grow" },
-    ctaVariant: "primary",
-    nextTierTarget: 298,
-    nextTierName: "Pro",
-    setup: {
-      price: 290,
-      included: {
-        bg: [
-          "AI асистент денонощно (Viber, Messenger, сайт)",
-          "Автоматично записване на часове",
-          "CRM база данни за клиенти",
-        ],
-        en: [
-          "24/7 AI assistant (Viber, Messenger, website)",
-          "Automated calendar booking",
-          "CRM database for your clients",
-        ],
-      },
-    },
-    monthly: {
-      price: 248,
-      annualPrice: 2678,
-      annualListPrice: 2976,
-      included: {
-        bg: [
-          "AI асистент денонощно (Viber, Messenger, сайт)",
-          "Автоматично записване на часове",
-          "CRM база данни за клиенти",
-          "Поддръжка по имейл и чат",
-        ],
-        en: [
-          "24/7 AI assistant (Viber, Messenger, website)",
-          "Automated calendar booking",
-          "CRM database for your clients",
-          "Email & chat support",
-        ],
-      },
-    },
-    notIncluded: {
-      bg: [
-        "Изработка на нов сайт (освен ако не изберете Pro пакета)",
-        "Обучение на AI за над 50 продукта/услуги (по оферта при по-голям каталог)",
-        "Интеграция с външни системи извън стандартните канали",
-      ],
-      en: [
-        "A new website build (unless you choose the Pro package)",
-        "AI training for over 50 products/services (custom quote for larger catalogs)",
-        "Integrations with external systems outside the standard channels",
-      ],
-    },
-    audit: {
-      bg: {
-        setup: [
-          { label: "Обучение и характер на асистента", value: "150 €" },
-          { label: "База от знания (каталози и цени)", value: "90 €" },
-          { label: "Интеграция с Viber и Уебсайт", value: "50 €" },
-        ],
-        monthly: [
-          { label: "Информационно табло и анализи", value: "50 €" },
-          { label: "Сейф за Клиенти (CRM база)", value: "49 €" },
-          { label: "Платформи и конектори лицензи", value: "50 €" },
-          { label: "API разход към OpenAI/Claude", value: "24 €" },
-          { label: "Седмични инженерни проверки за точност", value: "25 €" },
-          { label: "Оперативни разходи и абонаментна поддръжка", value: "50 €" },
-        ],
-      },
-      en: {
-        setup: [
-          { label: "AI Persona & Character Training", value: "150 €" },
-          { label: "Knowledge Base Compiler (catalogs/rules)", value: "90 €" },
-          { label: "Viber & Web integration channels", value: "50 €" },
-        ],
-        monthly: [
-          { label: "Interactive Analytics Dashboard", value: "50 €" },
-          { label: "Secure Client Vault (CRM database)", value: "49 €" },
-          { label: "Connector licenses & APIs hosting", value: "50 €" },
-          { label: "LLM API usage budget", value: "24 €" },
-          { label: "Weekly human auditing & prompt tuning", value: "25 €" },
-          { label: "Operating overhead & subscription upkeep", value: "50 €" },
-        ],
-      },
-    },
+    q: "Why does the monthly part of a bundle have a 6-month minimum?",
+    a: "The bundle discount is carried by the monthly services — care, SEO, social media. They show results after a few months, so bundle pricing requires at least 6 months on the monthly part. After that you continue month to month with 30 days' notice.",
   },
   {
-    id: "pro",
-    name: "Pro",
-    description: {
-      bg: "Дигитален Автопилот: Премиум сайт + AI Асистент",
-      en: "Digital Autopilot: Premium Website & AI Assistant",
-    },
-    popular: false,
-    intent: "pro-pack",
-    pack: "pro",
-    cta: { bg: "Избери Pro", en: "Select Pro" },
-    ctaVariant: "secondary",
-    nextTierTarget: null,
-    nextTierName: null,
-    setup: {
-      price: 990,
-      included: {
-        bg: [
-          "Премиум сайт + AI по всички чат канали",
-          "Синхронизация в реално време",
-          "Лична техническа поддръжка",
-        ],
-        en: [
-          "Premium website + AI across all chat channels",
-          "Real-time catalog & stock sync",
-          "Dedicated technical support",
-        ],
-      },
-    },
-    monthly: {
-      price: 298,
-      annualPrice: 3218,
-      annualListPrice: 3576,
-      included: {
-        bg: [
-          "Премиум сайт + AI по всички чат канали",
-          "Синхронизация в реално време",
-          "Лична техническа поддръжка",
-          "Месечна консултация за растеж",
-        ],
-        en: [
-          "Premium website + AI across all chat channels",
-          "Real-time catalog & stock sync",
-          "Dedicated technical support",
-          "Monthly growth consultation",
-        ],
-      },
-    },
-    notIncluded: {
-      bg: [
-        "Многоезичност (по оферта)",
-        "Разширени custom интеграции извън стандартния обхват",
-      ],
-      en: [
-        "Multi-language support (custom quote)",
-        "Advanced custom integrations beyond the standard scope",
-      ],
-    },
-    audit: {
-      bg: {
-        setup: [
-          { label: "Сайт с резервации и е-търговия", value: "400 €" },
-          { label: "Обучение на AI и векторна памет", value: "250 €" },
-          { label: "Връзка Viber + Messenger + Web", value: "200 €" },
-          { label: "Премиум SEO и локално присъствие", value: "140 €" },
-        ],
-        monthly: [
-          { label: "Високоскоростен хостинг", value: "80 €" },
-          { label: "Панел за управление и CRM", value: "69 €" },
-          { label: "Месечна техническа поддръжка", value: "100 €" },
-          { label: "API разходи и лицензи за токени", value: "29 €" },
-          { label: "Синхронизиране на каталози в реално време", value: "20 €" },
-        ],
-      },
-      en: {
-        setup: [
-          { label: "Enterprise E-Commerce UI build", value: "400 €" },
-          { label: "AI Agent & High-speed Vector Memory", value: "250 €" },
-          { label: "Facebook, Viber & Web connection setup", value: "200 €" },
-          { label: "Premium SEO & local positioning", value: "140 €" },
-        ],
-        monthly: [
-          { label: "Premium Cluster Edge Hosting SLA", value: "80 €" },
-          { label: "Multi-User CRM dashboard database", value: "69 €" },
-          { label: "Continuous developer modifications & copy", value: "100 €" },
-          { label: "LLM token API allocation", value: "29 €" },
-          { label: "Real-time Vector Database sync engine", value: "20 €" },
-        ],
-      },
-    },
+    q: "Can I swap a service in a bundle?",
+    a: "Yes. One service in a bundle can be swapped for another of equal or lower price. If you want something more expensive, we'll tell you the difference before we start.",
+  },
+  {
+    q: "Do prices include VAT?",
+    a: "No. All prices on this page exclude VAT. VAT is added separately on the invoice.",
+  },
+  {
+    q: "Is there a contract for single services?",
+    a: "There's no minimum term. You pay one-time services for the specific work, and monthly services stop with 30 days' notice.",
+  },
+  {
+    q: "Is there a discount for paying annually?",
+    a: "Yes — prepaying a monthly single service for a year makes it 10% cheaper. This discount does not stack with a bundle discount.",
+  },
+  {
+    q: "I bought a single service and now want a bundle. What happens?",
+    a: "If you bought it in the last 60 days, what you paid is deducted from the bundle price.",
+  },
+  {
+    q: "What isn't included in the prices?",
+    a: "Ad spend (paid directly to Meta or Google), printing, the domain and SMS fees. If you need any of these, you'll see them as a separate line before we start.",
   },
 ];

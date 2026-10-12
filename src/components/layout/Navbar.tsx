@@ -6,10 +6,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { Menu, X, ArrowRight, Sparkles } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import LanguageToggle from "@/components/ui/LanguageToggle";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { useI18n } from "@/lib/i18n";
+
+/** Every "book a call" entry point uses the contact page's call flow. */
+const CALL_HREF = "/contact?source=nav&kind=call";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -60,7 +63,7 @@ export default function Navbar() {
             className="fixed inset-0 z-[9998] flex flex-col bg-[var(--bg-page)] lg:hidden"
             role="dialog"
             aria-modal="true"
-            aria-label="Navigation menu"
+            aria-label={t("nav.menu")}
           >
             <div className="flex shrink-0 items-center justify-between border-b border-[var(--border)] px-4 py-3 safe-area-pt">
               <Image src="/new-logo.png" alt="SilexBrand" width={160} height={40} className="h-10 w-auto object-contain" />
@@ -68,7 +71,7 @@ export default function Navbar() {
                 type="button"
                 onClick={closeMenu}
                 className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--accent)] text-white shadow-md touch-target"
-                aria-label="Close menu"
+                aria-label={t("nav.closeMenu")}
               >
                 <X size={22} />
               </button>
@@ -85,7 +88,7 @@ export default function Navbar() {
                     className="group flex flex-col items-center text-center"
                   >
                     <span
-                      className={`font-display text-3xl font-bold transition-colors sm:text-4xl ${
+                      className={`font-display text-h2 font-bold transition-colors ${
                         isActive
                           ? "text-[var(--accent)]"
                           : "text-[var(--text-sub)] group-hover:text-[var(--accent)]"
@@ -102,12 +105,12 @@ export default function Navbar() {
 
               <div className="mt-4 w-full max-w-sm space-y-4">
                 <Link
-                  href="/contact"
+                  href={CALL_HREF}
                   onClick={closeMenu}
-                  className="flex w-full items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-6 py-4 text-lg font-bold text-white shadow-[0_10px_30px_rgba(106,46,58,0.35)]"
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-6 py-4 text-h4 text-white shadow-[0_10px_30px_rgba(106,46,58,0.35)]"
                 >
-                  <Sparkles size={18} />
-                  {t("nav.getStarted") || t("common.contactUs")}
+                  {t("nav.getStarted")}
+                  <ArrowRight size={18} aria-hidden />
                 </Link>
                 <div className="flex items-center justify-center gap-4 pt-2">
                   <LanguageToggle />
@@ -151,7 +154,7 @@ export default function Navbar() {
                   className="group relative px-4 py-2"
                 >
                   <span
-                    className={`relative z-10 text-[15px] font-[600] transition-colors duration-300 ${
+                    className={`relative z-10 text-body font-semibold transition-colors duration-300 ${
                       isActive
                         ? "text-[var(--accent)]"
                         : "text-[var(--text-sub)] group-hover:text-[var(--accent)]"
@@ -179,17 +182,19 @@ export default function Navbar() {
             <div className="flex items-center rounded-full border border-[var(--border)] bg-[var(--bg-section)]/50 p-1">
               <LanguageToggle />
             </div>
-            <Link href="/contact" className="group relative">
-              <div className="absolute -inset-1 rounded-full bg-[var(--accent)] opacity-30 blur-sm transition duration-500 group-hover:opacity-50" />
-              <motion.button
+            <Link
+              href={CALL_HREF}
+              className="group relative rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+            >
+              <span className="absolute -inset-1 rounded-full bg-[var(--accent)] opacity-30 blur-sm transition duration-500 group-hover:opacity-50" aria-hidden />
+              <motion.span
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="relative flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-5 py-2.5 text-[14px] font-[700] text-white shadow-lg transition-all duration-300"
+                className="relative flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-5 py-2.5 text-small font-bold text-white shadow-lg transition-all duration-300"
               >
-                <Sparkles className="h-4 w-4 text-white group-hover:animate-pulse" />
-                {t("common.contactUs")}
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </motion.button>
+                {t("nav.getStarted")}
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden />
+              </motion.span>
             </Link>
           </div>
 
@@ -199,7 +204,7 @@ export default function Navbar() {
             onClick={() => setIsMobileMenuOpen((open) => !open)}
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-nav-menu"
-            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-label={isMobileMenuOpen ? t("nav.closeMenu") : t("nav.openMenu")}
           >
             {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>

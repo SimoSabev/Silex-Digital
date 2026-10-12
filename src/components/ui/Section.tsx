@@ -63,7 +63,7 @@ const Section = forwardRef<HTMLElement, SectionProps>(
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.6 }}
-                  className="mb-6 text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl"
+                  className="mb-6 text-h2 text-white"
                 >
                   {title}
                 </motion.h2>
@@ -74,7 +74,7 @@ const Section = forwardRef<HTMLElement, SectionProps>(
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.6, delay: 0.1 }}
-                  className={`max-w-3xl text-lg leading-relaxed text-slate-400 md:text-xl ${
+                  className={`max-w-3xl text-lead text-slate-400 ${
                     centered ? "mx-auto" : ""
                   }`}
                 >

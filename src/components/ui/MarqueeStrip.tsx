@@ -1,5 +1,5 @@
 type MarqueeStripProps = {
-  items: string[];
+  items: readonly string[];
   className?: string;
 };
 
@@ -20,7 +20,7 @@ export default function MarqueeStrip({ items, className = "" }: MarqueeStripProp
         {track.map((item, i) => (
           <span
             key={`${item}-${i}`}
-            className="flex items-center gap-10 text-sm font-bold tracking-[0.18em] whitespace-nowrap text-[var(--text-sub)] uppercase"
+            className="flex items-center gap-10 font-display text-h4 whitespace-nowrap text-[var(--text-sub)]"
           >
             {item}
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]/60" />

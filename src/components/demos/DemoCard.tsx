@@ -65,7 +65,7 @@ export default function DemoCard({
         </div>
 
         {/* Content */}
-        <h3 className="mb-2 text-lg font-semibold text-[var(--text-main)] transition-colors group-hover:text-[var(--accent)]">
+        <h3 className="mb-2 text-h4 text-[var(--text-main)] transition-colors group-hover:text-[var(--accent)]">
           {title}
         </h3>
         <p className="mb-4 text-sm text-[var(--text-sub)]">{description}</p>

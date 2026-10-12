@@ -40,7 +40,7 @@ function smooth(t: number): number {
 }
 
 export default function HeroProductReveal() {
-  const { locale } = useI18n();
+  const { t } = useI18n();
   const trackRef = useRef<HTMLElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
@@ -138,13 +138,11 @@ export default function HeroProductReveal() {
     return (
       <section className="relative flex min-h-[70vh] flex-col items-center justify-center gap-5 overflow-hidden bg-[var(--color-bg-dark)] px-6 py-20 text-center">
         <Image src="/logo-new.png" alt="SilexBrand" width={64} height={64} className="h-14 w-auto" />
-        <h2 className="font-display text-3xl font-extrabold text-[var(--color-text-on-dark)] sm:text-4xl">
+        <h2 className="text-h2 text-[var(--color-text-on-dark)]">
           SilexBrand
         </h2>
-        <p className="max-w-md text-[var(--color-text-on-dark)]/60">
-          {locale === "bg"
-            ? "Сайт, Google и AI асистент — сглобени в една система."
-            : "Website, Google and an AI assistant — assembled into one system."}
+        <p className="max-w-md text-lead text-[var(--color-text-on-dark)]/60">
+          {t("hero.reveal.tagline")}
         </p>
       </section>
     );
@@ -153,7 +151,7 @@ export default function HeroProductReveal() {
   return (
     <section
       ref={trackRef}
-      aria-label={locale === "bg" ? "Как работи SilexBrand" : "How SilexBrand works"}
+      aria-label={t("hero.reveal.label")}
       className="relative w-full"
       style={{ height: `${TRACK_HEIGHT_VH}vh` }}
     >
@@ -163,7 +161,7 @@ export default function HeroProductReveal() {
         {/* Small persistent brand mark — visible throughout, like a real ad */}
         <div className="absolute top-6 left-6 z-10 flex items-center gap-2 opacity-70 sm:top-8 sm:left-8">
           <Image src="/new-logo.png" alt="" width={28} height={28} className="h-6 w-auto sm:h-7" />
-          <span className="font-display text-xs font-bold tracking-wide text-[var(--color-text-on-dark)] sm:text-sm">
+          <span className="font-display text-caption font-bold tracking-wide text-[var(--color-text-on-dark)] sm:text-small">
             SilexBrand
           </span>
         </div>
@@ -185,14 +183,12 @@ export default function HeroProductReveal() {
         >
           <div className="mb-3 flex items-center justify-center gap-2.5">
             <Image src="/new-logo.png" alt="" width={40} height={40} className="h-8 w-auto sm:h-10" />
-            <span className="font-display text-2xl font-extrabold text-[var(--color-text-on-dark)] sm:text-4xl">
+            <span className="font-display text-h3 font-extrabold text-[var(--color-text-on-dark)] sm:text-h2">
               SilexBrand
             </span>
           </div>
-          <p className="mx-auto max-w-md text-[13px] leading-relaxed text-[var(--color-text-on-dark)]/70 sm:text-base">
-            {locale === "bg"
-              ? "Сайт, Google и AI асистент — сглобени в една система."
-              : "Website, Google and an AI assistant — assembled into one system."}
+          <p className="mx-auto max-w-md text-caption text-[var(--color-text-on-dark)]/70 sm:text-body">
+            {t("hero.reveal.tagline")}
           </p>
         </div>
 
@@ -203,8 +199,8 @@ export default function HeroProductReveal() {
         )}
 
         <div className="pointer-events-none absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1.5 text-[var(--color-text-on-dark)]/40">
-          <span className="font-mono text-[10px] font-bold tracking-[0.2em] uppercase">
-            {locale === "bg" ? "Скролни" : "Scroll"}
+          <span className="eyebrow-mono">
+            {t("hero.reveal.scroll")}
           </span>
           <span className="h-6 w-px animate-pulse bg-gradient-to-b from-[var(--color-text-on-dark)]/40 to-transparent" />
         </div>

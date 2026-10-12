@@ -1,591 +1,201 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { CalendarCheck, TrendingUp, Zap, Mail, type LucideIcon } from "lucide-react";
-import { useI18n, type Locale } from "@/lib/i18n";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { Check, type LucideIcon } from "lucide-react";
+import { useReducedMotion } from "@/lib/motion";
 
-type Localized = { bg: string; en: string };
-
-type Channel = {
-  name: Localized;
-  color: string;
-  bg: string;
+export type BrandLayer = {
+  key: "identity" | "website" | "content" | "ads" | "seo" | "ai";
+  title: string;
+  /** Starting price, already formatted from "@/lib/offer". */
+  price: string;
+  icon: LucideIcon;
 };
 
-const CHANNELS: Channel[] = [
-  {
-    name: { bg: "WhatsApp", en: "WhatsApp" },
-    color: "#25D366",
-    bg: "rgba(37,211,102,0.12)",
-  },
-  {
-    name: { bg: "Имейл", en: "Email" },
-    color: "#4A90E2",
-    bg: "rgba(74,144,226,0.12)",
-  },
-  {
-    name: { bg: "SMS", en: "SMS" },
-    color: "#FB923C",
-    bg: "rgba(251,146,60,0.12)",
-  },
-  {
-    name: { bg: "Форма", en: "Form" },
-    color: "#A78BFA",
-    bg: "rgba(167,139,250,0.12)",
-  },
-];
-
-type Conversation = {
-  id: number;
-  initials: string;
-  name: string;
-  channel: Channel;
-  msg: Localized;
-  reply: Localized;
-  time: string;
+type HeroVisualizationProps = {
+  layers: readonly BrandLayer[];
+  title: string;
+  layersLabel: string;
+  readyLabel: string;
 };
 
-const CONVERSATIONS: Conversation[] = [
-  {
-    id: 1,
-    initials: "MK",
-    name: "Maria K.",
-    channel: CHANNELS[0]!,
-    msg: {
-      bg: "Имате ли свободна дата за утре?",
-      en: "Do you have an opening tomorrow?",
-    },
-    reply: {
-      bg: "Здравей! Имаме от 10:00 до 15:00. Кое е удобно?",
-      en: "Hi! We have 10:00–15:00 open. What works for you?",
-    },
-    time: "0.8s",
-  },
-  {
-    id: 2,
-    initials: "SP",
-    name: "Stefan P.",
-    channel: CHANNELS[1]!,
-    msg: {
-      bg: "Колко струва стандартният пакет?",
-      en: "How much is the standard package?",
-    },
-    reply: {
-      bg: "Grow е 248 €/мес — AI асистент + автоматизации.",
-      en: "Grow is 248 EUR/mo — AI assistant + automations.",
-    },
-    time: "1.1s",
-  },
-  {
-    id: 3,
-    initials: "ET",
-    name: "Elena T.",
-    channel: CHANNELS[2]!,
-    msg: {
-      bg: "Искам демо на вашата платформа.",
-      en: "I'd like a demo of your platform.",
-    },
-    reply: {
-      bg: "Резервирах 30-мин. демо за утре в 11:00. Очаквайте!",
-      en: "Booked a 30-min demo tomorrow at 11:00. See you then!",
-    },
-    time: "0.6s",
-  },
-  {
-    id: 4,
-    initials: "BV",
-    name: "Boris V.",
-    channel: CHANNELS[3]!,
-    msg: {
-      bg: "Мога ли да го свържа с моя CRM?",
-      en: "Can I connect this to my CRM?",
-    },
-    reply: {
-      bg: "Да! Поддържаме интеграции с популярни CRM системи.",
-      en: "Yes! We support integrations with popular CRM tools.",
-    },
-    time: "0.9s",
-  },
-];
+const STEP_MS = 1400;
+const HOLD_MS = 2600;
 
-const TOASTS: { icon: LucideIcon; label: Localized; sub: Localized; type: "accent" | "success" }[] = [
-  {
-    icon: CalendarCheck,
-    label: { bg: "Нова резервация", en: "New booking" },
-    sub: { bg: "Maria K. · сега", en: "Maria K. · just now" },
-    type: "success",
-  },
-  {
-    icon: TrendingUp,
-    label: { bg: "+3 запитвания днес", en: "+3 leads today" },
-    sub: { bg: "Над план с 40%", en: "40% above target" },
-    type: "accent",
-  },
-  {
-    icon: Zap,
-    label: { bg: "Автоматизацията е готова", en: "Workflow complete" },
-    sub: { bg: "Изпълнено за 0.6s", en: "Finished in 0.6s" },
-    type: "accent",
-  },
-  {
-    icon: Mail,
-    label: { bg: "Репорт изпратен", en: "Report sent" },
-    sub: { bg: "Месечен отчет", en: "Monthly report" },
-    type: "success",
-  },
-];
-
-// These metric values render on a near-black card (see the two METRICS.map
-// usages below) — they need the light "on-dark" tint variants, not the base
-// --accent/--color-success tokens, which are tuned for text on light
-// surfaces and read at ~1.7:1 contrast here (AUDIT.md H3).
-const METRICS = [
-  {
-    label: { bg: "Ср. отговор", en: "Avg reply" },
-    value: "0.8s",
-    accent: "var(--accent-10)",
-  },
-  {
-    label: { bg: "Запитвания / ден", en: "Leads / day" },
-    value: "24",
-    accent: "var(--color-success-10)",
-  },
-  {
-    label: { bg: "Конверсия", en: "Conversion" },
-    value: "94%",
-    accent: "var(--accent-10)",
-  },
-  {
-    label: { bg: "Спест. часа", en: "Saved hrs" },
-    value: "15h",
-    accent: "var(--color-success-10)",
-  },
-];
-
-const BAR_DATA = [14, 21, 18, 27, 24, 31, 24];
-const BAR_DAYS: Localized[] = [
-  { bg: "П", en: "M" },
-  { bg: "В", en: "T" },
-  { bg: "С", en: "W" },
-  { bg: "Ч", en: "T" },
-  { bg: "П", en: "F" },
-  { bg: "С", en: "S" },
-  { bg: "Н", en: "S" },
-];
-
-const COPY = {
-  liveInbox: { bg: "Демо: примерни входящи", en: "Demo: example inbox" },
-  performance: { bg: "Показатели", en: "Performance" },
-  weekTrend: { bg: "↑ 40% тази седмица", en: "↑ 40% this week" },
-  leadsWeek: { bg: "Запитвания тази седмица", en: "Leads this week" },
-  justNow: { bg: "току-що", en: "just now" },
-  aiTyping: { bg: "🤖 AI подготвя отговор", en: "🤖 AI drafting reply" },
-  sentIn: { bg: "Изпратен за", en: "Sent in" },
-} as const;
-
-function pick(locale: Locale, text: Localized): string {
-  return text[locale];
-}
-
-function LiveDot() {
-  return (
-    <span className="relative flex h-2 w-2 flex-none">
-      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-success)] opacity-60" />
-      <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--color-success)]" />
-    </span>
-  );
-}
-
-function TypingDots() {
-  return (
-    <div className="flex gap-1 py-0.5">
-      {[0, 1, 2].map((i) => (
-        <motion.div
-          key={i}
-          className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]/80"
-          animate={{ y: [0, -4, 0] }}
-          transition={{
-            duration: 0.5,
-            repeat: Infinity,
-            delay: i * 0.13,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
-type Phase = "incoming" | "typing" | "replied";
-
-export default function HeroVisualization() {
-  const { locale } = useI18n();
-  const [convIdx, setConvIdx] = useState(0);
-  const [phase, setPhase] = useState<Phase>("incoming");
-  const [toastIdx, setToastIdx] = useState<number | null>(null);
-  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
-
-  const clear = () => {
-    timers.current.forEach(clearTimeout);
-    timers.current = [];
-  };
-  const after = (ms: number, fn: () => void) => {
-    const t = setTimeout(fn, ms);
-    timers.current.push(t);
-  };
+/**
+ * The six layers of a brand being built in order — foundation first.
+ * Left: the layer list with starting prices. Right (lg+): a preview where each
+ * layer's piece appears once it is built. Purely illustrative; prices are
+ * passed in from the offer catalog.
+ */
+export default function HeroVisualization({ layers, title, layersLabel, readyLabel }: HeroVisualizationProps) {
+  const prefersReduced = useReducedMotion();
+  const [built, setBuilt] = useState(0);
+  const total = layers.length;
+  const shown = prefersReduced ? total : built;
+  const isComplete = shown >= total;
 
   useEffect(() => {
-    clear();
-    setPhase("incoming");
-    after(1100, () => {
-      setPhase("typing");
-      after(1700, () => {
-        setPhase("replied");
-        const ti = Math.floor(Math.random() * TOASTS.length);
-        after(500, () => {
-          setToastIdx(ti);
-          after(2400, () => {
-            setToastIdx(null);
-            after(800, () => setConvIdx((i) => (i + 1) % CONVERSATIONS.length));
-          });
-        });
-      });
-    });
-    return clear;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [convIdx]);
-
-  const conv = CONVERSATIONS[convIdx]!;
-  const toast = toastIdx !== null ? TOASTS[toastIdx] : null;
+    if (prefersReduced) return;
+    const delay = built >= total ? HOLD_MS : STEP_MS;
+    const id = setTimeout(() => setBuilt((n) => (n >= total ? 0 : n + 1)), delay);
+    return () => clearTimeout(id);
+  }, [built, total, prefersReduced]);
 
   return (
-    <div
-      className="relative flex h-full w-full overflow-hidden bg-[var(--color-bg-dark)]"
-      aria-hidden="true"
-    >
+    <div className="relative flex h-full w-full overflow-hidden bg-[var(--color-bg-dark)]" aria-hidden="true">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-20 left-1/4 h-64 w-64 rounded-full bg-[var(--accent)]/12 blur-3xl" />
-        <div className="absolute -bottom-20 right-1/4 h-64 w-64 rounded-full bg-[var(--accent)]/10 blur-3xl" />
-        <div className="absolute top-1/3 right-0 h-48 w-48 rounded-full bg-[var(--accent)]/10 blur-3xl" />
+        <div className="absolute -top-24 left-1/4 h-64 w-64 rounded-full bg-[var(--accent)]/15 blur-3xl" />
+        <div className="absolute -bottom-24 right-1/4 h-64 w-64 rounded-full bg-[var(--accent)]/10 blur-3xl" />
       </div>
 
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.025]"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle, rgba(255,255,255,.8) 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
-        }}
-      />
-
-      <div className="relative z-10 flex w-full flex-col border-white/6 p-4 sm:p-5 lg:w-[55%] lg:border-r">
-        <div className="mb-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <LiveDot />
-            <span className="text-[10px] font-bold tracking-widest text-white/40 uppercase">
-              {pick(locale, COPY.liveInbox)}
-            </span>
-          </div>
-          <div className="hidden gap-1 sm:flex">
-            {CHANNELS.map((ch) => (
-              <div
-                key={ch.name.en}
-                className="rounded-full px-2 py-0.5 text-[9px] font-bold"
-                style={{ backgroundColor: ch.bg, color: ch.color }}
-              >
-                {pick(locale, ch.name)}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mb-3 space-y-1.5">
-          {CONVERSATIONS.filter((_, i) => i !== convIdx)
-            .slice(0, 2)
-            .map((c) => (
-              <div
-                key={c.id}
-                className="flex items-center gap-2 rounded-xl bg-white/[0.03] px-3 py-1.5"
-              >
-                <div
-                  className="flex h-6 w-6 flex-none items-center justify-center rounded-full text-[9px] font-bold text-white"
-                  style={{
-                    background: `linear-gradient(135deg,${c.channel.color}66,${c.channel.color}33)`,
-                  }}
-                >
-                  {c.initials}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="text-[10px] font-semibold text-white/35">
-                    {c.name}
-                  </p>
-                  <p className="truncate text-[9px] text-white/20">
-                    {pick(locale, c.msg)}
-                  </p>
-                </div>
-                <svg viewBox="0 0 10 10" className="h-3 w-3 flex-none" fill="none">
-                  <path
-                    d="M2 5l2 2 4-4"
-                    stroke="var(--color-success)"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-            ))}
-        </div>
-
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`${conv.id}-${locale}`}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.3 }}
-            className="flex-1 rounded-2xl border border-white/8 bg-white/[0.03] p-3 sm:p-4"
-          >
-            <div className="mb-3 flex items-center gap-2.5">
-              <div
-                className="flex h-9 w-9 flex-none items-center justify-center rounded-full text-xs font-bold text-white"
-                style={{
-                  background: `linear-gradient(135deg,${conv.channel.color},${conv.channel.color}88)`,
-                }}
-              >
-                {conv.initials}
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-center gap-1.5">
-                  <span className="text-sm font-bold text-white">
-                    {conv.name}
-                  </span>
-                  <span
-                    className="rounded-full px-2 py-0.5 text-[9px] font-bold"
-                    style={{
-                      backgroundColor: conv.channel.bg,
-                      color: conv.channel.color,
-                    }}
-                  >
-                    {pick(locale, conv.channel.name)}
-                  </span>
-                </div>
-                <span className="text-[10px] text-white/25">
-                  {pick(locale, COPY.justNow)}
-                </span>
-              </div>
-            </div>
-
-            <div className="mb-3 rounded-xl rounded-tl-sm bg-white/8 px-3 py-2 text-xs leading-relaxed text-white/75 sm:text-sm">
-              {pick(locale, conv.msg)}
-            </div>
-
-            <AnimatePresence>
-              {(phase === "typing" || phase === "replied") && (
-                <motion.div
-                  initial={{ opacity: 0, y: 5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="rounded-xl rounded-tl-sm border px-3 py-2.5"
-                  style={{
-                    borderColor: `${conv.channel.color}30`,
-                    background: `${conv.channel.color}0D`,
-                  }}
-                >
-                  {phase === "typing" ? (
-                    <div className="flex items-center gap-2">
-                      <span
-                        className="text-[10px] font-semibold"
-                        style={{ color: conv.channel.color }}
-                      >
-                        {pick(locale, COPY.aiTyping)}
-                      </span>
-                      <TypingDots />
-                    </div>
-                  ) : (
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                      <p className="mb-1.5 text-[11px] leading-relaxed text-white/70 sm:text-xs">
-                        {pick(locale, conv.reply)}
-                      </p>
-                      <div className="flex items-center gap-1.5">
-                        <svg
-                          viewBox="0 0 12 12"
-                          className="h-3 w-3 text-[var(--color-success)]"
-                          fill="none"
-                        >
-                          <path
-                            d="M2 6l2.5 2.5L10 3"
-                            stroke="currentColor"
-                            strokeWidth="1.8"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <span className="text-[10px] font-semibold text-[var(--color-success-10)]">
-                          {pick(locale, COPY.sentIn)} {conv.time}
-                        </span>
-                      </div>
-                    </motion.div>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      <div className="relative z-10 hidden flex-col p-5 lg:flex lg:w-[45%]">
-        <div className="mb-4 flex items-center justify-between">
-          <span className="text-[10px] font-bold tracking-widest text-white/40 uppercase">
-            {pick(locale, COPY.performance)}
+      {/* Layer list */}
+      <div className="relative z-10 flex w-full flex-col p-4 sm:p-6 lg:w-[52%] lg:border-r lg:border-white/[0.08]">
+        <div className="mb-3 flex items-center justify-between sm:mb-4">
+          <span className="eyebrow text-white/45">{layersLabel}</span>
+          <span className="nums text-micro font-bold text-[var(--accent-10)]">
+            {Math.min(shown, total)} / {total}
           </span>
-          <div className="rounded-full bg-accent/15 px-2.5 py-1 text-[9px] font-bold text-[var(--accent-10)]">
-            {pick(locale, COPY.weekTrend)}
-          </div>
         </div>
 
-        <div className="mb-4 grid grid-cols-2 gap-2">
-          {METRICS.map((m) => (
-            <div
-              key={m.label.en}
-              className="rounded-xl border border-white/8 bg-white/[0.04] p-3"
-            >
-              <div
-                className="text-2xl font-black leading-none"
-                style={{ color: m.accent }}
+        {/* Reversed so the foundation (identity) sits at the bottom and the brand builds upward. */}
+        <ol className="flex flex-1 flex-col-reverse gap-1.5 sm:gap-2">
+          {layers.map((layer, i) => {
+            const isBuilt = i < shown;
+            const isNext = i === shown && !isComplete;
+            const Icon = layer.icon;
+            return (
+              <li
+                key={layer.key}
+                className={`flex items-center gap-3 rounded-xl border px-3 py-2 transition-colors duration-500 sm:py-2.5 ${
+                  isBuilt
+                    ? "border-[var(--accent-10)]/25 bg-white/[0.07]"
+                    : isNext
+                      ? "border-white/15 bg-white/[0.04]"
+                      : "border-white/[0.06] bg-transparent"
+                }`}
               >
-                {m.value}
-              </div>
-              <div className="mt-1 text-[10px] text-white/30">
-                {pick(locale, m.label)}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mb-4 rounded-xl border border-white/8 bg-white/[0.03] p-3">
-          <div className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-white/30">
-            {pick(locale, COPY.leadsWeek)}
-          </div>
-          <div className="flex h-12 items-end gap-1">
-            {BAR_DATA.map((v, i) => (
-              <motion.div
-                key={i}
-                className={`flex-1 rounded-sm ${i === 6 ? "bg-[var(--accent)]" : "bg-accent/20"}`}
-                initial={{ height: "0%" }}
-                animate={{ height: `${(v / 31) * 100}%` }}
-                transition={{ duration: 0.5, delay: i * 0.06, ease: "easeOut" }}
-              />
-            ))}
-          </div>
-          <div className="mt-1 flex justify-between text-[9px] text-white/20">
-            {BAR_DAYS.map((d, i) => (
-              <span key={i}>{pick(locale, d)}</span>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex-1 space-y-1.5">
-          {[
-            {
-              label: { bg: "Имейл отговор", en: "Email reply" },
-              status: { bg: "активен", en: "running" },
-              color: "var(--color-success)",
-              textColor: "var(--color-success-10)",
-              key: "email",
-              running: true,
-            },
-            {
-              label: { bg: "Квалификация", en: "Lead qualification" },
-              status: { bg: "активен", en: "running" },
-              color: "var(--color-success)",
-              textColor: "var(--color-success-10)",
-              key: "lead",
-              running: true,
-            },
-            {
-              label: { bg: "Напомняне за среща", en: "Booking reminder" },
-              status: { bg: "на опашка", en: "queued" },
-              color: "var(--accent)",
-              textColor: "var(--accent-10)",
-              key: "book",
-              running: false,
-            },
-            // `color` stays the saturated brand token — it's only ever used as
-            // the small status-dot fill, a graphical element, not text, so it
-            // isn't held to WCAG text-contrast thresholds. `textColor` is the
-            // light on-dark variant for the actual status label (see below).
-          ].map((item) => (
-            <div
-              key={item.key}
-              className="flex items-center gap-2.5 rounded-lg bg-white/[0.03] px-3 py-2"
-            >
-              <div className="relative h-2 w-2 flex-none">
-                {item.running && (
-                  <span
-                    className="absolute inset-0 animate-ping rounded-full opacity-60"
-                    style={{ backgroundColor: item.color }}
-                  />
-                )}
+                <span className="nums w-5 text-micro font-bold text-white/30">{String(i + 1).padStart(2, "0")}</span>
                 <span
-                  className="relative block h-2 w-2 rounded-full"
-                  style={{ backgroundColor: item.color }}
-                />
-              </div>
-              <span className="flex-1 truncate text-[11px] text-white/50">
-                {pick(locale, item.label)}
-              </span>
-              <span
-                className="flex-none text-[9px] font-bold uppercase tracking-wider"
-                style={{ color: item.textColor }}
-              >
-                {pick(locale, item.status)}
-              </span>
-            </div>
-          ))}
+                  className={`flex h-7 w-7 flex-none items-center justify-center rounded-lg transition-colors duration-500 ${
+                    isBuilt ? "bg-[var(--accent)] text-white" : "bg-white/[0.06] text-white/40"
+                  }`}
+                >
+                  {isBuilt ? <Check className="h-3.5 w-3.5" strokeWidth={2.5} /> : <Icon className="h-3.5 w-3.5" />}
+                </span>
+                <span className={`min-w-0 flex-1 truncate text-small font-semibold ${isBuilt ? "text-white" : "text-white/55"}`}>
+                  {layer.title}
+                </span>
+                <span className={`nums hidden flex-none text-micro sm:inline ${isBuilt ? "text-[var(--accent-10)]" : "text-white/35"}`}>
+                  {layer.price}
+                </span>
+              </li>
+            );
+          })}
+        </ol>
+
+        <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/[0.08] sm:mt-4">
+          <motion.div
+            className="h-full rounded-full bg-[var(--accent-10)]"
+            initial={false}
+            animate={{ scaleX: shown / total }}
+            style={{ originX: 0 }}
+            transition={{ duration: prefersReduced ? 0 : 0.5, ease: "easeOut" }}
+          />
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 z-20 flex border-t border-white/8 bg-[var(--color-bg-dark)]/90 px-4 py-2.5 backdrop-blur-sm lg:hidden">
-        {METRICS.map((m) => (
-          <div key={m.label.en} className="flex-1 text-center">
-            <div className="text-sm font-black" style={{ color: m.accent }}>
-              {m.value}
-            </div>
-            <div className="text-[9px] text-white/30">{pick(locale, m.label)}</div>
-          </div>
-        ))}
-      </div>
-
-      <AnimatePresence>
-        {toast && (
-          <motion.div
-            key={`${toastIdx}-${locale}`}
-            initial={{ opacity: 0, y: 12, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 12, scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 340, damping: 28 }}
-            className="absolute bottom-14 left-1/2 z-30 flex -translate-x-1/2 items-center gap-3 rounded-2xl border border-white/10 bg-[var(--color-bg-dark)]/95 px-4 py-2.5 shadow-2xl backdrop-blur-xl lg:bottom-5"
+      {/* Brand preview */}
+      <div className="relative z-10 hidden flex-col p-6 lg:flex lg:w-[48%]">
+        <div className="mb-4 flex items-center justify-between">
+          <span className="eyebrow text-white/45">{title}</span>
+          <motion.span
+            className="rounded-full bg-[var(--color-success)]/15 px-2.5 py-1 text-micro font-bold text-[var(--color-success-10)]"
+            animate={{ opacity: isComplete ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
           >
-            <div
-              className={`flex h-8 w-8 flex-none items-center justify-center rounded-xl ${toast.type === "success" ? "bg-success/10 text-[var(--color-success)]" : "bg-accent/10 text-[var(--accent)]"}`}
-            >
-              <toast.icon className="h-4 w-4" strokeWidth={2.25} />
-            </div>
-            <div>
-              <p className="text-xs font-bold text-white">
-                {pick(locale, toast.label)}
-              </p>
-              <p className={`text-[10px] ${toast.type === "success" ? "text-[var(--color-success-10)]" : "text-[var(--accent-10)]"}`}>
-                {pick(locale, toast.sub)}
-              </p>
-            </div>
-            <div
-              className={`ml-1 h-1.5 w-1.5 flex-none animate-pulse rounded-full ${toast.type === "success" ? "bg-[var(--color-success)]" : "bg-[var(--accent)]"}`}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {readyLabel}
+          </motion.span>
+        </div>
+        <div className="grid flex-1 grid-cols-2 grid-rows-3 gap-2.5">
+          {layers.map((layer, i) => (
+            <PreviewTile key={layer.key} layerKey={layer.key} isBuilt={i < shown} />
+          ))}
+        </div>
+      </div>
     </div>
   );
+}
+
+function PreviewTile({ layerKey, isBuilt }: { layerKey: BrandLayer["key"]; isBuilt: boolean }) {
+  return (
+    <motion.div
+      className="relative overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.04] p-3"
+      animate={{ opacity: isBuilt ? 1 : 0.18, scale: isBuilt ? 1 : 0.97 }}
+      transition={{ duration: 0.45, ease: "easeOut" }}
+    >
+      <TileArt layerKey={layerKey} />
+    </motion.div>
+  );
+}
+
+function TileArt({ layerKey }: { layerKey: BrandLayer["key"] }) {
+  switch (layerKey) {
+    case "identity":
+      return (
+        <div className="flex h-full items-center gap-3">
+          <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--accent)] font-display text-h4 text-white">S</span>
+          <div className="flex gap-1">
+            {["var(--accent)", "var(--accent-10)", "var(--color-text-on-dark)"].map((c) => (
+              <span key={c} className="h-5 w-5 rounded-full border border-white/10" style={{ backgroundColor: c }} />
+            ))}
+          </div>
+        </div>
+      );
+    case "website":
+      return (
+        <div className="flex h-full flex-col gap-1.5">
+          <div className="flex gap-1">
+            {[0, 1, 2].map((d) => (
+              <span key={d} className="h-1.5 w-1.5 rounded-full bg-white/25" />
+            ))}
+          </div>
+          <div className="h-2 w-3/4 rounded bg-white/30" />
+          <div className="h-2 w-1/2 rounded bg-white/15" />
+          <div className="mt-auto h-4 w-16 rounded-md bg-[var(--accent)]" />
+        </div>
+      );
+    case "content":
+      return (
+        <div className="grid h-full grid-cols-3 gap-1.5">
+          {[0, 1, 2].map((d) => (
+            <span key={d} className="rounded-md bg-gradient-to-br from-[var(--accent)]/70 to-white/10" />
+          ))}
+        </div>
+      );
+    case "ads":
+      return (
+        <div className="flex h-full flex-col justify-center gap-1.5">
+          <span className="w-fit rounded bg-white/10 px-1.5 py-0.5 text-micro text-white/60">Ad</span>
+          <div className="h-2 w-4/5 rounded bg-white/30" />
+          <div className="h-2 w-2/3 rounded bg-white/15" />
+        </div>
+      );
+    case "seo":
+      return (
+        <div className="flex h-full flex-col justify-center gap-1.5">
+          <div className="h-1.5 w-1/2 rounded bg-[var(--color-success)]/60" />
+          <div className="h-2 w-5/6 rounded bg-[var(--accent-10)]/70" />
+          <div className="h-1.5 w-3/4 rounded bg-white/15" />
+        </div>
+      );
+    case "ai":
+      return (
+        <div className="flex h-full flex-col justify-center gap-1.5">
+          <div className="h-3 w-3/5 rounded-lg rounded-bl-sm bg-white/15" />
+          <div className="ml-auto h-3 w-2/3 rounded-lg rounded-br-sm bg-[var(--accent)]" />
+        </div>
+      );
+  }
 }

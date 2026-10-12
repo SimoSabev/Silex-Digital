@@ -1,10 +1,11 @@
 import { type Metadata } from "next";
+import { pageSeo } from "@/config/seo";
 import HomeContent from "./_components/HomeContent";
 
 export const metadata: Metadata = {
-  title: "SilexBrand | Автоматизация на бизнеса в България — AI чатбот и CRM",
-  description:
-    "Спести над 15 часа на месец с AI автоматизация. Чатбот за бизнес, CRM интеграция, омниканални съобщения (Viber, Messenger, WhatsApp). Безплатна консултация за малкия бизнес в България.",
+  title: { absolute: pageSeo.home.title },
+  description: pageSeo.home.description,
+  keywords: pageSeo.home.keywords,
   alternates: {
     canonical: "/",
   },

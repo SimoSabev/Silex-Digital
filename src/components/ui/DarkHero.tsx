@@ -48,20 +48,20 @@ export default function DarkHero({
       <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
         {eyebrow && (
           <Reveal variant="rise">
-            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-2 text-xs font-bold tracking-[0.14em] text-[var(--color-text-on-dark)]/85 uppercase backdrop-blur-md">
+            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-2 eyebrow text-[var(--color-text-on-dark)]/85 backdrop-blur-md">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--accent-10)]" />
               {eyebrow}
             </span>
           </Reveal>
         )}
         <Reveal variant="blur" delay={0.08}>
-          <h1 className="font-display text-[2rem] leading-[1.08] font-extrabold tracking-tight text-[var(--color-text-on-dark)] sm:text-[2.75rem] md:text-[3.5rem]">
+          <h1 className="text-display text-[var(--color-text-on-dark)]">
             {title}
           </h1>
         </Reveal>
         {subtitle && (
           <Reveal variant="rise" delay={0.16}>
-            <p className="mx-auto mt-6 max-w-2xl text-[17px] leading-relaxed text-[var(--color-text-on-dark)]/70 md:text-[19px]">
+            <p className="mx-auto mt-6 max-w-2xl text-lead text-[var(--color-text-on-dark)]/70">
               {subtitle}
             </p>
           </Reveal>

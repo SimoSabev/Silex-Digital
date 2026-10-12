@@ -1,4 +1,4 @@
-import { siteConfig } from '@/config/seo';
+import { offerCatalogSchema, siteConfig } from '@/config/seo';
 
 /**
  * Generate JSON-LD structured data for the organization
@@ -24,11 +24,7 @@ export function generateOrganizationSchema() {
       '@type': 'PostalAddress',
       ...siteConfig.contact.address,
     },
-    sameAs: [
-      siteConfig.social.facebook,
-      siteConfig.social.linkedin,
-      siteConfig.social.instagram,
-    ],
+    // No `sameAs`: the social handles in siteConfig are placeholders, not live profiles.
   };
 }
 
@@ -75,11 +71,7 @@ export function generateWebsiteSchema() {
     name: siteConfig.name,
     url: siteConfig.url,
     description: siteConfig.description,
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: `${siteConfig.url}/search?q={search_term_string}`,
-      'query-input': 'required name=search_term_string',
-    },
+    // No SearchAction: the site has no /search route.
   };
 }
 
@@ -338,6 +330,15 @@ export function generatePersonSchema(name: string, url?: string, image?: string)
   }
 
   return personSchema;
+}
+
+/**
+ * JSON-LD for the whole offer catalog (single services + bundles) as one
+ * AggregateOffer — prices come from "@/lib/offer" via src/config/seo.ts.
+ * No aggregateRating/review: there are no verifiable public reviews.
+ */
+export function generateOfferCatalogSchema() {
+  return offerCatalogSchema;
 }
 
 /**

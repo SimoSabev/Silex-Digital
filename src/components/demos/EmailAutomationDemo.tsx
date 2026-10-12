@@ -140,12 +140,12 @@ export default function EmailAutomationDemo() {
   };
 
   return (
-    <div className="flex flex-col rounded-2xl sm:rounded-[24px] bg-[var(--bg-card)] border border-[var(--border)] shadow-2xl overflow-hidden min-h-[min(520px,85dvh)] sm:min-h-[600px] lg:min-h-[700px] relative font-[family-name:var(--font-main)]">
+    <div className="flex flex-col rounded-2xl sm:rounded-[24px] bg-[var(--bg-card)] border border-[var(--border)] shadow-2xl overflow-hidden min-h-[min(520px,85dvh)] sm:min-h-[600px] lg:min-h-[700px] relative font-body">
 
       {/* Header */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between p-5 md:p-6 border-b border-[var(--border)] bg-transparent relative z-20 gap-4">
         <div className="flex-1">
-          <h3 className="font-display text-xl font-bold text-[var(--text-main)] leading-tight tracking-tight mb-1">
+          <h3 className="mb-1 text-h3 text-[var(--text-main)]">
             {t("demo.multichannel.title")}
           </h3>
           <p className="text-sm text-[var(--text-sub)]">
@@ -287,7 +287,7 @@ export default function EmailAutomationDemo() {
                     <div className={`absolute inset-0 rounded-[24px] ${c.bgColor} opacity-40`} />
                     <div className="relative z-10 flex gap-2 items-center mb-1.5 border-b border-[var(--border)] pb-1.5">
                       <div className={`scale-75 p-1 rounded-md ${c.bgColor} ${c.activeColor.replace("bg-", "text-")}`}>{c.icon}</div>
-                      <span className="text-[10px] font-bold uppercase text-[var(--text-sub)] tracking-widest">{t("demo.multichannel.newInquiry")}</span>
+                      <span className="text-micro font-bold uppercase text-[var(--text-sub)] tracking-widest">{t("demo.multichannel.newInquiry")}</span>
                     </div>
                     <p className="relative z-10 text-xs text-[var(--text-main)] font-medium line-clamp-2 leading-relaxed">{msg.text}</p>
                   </motion.div>
@@ -319,7 +319,7 @@ export default function EmailAutomationDemo() {
               }`}
             >
               <Bot size={processingMsg ? 32 : 28} className={processingMsg ? "drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]" : ""} />
-              <span className={`text-[9px] md:text-[10px] font-black uppercase tracking-widest mt-2 ${processingMsg ? "opacity-90" : "opacity-60"}`}>
+              <span className={`text-micro font-extrabold uppercase tracking-widest mt-2 ${processingMsg ? "opacity-90" : "opacity-60"}`}>
                 {processingMsg ? t("demo.multichannel.extracting") : t("demo.multichannel.aiCore")}
               </span>
               <AnimatePresence>
@@ -353,9 +353,9 @@ export default function EmailAutomationDemo() {
                   <div className="relative z-10">
                     <div className="flex items-center gap-2 mb-2">
                       <Database size={10} className="text-[var(--accent)]" />
-                      <div className="text-[9px] text-[var(--accent)] font-mono uppercase tracking-[0.2em]">{"<Data_Map>"}</div>
+                      <div className="text-micro text-[var(--accent)] font-mono uppercase tracking-widest">{"<Data_Map>"}</div>
                     </div>
-                    <div className="text-[10px] sm:text-xs text-[var(--text-sub)] font-mono flex flex-col gap-1.5">
+                    <div className="text-micro sm:text-xs text-[var(--text-sub)] font-mono flex flex-col gap-1.5">
                       <span className="flex justify-between">{t("demo.multichannel.source")} <span className="text-[var(--text-main)] font-bold">{CHANNELS[processingMsg.source][locale === "bg" ? "bgName" : "enName"]}</span></span>
                       <span className="flex justify-between items-center gap-2">{t("demo.multichannel.item")} <span className="text-[var(--accent)] font-bold truncate">{processingMsg.product}</span></span>
                     </div>
@@ -367,7 +367,7 @@ export default function EmailAutomationDemo() {
 
           {/* BOTTOM: ERP table */}
           <div className="w-full mt-auto relative z-50 px-2 sm:px-0">
-            <div className="text-center font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] text-[var(--text-muted)] mb-3 md:mb-4">
+            <div className="text-center font-bold text-micro md:text-xs uppercase tracking-widest text-[var(--text-muted)] mb-3 md:mb-4">
               {t("demo.multichannel.vaultTitle")}
             </div>
             <div className="w-full max-w-3xl mx-auto h-40 sm:h-52 bg-[var(--bg-card)]/80 border border-[var(--border)] rounded-2xl sm:rounded-[24px] shadow-xl backdrop-blur-2xl p-3 sm:p-4 overflow-hidden relative flex flex-col gap-2">
@@ -404,16 +404,16 @@ export default function EmailAutomationDemo() {
                       <div className="truncate min-w-0 flex-1">
                         <div className="font-bold text-[var(--text-main)] flex items-center gap-2 text-xs sm:text-sm truncate">
                           {order.product}
-                          <span className={`text-[9px] sm:text-[10px] px-2 py-0.5 rounded-md ${CHANNELS[order.source].bgColor} ${CHANNELS[order.source].activeColor.replace("bg-", "text-")} shrink-0 border border-transparent`}>
+                          <span className={`text-micro px-2 py-0.5 rounded-md ${CHANNELS[order.source].bgColor} ${CHANNELS[order.source].activeColor.replace("bg-", "text-")} shrink-0 border border-transparent`}>
                             {CHANNELS[order.source][locale === "bg" ? "bgName" : "enName"]}
                           </span>
                         </div>
-                        <div className="text-[10px] sm:text-xs text-[var(--text-sub)] truncate mt-0.5 font-mono">
+                        <div className="text-micro sm:text-xs text-[var(--text-sub)] truncate mt-0.5 font-mono">
                           {t("demo.multichannel.from")} &quot;{order.text}&quot;
                         </div>
                       </div>
                     </div>
-                    <div className="hidden sm:flex shrink-0 items-center gap-1.5 text-[9px] font-bold text-[var(--accent)] py-1 px-2.5 rounded border border-[var(--accent)]/20 uppercase tracking-widest bg-[var(--accent)]/10">
+                    <div className="hidden sm:flex shrink-0 items-center gap-1.5 text-micro font-bold text-[var(--accent)] py-1 px-2.5 rounded border border-[var(--accent)]/20 uppercase tracking-widest bg-[var(--accent)]/10">
                       <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
                       {t("demo.multichannel.stored")}
                     </div>

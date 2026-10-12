@@ -11,59 +11,48 @@ import Footer from "@/components/layout/Footer";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import PremiumHybridBackground from "@/components/ui/PremiumHybridBackground";
 import {
+  siteConfig,
   organizationSchema,
   localBusinessSchema,
   websiteSchema,
+  offerCatalogSchema,
 } from "@/config/seo";
 
+// Typography: see the type scale in src/styles/globals.css (@theme).
+// Bulgarian only needs the base "cyrillic" subset (cyrillic-ext covers
+// Abkhaz/Chuvash/etc. — not used). All three families are variable fonts on
+// Google Fonts, so Golos and JetBrains Mono load the single variable file;
+// Unbounded is pinned to the only weights the scale uses (700 h3/h4, 800
+// display/h1/h2) so no faux-bold or stray weights ship.
 const golosText = Golos_Text({
   subsets: ["latin", "cyrillic"],
-  variable: "--font-body",
+  variable: "--font-golos",
   display: "swap",
 });
 
 const unbounded = Unbounded({
   subsets: ["latin", "cyrillic"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-display",
+  weight: ["700", "800"],
+  variable: "--font-unbounded",
   display: "swap",
 });
 
+// Accent face (kickers, stats, demo UI) — not needed for first paint, so it
+// is not preloaded and doesn't compete with the hero's display/body fonts.
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin", "cyrillic"],
-  variable: "--font-mono",
+  variable: "--font-jetbrains",
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "SilexBrand | Сайт, Google и Viber за местния бизнес",
+    default: siteConfig.title,
     template: "%s | SilexBrand",
   },
-  description:
-    "Не губете клиенти, защото отговаряте късно. Viber помощник и сайт, изградени за вашия бизнес — знае цените ви, записва час и отговаря денем и нощем. Безплатна консултация.",
-  keywords: [
-    "автоматизация на бизнеса",
-    "бизнес автоматизация България",
-    "AI чатбот за бизнес",
-    "Viber бот за бизнес",
-    "уеб сайт за малкия бизнес",
-    "автоматизация на процеси",
-    "дигитализация на бизнес",
-    "омниканална автоматизация",
-    "автоматизация маркетинг",
-    "уеб разработка България",
-    "чатбот за бизнес",
-    "интеграция Viber Messenger WhatsApp",
-    "генериране на лийдове",
-    "бизнес автоматизация София",
-    "бизнес автоматизация Варна",
-    "business automation Bulgaria",
-    "AI chatbot Bulgaria",
-    "web development Bulgaria",
-    "Viber chatbot Bulgaria",
-    "automation agency Bulgaria",
-  ],
+  description: siteConfig.description,
+  keywords: siteConfig.keywords,
   metadataBase: new URL("https://silexbrand.com"),
   // NOTE: no "en-US" alternate — locale switching today is client-side
   // (I18nProvider), not routed. Declaring a hreflang to a URL that doesn't
@@ -74,9 +63,8 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "SilexBrand | Не губете клиенти заради бавен отговор",
-    description:
-      "Viber помощник и сайт за местния бизнес — записва час, знае цените ви, отговаря денем и нощем. Изграден специално за вас.",
+    title: siteConfig.title,
+    description: siteConfig.description,
     type: "website",
     locale: "bg_BG",
     alternateLocale: ["en_US"],
@@ -86,15 +74,14 @@ export const metadata: Metadata = {
         url: "/images/og-default.jpg",
         width: 1200,
         height: 630,
-        alt: "SilexBrand — Сайт и Viber помощник за местния бизнес в България",
+        alt: "SilexBrand — идентичност, уебсайт, съдържание, реклама, SEO и AI автоматизация",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "SilexBrand | Не губете клиенти заради бавен отговор",
-    description:
-      "Viber помощник и сайт за местния бизнес — записва час и отговаря 24/7. Безплатна консултация.",
+    title: siteConfig.title,
+    description: siteConfig.description,
     creator: "@silexbrand",
     site: "@silexbrand",
   },
@@ -123,7 +110,7 @@ export default function RootLayout({
   return (
     <html lang="bg" className={`${golosText.variable} ${unbounded.variable} ${jetbrainsMono.variable}`}>
       <body className="font-body flex min-h-dvh flex-col antialiased bg-(--bg-page) text-(--text-main)">
-        {[organizationSchema, localBusinessSchema, websiteSchema].map((schema) => (
+        {[organizationSchema, localBusinessSchema, websiteSchema, offerCatalogSchema].map((schema) => (
           <script
             key={schema["@type"]}
             type="application/ld+json"

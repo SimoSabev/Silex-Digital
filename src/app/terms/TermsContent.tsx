@@ -64,15 +64,31 @@ const CONTENT: Record<"bg" | "en", { updated: string; intro: string; blocks: Blo
         ],
       },
       {
-        h: "8. Ограничение на отговорността",
+        h: "8. Поверителност",
         p: [
-          "SilexBrand не носи отговорност за пропуснати ползи или косвени вреди, произтичащи от временна недостъпност на трети страни (хостинг доставчици, Viber/Meta платформи, доставчици на AI модели), извън нашия контрол.",
+          "Всяка от страните пази в тайна търговската и техническата информация на другата страна, получена във връзка с изпълнението на услугата (напр. цени, клиентска база, вътрешни процеси), и не я разкрива на трети страни без съгласие, освен когато разкриването се изисква по закон.",
         ],
       },
       {
-        h: "9. Приложимо право",
+        h: "9. Отговорност и AI резултати",
         p: [
-          "Тези условия се уреждат от българското законодателство. Спорове, които не могат да се разрешат доброволно, се отнасят пред компетентния български съд.",
+          [
+            "AI асистентът генерира отговори на база предоставената от клиента информация и общи езикови модели — отговорите могат да съдържат грешки или остарели данни и не представляват правен, финансов, медицински или друг професионален съвет.",
+            "Отговорността на SilexBrand към клиента по всеки отделен план е ограничена до размера на реално платените от клиента суми за съответната услуга през последните 12 месеца.",
+            "SilexBrand не носи отговорност за пропуснати ползи, косвени вреди или временна недостъпност на трети страни (хостинг доставчици, Viber/Meta платформи, доставчици на AI модели), извън нашия контрол.",
+          ],
+        ],
+      },
+      {
+        h: "10. Обработка на данни за AI функционалности",
+        p: [
+          "Когато клиент използва AI асистента, съобщенията на неговите крайни клиенти (получени през Viber, Messenger, WhatsApp или сайта) се препращат към доставчици на AI модели (напр. OpenAI, Anthropic) единствено с цел генериране на отговор. В тази връзка SilexBrand действа като обработващ данни от името на клиента, а доставчиците на AI модели — като подобработващи. Когато тези доставчици се намират извън ЕИП, предаването се основава на Стандартни договорни клаузи (SCC) или друго законово основание по чл. 46 GDPR. Клиентът се задължава да не въвежда в системата специални категории лични данни (напр. здравни данни), освен ако това не е изрично договорено писмено.",
+        ],
+      },
+      {
+        h: "11. Приложимо право",
+        p: [
+          "Тези условия се уреждат от българското законодателство. Спорове, които не могат да се разрешат доброволно, се отнасят пред компетентния български съд, а по потребителски въпроси клиентът може да се обърне и към Комисията за защита на потребителите (КЗП).",
         ],
       },
     ],
@@ -133,15 +149,31 @@ const CONTENT: Record<"bg" | "en", { updated: string; intro: string; blocks: Blo
         ],
       },
       {
-        h: "8. Limitation of liability",
+        h: "8. Confidentiality",
         p: [
-          "SilexBrand is not liable for lost profits or indirect damages arising from temporary unavailability of third parties (hosting providers, Viber/Meta platforms, AI model providers) outside our control.",
+          "Each party keeps confidential the other party's business and technical information received in connection with delivering the service (e.g. pricing, customer base, internal processes), and will not disclose it to third parties without consent, except where disclosure is required by law.",
         ],
       },
       {
-        h: "9. Governing law",
+        h: "9. Liability and AI output",
         p: [
-          "These Terms are governed by Bulgarian law. Disputes that cannot be resolved amicably are referred to the competent Bulgarian court.",
+          [
+            "The AI assistant generates replies based on information the client provides and general-purpose language models — replies may contain errors or outdated information and do not constitute legal, financial, medical, or other professional advice.",
+            "SilexBrand's liability to the client under any given plan is capped at the amount the client actually paid for that service in the preceding 12 months.",
+            "SilexBrand is not liable for lost profits, indirect damages, or temporary unavailability of third parties (hosting providers, Viber/Meta platforms, AI model providers) outside our control.",
+          ],
+        ],
+      },
+      {
+        h: "10. Data processing for AI features",
+        p: [
+          "When a client uses the AI assistant, messages from their end customers (received via Viber, Messenger, WhatsApp, or the website) are forwarded to AI model providers (e.g. OpenAI, Anthropic) solely to generate a reply. In this respect, SilexBrand acts as a processor on behalf of the client, and the AI model providers act as sub-processors. Where those providers are located outside the EEA, the transfer relies on Standard Contractual Clauses (SCCs) or another legal basis under GDPR Art. 46. The client agrees not to feed special categories of personal data (e.g. health data) into the system unless explicitly agreed in writing.",
+        ],
+      },
+      {
+        h: "11. Governing law",
+        p: [
+          "These Terms are governed by Bulgarian law. Disputes that cannot be resolved amicably are referred to the competent Bulgarian court; on consumer matters, the client may also contact Bulgaria's Commission for Consumer Protection (CPC).",
         ],
       },
     ],
@@ -153,19 +185,19 @@ export default function TermsContent() {
   const data = CONTENT[locale];
 
   return (
-    <div className="min-h-dvh bg-[var(--bg-page)] font-[family-name:var(--font-body)] text-[var(--text-main)]">
+    <div className="min-h-dvh bg-[var(--bg-page)] font-body text-[var(--text-main)]">
       <section className="atelier-band-dark relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-20">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
             <Reveal variant="blur">
-              <p className="mb-5 font-mono text-xs font-bold tracking-[0.2em] text-[var(--color-text-on-dark)]/40 uppercase">
+              <p className="mb-5 eyebrow-mono text-[var(--color-text-on-dark)]/40">
                 {locale === "bg" ? "Общи условия · SilexBrand" : "Terms · SilexBrand"}
               </p>
             </Reveal>
-            <h1 className="font-display text-[2.25rem] leading-[1.05] font-extrabold tracking-tight text-[var(--color-text-on-dark)] sm:text-[3rem]">
+            <h1 className="text-h1 text-[var(--color-text-on-dark)]">
               {locale === "bg" ? "Общи условия" : "Terms of Service"}
             </h1>
-            <p className="mt-4 text-sm text-[var(--color-text-on-dark)]/50">{data.updated}</p>
+            <p className="mt-4 text-small text-[var(--color-text-on-dark)]/50">{data.updated}</p>
           </div>
         </Container>
       </section>
@@ -174,14 +206,14 @@ export default function TermsContent() {
         <section className="section pt-16 md:pt-20">
           <div className="mx-auto max-w-3xl">
             <div className="card space-y-10 p-8 md:p-10">
-              <p className="text-[15px] leading-relaxed text-[var(--text-sub)]">{data.intro}</p>
+              <p className="max-w-prose text-body text-[var(--text-sub)]">{data.intro}</p>
 
               {data.blocks.map((block) => (
                 <div key={block.h}>
-                  <h2 className="mb-3 font-[family-name:var(--font-display)] text-lg font-[700] text-[var(--text-main)]">
+                  <h2 className="mb-3 text-h4 text-[var(--text-main)]">
                     {block.h}
                   </h2>
-                  <div className="space-y-3 text-[15px] leading-relaxed text-[var(--text-sub)]">
+                  <div className="max-w-prose space-y-3 text-body text-[var(--text-sub)]">
                     {block.p.map((item, i) =>
                       Array.isArray(item) ? (
                         <ul key={i} className="list-disc space-y-1.5 pl-5">
@@ -199,7 +231,7 @@ export default function TermsContent() {
 
               <div className="section-divider" />
 
-              <p className="text-sm text-[var(--text-muted)]">
+              <p className="text-small text-[var(--text-muted)]">
                 {locale === "bg" ? (
                   <>
                     Свързани документи:{" "}

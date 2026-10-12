@@ -99,11 +99,11 @@ export default function DemosContent() {
         <Container>
           <div className="mx-auto max-w-3xl text-center">
             <Reveal variant="blur">
-              <p className="mb-5 font-mono text-xs font-bold tracking-[0.2em] text-[var(--color-text-on-dark)]/40 uppercase">
+              <p className="mb-5 eyebrow-mono text-[var(--color-text-on-dark)]/40">
                 {locale === "bg" ? "Демонстрации · SilexBrand" : "Demos · SilexBrand"}
               </p>
             </Reveal>
-            <h1 className="font-display text-[2.5rem] leading-[1] font-extrabold tracking-tight text-[var(--color-text-on-dark)] sm:text-[3.5rem] md:text-[4.5rem]">
+            <h1 className="text-display text-[var(--color-text-on-dark)]">
               {locale === "bg" ? (
                 <>Три системи.<br /><span className="text-[var(--accent-10)]">Работещи точно сега.</span></>
               ) : (
@@ -111,14 +111,14 @@ export default function DemosContent() {
               )}
             </h1>
             <Reveal variant="rise" delay={0.14}>
-              <p className="mx-auto mt-7 max-w-xl text-[17px] leading-relaxed text-[var(--color-text-on-dark)]/60 md:text-[19px]">
+              <p className="mx-auto mt-7 max-w-xl text-lead text-[var(--color-text-on-dark)]/60">
                 {locale === "bg"
                   ? "Не скрийншоти — истински интерактивни системи, точно под този текст. Кликнете и пробвайте директно, без регистрация."
                   : "Not screenshots — real interactive systems, right below this text. Click in and try them directly, no sign-up needed."}
               </p>
             </Reveal>
             <Reveal variant="rise" delay={0.24}>
-              <div className="mt-9 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-4 py-2 text-sm font-semibold text-[var(--color-text-on-dark)]/70 backdrop-blur-md">
+              <div className="mt-9 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-4 py-2 text-small font-semibold text-[var(--color-text-on-dark)]/70 backdrop-blur-md">
                 <MousePointerClick className="h-4 w-4 text-[var(--accent-10)]" />
                 {locale === "bg" ? "Скролни надолу и опитай" : "Scroll down and try one"}
               </div>
@@ -164,7 +164,7 @@ export default function DemosContent() {
         <Container>
           <LazyReveal delay={0.1}>
             <div className="mb-12 text-center">
-              <h2 className="font-display text-2xl sm:text-3xl font-bold text-[var(--text-main)]">
+              <h2 className="text-h2 text-[var(--text-main)]">
                 {locale === "bg" ? "Очаквайте скоро" : "Coming Soon"}
               </h2>
             </div>
@@ -186,7 +186,7 @@ export default function DemosContent() {
                         {demo.icon}
                       </div>
                       <div>
-                        <h3 className="font-[family-name:var(--font-display)] text-xl font-semibold text-[var(--text-main)]">
+                        <h3 className="text-h3 text-[var(--text-main)]">
                           {demo.title[locale]}
                         </h3>
                       </div>
@@ -222,12 +222,12 @@ export default function DemosContent() {
         <Container>
           <LazyReveal delay={0.3}>
             <div className="card-featured mx-auto max-w-4xl p-6 sm:p-8 text-center md:p-12 shadow-2xl hover:shadow-[var(--accent)]/20 transition-all duration-700">
-              <h2 className="mb-3 sm:mb-4 font-[family-name:var(--font-display)] text-xl sm:text-2xl font-[700] text-[var(--text-main)] md:text-3xl">
+              <h2 className="mb-3 text-h3 text-[var(--text-main)] sm:mb-4">
                 {locale === "bg"
                   ? "Искаш персонализирана демонстрация?"
                   : "Need a personalized demo?"}
               </h2>
-              <p className="mx-auto mb-8 max-w-xl text-[var(--text-sub)]">
+              <p className="mx-auto mb-8 max-w-xl text-body text-[var(--text-sub)]">
                 {locale === "bg"
                   ? "Свържи се с нас и ще ти покажем как автоматизацията може да работи за твоя конкретен бизнес случай."
                   : "Get in touch and we will show you how automation can work for your exact business case."}

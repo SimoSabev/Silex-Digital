@@ -41,11 +41,12 @@ const CONTENT: Record<"bg" | "en", { updated: string; intro: string; blocks: Blo
         h: "4. С кого споделяме данни",
         p: [
           [
-            "Resend — доставчик за изпращане на имейл известия при нова заявка.",
+            "Resend (САЩ) — доставчик за изпращане на имейл известия при нова заявка.",
             "Supabase — база данни, в която се съхраняват изпратените запитвания.",
             "Vercel — хостинг на сайта и обобщена аналитика.",
             "Не продаваме и не споделяме данните ви с трети страни за маркетингови цели.",
           ],
+          "Отделно от този сайт: ако сте краен клиент на бизнес, който използва нашия AI асистент (Viber/Messenger/уебсайт чат), съобщенията ви се обработват от доставчици на AI модели (напр. OpenAI, Anthropic) с цел генериране на отговор. В тази хипотеза SilexBrand действа като обработващ данните от името на съответния бизнес клиент, а не като администратор — подробности за тази обработка са уредени в Общите условия, раздел 10. За да поискате изтриване на такива съобщения, вижте Инструкциите за изтриване на данни.",
         ],
       },
       {
@@ -55,7 +56,13 @@ const CONTENT: Record<"bg" | "en", { updated: string; intro: string; blocks: Blo
         ],
       },
       {
-        h: "6. Вашите права по GDPR",
+        h: "6. Международно предаване на данни",
+        p: [
+          "Част от доставчиците по-горе (Resend, доставчиците на AI модели) обработват данни извън Европейското икономическо пространство, включително в САЩ. Когато това е приложимо, предаването се основава на Стандартни договорни клаузи (SCC), одобрени от Европейската комисция, или друго законово основание по чл. 46 GDPR.",
+        ],
+      },
+      {
+        h: "7. Вашите права по GDPR",
         p: [
           [
             "Достъп до данните, които съхраняваме за вас.",
@@ -63,19 +70,19 @@ const CONTENT: Record<"bg" | "en", { updated: string; intro: string; blocks: Blo
             "Изтриване (\"право да бъдеш забравен\").",
             "Ограничаване или възражение срещу обработването.",
             "Преносимост на данните.",
-            "Жалба до Комисията за защита на личните данни (КЗЛД), ако смятате, че правата ви са нарушени.",
+            "Жалба до Комисията за защита на личните данни (КЗЛД) по въпроси, свързани с лични данни, или до Комисията за защита на потребителите (КЗП) по общи потребителски въпроси.",
           ],
           "За да упражните някое от тези права, пишете ни на info@silexbrand.com — отговаряме в рамките на 30 дни.",
         ],
       },
       {
-        h: "7. Бисквитки",
+        h: "8. Бисквитки",
         p: [
           "Сайтът не използва рекламни или проследяващи бисквитки на трети страни. Аналитичните инструменти, които използваме, не разчитат на бисквитки за идентифициране на отделен посетител.",
         ],
       },
       {
-        h: "8. Промени в тази политика",
+        h: "9. Промени в тази политика",
         p: [
           "Можем да актуализираме тази политика при промяна на услугите или законодателството. Датата по-горе показва последната актуализация.",
         ],
@@ -115,11 +122,12 @@ const CONTENT: Record<"bg" | "en", { updated: string; intro: string; blocks: Blo
         h: "4. Who we share data with",
         p: [
           [
-            "Resend — email delivery provider for new-lead notifications.",
+            "Resend (US) — email delivery provider for new-lead notifications.",
             "Supabase — database where submitted inquiries are stored.",
             "Vercel — site hosting and aggregated analytics.",
             "We do not sell or share your data with third parties for marketing purposes.",
           ],
+          "Separately from this site: if you are an end customer of a business that uses our AI assistant (Viber/Messenger/website chat), your messages are processed by AI model providers (e.g. OpenAI, Anthropic) to generate a reply. In that scenario SilexBrand acts as a processor on behalf of the business client, not as controller — details of that processing are set out in the Terms of Service, Section 10. To request deletion of such messages, see the Data Deletion Instructions.",
         ],
       },
       {
@@ -129,7 +137,13 @@ const CONTENT: Record<"bg" | "en", { updated: string; intro: string; blocks: Blo
         ],
       },
       {
-        h: "6. Your rights under GDPR",
+        h: "6. International data transfers",
+        p: [
+          "Some of the providers above (Resend, AI model providers) process data outside the European Economic Area, including in the US. Where applicable, this transfer relies on Standard Contractual Clauses (SCCs) approved by the European Commission, or another legal basis under GDPR Art. 46.",
+        ],
+      },
+      {
+        h: "7. Your rights under GDPR",
         p: [
           [
             "Access to the data we hold about you.",
@@ -137,19 +151,19 @@ const CONTENT: Record<"bg" | "en", { updated: string; intro: string; blocks: Blo
             "Erasure (\"right to be forgotten\").",
             "Restriction of, or objection to, processing.",
             "Data portability.",
-            "Complaint to Bulgaria's Commission for Personal Data Protection (CPDP) if you believe your rights were violated.",
+            "Complaint to Bulgaria's Commission for Personal Data Protection (CPDP) for data-protection matters, or the Commission for Consumer Protection (CPC) for general consumer matters.",
           ],
           "To exercise any of these rights, email info@silexbrand.com — we respond within 30 days.",
         ],
       },
       {
-        h: "7. Cookies",
+        h: "8. Cookies",
         p: [
           "The site does not use advertising or third-party tracking cookies. The analytics tools we use do not rely on cookies to identify individual visitors.",
         ],
       },
       {
-        h: "8. Changes to this policy",
+        h: "9. Changes to this policy",
         p: [
           "We may update this policy as our services or the law change. The date above reflects the last update.",
         ],
@@ -163,19 +177,19 @@ export default function PrivacyContent() {
   const data = CONTENT[locale];
 
   return (
-    <div className="min-h-dvh bg-[var(--bg-page)] font-[family-name:var(--font-body)] text-[var(--text-main)]">
+    <div className="min-h-dvh bg-[var(--bg-page)] font-body text-[var(--text-main)]">
       <section className="atelier-band-dark relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-20">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
             <Reveal variant="blur">
-              <p className="mb-5 font-mono text-xs font-bold tracking-[0.2em] text-[var(--color-text-on-dark)]/40 uppercase">
+              <p className="mb-5 eyebrow-mono text-[var(--color-text-on-dark)]/40">
                 {locale === "bg" ? "Поверителност · SilexBrand" : "Privacy · SilexBrand"}
               </p>
             </Reveal>
-            <h1 className="font-display text-[2.25rem] leading-[1.05] font-extrabold tracking-tight text-[var(--color-text-on-dark)] sm:text-[3rem]">
+            <h1 className="text-h1 text-[var(--color-text-on-dark)]">
               {locale === "bg" ? "Политика за поверителност" : "Privacy Policy"}
             </h1>
-            <p className="mt-4 text-sm text-[var(--color-text-on-dark)]/50">{data.updated}</p>
+            <p className="mt-4 text-small text-[var(--color-text-on-dark)]/50">{data.updated}</p>
           </div>
         </Container>
       </section>
@@ -184,14 +198,14 @@ export default function PrivacyContent() {
         <section className="section pt-16 md:pt-20">
           <div className="mx-auto max-w-3xl">
             <div className="card space-y-10 p-8 md:p-10">
-              <p className="text-[15px] leading-relaxed text-[var(--text-sub)]">{data.intro}</p>
+              <p className="max-w-prose text-body text-[var(--text-sub)]">{data.intro}</p>
 
               {data.blocks.map((block) => (
                 <div key={block.h}>
-                  <h2 className="mb-3 font-[family-name:var(--font-display)] text-lg font-[700] text-[var(--text-main)]">
+                  <h2 className="mb-3 text-h4 text-[var(--text-main)]">
                     {block.h}
                   </h2>
-                  <div className="space-y-3 text-[15px] leading-relaxed text-[var(--text-sub)]">
+                  <div className="max-w-prose space-y-3 text-body text-[var(--text-sub)]">
                     {block.p.map((item, i) =>
                       Array.isArray(item) ? (
                         <ul key={i} className="list-disc space-y-1.5 pl-5">
@@ -209,7 +223,7 @@ export default function PrivacyContent() {
 
               <div className="section-divider" />
 
-              <p className="text-sm text-[var(--text-muted)]">
+              <p className="text-small text-[var(--text-muted)]">
                 {locale === "bg" ? (
                   <>
                     Свързани документи:{" "}

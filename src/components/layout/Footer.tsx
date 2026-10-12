@@ -7,14 +7,16 @@ import { Mail, Phone, MapPin, ChevronRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
 export default function Footer() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
 
-  const solutions = [
-    { label: t("footer.automation"), href: "/services" },
-    { label: t("footer.cmsLayer"), href: "/services" },
-    { label: t("footer.codeLayer"), href: "/services" },
-    { label: t("footer.seo"), href: "/pricing/seo" },
-    { label: t("footer.integrations"), href: "/demos" },
+  const serviceLinks = [
+    { label: t("svc.identity.title"), href: "/services" },
+    { label: t("svc.website.title"), href: "/services" },
+    { label: t("svc.content.title"), href: "/services" },
+    { label: t("svc.ads.title"), href: "/services" },
+    { label: t("svc.seo.title"), href: "/pricing/seo" },
+    { label: t("svc.ai.short"), href: "/demos" },
+    { label: t("nav.pricing"), href: "/pricing" },
   ];
 
   // Social icons are intentionally not rendered until real, live SilexBrand
@@ -25,6 +27,7 @@ export default function Footer() {
   const legalLinks = [
     { label: t("footer.privacy"), href: "/privacy" },
     { label: t("footer.terms"), href: "/terms" },
+    { label: t("footer.dataDeletion"), href: "/data-deletion" },
   ];
 
   return (
@@ -64,32 +67,31 @@ export default function Footer() {
                     />
                   </Link>
                   
-                  {/* Premium System Operational Indicator */}
-                  <div className="flex items-center gap-2 self-start sm:self-auto rounded-full border border-[var(--accent)]/20 bg-[var(--accent)]/10 px-2.5 py-1 text-[9px] font-bold tracking-[0.1em] text-[var(--accent)] uppercase">
-                    <span className="relative flex h-1.5 w-1.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--accent)]"></span>
-                    </span>
-                    {locale === "bg" ? "Всички системи активни" : "Systems Online"}
-                  </div>
+                  <Link
+                    href="/contact?source=footer&kind=call"
+                    className="flex items-center gap-2 self-start rounded-full border border-[var(--accent)]/20 bg-[var(--accent)]/10 px-3 py-1.5 text-caption font-semibold text-[var(--accent)] transition-colors hover:bg-[var(--accent)]/15 sm:self-auto"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" aria-hidden />
+                    {t("footer.freeCall")}
+                  </Link>
                 </div>
 
-                <p className="font-inter text-sm leading-relaxed text-[var(--text-sub)]">
+                <p className="text-small text-[var(--text-sub)]">
                   {t("footer.description")}
                 </p>
 
                 <div className="w-full h-[1px] bg-[var(--border)]/40 my-1" />
 
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <span className="text-[10px] font-bold tracking-[0.15em] text-[var(--text-muted)] uppercase">
-                    {locale === "bg" ? "Правна информация" : "Legal"}
+                  <span className="eyebrow text-[var(--text-muted)]">
+                    {t("footer.legal")}
                   </span>
                   <div className="flex gap-4">
                     {legalLinks.map((link) => (
                       <Link
                         key={link.href}
                         href={link.href}
-                        className="text-xs font-semibold text-[var(--text-sub)] underline-offset-2 transition-colors hover:text-[var(--accent)] hover:underline"
+                        className="text-caption font-semibold text-[var(--text-sub)] underline-offset-2 transition-colors hover:text-[var(--accent)] hover:underline"
                       >
                         {link.label}
                       </Link>
@@ -107,20 +109,20 @@ export default function Footer() {
               transition={{ delay: 0.1, duration: 0.6 }}
               className="lg:col-span-3 flex flex-col items-start lg:pl-2"
             >
-              <h3 className="font-space mb-6 flex items-center gap-2 text-xs font-[800] tracking-[0.2em] text-[var(--text-main)] uppercase">
+              <h3 className="mb-6 flex items-center gap-2 eyebrow text-[var(--text-main)]">
                 <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
-                {t("footer.solutions")}
+                {t("footer.services")}
               </h3>
               <div className="flex flex-col gap-3 w-full">
-                {solutions.map((link) => (
+                {serviceLinks.map((link) => (
                   <Link
                     key={link.label}
                     href={link.href}
-                    className="group font-inter flex items-center justify-between gap-3 w-full rounded-xl border border-[var(--border)]/40 bg-[var(--bg-card)]/10 hover:bg-[var(--bg-card)]/30 hover:border-[var(--accent)]/25 px-4 py-3.5 shadow-xs transition-all duration-300"
+                    className="group flex items-center justify-between gap-3 w-full rounded-xl border border-[var(--border)]/40 bg-[var(--bg-card)]/10 hover:bg-[var(--bg-card)]/30 hover:border-[var(--accent)]/25 px-4 py-3.5 shadow-xs transition-all duration-300"
                   >
                     <div className="flex items-center gap-2.5">
                       <span className="h-1 w-1 rounded-full bg-[var(--accent)] scale-50 group-hover:scale-100 transition-transform duration-300" />
-                      <span className="text-sm font-semibold text-[var(--text-sub)] transition-colors group-hover:text-[var(--text-main)]">
+                      <span className="text-small font-semibold text-[var(--text-sub)] transition-colors group-hover:text-[var(--text-main)]">
                         {link.label}
                       </span>
                     </div>
@@ -139,7 +141,7 @@ export default function Footer() {
               className="lg:col-span-4 flex flex-col items-start lg:items-end w-full"
             >
               <div className="w-full max-w-sm lg:text-right">
-                <h3 className="font-space mb-6 flex items-center gap-2 text-xs font-[800] tracking-[0.2em] text-[var(--text-main)] uppercase lg:justify-end">
+                <h3 className="mb-6 flex items-center gap-2 eyebrow text-[var(--text-main)] lg:justify-end">
                   <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
                   {t("footer.contact")}
                 </h3>
@@ -151,11 +153,11 @@ export default function Footer() {
                       <MapPin size={18} />
                     </div>
                     <div className="flex flex-col items-start text-left">
-                      <span className="text-[10px] font-[800] tracking-[0.1em] text-[var(--text-muted)] uppercase">
-                        {locale === "bg" ? "Офис" : "Office"}
+                      <span className="eyebrow text-[var(--text-muted)]">
+                        {t("footer.office")}
                       </span>
-                      <span className="text-sm font-semibold text-[var(--text-sub)]">
-                        {locale === "bg" ? "Варна, България" : "Varna, Bulgaria"}
+                      <span className="text-small font-semibold text-[var(--text-sub)]">
+                        {t("footer.city")}
                       </span>
                     </div>
                   </div>
@@ -169,10 +171,10 @@ export default function Footer() {
                       <Phone size={18} />
                     </div>
                     <div className="flex flex-col items-start text-left">
-                      <span className="text-[10px] font-[800] tracking-[0.1em] text-[var(--text-muted)] uppercase">
-                        {locale === "bg" ? "Телефон" : "Phone"}
+                      <span className="eyebrow text-[var(--text-muted)]">
+                        {t("footer.phone")}
                       </span>
-                      <span className="text-sm font-semibold text-[var(--text-sub)] transition-colors group-hover:text-[var(--text-main)]">
+                      <span className="text-small font-semibold text-[var(--text-sub)] transition-colors group-hover:text-[var(--text-main)]">
                         +359 88 503 1865
                       </span>
                     </div>
@@ -187,10 +189,10 @@ export default function Footer() {
                       <Mail size={18} />
                     </div>
                     <div className="flex flex-col items-start text-left">
-                      <span className="text-[10px] font-[800] tracking-[0.1em] text-[var(--text-muted)] uppercase">
-                        {locale === "bg" ? "Имейл" : "Email"}
+                      <span className="eyebrow text-[var(--text-muted)]">
+                        {t("footer.email")}
                       </span>
-                      <span className="text-sm font-semibold text-[var(--text-sub)] transition-colors group-hover:text-[var(--text-main)]">
+                      <span className="text-small font-semibold text-[var(--text-sub)] transition-colors group-hover:text-[var(--text-main)]">
                         info@silexbrand.com
                       </span>
                     </div>
@@ -205,9 +207,10 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="w-full border-t border-[var(--border)]/60 bg-transparent">
         <div className="mx-auto flex w-full flex-col items-center justify-center gap-4 px-4 py-6 sm:flex-row sm:px-6 sm:py-7 md:px-8 lg:px-12">
-          <p className="font-inter text-xs tracking-wider text-[var(--text-muted)] uppercase">
+          <p className="eyebrow font-medium text-[var(--text-muted)]">
             © {new Date().getFullYear()} SilexBrand. {t("footer.rights")}
           </p>
+          <p className="text-caption text-[var(--text-muted)]">{t("common.vatNote")}</p>
         </div>
       </div>
     </footer>

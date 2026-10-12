@@ -1,17 +1,24 @@
 import { type Metadata } from "next";
-import { pageSeo } from "@/config/seo";
+import { formatEur, getService } from "@/lib/offer";
 import SeoPricingContent from "./SeoPricingContent";
 
+// Prices in the snippet come from the catalog, so they can't drift from the page.
+const startPrice = formatEur(getService("seo-start").price.oneTime ?? 0, "bg");
+const localPrice = formatEur(getService("seo-local").price.monthly ?? 0, "bg");
+
+const title = "SEO цени | Локално SEO и видимост в AI търсачките";
+const description = `SEO Старт за ${startPrice} еднократно и месечни нива от ${localPrice}/мес. — Google бизнес профил, съдържание и проследяване дали AI търсачките ви споменават. Цени без ДДС.`;
+
 export const metadata: Metadata = {
-  title: pageSeo.pricingSeo.title,
-  description: pageSeo.pricingSeo.description,
-  keywords: pageSeo.pricingSeo.keywords,
+  title,
+  description,
+  keywords: ["SEO услуги Варна", "локално SEO България", "цена SEO", "Google бизнес профил", "SEO за AI търсачки"],
   alternates: {
     canonical: "/pricing/seo",
   },
   openGraph: {
-    title: pageSeo.pricingSeo.title,
-    description: pageSeo.pricingSeo.description,
+    title,
+    description,
   },
 };
 

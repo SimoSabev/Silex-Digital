@@ -110,7 +110,7 @@ export default function ChatbotDemo() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-5 gap-0 rounded-2xl sm:rounded-[2rem] bg-[var(--bg-card)] overflow-hidden border border-[var(--border)] shadow-2xl flex-1 min-h-[min(560px,88dvh)] lg:min-h-[600px] font-[family-name:var(--font-main)]">
+    <div className="grid grid-cols-1 lg:grid-cols-5 gap-0 rounded-2xl sm:rounded-[2rem] bg-[var(--bg-card)] overflow-hidden border border-[var(--border)] shadow-2xl flex-1 min-h-[min(560px,88dvh)] lg:min-h-[600px] font-body">
       
       {/* Left: Chat Interface */}
       <div className="lg:col-span-3 flex flex-col min-h-[320px] lg:min-h-0 lg:h-full border-b lg:border-b-0 lg:border-r border-[var(--border)] relative bg-transparent z-10 shadow-lg">
@@ -127,7 +127,7 @@ export default function ChatbotDemo() {
             />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-[var(--text-main)] leading-tight tracking-tight flex items-center gap-2">
+            <h3 className="flex items-center gap-2 text-h4 text-[var(--text-main)]">
               Silex AI Agent
               <ShieldCheck size={16} className="text-[var(--accent)]" />
             </h3>
@@ -159,7 +159,7 @@ export default function ChatbotDemo() {
                 
                 <div className={`flex flex-col gap-1 max-w-[85%] md:max-w-[75%] ${msg.role === "user" ? "items-end" : "items-start"}`}>
                   <div
-                    className={`px-5 py-3.5 text-[15px] leading-relaxed shadow-md backdrop-blur-md relative ${
+                    className={`px-5 py-3.5 text-body shadow-md backdrop-blur-md relative ${
                       msg.role === "user"
                         ? "bg-[var(--accent)] text-white rounded-[1.5rem] rounded-br-sm"
                         : "bg-[var(--bg-card)]/90 text-[var(--text-main)] border border-[var(--border)] rounded-[1.5rem] rounded-bl-sm"
@@ -253,13 +253,13 @@ export default function ChatbotDemo() {
             <div className="p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--accent)]/30 shadow-sm">
                <Binary className="text-[var(--accent)] h-4 w-4" />
             </div>
-            <h4 className="font-[family-name:var(--font-mono)] font-bold text-[var(--text-main)] uppercase tracking-widest text-[10px] md:text-xs">
+            <h4 className="eyebrow-mono text-[var(--text-main)]">
               {locale === "bg" ? "Live: Лог на агента" : "Live: Agent Terminal"}
             </h4>
             {botPulsing && <span className="ml-auto w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse shadow-[0_0_8px_rgba(132,204,22,0.8)]" />}
           </div>
 
-          <div className="flex flex-col space-y-3 font-[family-name:var(--font-mono)] text-sm">
+          <div className="flex flex-col space-y-3 font-mono text-sm">
             {activeThoughts.length === 0 && !isTyping ? (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center text-center text-[var(--text-muted)] p-10 h-48 border border-[var(--border)] bg-[var(--bg-card)]/50 rounded-[24px] backdrop-blur-md shadow-inner">
                 <Database className="h-8 w-8 mb-4 opacity-50" />
@@ -291,12 +291,12 @@ export default function ChatbotDemo() {
                          {thought.type === "parsing" ? <Code2 className="h-3 w-3 text-[var(--accent)]" /> :
                           thought.type === "searching" ? <Database className="h-3 w-3 text-[var(--accent)]" /> :
                           <Zap className="h-3 w-3 text-[var(--accent)]" />}
-                         <span className="text-[9px] text-[var(--text-sub)] uppercase tracking-widest leading-none">{thought.log}</span>
+                         <span className="text-micro text-[var(--text-sub)] uppercase tracking-widest leading-none">{thought.log}</span>
                        </div>
                        
                        <div className="flex gap-2 relative z-10">
                          <ChevronRight size={14} className="text-[var(--accent)] shrink-0 mt-0.5" />
-                         <span className="text-[11px] md:text-xs leading-relaxed text-[var(--text-main)] font-medium">
+                         <span className="text-micro md:text-xs leading-relaxed text-[var(--text-main)] font-medium">
                            {thought.text[locale]}
                          </span>
                        </div>
@@ -308,7 +308,7 @@ export default function ChatbotDemo() {
                         className="flex items-center gap-2 h-6 pl-2"
                      >
                         <div className="w-1 h-3 bg-[var(--accent)] animate-pulse" />
-                        <span className="text-[10px] text-[var(--accent)] uppercase tracking-widest font-bold font-mono">
+                        <span className="text-micro text-[var(--accent)] uppercase tracking-widest font-bold font-mono">
                           {locale === "bg" ? "Процесиране_В_Ход..." : "Processing_Stream..."}
                         </span>
                      </motion.div>
@@ -322,11 +322,11 @@ export default function ChatbotDemo() {
         {/* Footer Metrics */}
         <div className="mt-auto border-t border-[var(--border)] pt-4 relative z-10 flex justify-between items-center px-1">
           <div className="flex flex-col">
-            <span className="text-[9px] uppercase text-[var(--text-muted)] tracking-widest mb-0.5 font-mono">Latency</span>
+            <span className="text-micro uppercase text-[var(--text-muted)] tracking-widest mb-0.5 font-mono">Latency</span>
             <span className="text-xs font-bold text-[var(--accent)] font-mono animate-pulse">24ms</span>
           </div>
           <div className="flex flex-col text-right">
-            <span className="text-[9px] uppercase text-[var(--text-muted)] tracking-widest mb-0.5 font-mono">Model</span>
+            <span className="text-micro uppercase text-[var(--text-muted)] tracking-widest mb-0.5 font-mono">Model</span>
             <span className="text-xs font-bold text-[var(--text-sub)] font-mono">SD-Agent-v2</span>
           </div>
         </div>

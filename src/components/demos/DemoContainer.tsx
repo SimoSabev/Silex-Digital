@@ -136,7 +136,7 @@ export default function DemoContainer({
                  {icon}
                </div>
              )}
-             <h3 className="text-lg sm:text-xl font-bold text-[var(--text-main)] line-clamp-2">{title}</h3>
+             <h3 className="line-clamp-2 text-h4 text-[var(--text-main)]">{title}</h3>
           </div>
           <p className="text-sm text-[var(--text-sub)]">{description}</p>
         </div>
@@ -213,7 +213,7 @@ export default function DemoContainer({
                     </div>
                   )}
                   <div className="min-w-0">
-                    <h3 className="text-lg sm:text-2xl font-bold text-[var(--text-main)] font-[family-name:var(--font-display)] leading-tight truncate sm:whitespace-normal">{title}</h3>
+                    <h3 className="truncate text-h3 text-[var(--text-main)] sm:whitespace-normal">{title}</h3>
                     <p className="text-xs sm:text-sm text-[var(--text-sub)]">
                       {locale === "bg" ? "Интерактивна симулация" : "Interactive Simulation"}
                     </p>
